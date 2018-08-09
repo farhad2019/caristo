@@ -1,0 +1,3 @@
+id,name,email,password
+1,Super Admin,superadmin@ingic.com,bcrypt('superadmin123')
+2,Admin,admin@ingic.com,bcrypt('admin123')
