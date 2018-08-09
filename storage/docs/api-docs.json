@@ -1851,8 +1851,6 @@
                 "name",
                 "email",
                 "phone",
-                "address",
-                "image",
                 "password",
                 "password_confirmation",
                 "device_token",
@@ -1860,19 +1858,11 @@
             ],
             "properties": {
                 "name": {
-                    "description": "User First Name",
-                    "type": "string"
-                },
-                "address": {
-                    "description": "User address",
+                    "description": "User Full Name",
                     "type": "string"
                 },
                 "phone": {
                     "description": "User Phone Name",
-                    "type": "string"
-                },
-                "image": {
-                    "description": "User Image",
                     "type": "string"
                 },
                 "email": {
