@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Dimsav\Translatable\Translatable;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -32,8 +33,11 @@ class Category extends Model
 {
     use SoftDeletes;
 
+    use Translatable;
+
     public $table = 'category';
-    
+
+    public $translatedAttributes = ['name'];
 
     protected $dates = ['deleted_at'];
 
@@ -56,21 +60,31 @@ class Category extends Model
      *
      * @var array
      */
-     protected $with = [];
+    protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+
+    ];
 
     /**
      * The attributes that should be visible in toArray.
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'name',
+        'user_id',
+//        'slug',
+        'created_at',
+        'updated_at',
+//        'deleted_at'
+    ];
 
     /**
      * Validation create rules
@@ -99,5 +113,16 @@ class Category extends Model
         'slug' => 'required'
     ];
 
-    
+    public function Variants()
+    {
+        return $this->hasMany(\App\Models\ItemVariant::class, 'item_id', 'id');
+    }
+
+    /*
+    public function Media()
+    {
+        return $this->morphMany(MediaFi::class, 'item_id', 'id');
+    }
+    */
+
 }

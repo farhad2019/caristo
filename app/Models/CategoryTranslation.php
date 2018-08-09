@@ -2,54 +2,36 @@
 
 namespace App\Models;
 
-use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * Class CategoryTranslation
+ * @package App\Models
+ *
  * @property integer id
- * @property string slug
+ * @property integer category_id
+ * @property string locale
+ * @property string name
  * @property integer status
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
  *
- * @property PageTranslation translations
- *
- * @SWG\Definition(
- *      definition="Page",
- *      required={"slug", "status"},
- *      @SWG\Property(
- *          property="id",
- *          description="id",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
- *          property="slug",
- *          description="slug",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="status",
- *          description="status",
- *          type="boolean"
- *      )
- * )
+ * @property Page page
  */
-class Page extends Model
+class CategoryTranslation extends Model
 {
-    use Translatable;
     use SoftDeletes;
 
-    public $translatedAttributes = ['title', 'content'];
+    public $table = 'category_translations';
 
     protected $dates = ['deleted_at'];
 
-    public $table = 'pages';
-
     public $fillable = [
-        'slug',
+        'category_id',
+        'locale',
+        'name',
         'status'
     ];
 
@@ -59,7 +41,8 @@ class Page extends Model
      * @var array
      */
     protected $casts = [
-        'slug'   => 'string',
+        'locale' => 'string',
+        'name'   => 'string',
         'status' => 'boolean'
     ];
 
@@ -90,8 +73,9 @@ class Page extends Model
      * @var array
      */
     public static $rules = [
-        'slug'   => 'required|unique:pages,slug',
-        'status' => 'required'
+        'locale'      => 'required',
+        'category_id' => 'required',
+        'name'        => 'required'
     ];
 
     /**
@@ -100,16 +84,7 @@ class Page extends Model
      * @var array
      */
     public static $update_rules = [
-
-    ];
-
-    /**
-     * Validation api rules
-     *
-     * @var array
-     */
-    public static $api_rules = [
-        'slug'   => 'required|unique:pages,slug',
-        'status' => 'required'
+        'locale'      => 'required',
+        'category_id' => 'required'
     ];
 }

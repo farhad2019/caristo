@@ -68,11 +68,14 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('v1/languages', 'LanguageAPIController');
 
-    Route::resource('v1/pages', 'PageAPIController');
 
     Route::resource('v1/contactus', 'ContactUsAPIController');
 
     Route::resource('v1/notifications', 'NotificationAPIController');
 
     Route::resource('v1/categories', 'CategoryAPIController');
+
+
 });
+
+Route::resource('v1/pages', 'PageAPIController');

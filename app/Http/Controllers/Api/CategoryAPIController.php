@@ -16,7 +16,6 @@ use Response;
  * Class CategoryController
  * @package App\Http\Controllers\Api
  */
-
 class CategoryAPIController extends AppBaseController
 {
     /** @var  CategoryRepository */
@@ -37,6 +36,21 @@ class CategoryAPIController extends AppBaseController
      *      tags={"Category"},
      *      description="Get all Categories",
      *      produces={"application/json"},
+     *     @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *     @SWG\Parameter(
+     *          name="locale",
+     *          description="Response Language",
+     *          type="string",
+     *          default="en",
+     *          in="query"
+     *      ),
      *      @SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
@@ -75,6 +89,9 @@ class CategoryAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        \App::setLocale($request->get('locale', 'en'));
+
+
         $this->categoryRepository->pushCriteria(new RequestCriteria($request));
         $this->categoryRepository->pushCriteria(new LimitOffsetCriteria($request));
         $categories = $this->categoryRepository->all();

@@ -16,7 +16,6 @@ use Response;
  * Class PageController
  * @package App\Http\Controllers\Api
  */
-
 class PageAPIController extends AppBaseController
 {
     /** @var  PageRepository */
@@ -75,6 +74,8 @@ class PageAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        App::setLocale($request->get('locale', 'en'));
+
         $this->pageRepository->pushCriteria(new RequestCriteria($request));
         $this->pageRepository->pushCriteria(new LimitOffsetCriteria($request));
         $pages = $this->pageRepository->all();
