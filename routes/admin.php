@@ -47,3 +47,9 @@ Route::get('statusChange/{id}', 'MenuController@statusChange');
 Route::post('updateChannelPosition', 'MenuController@update_channel_position')->name('channels');
 
 Route::resource('categories', 'CategoryController');
+
+Route::resource('news', 'NewsController');
+
+Route::resource('comments', 'CommentController');
+
+Route::resource('media', 'MediaController');

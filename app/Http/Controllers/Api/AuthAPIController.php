@@ -134,7 +134,8 @@ class AuthAPIController extends AppBaseController
                   });*/
 //            return $this->sendResponse(['user' => $userById, 'token' => $token], 'User Registered successfully.');
         } catch (\Exception $e) {
-            return $this->sendError('Internal Server Error', 500);
+            return $this->sendErrorWithData("Invalid Login Credentials", 403, $e);
+            //return $this->sendError('Internal Server Error', 500);
         }
     }
 

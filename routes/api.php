@@ -79,3 +79,10 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::resource('v1/pages', 'PageAPIController');
+
+
+Route::resource('admin/news', 'NewsAPIController');
+
+Route::resource('admin/comments', 'CommentAPIController');
+
+Route::resource('admin/media', 'MediaAPIController');
