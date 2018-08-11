@@ -13,7 +13,7 @@ use InfyOm\Generator\Common\BaseRepository;
  * @method User findWithoutFail($id, $columns = ['*'])
  * @method User find($id, $columns = ['*'])
  * @method User first($columns = ['*'])
-*/
+ */
 class UserRepository extends BaseRepository
 {
     /**
@@ -34,14 +34,22 @@ class UserRepository extends BaseRepository
         return User::class;
     }
 
-    public function attachRole($userId, $roleId){
+    public function attachRole($userId, $roleId)
+    {
         $user = $this->findWithoutFail($userId);
         $user->roles()->attach($roleId);
         $user->save();
     }
-    public function detachRole($userId, $roleId){
+
+    public function detachRole($userId, $roleId)
+    {
         $user = $this->findWithoutFail($userId);
         $user->roles()->detach($roleId);
         $user->save();
+    }
+
+    public function getUserByEmail($email)
+    {
+        return $this->model->whereEmail($email)->first();
     }
 }

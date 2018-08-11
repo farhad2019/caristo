@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use InfyOm\Generator\Utils\ResponseUtil;
 use Response;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 
 /**
  * @SWG\Swagger(

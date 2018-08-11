@@ -43,7 +43,7 @@ class RegistrationAPIRequest extends APIRequest
         $excep = new ValidationException($validator);
         $excep->errorBag($this->errorBag)->redirectTo($this->getRedirectUrl());
         $excep->status = 200;
-        $excep->response = Response::json(ResponseUtil::makeError("Validation Error", $excep->errors()));
+        $excep->response = Response::json(ResponseUtil::makeError("Validation Error", ['errors' => $excep->errors()]), 200);
         throw $excep;
     }
 }

@@ -7,14 +7,22 @@ use Illuminate\Support\Facades\Hash;
 /**
  * @SWG\Definition(
  *      definition="Register",
- *      required={"name", "email", "phone", "password", "password_confirmation", "device_token", "device_type"},
+ *      required={"name", "email", "phone", "address", "image", "password", "password_confirmation"},
  *      @SWG\Property(
  *          property="name",
- *          description="User Full Name",
+ *          description="User First Name",
+ *          type="string"
+ *      ),@SWG\Property(
+ *          property="address",
+ *          description="User address",
  *          type="string"
  *      ),@SWG\Property(
  *          property="phone",
  *          description="User Phone Name",
+ *          type="string"
+ *      ),@SWG\Property(
+ *          property="image",
+ *          description="User Image",
  *          type="string"
  *      ),@SWG\Property(
  *          property="email",

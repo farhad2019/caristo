@@ -93,17 +93,21 @@ class AuthAPIController extends AppBaseController
 
             $this->userDetailRepository->create($userDetails);
 
-            // check if device token exists
-            if ($this->uDevice->getByDeviceToken($request->device_token)) {
-                $this->uDevice->deleteByDeviceToken($request->device_token);
+            // check if device token exists in incomign  params
+            if (isset($request->device_token) && isset($request->device_token)) {
+                // check if device token exists
+                if ($this->uDevice->getByDeviceToken($request->device_token)) {
+                    $this->uDevice->deleteByDeviceToken($request->device_token);
+                }
+
+                $deviceData['user_id'] = $user->id;
+                $deviceData['device_token'] = $request->device_token;;
+                $deviceData['device_type'] = $request->device_type;
+                $deviceData['push_notification'] = isset($request->push_notification) ? $request->push_notification : 1;
+
+                $this->uDevice->create($deviceData);
+
             }
-
-            $deviceData['user_id'] = $user->id;
-            $deviceData['device_token'] = $request->device_token;;
-            $deviceData['device_type'] = $request->device_type;
-            $deviceData['push_notification'] = isset($request->push_notification) ? $request->push_notification : 1;
-
-            $this->uDevice->create($deviceData);
 
             $user->roles()->attach([3]);
             $user->save();
@@ -134,8 +138,8 @@ class AuthAPIController extends AppBaseController
                   });*/
 //            return $this->sendResponse(['user' => $userById, 'token' => $token], 'User Registered successfully.');
         } catch (\Exception $e) {
-            return $this->sendErrorWithData("Invalid Login Credentials", 403, $e);
-            //return $this->sendError('Internal Server Error', 500);
+            //return $this->sendErrorWithData("Invalid Login Credentials", 403, $e);
+            return $this->sendError('Internal Server Error', 500);
         }
     }
 
