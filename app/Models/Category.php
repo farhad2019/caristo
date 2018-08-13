@@ -118,11 +118,9 @@ class Category extends Model
         return $this->hasMany(\App\Models\ItemVariant::class, 'item_id', 'id');
     }
 
-    /*
     public function Media()
     {
         return $this->morphMany(MediaFi::class, 'item_id', 'id');
     }
-    */
 
 }

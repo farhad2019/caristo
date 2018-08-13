@@ -155,6 +155,14 @@ class CategoryAPIController extends AppBaseController
      *      tags={"Category"},
      *      description="Get Category",
      *      produces={"application/json"},
+     *     @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Parameter(
      *          name="id",
      *          description="id of Category",

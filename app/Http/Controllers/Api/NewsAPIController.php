@@ -16,7 +16,6 @@ use Response;
  * Class NewsController
  * @package App\Http\Controllers\Api
  */
-
 class NewsAPIController extends AppBaseController
 {
     /** @var  NewsRepository */
@@ -37,6 +36,14 @@ class NewsAPIController extends AppBaseController
      *      tags={"News"},
      *      description="Get all News",
      *      produces={"application/json"},
+     *     @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
