@@ -75,6 +75,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('v1/categories', 'CategoryAPIController');
 
+    Route::resource('v1/news', 'NewsAPIController');
+
 
 });
 

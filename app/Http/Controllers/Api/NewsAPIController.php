@@ -36,7 +36,7 @@ class NewsAPIController extends AppBaseController
      *      tags={"News"},
      *      description="Get all News",
      *      produces={"application/json"},
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -82,6 +82,8 @@ class NewsAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        \App::setLocale($request->get('locale', 'en'));
+
         $this->newsRepository->pushCriteria(new RequestCriteria($request));
         $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
         $news = $this->newsRepository->all();
