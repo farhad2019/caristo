@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Dimsav\Translatable\Translatable;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -62,9 +63,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class News extends Model
 {
     use SoftDeletes;
+    use Translatable;
 
-    public $table = 'posts';
-    
+    public $table = 'news';
+
+    public $translatedAttributes = ['headline', 'description'];
 
     protected $dates = ['deleted_at'];
 
@@ -81,7 +84,7 @@ class News extends Model
      * @var array
      */
     protected $casts = [
-        
+
     ];
 
     /**
@@ -89,7 +92,7 @@ class News extends Model
      *
      * @var array
      */
-     protected $with = [];
+    protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
@@ -103,7 +106,19 @@ class News extends Model
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'category_id',
+        'user_id',
+        'views_count',
+        'favorite_count',
+        'like_id',
+        'comments_count',
+        'is_featured',
+        'created_at',
+        'updated_at',
+//        'deleted_at'
+    ];
 
     /**
      * Validation create rules
@@ -111,7 +126,7 @@ class News extends Model
      * @var array
      */
     public static $rules = [
-        'id' => 'required',
+        'id'          => 'required',
         'category_id' => 'required',
         'is_featured' => 'required'
     ];
@@ -122,7 +137,7 @@ class News extends Model
      * @var array
      */
     public static $update_rules = [
-        'id' => 'required',
+        'id'          => 'required',
         'category_id' => 'required',
         'is_featured' => 'required'
     ];
@@ -133,10 +148,19 @@ class News extends Model
      * @var array
      */
     public static $api_rules = [
-        'id' => 'required',
+        'id'          => 'required',
         'category_id' => 'required',
         'is_featured' => 'required'
     ];
 
-    
+    public function Variants()
+    {
+        return $this->hasMany(\App\Models\ItemVariant::class, 'item_id', 'id');
+    }
+
+    public function Media()
+    {
+        return $this->morphMany(MediaFi::class, 'item_id', 'id');
+    }
+
 }

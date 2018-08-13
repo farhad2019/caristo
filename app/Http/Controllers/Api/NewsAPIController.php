@@ -44,6 +44,19 @@ class NewsAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
+     *     @SWG\Parameter(
+     *          name="locale",
+     *          description="Response Language",
+     *          type="string",
+     *          default="en",
+     *          in="query"
+     *      ),
+     *     @SWG\Parameter(
+     *          name="category_id",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
      *      @SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
@@ -84,9 +97,19 @@ class NewsAPIController extends AppBaseController
     {
         \App::setLocale($request->get('locale', 'en'));
 
+        $input = $request->all();
+
         $this->newsRepository->pushCriteria(new RequestCriteria($request));
         $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $news = $this->newsRepository->all();
+
+        extract($input);
+        if (isset($category_id)) {
+            $news = $this->newsRepository->getCategory($category_id);
+        } else {
+            $news = $this->newsRepository->all();
+        }
+
+
 
         return $this->sendResponse($news->toArray(), 'News retrieved successfully');
     }

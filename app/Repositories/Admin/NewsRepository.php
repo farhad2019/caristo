@@ -36,4 +36,9 @@ class NewsRepository extends BaseRepository
     {
         return News::class;
     }
+
+    public function getCategory($catId) {
+       return News::where('category_id', $catId)->get();
+    }
+
 }

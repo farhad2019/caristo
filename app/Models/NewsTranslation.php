@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  *
  * @property integer id
- * @property integer post_id
+ * @property integer news_id
  * @property string headline
  * @property string description
  * @property string source
@@ -26,12 +26,12 @@ class NewsTranslation extends Model
 {
     use SoftDeletes;
 
-    public $table = 'post_translations';
+    public $table = 'news_translations';
 
     protected $dates = ['deleted_at'];
 
     public $fillable = [
-        'post_id',
+        'news_id',
         'headline',
         'description',
         'source',
@@ -93,7 +93,7 @@ class NewsTranslation extends Model
      * @var array
      */
     public static $update_rules = [
-        'post_id'     => 'required',
+        'news_id'     => 'required',
         'locale'      => 'required',
         'headline'    => 'required',
         'name'        => 'required',
