@@ -39,15 +39,17 @@ CREATE TABLE `category` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `slug` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT '',
   `user_id` int(11) unsigned DEFAULT NULL,
+  `parent_id` int(11) unsigned DEFAULT '0',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`id`),
+  KEY `parent_id` (`parent_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `category` */
 
-insert  into `category`(`id`,`slug`,`user_id`,`created_at`,`updated_at`,`deleted_at`) values (1,'test category',1,'2018-08-09 17:10:29','2018-08-09 17:10:29',NULL);
+insert  into `category`(`id`,`slug`,`user_id`,`parent_id`,`created_at`,`updated_at`,`deleted_at`) values (1,'test category',1,0,'2018-08-09 17:10:29','2018-08-09 17:10:29',NULL),(2,'child test',1,1,'2018-08-14 11:38:22','2018-08-14 11:38:22',NULL);
 
 /*Table structure for table `category_translations` */
 
@@ -64,11 +66,11 @@ CREATE TABLE `category_translations` (
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`),
   CONSTRAINT `category_translations_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `category_translations` */
 
-insert  into `category_translations`(`id`,`category_id`,`name`,`locale`,`cretaed_at`,`updated_at`,`deleted_at`) values (1,1,'test','en','2018-08-09 17:34:59','2018-08-09 17:34:59',NULL),(2,1,'ٹھوٹ','ar','2018-08-09 17:35:19','2018-08-09 17:35:19',NULL);
+insert  into `category_translations`(`id`,`category_id`,`name`,`locale`,`cretaed_at`,`updated_at`,`deleted_at`) values (1,1,'test','en','2018-08-09 17:34:59','2018-08-09 17:34:59',NULL),(2,1,'ٹھوٹ','ar','2018-08-09 17:35:19','2018-08-09 17:35:19',NULL),(3,2,'child test','en','2018-08-14 11:38:36','2018-08-14 11:38:36',NULL);
 
 /*Table structure for table `comments` */
 
@@ -78,21 +80,22 @@ CREATE TABLE `comments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `comment_text` text COLLATE utf8mb4_unicode_ci,
   `parent_id` int(11) unsigned DEFAULT NULL,
-  `post_id` int(11) unsigned DEFAULT NULL,
+  `news_id` int(11) unsigned DEFAULT NULL,
   `user_id` int(11) unsigned DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `comments_ibfk_1` (`post_id`),
+  KEY `comments_ibfk_1` (`news_id`),
   KEY `comments_ibfk_2` (`user_id`),
   KEY `parent_id` (`parent_id`),
-  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `news` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `comments_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `comments` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`news_id`) REFERENCES `news` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `comments` */
+
+insert  into `comments`(`id`,`comment_text`,`parent_id`,`news_id`,`user_id`,`created_at`,`updated_at`,`deleted_at`) values (1,'test',0,4,1,NULL,NULL,NULL);
 
 /*Table structure for table `locales` */
 
@@ -362,7 +365,7 @@ CREATE TABLE `password_resets` (
 
 /*Data for the table `password_resets` */
 
-insert  into `password_resets`(`email`,`code`,`token`,`created_at`) values ('testuser123@gmail.com','7684','','2018-08-14 05:50:55');
+insert  into `password_resets`(`email`,`code`,`token`,`created_at`) values ('string@string.com','5380','','2018-08-14 07:21:00'),('testuser123@gmail.com','8936','','2018-08-14 07:48:18'),('cc00@mailinator.com','9066','','2018-08-14 08:26:34');
 
 /*Table structure for table `permission_role` */
 
@@ -402,76 +405,6 @@ CREATE TABLE `permissions` (
 
 insert  into `permissions`(`id`,`name`,`display_name`,`is_protected`,`description`,`created_at`,`updated_at`,`deleted_at`) values (1,'adminpanel','Admin Panel',1,'Admin Panel','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(2,'dashboard','Dashboard',1,'Dashboard','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(3,'permissions.index','List Permissions',1,'List Permissions','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(4,'permissions.create','Create Permission',1,'Create Permission','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(5,'permissions.show','View Permission',1,'View Permission','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(6,'permissions.edit','Edit Permission',1,'Edit Permission','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(7,'permissions.destroy','Delete Permission',1,'Delete Permission','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(8,'roles.index','List Roles',1,'List Roles','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(9,'roles.create','Create Role',1,'Create Role','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(10,'roles.show','View Role',1,'View Role','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(11,'roles.edit','Edit Role',1,'Edit Role','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(12,'roles.destroy','Delete Role',1,'Delete Role','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(13,'users.index','List Roles',1,'List Roles','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(14,'users.create','Create Users',1,'Create Users','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(15,'users.show','View User',1,'View User','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(16,'users.edit','Edit User',1,'Edit User','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(17,'users.destroy','Delete User',1,'Delete User','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(18,'modules.index','List Modules',1,'List Modules','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(19,'modules.create','Create Module',1,'Create Module','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(20,'modules.show','View Module',1,'View Module','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(21,'modules.edit','Edit Module',1,'Edit Module','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(22,'modules.destroy','Delete Module',1,'Delete Module','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(23,'languages.index','List Languages',1,'List Languages','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(24,'languages.create','Create Languages',1,'Create Languages','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(25,'languages.show','View Languages',1,'View Languages','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(26,'languages.edit','Edit Languages',1,'Edit Languages','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(27,'languages.destroy','Delete Languages',1,'Delete Languages','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(28,'pages.index','List Pages',1,'List Pages','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(29,'pages.create','Create Pages',1,'Create Pages','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(30,'pages.show','View Pages',1,'View Pages','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(31,'pages.edit','Edit Pages',1,'Edit Pages','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(32,'pages.destroy','Delete Pages',1,'Delete Pages','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(33,'contactus.index','List Contact Us',1,'List Contact Us Record','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(34,'contactus.create','Create Contact Us',1,'Create Contact Us Record','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(35,'contactus.show','View Contact Us',1,'View Contact Us Record','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(36,'contactus.edit','Edit Contact Us',1,'Edit Contact Us Record','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(37,'contactus.destroy','Delete Contact Us',1,'Delete Contact Us Record','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(38,'notifications.index','List Notification',1,'List Notification','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(39,'notifications.create','Create Notification',1,'Create Notification','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(40,'notifications.show','View Notification',1,'View Notification','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(41,'notifications.edit','Edit Notification',1,'Edit Notification','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(42,'notifications.destroy','Delete Notification',1,'Delete Notification','2018-08-03 09:31:42','2018-08-03 09:31:42',NULL),(53,'news.index','News',0,'Index news',NULL,NULL,NULL),(54,'news.create','News',0,'Create news',NULL,NULL,NULL),(55,'news.show','News',0,'Show news',NULL,NULL,NULL),(56,'news.edit','News',0,'Edit news',NULL,NULL,NULL),(57,'news.destroy','News',0,'Destroy news',NULL,NULL,NULL),(58,'comments.index','Comment',0,'Index comments',NULL,NULL,NULL),(59,'comments.create','Comment',0,'Create comments',NULL,NULL,NULL),(60,'comments.show','Comment',0,'Show comments',NULL,NULL,NULL),(61,'comments.edit','Comment',0,'Edit comments',NULL,NULL,NULL),(62,'comments.destroy','Comment',0,'Destroy comments',NULL,NULL,NULL),(63,'media.index','Media',0,'Index media',NULL,NULL,NULL),(64,'media.create','Media',0,'Create media',NULL,NULL,NULL),(65,'media.show','Media',0,'Show media',NULL,NULL,NULL),(66,'media.edit','Media',0,'Edit media',NULL,NULL,NULL),(67,'media.destroy','Media',0,'Destroy media',NULL,NULL,NULL);
 
-/*Table structure for table `post_interactions` */
-
-DROP TABLE IF EXISTS `post_interactions`;
-
-CREATE TABLE `post_interactions` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned DEFAULT NULL,
-  `post_id` int(11) unsigned DEFAULT NULL,
-  `type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT 'it could be "like", "favorite" or "view"',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `post_id` (`post_id`),
-  CONSTRAINT `post_interactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `post_interactions_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `post_interactions` */
-
-/*Table structure for table `post_translations` */
-
-DROP TABLE IF EXISTS `post_translations`;
-
-CREATE TABLE `post_translations` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `post_id` int(11) unsigned DEFAULT NULL,
-  `headline` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT '',
-  `description` longblob,
-  `source` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '',
-  `locale` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) DEFAULT '1',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `post_id` (`post_id`),
-  CONSTRAINT `post_translations_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `post_translations` */
-
-/*Table structure for table `posts` */
-
-DROP TABLE IF EXISTS `posts`;
-
-CREATE TABLE `posts` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `category_id` int(11) unsigned DEFAULT NULL,
-  `user_id` int(11) unsigned DEFAULT NULL,
-  `views_count` int(11) DEFAULT NULL,
-  `favorite_count` int(11) DEFAULT NULL,
-  `like_count` int(11) DEFAULT NULL,
-  `comments_count` int(11) DEFAULT NULL,
-  `is_featured` int(5) DEFAULT '0',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `category_id` (`category_id`),
-  CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
-/*Data for the table `posts` */
-
-insert  into `posts`(`id`,`category_id`,`user_id`,`views_count`,`favorite_count`,`like_count`,`comments_count`,`is_featured`,`created_at`,`updated_at`,`deleted_at`) values (4,1,1,5,5,5,5,0,'2018-08-13 14:49:08','2018-08-13 14:49:08',NULL),(5,1,1,5,5,5,5,0,'2018-08-13 14:49:12','2018-08-13 14:49:12',NULL);
-
 /*Table structure for table `role_user` */
 
 DROP TABLE IF EXISTS `role_user`;
@@ -487,7 +420,7 @@ CREATE TABLE `role_user` (
 
 /*Data for the table `role_user` */
 
-insert  into `role_user`(`user_id`,`role_id`) values (1,1),(2,2),(3,3),(4,3),(5,3),(6,3),(8,3),(9,3),(10,3),(11,3),(12,3),(13,3),(14,3),(15,3),(16,3);
+insert  into `role_user`(`user_id`,`role_id`) values (1,1),(2,2),(3,3),(4,3),(5,3),(6,3),(8,3),(9,3),(10,3),(11,3),(12,3),(13,3),(14,3),(15,3),(16,3),(17,3),(18,3),(19,3),(20,3);
 
 /*Table structure for table `roles` */
 
@@ -529,11 +462,11 @@ CREATE TABLE `user_details` (
   PRIMARY KEY (`id`),
   KEY `user_details_user_id_foreign` (`user_id`),
   CONSTRAINT `user_details_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `user_details` */
 
-insert  into `user_details`(`id`,`user_id`,`first_name`,`last_name`,`phone`,`address`,`image`,`email_updates`,`created_at`,`updated_at`,`deleted_at`) values (1,3,'Test',NULL,'78787',NULL,NULL,1,'2018-08-09 08:33:05','2018-08-09 08:33:05',NULL),(2,4,'Test',NULL,'78787',NULL,NULL,1,'2018-08-09 08:35:02','2018-08-09 08:35:02',NULL),(3,5,'String',NULL,'string','string',NULL,1,'2018-08-09 10:21:12','2018-08-09 10:21:12',NULL),(4,6,'String',NULL,'string','string',NULL,1,'2018-08-09 10:32:44','2018-08-09 10:32:44',NULL),(5,8,'Test',NULL,'78787',NULL,NULL,1,'2018-08-09 10:53:23','2018-08-09 10:53:23',NULL),(6,9,'String',NULL,'string','string',NULL,1,'2018-08-09 10:54:54','2018-08-09 10:54:54',NULL),(7,10,'String',NULL,'string','string',NULL,1,'2018-08-09 11:07:18','2018-08-09 11:07:18',NULL),(8,11,'String',NULL,'string','string',NULL,1,'2018-08-09 11:08:02','2018-08-09 11:08:02',NULL),(9,12,'Testuser123',NULL,'56565656',NULL,NULL,1,'2018-08-09 12:09:35','2018-08-09 12:09:35',NULL),(10,13,'Abc',NULL,'+971-4567897','Abc',NULL,1,'2018-08-10 06:49:38','2018-08-10 06:49:38',NULL),(11,14,'Abc',NULL,'+971-4567897','Abc',NULL,1,'2018-08-10 07:21:01','2018-08-10 07:21:01',NULL),(12,15,'John',NULL,'123456789',NULL,NULL,1,'2018-08-10 09:21:30','2018-08-10 09:21:30',NULL),(13,16,'Cc00',NULL,'string','cc00',NULL,1,'2018-08-10 10:04:01','2018-08-10 10:04:01',NULL);
+insert  into `user_details`(`id`,`user_id`,`first_name`,`last_name`,`phone`,`address`,`image`,`email_updates`,`created_at`,`updated_at`,`deleted_at`) values (1,3,'Test',NULL,'78787',NULL,NULL,1,'2018-08-09 08:33:05','2018-08-09 08:33:05',NULL),(2,4,'Test',NULL,'78787',NULL,NULL,1,'2018-08-09 08:35:02','2018-08-09 08:35:02',NULL),(3,5,'String',NULL,'string','string',NULL,1,'2018-08-09 10:21:12','2018-08-09 10:21:12',NULL),(4,6,'String',NULL,'string','string',NULL,1,'2018-08-09 10:32:44','2018-08-09 10:32:44',NULL),(5,8,'Test',NULL,'78787',NULL,NULL,1,'2018-08-09 10:53:23','2018-08-09 10:53:23',NULL),(6,9,'String',NULL,'string','string',NULL,1,'2018-08-09 10:54:54','2018-08-09 10:54:54',NULL),(7,10,'String',NULL,'string','string',NULL,1,'2018-08-09 11:07:18','2018-08-09 11:07:18',NULL),(8,11,'String',NULL,'string','string',NULL,1,'2018-08-09 11:08:02','2018-08-09 11:08:02',NULL),(9,12,'Testuser123',NULL,'56565656',NULL,NULL,1,'2018-08-09 12:09:35','2018-08-09 12:09:35',NULL),(10,13,'Abc',NULL,'+971-4567897','Abc',NULL,1,'2018-08-10 06:49:38','2018-08-10 06:49:38',NULL),(11,14,'Abc',NULL,'+971-4567897','Abc',NULL,1,'2018-08-10 07:21:01','2018-08-10 07:21:01',NULL),(12,15,'John',NULL,'123456789',NULL,NULL,1,'2018-08-10 09:21:30','2018-08-10 09:21:30',NULL),(13,16,'Cc00',NULL,'string','cc00',NULL,1,'2018-08-10 10:04:01','2018-08-10 10:04:01',NULL),(14,17,'Sasa',NULL,'123456789','sasa',NULL,1,'2018-08-14 06:50:37','2018-08-14 06:50:37',NULL),(15,18,'String',NULL,'string','string',NULL,1,'2018-08-14 07:17:41','2018-08-14 07:17:41',NULL),(16,19,'Sasa',NULL,'123456789','sasa',NULL,1,'2018-08-14 07:26:10','2018-08-14 07:26:10',NULL),(17,20,'CC 00',NULL,NULL,'cc00',NULL,1,'2018-08-14 07:48:56','2018-08-14 07:48:56',NULL);
 
 /*Table structure for table `user_devices` */
 
@@ -550,11 +483,11 @@ CREATE TABLE `user_devices` (
   PRIMARY KEY (`id`),
   KEY `user_devices_user_id_foreign` (`user_id`),
   CONSTRAINT `user_devices_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `user_devices` */
 
-insert  into `user_devices`(`id`,`user_id`,`device_type`,`device_token`,`created_at`,`updated_at`,`deleted_at`) values (1,3,'test123','ios','2018-08-09 08:33:05','2018-08-09 08:35:02','2018-08-09 08:35:02'),(2,4,'test123','ios','2018-08-09 08:35:02','2018-08-09 10:53:24','2018-08-09 10:53:24'),(3,5,'android','xyz123','2018-08-09 10:21:12','2018-08-09 10:32:44','2018-08-09 10:32:44'),(4,6,'android','xyz123','2018-08-09 10:32:44','2018-08-09 11:07:18','2018-08-09 11:07:18'),(5,8,'test123','ios','2018-08-09 10:53:24','2018-08-09 10:53:24',NULL),(6,9,'string','string','2018-08-09 10:54:54','2018-08-09 10:54:54',NULL),(7,10,'android','xyz123','2018-08-09 11:07:18','2018-08-09 11:08:02','2018-08-09 11:08:02'),(8,11,'android','xyz123','2018-08-09 11:08:02','2018-08-10 10:04:01','2018-08-10 10:04:01'),(9,12,'android','123','2018-08-09 12:09:35','2018-08-09 12:09:35',NULL),(10,13,'android','xyz','2018-08-10 06:49:38','2018-08-10 07:21:01','2018-08-10 07:21:01'),(11,14,'android','xyz','2018-08-10 07:21:01','2018-08-10 07:21:01',NULL),(12,15,'ios','sasasasasassasasas','2018-08-10 09:21:30','2018-08-10 09:21:30',NULL),(13,16,'android','xyz123','2018-08-10 10:04:01','2018-08-10 10:04:01',NULL);
+insert  into `user_devices`(`id`,`user_id`,`device_type`,`device_token`,`created_at`,`updated_at`,`deleted_at`) values (1,3,'test123','ios','2018-08-09 08:33:05','2018-08-09 08:35:02','2018-08-09 08:35:02'),(2,4,'test123','ios','2018-08-09 08:35:02','2018-08-09 10:53:24','2018-08-09 10:53:24'),(3,5,'android','xyz123','2018-08-09 10:21:12','2018-08-09 10:32:44','2018-08-09 10:32:44'),(4,6,'android','xyz123','2018-08-09 10:32:44','2018-08-09 11:07:18','2018-08-09 11:07:18'),(5,8,'test123','ios','2018-08-09 10:53:24','2018-08-09 10:53:24',NULL),(6,9,'string','string','2018-08-09 10:54:54','2018-08-14 07:17:41','2018-08-14 07:17:41'),(7,10,'android','xyz123','2018-08-09 11:07:18','2018-08-09 11:08:02','2018-08-09 11:08:02'),(8,11,'android','xyz123','2018-08-09 11:08:02','2018-08-10 10:04:01','2018-08-10 10:04:01'),(9,12,'android','123','2018-08-09 12:09:35','2018-08-09 12:09:35',NULL),(10,13,'android','xyz','2018-08-10 06:49:38','2018-08-10 07:21:01','2018-08-10 07:21:01'),(11,14,'android','xyz','2018-08-10 07:21:01','2018-08-10 07:21:01',NULL),(12,15,'ios','sasasasasassasasas','2018-08-10 09:21:30','2018-08-10 09:21:30',NULL),(13,16,'android','xyz123','2018-08-10 10:04:01','2018-08-14 07:48:56','2018-08-14 07:48:56'),(14,17,'ios','123456789','2018-08-14 06:50:37','2018-08-14 07:26:10','2018-08-14 07:26:10'),(15,18,'string','string','2018-08-14 07:17:41','2018-08-14 07:17:41',NULL),(16,19,'ios','123456789','2018-08-14 07:26:10','2018-08-14 07:26:10',NULL),(17,20,'android','xyz123','2018-08-14 07:48:56','2018-08-14 07:48:56',NULL);
 
 /*Table structure for table `users` */
 
@@ -571,11 +504,11 @@ CREATE TABLE `users` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`name`,`email`,`password`,`remember_token`,`created_at`,`updated_at`,`deleted_at`) values (1,'Super Admin','superadmin@ingic.com','$2y$10$nE83rMTJ6iFRu36EOYEgr.JrHmiN1y3.Rh7CaXC8AbCTzAUeGzcai',NULL,'2018-08-03 09:31:43','2018-08-03 09:31:43',NULL),(2,'Admin','admin@ingic.com','$2y$10$aodW5Pcl4JHjNl/VecDOvOrBI5EmgcyJKtz8D/aymHbE3ilUXQEfy',NULL,'2018-08-03 09:31:43','2018-08-03 09:31:43',NULL),(3,'Test','test@gmail.com','$2y$10$v/vzUEoLsPBE0sDbmAacKuJYNZ0idKNgr7fjxqUm44pRxql1UxVsW',NULL,'2018-08-09 08:33:05','2018-08-09 08:33:05',NULL),(4,'Test','test24@gmail.com','$2y$10$6QCYPgidFWA0d/RHJxj8suOY3SA58IvdviEslo3K78y788OpK62f2',NULL,'2018-08-09 08:35:02','2018-08-09 08:35:02',NULL),(5,'String','x@x.com','$2y$10$g4XKoLC1GjJgvlwLJDwfOuM9ru9VMvt7vkl9C8kxwXLHKtsd5dt.O',NULL,'2018-08-09 10:21:12','2018-08-09 10:21:12',NULL),(6,'String','xy@x.com','$2y$10$NLdYvAqn9Veb30hqEakrwOHMJnvsF0owl5bto3EU.fXyepHxRLIQe',NULL,'2018-08-09 10:32:44','2018-08-09 10:32:44',NULL),(7,'String','test12@test.com','$2y$10$HDLBnOrnz.IpUStFNCjj0uDk9FRYwZRbf/mJeTAxT90OZkDoP.oe2',NULL,'2018-08-09 10:52:27','2018-08-09 10:52:27',NULL),(8,'Test','test122@test.com','$2y$10$MCsYBfaoHwEY.ZMFuadkbeRAHH37PlrrVgbc7hS1CKaK2bHx6uMbe',NULL,'2018-08-09 10:53:23','2018-08-09 10:53:23',NULL),(9,'String','test@test.com','$2y$10$w3ofHqRj9CMpv8y4jOWlK.WBanWyn5HnWSgW1mgdUK4m4rwhhq2Ee',NULL,'2018-08-09 10:54:54','2018-08-09 10:54:54',NULL),(10,'String','a@mailinator.com','$2y$10$DuQf8yAujub5.CwraypoeuqNhISNk8RFWVPXj6MOjjpsN9ZHp9L66',NULL,'2018-08-09 11:07:18','2018-08-09 11:07:18',NULL),(11,'String','b@mailinator.com','$2y$10$0s/LvvKM6vcSUwdJBvXPruj3eeEFcbEP80fuaPvO/EqKKFjgpkzY.',NULL,'2018-08-09 11:08:02','2018-08-09 11:08:02',NULL),(12,'Testuser123','testuser123@gmail.com','$2y$10$UA9nTuOroiKwYbh5h0H8RuL.MmMuqGiyv3zFUjhyr5yYzVVWoaNka',NULL,'2018-08-09 12:09:35','2018-08-14 04:40:08',NULL),(13,'Abc','a@p.com','$2y$10$hyZir5vmkiKJy9D6b17XSe6Si8y/du2OGJB5XpZ5X7zoaoHvh0X92',NULL,'2018-08-10 06:49:38','2018-08-10 06:49:38',NULL),(14,'Abc','c@p.com','$2y$10$GG3VpVkSV2LZJcxmQF/5zu75Zv0QS3cqPuNmP9MMi.qSoCJ47HHx2',NULL,'2018-08-10 07:21:01','2018-08-10 07:21:01',NULL),(15,'John','john@gmail.com','$2y$10$HyKXP2AnWmWFDvFMLHdMa.UMYJEvu8l/5qH80Xu7XeECoV.oJfCPG',NULL,'2018-08-10 09:21:30','2018-08-10 09:21:30',NULL),(16,'Cc00','cc@mailinator.com','$2y$10$sWTzClxPazhTsZfJ3a/yr.TSN5dtQ4L4q9UQ21QrNRyf3yeXMHqYW',NULL,'2018-08-10 10:04:01','2018-08-10 10:04:01',NULL);
+insert  into `users`(`id`,`name`,`email`,`password`,`remember_token`,`created_at`,`updated_at`,`deleted_at`) values (1,'Super Admin','superadmin@ingic.com','$2y$10$nE83rMTJ6iFRu36EOYEgr.JrHmiN1y3.Rh7CaXC8AbCTzAUeGzcai',NULL,'2018-08-03 09:31:43','2018-08-03 09:31:43',NULL),(2,'Admin','admin@ingic.com','$2y$10$aodW5Pcl4JHjNl/VecDOvOrBI5EmgcyJKtz8D/aymHbE3ilUXQEfy',NULL,'2018-08-03 09:31:43','2018-08-03 09:31:43',NULL),(3,'Test','test@gmail.com','$2y$10$v/vzUEoLsPBE0sDbmAacKuJYNZ0idKNgr7fjxqUm44pRxql1UxVsW',NULL,'2018-08-09 08:33:05','2018-08-09 08:33:05',NULL),(4,'Test','test24@gmail.com','$2y$10$6QCYPgidFWA0d/RHJxj8suOY3SA58IvdviEslo3K78y788OpK62f2',NULL,'2018-08-09 08:35:02','2018-08-09 08:35:02',NULL),(5,'String','x@x.com','$2y$10$g4XKoLC1GjJgvlwLJDwfOuM9ru9VMvt7vkl9C8kxwXLHKtsd5dt.O',NULL,'2018-08-09 10:21:12','2018-08-09 10:21:12',NULL),(6,'String','xy@x.com','$2y$10$NLdYvAqn9Veb30hqEakrwOHMJnvsF0owl5bto3EU.fXyepHxRLIQe',NULL,'2018-08-09 10:32:44','2018-08-09 10:32:44',NULL),(7,'String','test12@test.com','$2y$10$HDLBnOrnz.IpUStFNCjj0uDk9FRYwZRbf/mJeTAxT90OZkDoP.oe2',NULL,'2018-08-09 10:52:27','2018-08-09 10:52:27',NULL),(8,'Test','test122@test.com','$2y$10$MCsYBfaoHwEY.ZMFuadkbeRAHH37PlrrVgbc7hS1CKaK2bHx6uMbe',NULL,'2018-08-09 10:53:23','2018-08-09 10:53:23',NULL),(9,'String','test@test.com','$2y$10$w3ofHqRj9CMpv8y4jOWlK.WBanWyn5HnWSgW1mgdUK4m4rwhhq2Ee',NULL,'2018-08-09 10:54:54','2018-08-09 10:54:54',NULL),(10,'String','a@mailinator.com','$2y$10$DuQf8yAujub5.CwraypoeuqNhISNk8RFWVPXj6MOjjpsN9ZHp9L66',NULL,'2018-08-09 11:07:18','2018-08-09 11:07:18',NULL),(11,'String','b@mailinator.com','$2y$10$0s/LvvKM6vcSUwdJBvXPruj3eeEFcbEP80fuaPvO/EqKKFjgpkzY.',NULL,'2018-08-09 11:08:02','2018-08-09 11:08:02',NULL),(12,'Testuser123','testuser123@gmail.com','$2y$10$npI5ZkBH6xQFMP2poKZhoO1HJu2X5qnUvpQwd3MeNDwQoF9oJd3Tu',NULL,'2018-08-09 12:09:35','2018-08-14 07:01:52',NULL),(13,'Abc','a@p.com','$2y$10$hyZir5vmkiKJy9D6b17XSe6Si8y/du2OGJB5XpZ5X7zoaoHvh0X92',NULL,'2018-08-10 06:49:38','2018-08-10 06:49:38',NULL),(14,'Abc','c@p.com','$2y$10$GG3VpVkSV2LZJcxmQF/5zu75Zv0QS3cqPuNmP9MMi.qSoCJ47HHx2',NULL,'2018-08-10 07:21:01','2018-08-10 07:21:01',NULL),(15,'John','john@gmail.com','$2y$10$HyKXP2AnWmWFDvFMLHdMa.UMYJEvu8l/5qH80Xu7XeECoV.oJfCPG',NULL,'2018-08-10 09:21:30','2018-08-10 09:21:30',NULL),(16,'Cc00','cc@mailinator.com','$2y$10$sWTzClxPazhTsZfJ3a/yr.TSN5dtQ4L4q9UQ21QrNRyf3yeXMHqYW',NULL,'2018-08-10 10:04:01','2018-08-10 10:04:01',NULL),(17,'Sasa','123456789@gmail.com','$2y$10$sBjdfLIUhyG/80DMdrvKieA1S1sjL5tM.RKVZ3YwgvSLUDZR.8azi',NULL,'2018-08-14 06:50:37','2018-08-14 06:50:37',NULL),(18,'String','string@string.com','$2y$10$ynppAY5H1RSrYjO1Ti6Cve3TUfIcCQj3l/eMcaPxURS6ZrsJLDZrG',NULL,'2018-08-14 07:17:41','2018-08-14 07:17:41',NULL),(19,'Sasa','123456789A@gmail.com','$2y$10$kzI8iKUjIvUHrgN.91F97e2McmucWsMNE0YD6vzjA4sWwKiJVPRFC',NULL,'2018-08-14 07:26:10','2018-08-14 07:26:10',NULL),(20,'CC 00','cc00@mailinator.com','$2y$10$MIRfz1yNCgffpL3yHgM1JOcxmDStM3AF89T8NJCuJaoqEsMrb1raG',NULL,'2018-08-14 07:48:56','2018-08-14 07:50:17',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

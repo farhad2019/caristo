@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Dimsav\Translatable\Translatable;
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -60,7 +60,10 @@ class Category extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+//        'parentCategory',
+        'childCategory'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -83,6 +86,8 @@ class Category extends Model
 //        'slug',
         'created_at',
         'updated_at',
+//        'parentCategory',
+        'childCategory',
 //        'deleted_at'
     ];
 
@@ -113,14 +118,31 @@ class Category extends Model
         'slug' => 'required'
     ];
 
-    public function Variants()
-    {
-        return $this->hasMany(\App\Models\ItemVariant::class, 'item_id', 'id');
-    }
+//    public function Subcategories()
+//    {
+//        return $this->hasMany(\App\Models\Subcategories::class, 'item_id', 'id');
+//    }
+
 
     public function Media()
     {
-        return $this->morphMany(MediaFi::class, 'item_id', 'id');
+        return $this->morphMany(MediaFiles::class, 'item_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function childCategory()
+    {
+        return $this->hasMany(Category::class, 'parent_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parentCategory()
+    {
+        return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
 
 }

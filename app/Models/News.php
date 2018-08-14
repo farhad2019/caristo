@@ -67,7 +67,7 @@ class News extends Model
 
     public $table = 'news';
 
-    public $translatedAttributes = ['headline', 'description'];
+    public $translatedAttributes = ['headline', 'description', 'source'];
 
     protected $dates = ['deleted_at'];
 

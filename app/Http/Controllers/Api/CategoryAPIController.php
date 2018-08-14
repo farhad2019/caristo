@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Criteria\CategoryCriteria;
 use App\Http\Requests\Api\CreateCategoryAPIRequest;
 use App\Http\Requests\Api\UpdateCategoryAPIRequest;
 use App\Models\Category;
@@ -65,6 +66,14 @@ class CategoryAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="parent_id",
+     *          description="asda sd",
+     *          type="integer",
+     *          required=false,
+     *          default=0,
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
@@ -91,9 +100,9 @@ class CategoryAPIController extends AppBaseController
     {
         \App::setLocale($request->get('locale', 'en'));
 
-
         $this->categoryRepository->pushCriteria(new RequestCriteria($request));
         $this->categoryRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $this->categoryRepository->pushCriteria(new CategoryCriteria($request));
         $categories = $this->categoryRepository->all();
 
         return $this->sendResponse($categories->toArray(), 'Categories retrieved successfully');

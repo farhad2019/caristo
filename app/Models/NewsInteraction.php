@@ -7,18 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @SWG\Definition(
- *      definition="Comment",
- *      required={"user_id", "news_id", "comment_text"},
- *
+ *      definition="NewsInteraction",
+ *      required={"id", "user_id", "news_id", "type", "created_at", "updated_at", "deleted_at"},
  *      @SWG\Property(
- *          property="parent_id",
- *          description="parent_id",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
- *          property="news_id",
- *          description="news_id",
+ *          property="id",
+ *          description="id",
  *          type="integer",
  *          format="int32"
  *      ),
@@ -29,18 +22,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="comment_text",
- *          description="comment_text",
+ *          property="news_id",
+ *          description="news_id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="type",
+ *          description="type",
  *          type="string"
  *      )
  * )
  */
-class Comment extends Model
+class NewsInteraction extends Model
 {
     use SoftDeletes;
 
-    public $table = 'comments';
-
+    public $table = 'news_interactions';
+    
 
     protected $dates = ['deleted_at'];
 
@@ -49,8 +48,10 @@ class Comment extends Model
         'id',
         'user_id',
         'news_id',
-        'comment_text',
-        'created_at'
+        'type',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
     /**
@@ -59,7 +60,7 @@ class Comment extends Model
      * @var array
      */
     protected $casts = [
-        'comment_text' => 'string'
+        'type' => 'string'
     ];
 
     /**
@@ -67,7 +68,7 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $with = [];
+     protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
@@ -89,9 +90,13 @@ class Comment extends Model
      * @var array
      */
     public static $rules = [
-        'user_id'      => 'required',
-        'news_id'      => 'required',
-        'comment_text' => 'required',
+        'id' => 'required',
+        'user_id' => 'required',
+        'news_id' => 'required',
+        'type' => 'required',
+        'created_at' => 'required',
+        'updated_at' => 'required',
+        'deleted_at' => 'required'
     ];
 
     /**
@@ -100,10 +105,13 @@ class Comment extends Model
      * @var array
      */
     public static $update_rules = [
-        'id'           => 'required',
-        'user_id'      => 'required',
-        'comment_text' => 'required',
-        'created_at'   => 'required'
+        'id' => 'required',
+        'user_id' => 'required',
+        'news_id' => 'required',
+        'type' => 'required',
+        'created_at' => 'required',
+        'updated_at' => 'required',
+        'deleted_at' => 'required'
     ];
 
     /**
@@ -112,10 +120,14 @@ class Comment extends Model
      * @var array
      */
     public static $api_rules = [
-        'user_id'      => 'required',
-        'news_id'      => 'required',
-        'comment_text' => 'required'
+        'id' => 'required',
+        'user_id' => 'required',
+        'news_id' => 'required',
+        'type' => 'required',
+        'created_at' => 'required',
+        'updated_at' => 'required',
+        'deleted_at' => 'required'
     ];
 
-
+    
 }

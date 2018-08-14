@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Api\CreateNewsAPIRequest;
-use App\Http\Requests\Api\UpdateNewsAPIRequest;
-use App\Models\News;
-use App\Repositories\Admin\NewsRepository;
+use App\Http\Requests\Api\CreateNewsInteractionAPIRequest;
+use App\Http\Requests\Api\UpdateNewsInteractionAPIRequest;
+use App\Models\NewsInteraction;
+use App\Repositories\Admin\NewsInteractionRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
@@ -13,17 +13,18 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
 /**
- * Class NewsController
+ * Class NewsInteractionController
  * @package App\Http\Controllers\Api
  */
-class NewsAPIController extends AppBaseController
-{
-    /** @var  NewsRepository */
-    private $newsRepository;
 
-    public function __construct(NewsRepository $newsRepo)
+class NewsInteractionAPIController extends AppBaseController
+{
+    /** @var  NewsInteractionRepository */
+    private $newsInteractionRepository;
+
+    public function __construct(NewsInteractionRepository $newsInteractionRepo)
     {
-        $this->newsRepository = $newsRepo;
+        $this->newsInteractionRepository = $newsInteractionRepo;
     }
 
     /**
@@ -31,32 +32,11 @@ class NewsAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Get(
-     *      path="/news",
-     *      summary="Get a listing of the News.",
-     *      tags={"News"},
-     *      description="Get all News",
+     *      path="/newsInteractions",
+     *      summary="Get a listing of the NewsInteractions.",
+     *      tags={"NewsInteraction"},
+     *      description="Get all NewsInteractions",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
-     *          name="Authorization",
-     *          description="User Auth Token{ Bearer ABC123 }",
-     *          type="string",
-     *          required=true,
-     *          default="Bearer ABC123",
-     *          in="header"
-     *      ),
-     *     @SWG\Parameter(
-     *          name="locale",
-     *          description="Response Language",
-     *          type="string",
-     *          default="en",
-     *          in="query"
-     *      ),
-     *     @SWG\Parameter(
-     *          name="category_id",
-     *          type="integer",
-     *          required=false,
-     *          in="query"
-     *      ),
      *      @SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
@@ -83,7 +63,7 @@ class NewsAPIController extends AppBaseController
      *              @SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/News")
+     *                  @SWG\Items(ref="#/definitions/NewsInteraction")
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -95,41 +75,29 @@ class NewsAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        \App::setLocale($request->get('locale', 'en'));
+        $this->newsInteractionRepository->pushCriteria(new RequestCriteria($request));
+        $this->newsInteractionRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $newsInteractions = $this->newsInteractionRepository->all();
 
-        $input = $request->all();
-
-        $this->newsRepository->pushCriteria(new RequestCriteria($request));
-        $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
-
-        extract($input);
-        if (isset($category_id)) {
-            $news = $this->newsRepository->getCategoryWiseNews($category_id);
-        } else {
-            $news = $this->newsRepository->all();
-        }
-
-
-
-        return $this->sendResponse($news->toArray(), 'News retrieved successfully');
+        return $this->sendResponse($newsInteractions->toArray(), 'News Interactions retrieved successfully');
     }
 
     /**
-     * @param CreateNewsAPIRequest $request
+     * @param CreateNewsInteractionAPIRequest $request
      * @return Response
      *
      * @SWG\Post(
-     *      path="/news",
-     *      summary="Store a newly created News in storage",
-     *      tags={"News"},
-     *      description="Store News",
+     *      path="/newsInteractions",
+     *      summary="Store a newly created NewsInteraction in storage",
+     *      tags={"NewsInteraction"},
+     *      description="Store NewsInteraction",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
-     *          description="News that should be stored",
+     *          description="NewsInteraction that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/News")
+     *          @SWG\Schema(ref="#/definitions/NewsInteraction")
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -142,7 +110,7 @@ class NewsAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/News"
+     *                  ref="#/definitions/NewsInteraction"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -152,13 +120,13 @@ class NewsAPIController extends AppBaseController
      *      )
      * )
      */
-    public function store(CreateNewsAPIRequest $request)
+    public function store(CreateNewsInteractionAPIRequest $request)
     {
         $input = $request->all();
 
-        $news = $this->newsRepository->create($input);
+        $newsInteractions = $this->newsInteractionRepository->create($input);
 
-        return $this->sendResponse($news->toArray(), 'News saved successfully');
+        return $this->sendResponse($newsInteractions->toArray(), 'News Interaction saved successfully');
     }
 
     /**
@@ -166,14 +134,14 @@ class NewsAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Get(
-     *      path="/news/{id}",
-     *      summary="Display the specified News",
-     *      tags={"News"},
-     *      description="Get News",
+     *      path="/newsInteractions/{id}",
+     *      summary="Display the specified NewsInteraction",
+     *      tags={"NewsInteraction"},
+     *      description="Get NewsInteraction",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of News",
+     *          description="id of NewsInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -189,7 +157,7 @@ class NewsAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/News"
+     *                  ref="#/definitions/NewsInteraction"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -201,30 +169,30 @@ class NewsAPIController extends AppBaseController
      */
     public function show($id)
     {
-        /** @var News $news */
-        $news = $this->newsRepository->findWithoutFail($id);
+        /** @var NewsInteraction $newsInteraction */
+        $newsInteraction = $this->newsInteractionRepository->findWithoutFail($id);
 
-        if (empty($news)) {
-            return $this->sendError('News not found');
+        if (empty($newsInteraction)) {
+            return $this->sendError('News Interaction not found');
         }
 
-        return $this->sendResponse($news->toArray(), 'News retrieved successfully');
+        return $this->sendResponse($newsInteraction->toArray(), 'News Interaction retrieved successfully');
     }
 
     /**
      * @param int $id
-     * @param UpdateNewsAPIRequest $request
+     * @param UpdateNewsInteractionAPIRequest $request
      * @return Response
      *
      * @SWG\Put(
-     *      path="/news/{id}",
-     *      summary="Update the specified News in storage",
-     *      tags={"News"},
-     *      description="Update News",
+     *      path="/newsInteractions/{id}",
+     *      summary="Update the specified NewsInteraction in storage",
+     *      tags={"NewsInteraction"},
+     *      description="Update NewsInteraction",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of News",
+     *          description="id of NewsInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -232,9 +200,9 @@ class NewsAPIController extends AppBaseController
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
-     *          description="News that should be updated",
+     *          description="NewsInteraction that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/News")
+     *          @SWG\Schema(ref="#/definitions/NewsInteraction")
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -247,7 +215,7 @@ class NewsAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/News"
+     *                  ref="#/definitions/NewsInteraction"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -257,20 +225,20 @@ class NewsAPIController extends AppBaseController
      *      )
      * )
      */
-    public function update($id, UpdateNewsAPIRequest $request)
+    public function update($id, UpdateNewsInteractionAPIRequest $request)
     {
         $input = $request->all();
 
-        /** @var News $news */
-        $news = $this->newsRepository->findWithoutFail($id);
+        /** @var NewsInteraction $newsInteraction */
+        $newsInteraction = $this->newsInteractionRepository->findWithoutFail($id);
 
-        if (empty($news)) {
-            return $this->sendError('News not found');
+        if (empty($newsInteraction)) {
+            return $this->sendError('News Interaction not found');
         }
 
-        $news = $this->newsRepository->update($input, $id);
+        $newsInteraction = $this->newsInteractionRepository->update($input, $id);
 
-        return $this->sendResponse($news->toArray(), 'News updated successfully');
+        return $this->sendResponse($newsInteraction->toArray(), 'NewsInteraction updated successfully');
     }
 
     /**
@@ -278,14 +246,14 @@ class NewsAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Delete(
-     *      path="/news/{id}",
-     *      summary="Remove the specified News from storage",
-     *      tags={"News"},
-     *      description="Delete News",
+     *      path="/newsInteractions/{id}",
+     *      summary="Remove the specified NewsInteraction from storage",
+     *      tags={"NewsInteraction"},
+     *      description="Delete NewsInteraction",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of News",
+     *          description="id of NewsInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -313,15 +281,15 @@ class NewsAPIController extends AppBaseController
      */
     public function destroy($id)
     {
-        /** @var News $news */
-        $news = $this->newsRepository->findWithoutFail($id);
+        /** @var NewsInteraction $newsInteraction */
+        $newsInteraction = $this->newsInteractionRepository->findWithoutFail($id);
 
-        if (empty($news)) {
-            return $this->sendError('News not found');
+        if (empty($newsInteraction)) {
+            return $this->sendError('News Interaction not found');
         }
 
-        $news->delete();
+        $newsInteraction->delete();
 
-        return $this->sendResponse($id, 'News deleted successfully');
+        return $this->sendResponse($id, 'News Interaction deleted successfully');
     }
 }

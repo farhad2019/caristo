@@ -13,7 +13,7 @@ use InfyOm\Generator\Common\BaseRepository;
  * @method Comment findWithoutFail($id, $columns = ['*'])
  * @method Comment find($id, $columns = ['*'])
  * @method Comment first($columns = ['*'])
-*/
+ */
 class CommentRepository extends BaseRepository
 {
     /**
@@ -34,5 +34,10 @@ class CommentRepository extends BaseRepository
     public function model()
     {
         return Comment::class;
+    }
+
+    public function getNewsComments($newsId)
+    {
+        return Comment::where('news_id', $newsId)->get();
     }
 }

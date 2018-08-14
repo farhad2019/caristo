@@ -16,7 +16,6 @@ use Response;
  * Class CommentController
  * @package App\Http\Controllers\Api
  */
-
 class CommentAPIController extends AppBaseController
 {
     /** @var  CommentRepository */
@@ -37,6 +36,14 @@ class CommentAPIController extends AppBaseController
      *      tags={"Comment"},
      *      description="Get all Comments",
      *      produces={"application/json"},
+     *     @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
@@ -47,6 +54,12 @@ class CommentAPIController extends AppBaseController
      *     @SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *     @SWG\Parameter(
+     *          name="news_id",
      *          type="integer",
      *          required=false,
      *          in="query"
@@ -75,9 +88,17 @@ class CommentAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $input = $request->all();
         $this->commentRepository->pushCriteria(new RequestCriteria($request));
         $this->commentRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $comments = $this->commentRepository->all();
+
+        extract($input);
+        if (isset($news_id)) {
+            $comments = $this->commentRepository->getNewsComments($news_id);
+        } else {
+            $comments = $this->commentRepository->all();
+        }
+
 
         return $this->sendResponse($comments->toArray(), 'Comments retrieved successfully');
     }
@@ -92,6 +113,14 @@ class CommentAPIController extends AppBaseController
      *      tags={"Comment"},
      *      description="Store Comment",
      *      produces={"application/json"},
+     *     @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
@@ -104,6 +133,7 @@ class CommentAPIController extends AppBaseController
      *          description="successful operation",
      *          @SWG\Schema(
      *              type="object",
+     *
      *              @SWG\Property(
      *                  property="success",
      *                  type="boolean"
