@@ -345,6 +345,48 @@
                 }
             }
         },
+        "/social_login": {
+            "post": {
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Login With Social Account.",
+                "description": "Login With Social Account.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Login With Social Account.",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/SocialAccounts"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/SocialAccounts"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/categories": {
             "get": {
                 "tags": [
@@ -3093,7 +3135,7 @@
                     "format": "int32"
                 },
                 "type": {
-                    "description": "type",
+                    "description": "type, like, favorite",
                     "type": "string"
                 }
             }
@@ -3233,6 +3275,55 @@
                     "description": "id",
                     "type": "integer",
                     "format": "int32"
+                }
+            }
+        },
+        "SocialAccounts": {
+            "required": [
+                "platform",
+                "client_id",
+                "token",
+                "username",
+                "email",
+                "expires_at",
+                "image"
+            ],
+            "properties": {
+                "platform": {
+                    "description": "platform",
+                    "type": "string"
+                },
+                "client_id": {
+                    "description": "client_id",
+                    "type": "string"
+                },
+                "token": {
+                    "description": "token",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "username",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "email",
+                    "type": "string"
+                },
+                "image": {
+                    "description": "image",
+                    "type": "string"
+                },
+                "device_token": {
+                    "description": "User Device Token",
+                    "type": "string"
+                },
+                "device_type": {
+                    "description": "User Device Type",
+                    "type": "string"
+                },
+                "expires_at": {
+                    "description": "expires_at",
+                    "type": "string"
                 }
             }
         },
