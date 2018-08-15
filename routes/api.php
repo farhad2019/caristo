@@ -78,6 +78,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/news', 'NewsAPIController');
 
     Route::resource('v1/comments', 'CommentAPIController');
+    Route::resource('v1/newsInteractions', 'NewsInteractionAPIController');
 
 
 });

@@ -37,7 +37,7 @@ class Category extends Model
 
     public $table = 'category';
 
-    public $translatedAttributes = ['name'];
+    public $translatedAttributes = ['name', 'subtitle'];
 
     protected $dates = ['deleted_at'];
 

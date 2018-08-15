@@ -8,13 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @SWG\Definition(
  *      definition="NewsInteraction",
- *      required={"id", "user_id", "news_id", "type", "created_at", "updated_at", "deleted_at"},
- *      @SWG\Property(
- *          property="id",
- *          description="id",
- *          type="integer",
- *          format="int32"
- *      ),
+ *      required={"user_id", "news_id", "type"},
  *      @SWG\Property(
  *          property="user_id",
  *          description="user_id",
@@ -39,7 +33,7 @@ class NewsInteraction extends Model
     use SoftDeletes;
 
     public $table = 'news_interactions';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -49,9 +43,7 @@ class NewsInteraction extends Model
         'user_id',
         'news_id',
         'type',
-        'created_at',
-        'updated_at',
-        'deleted_at'
+        'created_at'
     ];
 
     /**
@@ -68,7 +60,7 @@ class NewsInteraction extends Model
      *
      * @var array
      */
-     protected $with = [];
+    protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
@@ -90,13 +82,9 @@ class NewsInteraction extends Model
      * @var array
      */
     public static $rules = [
-        'id' => 'required',
         'user_id' => 'required',
         'news_id' => 'required',
-        'type' => 'required',
-        'created_at' => 'required',
-        'updated_at' => 'required',
-        'deleted_at' => 'required'
+        'type'    => 'required'
     ];
 
     /**
@@ -105,10 +93,10 @@ class NewsInteraction extends Model
      * @var array
      */
     public static $update_rules = [
-        'id' => 'required',
-        'user_id' => 'required',
-        'news_id' => 'required',
-        'type' => 'required',
+        'id'         => 'required',
+        'user_id'    => 'required',
+        'news_id'    => 'required',
+        'type'       => 'required',
         'created_at' => 'required',
         'updated_at' => 'required',
         'deleted_at' => 'required'
@@ -120,14 +108,10 @@ class NewsInteraction extends Model
      * @var array
      */
     public static $api_rules = [
-        'id' => 'required',
         'user_id' => 'required',
         'news_id' => 'required',
-        'type' => 'required',
-        'created_at' => 'required',
-        'updated_at' => 'required',
-        'deleted_at' => 'required'
+        'type'    => 'required'
     ];
 
-    
+
 }

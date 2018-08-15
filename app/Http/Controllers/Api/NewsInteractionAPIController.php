@@ -16,7 +16,6 @@ use Response;
  * Class NewsInteractionController
  * @package App\Http\Controllers\Api
  */
-
 class NewsInteractionAPIController extends AppBaseController
 {
     /** @var  NewsInteractionRepository */
@@ -92,6 +91,14 @@ class NewsInteractionAPIController extends AppBaseController
      *      tags={"NewsInteraction"},
      *      description="Store NewsInteraction",
      *      produces={"application/json"},
+     *     @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
