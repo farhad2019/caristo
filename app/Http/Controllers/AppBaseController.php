@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use InfyOm\Generator\Utils\ResponseUtil;
 use Response;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\ValidationException;
 
 /**
  * @SWG\Swagger(
- *   basePath="/caristocrat/api/v1",
+ *   basePath="/api/v1",
  *   @SWG\Info(
  *     title="Laravel Generator APIs",
  *     version="1.0.0",

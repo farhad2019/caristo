@@ -17,17 +17,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @SWG\Definition(
  *      definition="SocialAccounts",
- *      required={"platform", "client_id", "token", "username", "email", "expires_at", "image"},
+ *      required={"platform", "client_id"},
  *      @SWG\Property(
  *          property="platform",
  *          description="platform",
- *          type="string",
- *          required=true
+ *          type="string"
  *      ), @SWG\Property(
  *          property="client_id",
  *          description="client_id",
- *          type="string",
- *          required=true
+ *          type="string"
  *      ), @SWG\Property(
  *          property="token",
  *          description="token",
@@ -51,8 +49,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      ),@SWG\Property(
  *          property="device_type",
  *          description="User Device Type",
- *          type="string",
- *          required=true
+ *          type="string"
  *      ), @SWG\Property(
  *          property="expires_at",
  *          description="expires_at",
