@@ -92,14 +92,20 @@ class News extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'media'
+    ];
 
     /**
      * The attributes that should be append to toArray.
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'is_liked',
+        'is_favorite',
+//        'is_favorite'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
@@ -117,6 +123,9 @@ class News extends Model
         'is_featured',
         'created_at',
         'updated_at',
+        'is_liked',
+        'is_favorite',
+        'media',
 //        'deleted_at'
     ];
 
@@ -160,7 +169,22 @@ class News extends Model
 
     public function Media()
     {
-        return $this->morphMany(MediaFi::class, 'item_id', 'id');
+        return $this->morphMany(Media::class, 'instance');
+    }
+
+    public function getMorphClass()
+    {
+        return 'news';
+    }
+
+    public function getIsLikedAttribute()
+    {
+        return 0;
+    }
+
+    public function getIsFavoriteAttribute()
+    {
+        return 0;
     }
 
 }

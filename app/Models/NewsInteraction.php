@@ -8,13 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @SWG\Definition(
  *      definition="NewsInteraction",
- *      required={"user_id", "news_id", "type"},
- *      @SWG\Property(
- *          property="user_id",
- *          description="user_id",
- *          type="integer",
- *          format="int32"
- *      ),
+ *      required={"news_id", "type"},
  *      @SWG\Property(
  *          property="news_id",
  *          description="news_id",
@@ -23,8 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      ),
  *      @SWG\Property(
  *          property="type",
- *          description="type, like, favorite",
- *          type="string"
+ *          description="type, 10=View, 20=like, 30=favorite",
+ *          type="integer"
  *      )
  * )
  */
@@ -102,13 +96,13 @@ class NewsInteraction extends Model
      * @var array
      */
     public static $update_rules = [
-        'id'         => 'required',
-        'user_id'    => 'required',
-        'news_id'    => 'required',
-        'type'       => 'required',
-        'created_at' => 'required',
-        'updated_at' => 'required',
-        'deleted_at' => 'required'
+        'id'      => 'required',
+//        'user_id'    => 'required',
+        'news_id' => 'required',
+        'type'    => 'required',
+//        'created_at' => 'required',
+//        'updated_at' => 'required',
+//        'deleted_at' => 'required'
     ];
 
     /**
@@ -117,9 +111,13 @@ class NewsInteraction extends Model
      * @var array
      */
     public static $api_rules = [
-        'user_id' => 'required',
+//        'user_id' => 'required',
         'news_id' => 'required',
-        'type'    => 'required'
+        'type'    => [
+            'required',
+            'integer',
+            'in:10,20,30',
+        ]
     ];
 
 

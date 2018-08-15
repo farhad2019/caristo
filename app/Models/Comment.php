@@ -67,7 +67,9 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'user'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -117,5 +119,10 @@ class Comment extends Model
         'comment_text' => 'required'
     ];
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

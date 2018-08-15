@@ -43,7 +43,7 @@ class Media extends Model
     use SoftDeletes;
 
     public $table = 'media_files';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -64,8 +64,8 @@ class Media extends Model
      */
     protected $casts = [
         'instance_type' => 'string',
-        'title' => 'string',
-        'filename' => 'string'
+        'title'         => 'string',
+        'filename'      => 'string'
     ];
 
     /**
@@ -73,21 +73,29 @@ class Media extends Model
      *
      * @var array
      */
-     protected $with = [];
+    protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'file_url'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'title',
+        'filename',
+        'file_url',
+        'created_at'
+    ];
 
     /**
      * Validation create rules
@@ -95,12 +103,12 @@ class Media extends Model
      * @var array
      */
     public static $rules = [
-        'id' => 'required',
-        'instance_id' => 'required',
+        'id'            => 'required',
+        'instance_id'   => 'required',
         'instance_type' => 'required',
-        'title' => 'required',
-        'filename' => 'required',
-        'created_at' => 'required'
+        'title'         => 'required',
+        'filename'      => 'required',
+        'created_at'    => 'required'
     ];
 
     /**
@@ -109,12 +117,12 @@ class Media extends Model
      * @var array
      */
     public static $update_rules = [
-        'id' => 'required',
-        'instance_id' => 'required',
+        'id'            => 'required',
+        'instance_id'   => 'required',
         'instance_type' => 'required',
-        'title' => 'required',
-        'filename' => 'required',
-        'created_at' => 'required'
+        'title'         => 'required',
+        'filename'      => 'required',
+        'created_at'    => 'required'
     ];
 
     /**
@@ -123,13 +131,16 @@ class Media extends Model
      * @var array
      */
     public static $api_rules = [
-        'id' => 'required',
-        'instance_id' => 'required',
+        'id'            => 'required',
+        'instance_id'   => 'required',
         'instance_type' => 'required',
-        'title' => 'required',
-        'filename' => 'required',
-        'created_at' => 'required'
+        'title'         => 'required',
+        'filename'      => 'required',
+        'created_at'    => 'required'
     ];
 
-    
+    public function getFileUrlAttribute()
+    {
+        return ($this->filename) ? route('api.resize', ['img' => $this->filename]) : route('api.resize', ['img' => 'users/user.png']);
+    }
 }

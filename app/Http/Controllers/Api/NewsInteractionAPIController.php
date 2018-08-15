@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Api\CreateNewsInteractionAPIRequest;
 use App\Http\Requests\Api\UpdateNewsInteractionAPIRequest;
 use App\Models\NewsInteraction;
 use App\Repositories\Admin\NewsInteractionRepository;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
@@ -131,7 +131,7 @@ class NewsInteractionAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $newsInteractions = $this->newsInteractionRepository->createOrUpdate($input);
+        $newsInteractions = $this->newsInteractionRepository->createRecord($input);
 
         return $this->sendResponse($newsInteractions->toArray(), 'News Interaction saved successfully');
     }

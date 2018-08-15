@@ -36,11 +36,20 @@ class NewsInteractionRepository extends BaseRepository
         return NewsInteraction::class;
     }
 
+    public function createRecord($data)
+    {
+        return $this->create([
+            'news_id' => $data['news_id'],
+            'user_id' => \Auth::id(),
+            'type'    => $data['type'],
+        ]);
+    }
+
     public function createOrUpdate($data)
     {
         return $this->updateOrCreate([
             'news_id' => $data['news_id'],
-            'user_id' => $data['user_id'],
+            'user_id' => \Auth::id(),
             'type'    => $data['type'],
         ], [
             'deleted_at' => DB::raw('NOW()')

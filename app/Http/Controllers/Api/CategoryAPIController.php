@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Criteria\CategoryCriteria;
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Api\CreateCategoryAPIRequest;
 use App\Http\Requests\Api\UpdateCategoryAPIRequest;
 use App\Models\Category;
 use App\Repositories\Admin\CategoryRepository;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;

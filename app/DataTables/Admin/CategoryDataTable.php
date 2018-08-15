@@ -3,8 +3,8 @@
 namespace App\DataTables\Admin;
 
 use App\Models\Category;
-use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
+use Yajra\DataTables\Services\DataTable;
 
 class CategoryDataTable extends DataTable
 {
@@ -70,6 +70,7 @@ class CategoryDataTable extends DataTable
         return [
             'id',
             'slug',
+            'name',
             'created_at'
         ];
     }

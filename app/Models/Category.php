@@ -41,9 +41,9 @@ class Category extends Model
 
     protected $dates = ['deleted_at'];
 
-
     public $fillable = [
-        'slug'
+        'slug',
+        'user_id'
     ];
 
     /**
@@ -62,7 +62,8 @@ class Category extends Model
      */
     protected $with = [
 //        'parentCategory',
-        'childCategory'
+        'media',
+        'childCategory',
     ];
 
     /**
@@ -83,10 +84,11 @@ class Category extends Model
         'id',
         'name',
         'user_id',
-//        'slug',
+        'slug',
         'created_at',
         'updated_at',
 //        'parentCategory',
+        'media',
         'childCategory',
 //        'deleted_at'
     ];
@@ -124,9 +126,9 @@ class Category extends Model
 //    }
 
 
-    public function Media()
+    public function media()
     {
-        return $this->morphMany(MediaFiles::class, 'item_id', 'id');
+        return $this->morphMany(Media::class, 'instance');
     }
 
     /**
@@ -143,6 +145,11 @@ class Category extends Model
     public function parentCategory()
     {
         return $this->belongsTo(Category::class, 'parent_id', 'id');
+    }
+
+    public function getMorphClass()
+    {
+        return 'category';
     }
 
 }

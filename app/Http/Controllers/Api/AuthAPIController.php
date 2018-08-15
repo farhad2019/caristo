@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Api\ForgotPasswordCodeRequest;
+use App\Http\Requests\Api\LoginAPIRequest;
 use App\Http\Requests\Api\RegistrationAPIRequest;
 use App\Http\Requests\Api\SocialLoginAPIRequest;
 use App\Http\Requests\Api\UpdateForgotPasswordRequest;
@@ -186,9 +187,9 @@ class AuthAPIController extends AppBaseController
      *      )
      * )
      */
-    public function login()
+    public function login(LoginAPIRequest $request)
     {
-        $credentials = request(['email', 'password']);
+        $credentials = $request->only(['email', 'password']);
 
         if (!$token = auth()->guard('api')->attempt($credentials)) {
 //        if (!$token = auth()->attempt($credentials)) {
@@ -575,23 +576,16 @@ class AuthAPIController extends AppBaseController
         if ($account) {
             // Account found. generate token;
             $user = $account->user;
-//            if ($this->uDevice->getByDeviceToken($request->device_token)) {
-//                $this->uDevice->deleteByDeviceToken($request->device_token);
-//            }
 
         } else {
             // Check if email address already exists. if yes, then link social account. else register new user.
             if (isset($input['email'])) {
                 $user = User::query()->where('email', $input['email'])->first();
-//                if ($this->uDevice->getByDeviceToken($request->device_token)) {
-//                    $this->uDevice->deleteByDeviceToken($request->device_token);
-//                }
             }
 
             if (!$user) {
                 // Register user with only social details and no password.
                 $userData = [];
-//                $userData['email'] = (isset($input['email'])) ? $input['email'] : "";
                 $userData['email'] = $request->input('email',
                     config("app.name") . "." . $request->input('client_id') . "@" . $request->input('platform') . ".com"
                 );
@@ -600,20 +594,8 @@ class AuthAPIController extends AppBaseController
                 $user = User::create($userData);
                 $userDetails['user_id'] = $user->id;
                 $userDetails['phone'] = $request->input('phone', null);
-//                $userDetails['phone'] = (isset($input['phone'])) ? $input['phone'] : null;
                 UserDetail::create($userDetails);
 
-
-                // check if device token exists
-//                if ($this->uDevice->getByDeviceToken($request->device_token)) {
-//                    $this->uDevice->deleteByDeviceToken($request->device_token);
-//                }
-//                $deviceData['user_id'] = $user->id;
-//                $deviceData['device_token'] = $request->device_token;;
-//                $deviceData['device_type'] = $request->device_type;
-//
-//                $this->uDevice->create($deviceData);
-                $dev_msg = "User registered successfully";
             }
 
             // Add social media link to the user
@@ -637,7 +619,7 @@ class AuthAPIController extends AppBaseController
         $this->uDevice->create($deviceData);
 
         $details = UserDetail::where('user_id', $user->id)->first();
-//        $details->social_login = 1;
+        $details->social_login = 1;
         $details->image = $request->input('image', null);
         $details->save();
 
@@ -645,32 +627,6 @@ class AuthAPIController extends AppBaseController
             return $this->sendErrorWithData('Invalid credentials, please try login again');
         }
 
-//        if (!$token = auth()->guard('api')->attempt($credentials)) {
-////        if (!$token = auth()->attempt($credentials)) {
-//            return $this->sendErrorWithData("Invalid Login Credentials", 403);
-////            return response()->json(['error' => 'Unauthorized'], 401);
-//        }
-
         return $this->respondWithToken($token);
-
-        //$user = $user->toArray();
-        //$user['social_login'] = 1;
-//        $userData = \JWTAuth::toUser($token)->toArray();
-        //$userData = $user->toArray();
-//
-//        $result = [
-//            'user_id'             => $userData['id'],
-//            'full_name'           => $userData['full_name'],
-//            'email'               => $userData['email'],
-//            'mobile_no'           => $userData['mobile_no'],
-//            'role_id'             => $userData['role_id'],
-//            'role_name'           => $userData['role_name'],
-//            'status_text'         => $userData['status_text'],
-//            'profile_picture_url' => $userData['profile_picture_url'],
-//            'notification_status' => $userData['notification_status'],
-//            '_token'              => $token,
-//        ];
-
-//        return $this->sendResponse(['user' => $userData, 'token' => $token], $dev_msg);
     }
 }

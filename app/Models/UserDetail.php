@@ -2,13 +2,8 @@
 
 namespace App\Models;
 
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
 /**
@@ -21,6 +16,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string image
  * @property integer area_id
  * @property integer email_updates
+ * @property integer social_login
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -39,7 +35,7 @@ class UserDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'first_name', 'last_name', 'phone', 'address', 'image', 'area_id', 'email_updates'
+        'user_id', 'first_name', 'last_name', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login'
     ];
 
     public static $rules = [];
@@ -77,6 +73,7 @@ class UserDetail extends Model
         'image_url',
         'area_id',
         'email_updates',
+        'social_login',
     ];
 
     public function user()

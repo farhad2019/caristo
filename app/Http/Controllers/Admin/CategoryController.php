@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helper\BreadcrumbsRegister;
 use App\DataTables\Admin\CategoryDataTable;
-use App\Http\Requests\Admin;
+use App\Helper\BreadcrumbsRegister;
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Admin\CreateCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Repositories\Admin\CategoryRepository;
 use Flash;
-use App\Http\Controllers\AppBaseController;
 use Response;
 
 class CategoryController extends AppBaseController
@@ -38,7 +37,7 @@ class CategoryController extends AppBaseController
      */
     public function index(CategoryDataTable $categoryDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $categoryDataTable->render('admin.categories.index');
     }
 
@@ -49,7 +48,7 @@ class CategoryController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.categories.create');
     }
 
@@ -62,9 +61,8 @@ class CategoryController extends AppBaseController
      */
     public function store(CreateCategoryRequest $request)
     {
-        $input = $request->all();
 
-        $category = $this->categoryRepository->create($input);
+        $category = $this->categoryRepository->saveRecord($request);
 
         Flash::success('Category saved successfully.');
 
@@ -88,7 +86,7 @@ class CategoryController extends AppBaseController
             return redirect(route('admin.categories.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $category);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $category);
         return view('admin.categories.show')->with('category', $category);
     }
 
@@ -109,14 +107,14 @@ class CategoryController extends AppBaseController
             return redirect(route('admin.categories.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $category);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $category);
         return view('admin.categories.edit')->with('category', $category);
     }
 
     /**
      * Update the specified Category in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateCategoryRequest $request
      *
      * @return Response
@@ -131,7 +129,8 @@ class CategoryController extends AppBaseController
             return redirect(route('admin.categories.index'));
         }
 
-        $category = $this->categoryRepository->update($request->all(), $id);
+        $this->categoryRepository->updateRecord($id, $request);
+//        $category = $this->categoryRepository->update($request->all(), $id);
 
         Flash::success('Category updated successfully.');
 
