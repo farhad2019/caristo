@@ -119,6 +119,14 @@ class CategoryAPIController extends AppBaseController
      *      description="Store Category",
      *      produces={"application/json"},
      *      @SWG\Parameter(
+     *          name="token",
+     *          in="header",
+     *          description="Token",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer abc"
+     *      ),
+     *      @SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="Category that should be stored",

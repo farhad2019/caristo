@@ -131,7 +131,7 @@ class NewsInteractionAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $newsInteractions = $this->newsInteractionRepository->create($input);
+        $newsInteractions = $this->newsInteractionRepository->createOrUpdate($input);
 
         return $this->sendResponse($newsInteractions->toArray(), 'News Interaction saved successfully');
     }

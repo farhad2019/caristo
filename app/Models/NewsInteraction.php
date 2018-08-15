@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      ),
  *      @SWG\Property(
  *          property="type",
- *          description="type",
+ *          description="type, like, favorite",
  *          type="string"
  *      )
  * )
@@ -34,6 +34,15 @@ class NewsInteraction extends Model
 
     public $table = 'news_interactions';
 
+    const TYPE_VIEW = 10;
+    const TYPE_LIKE = 20;
+    const TYPE_FAVORITE = 30;
+
+    public static $TYPES = [
+        self::TYPE_VIEW     => "View",
+        self::TYPE_LIKE     => "Like",
+        self::TYPE_FAVORITE => "Favorite",
+    ];
 
     protected $dates = ['deleted_at'];
 

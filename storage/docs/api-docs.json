@@ -4,7 +4,7 @@
         "title": "Laravel Generator APIs",
         "version": "1.0.0"
     },
-    "basePath": "/api/v1",
+    "basePath": "/caristocrat/api/v1",
     "paths": {
         "/register": {
             "post": {
@@ -357,6 +357,21 @@
                 ],
                 "parameters": [
                     {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Response Language",
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
@@ -369,6 +384,14 @@
                         "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
                         "required": false,
                         "type": "integer"
+                    },
+                    {
+                        "name": "parent_id",
+                        "in": "query",
+                        "description": "asda sd",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0
                     }
                 ],
                 "responses": {
@@ -404,6 +427,14 @@
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "name": "token",
+                        "in": "header",
+                        "description": "Token",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer abc"
+                    },
                     {
                         "name": "body",
                         "in": "body",
@@ -446,6 +477,14 @@
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
                     {
                         "name": "id",
                         "in": "path",
@@ -535,6 +574,243 @@
                         "name": "id",
                         "in": "path",
                         "description": "id of Category",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/comments": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Get a listing of the Comments.",
+                "description": "Get all Comments",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "news_id",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Comment"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Store a newly created Comment in storage",
+                "description": "Store Comment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Comment that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Comment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Comment"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/comments/{id}": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Display the specified Comment",
+                "description": "Get Comment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Comment",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Comment"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Update the specified Comment in storage",
+                "description": "Update Comment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Comment",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Comment that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Comment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Comment"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Remove the specified Comment from storage",
+                "description": "Delete Comment",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Comment",
                         "required": true,
                         "type": "integer"
                     }
@@ -990,6 +1266,221 @@
                 }
             }
         },
+        "/media": {
+            "get": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Get a listing of the Media.",
+                "description": "Get all Media",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Media"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Store a newly created Media in storage",
+                "description": "Store Media",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Media that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Media"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Media"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/media/{id}": {
+            "get": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Display the specified Media",
+                "description": "Get Media",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Media",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Media"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Update the specified Media in storage",
+                "description": "Update Media",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Media",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Media that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Media"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Media"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Remove the specified Media from storage",
+                "description": "Delete Media",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Media",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/menus": {
             "get": {
                 "tags": [
@@ -1180,6 +1671,465 @@
                         "name": "id",
                         "in": "path",
                         "description": "id of Menu",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/news": {
+            "get": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Get a listing of the News.",
+                "description": "Get all News",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Response Language",
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/News"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Store a newly created News in storage",
+                "description": "Store News",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "News that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/News"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/News"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/news/{id}": {
+            "get": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Display the specified News",
+                "description": "Get News",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of News",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/News"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Update the specified News in storage",
+                "description": "Update News",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of News",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "News that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/News"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/News"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Remove the specified News from storage",
+                "description": "Delete News",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of News",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/newsInteractions": {
+            "get": {
+                "tags": [
+                    "NewsInteraction"
+                ],
+                "summary": "Get a listing of the NewsInteractions.",
+                "description": "Get all NewsInteractions",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/NewsInteraction"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "NewsInteraction"
+                ],
+                "summary": "Store a newly created NewsInteraction in storage",
+                "description": "Store NewsInteraction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "NewsInteraction that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/NewsInteraction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/NewsInteraction"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/newsInteractions/{id}": {
+            "get": {
+                "tags": [
+                    "NewsInteraction"
+                ],
+                "summary": "Display the specified NewsInteraction",
+                "description": "Get NewsInteraction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of NewsInteraction",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/NewsInteraction"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "NewsInteraction"
+                ],
+                "summary": "Update the specified NewsInteraction in storage",
+                "description": "Update NewsInteraction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of NewsInteraction",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "NewsInteraction that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/NewsInteraction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/NewsInteraction"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "NewsInteraction"
+                ],
+                "summary": "Remove the specified NewsInteraction from storage",
+                "description": "Delete NewsInteraction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of NewsInteraction",
                         "required": true,
                         "type": "integer"
                     }
@@ -1775,6 +2725,14 @@
                 ],
                 "parameters": [
                     {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "id of User",
@@ -1870,6 +2828,34 @@
                     "description": "user_id",
                     "type": "integer",
                     "format": "int32"
+                }
+            }
+        },
+        "Comment": {
+            "required": [
+                "user_id",
+                "news_id",
+                "comment_text"
+            ],
+            "properties": {
+                "parent_id": {
+                    "description": "parent_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "news_id": {
+                    "description": "news_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "user_id": {
+                    "description": "user_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "comment_text": {
+                    "description": "comment_text",
+                    "type": "string"
                 }
             }
         },
@@ -1970,6 +2956,40 @@
                 }
             }
         },
+        "Media": {
+            "required": [
+                "id",
+                "instance_id",
+                "instance_type",
+                "title",
+                "filename",
+                "created_at"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "instance_id": {
+                    "description": "instance_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "instance_type": {
+                    "description": "instance_type",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "title",
+                    "type": "string"
+                },
+                "filename": {
+                    "description": "filename",
+                    "type": "string"
+                }
+            }
+        },
         "Menu": {
             "required": [
                 "name"
@@ -2003,6 +3023,78 @@
                 "status": {
                     "description": "status",
                     "type": "boolean"
+                }
+            }
+        },
+        "News": {
+            "required": [
+                "id",
+                "category_id",
+                "is_featured"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "category_id": {
+                    "description": "category_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "user_id": {
+                    "description": "user_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "views_count": {
+                    "description": "views_count",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "favorite_count": {
+                    "description": "favorite_count",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "like_count": {
+                    "description": "like_count",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "comments_count": {
+                    "description": "comments_count",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "is_featured": {
+                    "description": "is_featured",
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "NewsInteraction": {
+            "required": [
+                "user_id",
+                "news_id",
+                "type"
+            ],
+            "properties": {
+                "user_id": {
+                    "description": "user_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "news_id": {
+                    "description": "news_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "type": {
+                    "description": "type",
+                    "type": "string"
                 }
             }
         },
@@ -2087,18 +3179,26 @@
                 "name",
                 "email",
                 "phone",
+                "address",
+                "image",
                 "password",
-                "password_confirmation",
-                "device_token",
-                "device_type"
+                "password_confirmation"
             ],
             "properties": {
                 "name": {
-                    "description": "User Full Name",
+                    "description": "User First Name",
+                    "type": "string"
+                },
+                "address": {
+                    "description": "User address",
                     "type": "string"
                 },
                 "phone": {
                     "description": "User Phone Name",
+                    "type": "string"
+                },
+                "image": {
+                    "description": "User Image",
                     "type": "string"
                 },
                 "email": {

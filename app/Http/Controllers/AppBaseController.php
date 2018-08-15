@@ -9,7 +9,7 @@ use Illuminate\Validation\ValidationException;
 
 /**
  * @SWG\Swagger(
- *   basePath="/api/v1",
+ *   basePath="/caristocrat/api/v1",
  *   @SWG\Info(
  *     title="Laravel Generator APIs",
  *     version="1.0.0",
