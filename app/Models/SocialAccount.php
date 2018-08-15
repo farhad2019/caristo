@@ -22,10 +22,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          property="platform",
  *          description="platform",
  *          type="string",
+ *          required=true
  *      ), @SWG\Property(
  *          property="client_id",
  *          description="client_id",
  *          type="string",
+ *          required=true
  *      ), @SWG\Property(
  *          property="token",
  *          description="token",
@@ -45,11 +47,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      ),@SWG\Property(
  *          property="device_token",
  *          description="User Device Token",
- *          type="string",
+ *          type="string"
  *      ),@SWG\Property(
  *          property="device_type",
  *          description="User Device Type",
  *          type="string",
+ *          required=true
  *      ), @SWG\Property(
  *          property="expires_at",
  *          description="expires_at",
@@ -103,12 +106,12 @@ class SocialAccount extends Model
      * @var array
      */
     public static $rules = [
-        'platform'     => 'required',
-        'device_token' => 'required',
-        'device_type'  => 'required',
-        'client_id'    => 'required',
-        'token'        => 'required',
-        'email'        => 'sometimes|required|email',
+        'platform'    => 'required',
+//        'device_token' => 'required',
+        'device_type' => 'required',
+        'client_id'   => 'required',
+//        'token'        => 'required',
+        'email'       => 'sometimes|required|email',
     ];
 
     public function user()

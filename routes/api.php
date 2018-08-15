@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 /*
@@ -48,6 +47,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 ## No Token Required
 Route::post('v1/login', 'AuthAPIController@login')->name('login');
+Route::post('v1/social_login', 'AuthAPIController@socialLogin')->name('socialLogin');
 Route::post('v1/register', 'AuthAPIController@register')->name('register');
 
 Route::get('v1/forget-password', 'AuthAPIController@getForgetPasswordCode')->name('forget-password');

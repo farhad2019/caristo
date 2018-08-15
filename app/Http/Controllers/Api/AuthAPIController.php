@@ -591,11 +591,16 @@ class AuthAPIController extends AppBaseController
             if (!$user) {
                 // Register user with only social details and no password.
                 $userData = [];
-                $userData['email'] = (isset($input['email'])) ? $input['email'] : null;
-                $userData['name'] = (isset($input['username'])) ? $input['username'] : "";
+//                $userData['email'] = (isset($input['email'])) ? $input['email'] : "";
+                $userData['email'] = $request->input('email',
+                    config("app.name") . "." . $request->input('client_id') . "@" . $request->input('platform') . ".com"
+                );
+                $userData['name'] = $request->input('username', "");
+                $userData['password'] = config("app.name");
                 $user = User::create($userData);
                 $userDetails['user_id'] = $user->id;
-                $userDetails['phone'] = (isset($input['phone'])) ? $input['phone'] : null;
+                $userDetails['phone'] = $request->input('phone', null);
+//                $userDetails['phone'] = (isset($input['phone'])) ? $input['phone'] : null;
                 UserDetail::create($userDetails);
 
 
@@ -616,24 +621,24 @@ class AuthAPIController extends AppBaseController
             $account->user_id = $user->id;
             $account->platform = $input['platform'];
             $account->client_id = $input['client_id'];
-            $account->token = $input['token'];
-            $account->email = (isset($input['email'])) ? $input['email'] : null;
-            $account->username = (isset($input['username'])) ? $input['username'] : null;
-            $account->expires_at = (isset($input['expires_at'])) ? $input['expires_at'] : null;
+            $account->token = $request->input('token', null);
+            $account->email = $request->input('email', null);
+            $account->username = $request->input('username', null);
+            $account->expires_at = $request->input('expires_at', null);
             $account->save();
         }
 
-        $user->name = (isset($input['username'])) ? $input['username'] : null;
+        $user->name = $request->input('username', null);
         $user->save();
 
         $deviceData['user_id'] = $user->id;
-        $deviceData['device_token'] = $request->device_token;;
+        $deviceData['device_token'] = $request->input('device_token', null);
         $deviceData['device_type'] = $request->device_type;
         $this->uDevice->create($deviceData);
 
         $details = UserDetail::where('user_id', $user->id)->first();
-        $details->social_login = 1;
-        $details->image = (isset($input['image'])) ? $input['image'] : null;
+//        $details->social_login = 1;
+        $details->image = $request->input('image', null);
         $details->save();
 
         if (!$token = \JWTAuth::fromUser($user)) {

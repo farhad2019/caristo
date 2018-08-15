@@ -2,7 +2,8 @@
 SQLyog Ultimate v11.11 (64 bit)
 MySQL - 5.7.20-log : Database - sanam_tech
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -33,7 +34,14 @@ CREATE TABLE `social_accounts` (
   CONSTRAINT `social_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
+ALTER TABLE `users` CHANGE `name` `name` VARCHAR(191) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+ALTER TABLE `user_details` CHANGE `first_name` `first_name` VARCHAR(191) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+ALTER TABLE `social_accounts` CHANGE `token` `token` VARCHAR(255) CHARSET utf8 COLLATE utf8_general_ci NULL;
+ALTER TABLE `user_devices` CHANGE `device_token` `device_token` VARCHAR(191) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
