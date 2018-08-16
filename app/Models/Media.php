@@ -63,9 +63,11 @@ class Media extends Model
      * @var array
      */
     protected $casts = [
+        'instance_id'   => 'int',
         'instance_type' => 'string',
         'title'         => 'string',
-        'filename'      => 'string'
+        'filename'      => 'string',
+        'file_url'      => 'string',
     ];
 
     /**

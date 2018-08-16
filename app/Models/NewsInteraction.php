@@ -57,7 +57,9 @@ class NewsInteraction extends Model
      * @var array
      */
     protected $casts = [
-        'type' => 'string'
+        'user_id' => 'int',
+        'news_id' => 'int',
+        'type'    => 'int'
     ];
 
     /**

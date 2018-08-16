@@ -76,6 +76,16 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'name'  => 'int',
+        'email' => 'string',
+    ];
+
+    /**
      * The attributes that should be append to toArray.
      *
      * @var array

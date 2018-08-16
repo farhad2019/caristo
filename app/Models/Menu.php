@@ -70,6 +70,7 @@ class Menu extends Model
         'name'         => 'string',
         'icon'         => 'string',
         'slug'         => 'string',
+        'position'     => 'int',
         'is_protected' => 'boolean',
         'status'       => 'boolean'
     ];

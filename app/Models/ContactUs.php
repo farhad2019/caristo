@@ -47,7 +47,7 @@ class ContactUs extends Model
     use SoftDeletes;
 
     public $table = 'admin_queries';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -65,11 +65,11 @@ class ContactUs extends Model
      * @var array
      */
     protected $casts = [
-        'name' => 'string',
-        'email' => 'string',
+        'name'    => 'string',
+        'email'   => 'string',
         'subject' => 'string',
         'message' => 'string',
-        'status' => 'boolean'
+        'status'  => 'boolean'
     ];
 
     /**
@@ -77,7 +77,7 @@ class ContactUs extends Model
      *
      * @var array
      */
-     protected $with = [];
+    protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
@@ -99,8 +99,8 @@ class ContactUs extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required',
-        'email' => 'required|email',
+        'name'    => 'required',
+        'email'   => 'required|email',
         'subject' => 'required',
         'message' => 'required'
     ];
@@ -111,8 +111,8 @@ class ContactUs extends Model
      * @var array
      */
     public static $update_rules = [
-        'name' => 'required',
-        'email' => 'required|email',
+        'name'    => 'required',
+        'email'   => 'required|email',
         'subject' => 'required',
         'message' => 'required'
     ];
@@ -123,11 +123,11 @@ class ContactUs extends Model
      * @var array
      */
     public static $api_rules = [
-        'name' => 'required',
-        'email' => 'required|email',
+        'name'    => 'required',
+        'email'   => 'required|email',
         'subject' => 'required',
         'message' => 'required'
     ];
 
-    
+
 }

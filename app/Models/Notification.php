@@ -83,7 +83,9 @@ class Notification extends Model
      * @var array
      */
     protected $casts = [
+        'sender_id'   => 'int',
         'url'         => 'string',
+        'ref_id'      => 'int',
         'action_type' => 'string',
         'message'     => 'string',
         'status'      => 'boolean'

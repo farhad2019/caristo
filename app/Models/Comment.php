@@ -52,7 +52,10 @@ class Comment extends Model
      * @var array
      */
     protected $casts = [
-        'comment_text' => 'string'
+        'comment_text' => 'string',
+        'parent_id'    => 'int',
+        'news_id'      => 'int',
+        'user_id'      => 'int',
     ];
 
     /**

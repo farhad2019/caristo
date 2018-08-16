@@ -85,7 +85,12 @@ class SocialAccount extends Model
      * @var array
      */
     protected $casts = [
-
+        'user_id'   => 'int',
+        'platform'  => 'string',
+        'client_id' => 'string',
+        'token'     => 'string',
+        'email'     => 'string',
+        'username'  => 'string',
     ];
 
 //    protected $visible = [

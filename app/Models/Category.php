@@ -52,7 +52,9 @@ class Category extends Model
      * @var array
      */
     protected $casts = [
-        'slug' => 'string'
+        'slug'      => 'string',
+        'user_id'   => 'int',
+        'parent_id' => 'int'
     ];
 
     /**

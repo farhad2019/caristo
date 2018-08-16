@@ -43,6 +43,7 @@ class PageTranslation extends Model
      * @var array
      */
     protected $casts = [
+        'page_id' => 'int',
         'locale'  => 'string',
         'title'   => 'string',
         'content' => 'string',

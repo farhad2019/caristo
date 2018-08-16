@@ -52,7 +52,7 @@ class Language extends Model
     use SoftDeletes;
 
     public $table = 'locales';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -71,11 +71,11 @@ class Language extends Model
      * @var array
      */
     protected $casts = [
-        'code' => 'string',
-        'title' => 'string',
+        'code'        => 'string',
+        'title'       => 'string',
         'native_name' => 'string',
-        'direction' => 'string',
-        'status' => 'boolean'
+        'direction'   => 'string',
+        'status'      => 'boolean'
     ];
 
     /**
@@ -83,7 +83,7 @@ class Language extends Model
      *
      * @var array
      */
-     protected $with = [];
+    protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
@@ -105,11 +105,11 @@ class Language extends Model
      * @var array
      */
     public static $rules = [
-        'code' => 'required',
-        'title' => 'required',
+        'code'        => 'required',
+        'title'       => 'required',
         'native_name' => 'required',
-        'direction' => 'required',
-        'status' => 'required'
+        'direction'   => 'required',
+        'status'      => 'required'
     ];
 
     /**
@@ -118,11 +118,11 @@ class Language extends Model
      * @var array
      */
     public static $update_rules = [
-        'code' => 'required',
-        'title' => 'required',
+        'code'        => 'required',
+        'title'       => 'required',
         'native_name' => 'required',
-        'direction' => 'required',
-        'status' => 'required'
+        'direction'   => 'required',
+        'status'      => 'required'
     ];
 
     /**
@@ -131,12 +131,12 @@ class Language extends Model
      * @var array
      */
     public static $api_rules = [
-        'code' => 'required',
-        'title' => 'required',
+        'code'        => 'required',
+        'title'       => 'required',
         'native_name' => 'required',
-        'direction' => 'required',
-        'status' => 'required'
+        'direction'   => 'required',
+        'status'      => 'required'
     ];
 
-    
+
 }

@@ -2,13 +2,8 @@
 
 namespace App\Models;
 
-use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
 /**
@@ -54,6 +49,17 @@ class UserDevice extends Model
      */
     protected $appends = [
 
+    ];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'user_id'      => 'int',
+        'device_type'  => 'string',
+        'device_token' => 'string',
     ];
 
     /**

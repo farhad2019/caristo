@@ -46,6 +46,23 @@ class UserDetail extends Model
      * @var array
      */
     protected $with = [
+        
+    ];
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'user_id'       => 'int',
+        'first_name'    => 'string',
+        'last_name'     => 'string',
+        'phone'         => 'string',
+        'address'       => 'string',
+        'image'         => 'string',
+        'email_updates' => 'boolean',
+        'social_login'  => 'boolean',
     ];
 
     /**

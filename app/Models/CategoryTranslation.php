@@ -42,9 +42,10 @@ class CategoryTranslation extends Model
      * @var array
      */
     protected $casts = [
-        'locale' => 'string',
-        'name'   => 'string',
-        'status' => 'boolean'
+        'locale'      => 'string',
+        'name'        => 'string',
+        'category_id' => 'int',
+        'status'      => 'boolean'
     ];
 
     /**
