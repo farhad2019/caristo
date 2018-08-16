@@ -752,7 +752,19 @@ class AuthAPIController extends AppBaseController
      *          in="query"
      *      ),@SWG\Parameter(
      *          name="country_code",
-     *          description="Country Code of User's Phone (like 966, 971",
+     *          description="Country Code of User's Phone (like 966, 971)",
+     *          type="string",
+     *          required=false,
+     *          in="query"
+     *      ),@SWG\Parameter(
+     *          name="phone",
+     *          description="Phone Number of User's Phone",
+     *          type="string",
+     *          required=false,
+     *          in="query"
+     *      ),@SWG\Parameter(
+     *          name="about",
+     *          description="About Me/Bio of User ",
      *          type="string",
      *          required=false,
      *          in="query"
@@ -781,37 +793,44 @@ class AuthAPIController extends AppBaseController
 
         extract($input);
 
-        echo $email;
-        die();
-
         $code = $request->verification_code;
 
         $user = \JWTAuth::parseToken()->toUser();
         $userData = $user->toArray();
 
-        $userEmail = $userData['email'];
 
-        $credentials = [
-            'email'    => $userEmail,
-            'password' => $old_password
-        ];
+        $thisUserId = $userData['id'];
 
-        if (!$token = auth()->guard('api')->attempt($credentials)) {
-            return $this->sendErrorWithData("Wrong Old Password", 403);
-        } else {
-            #Changing Password
+        if (isset($name)) {
             $postData = array();
-            $postData['password'] = bcrypt($new_password);
-            try {
-                $data = $this->userRepository->getUserByEmail($userEmail);
-                $user = $this->userRepository->update($postData, $data->id);
+            $postData['name'] = ($name);
 
-                return $this->sendResponse(['user' => $user], 'Password Changed');
-            } catch (\Exception $e) {
-                return $this->sendErrorWithData($e->getMessage(), 403);
-            }
+            $user = $this->userRepository->update($postData, $thisUserId);
         }
 
+        $postData = array();
+
+        if (isset($country_code)) {
+            $postData['country_code'] = $country_code;
+        }
+        if (isset($phone)) {
+            $postData['phone'] = $phone;
+        }
+        if (isset($about)) {
+            $postData['about'] = $about;
+        }
+
+
+        if ((isset($about)) || isset($country_code) || isset($phone)) {
+
+            $user = $this->userDetailRepository->update($postData, $thisUserId);
+        }
+
+
+        $user = \JWTAuth::parseToken()->toUser();
+        $userData = $user->toArray();
+
+        return $this->sendResponse(['user' => $userData], 'Profile Updated Successfully');
 
     }
 }

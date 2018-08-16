@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use InfyOm\Generator\Utils\ResponseUtil;
 
-class UpdateChangePasswordRequest extends FormRequest
+class UpdateUserProfileRequest extends FormRequest
 {
 
     public function authorize()
@@ -27,8 +27,7 @@ class UpdateChangePasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'old_password' => 'required',
-            'new_password' => 'required'
+            'email' => 'required'
         ];
     }
 

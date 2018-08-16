@@ -482,7 +482,21 @@
                     {
                         "name": "country_code",
                         "in": "query",
-                        "description": "Country Code of User's Phone (like 966, 971",
+                        "description": "Country Code of User's Phone (like 966, 971)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Phone Number of User's Phone",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "about",
+                        "in": "query",
+                        "description": "About Me/Bio of User ",
                         "required": false,
                         "type": "string"
                     }
