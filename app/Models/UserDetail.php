@@ -35,7 +35,7 @@ class UserDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'first_name', 'last_name', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login'
+        'user_id', 'first_name', 'last_name', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login', 'about'
     ];
 
     public static $rules = [];
@@ -74,6 +74,7 @@ class UserDetail extends Model
         'area_id',
         'email_updates',
         'social_login',
+        'about'
     ];
 
     public function user()

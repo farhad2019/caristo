@@ -9,6 +9,7 @@ use App\Http\Requests\Api\RegistrationAPIRequest;
 use App\Http\Requests\Api\SocialLoginAPIRequest;
 use App\Http\Requests\Api\UpdateChangePasswordRequest;
 use App\Http\Requests\Api\UpdateForgotPasswordRequest;
+use App\Http\Requests\Api\UpdateUserProfileRequest;
 use App\Http\Requests\Api\VerifyCodeRequest;
 use App\Models\SocialAccount;
 use App\Models\User;
@@ -689,6 +690,99 @@ class AuthAPIController extends AppBaseController
         $input = $request->all();
 
         extract($input);
+
+        $code = $request->verification_code;
+
+        $user = \JWTAuth::parseToken()->toUser();
+        $userData = $user->toArray();
+
+        $userEmail = $userData['email'];
+
+        $credentials = [
+            'email'    => $userEmail,
+            'password' => $old_password
+        ];
+
+        if (!$token = auth()->guard('api')->attempt($credentials)) {
+            return $this->sendErrorWithData("Wrong Old Password", 403);
+        } else {
+            #Changing Password
+            $postData = array();
+            $postData['password'] = bcrypt($new_password);
+            try {
+                $data = $this->userRepository->getUserByEmail($userEmail);
+                $user = $this->userRepository->update($postData, $data->id);
+
+                return $this->sendResponse(['user' => $user], 'Password Changed');
+            } catch (\Exception $e) {
+                return $this->sendErrorWithData($e->getMessage(), 403);
+            }
+        }
+
+
+    }
+
+
+    /**
+     * @SWG\Post(
+     *      path="/update-profile",
+     *      summary="Reset password.",
+     *      tags={"Authorization"},
+     *      description="Reset password.",
+     *      produces={"application/json"},
+     *     @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *     @SWG\Parameter(
+     *          name="email",
+     *          description="Email Address of user",
+     *          type="string",
+     *          required=true,
+     *          in="query"
+     *      ),@SWG\Parameter(
+     *          name="name",
+     *          description="Full Name of User",
+     *          type="string",
+     *          required=false,
+     *          in="query"
+     *      ),@SWG\Parameter(
+     *          name="country_code",
+     *          description="Country Code of User's Phone (like 966, 971",
+     *          type="string",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(
+     *                  property="success",
+     *                  type="boolean"
+     *              ),
+     *
+     *              @SWG\Property(
+     *                  property="message",
+     *                  type="string"
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function updateUserProfile(UpdateUserProfileRequest $request)
+    {
+        $input = $request->all();
+
+        extract($input);
+
+        echo $email;
+        die();
 
         $code = $request->verification_code;
 

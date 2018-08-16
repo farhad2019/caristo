@@ -84,6 +84,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('v1/change-password', 'AuthAPIController@changePassword')->name('change-password');
 
+    Route::post('v1/update-profile', 'AuthAPIController@updateUserProfile')->name('update-profile');
+
 
 });
 

@@ -4,7 +4,7 @@
         "title": "Laravel Generator APIs",
         "version": "1.0.0"
     },
-    "basePath": "/api/v1",
+    "basePath": "/caristocrat/api/v1",
     "paths": {
         "/register": {
             "post": {
@@ -376,6 +376,124 @@
                                 },
                                 "data": {
                                     "$ref": "#/definitions/SocialAccounts"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/change-password": {
+            "post": {
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Reset password.",
+                "description": "Reset password.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "old_password",
+                        "in": "query",
+                        "description": "old password",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "new_password",
+                        "in": "query",
+                        "description": "new password",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "confirm password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/update-profile": {
+            "post": {
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Reset password.",
+                "description": "Reset password.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email Address of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Full Name of User",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "country_code",
+                        "in": "query",
+                        "description": "Country Code of User's Phone (like 966, 971",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
                                 },
                                 "message": {
                                     "type": "string"
