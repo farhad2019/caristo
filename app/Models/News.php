@@ -84,7 +84,6 @@ class News extends Model
      * @var array
      */
     protected $casts = [
-
     ];
 
     /**
@@ -167,6 +166,16 @@ class News extends Model
         return $this->hasMany(\App\Models\ItemVariant::class, 'item_id', 'id');
     }
 
+    public function likes()
+    {
+        return $this->hasMany(NewsInteraction::class)->where('type', NewsInteraction::TYPE_LIKE);
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(NewsInteraction::class)->where('type', NewsInteraction::TYPE_FAVORITE);
+    }
+
     public function Media()
     {
         return $this->morphMany(Media::class, 'instance');
@@ -179,12 +188,12 @@ class News extends Model
 
     public function getIsLikedAttribute()
     {
-        return 0;
+        return ($this->likes()->where('user_id', \Auth::id())->first() != null);
     }
 
     public function getIsFavoriteAttribute()
     {
-        return 0;
+        return ($this->favorites()->where('user_id', \Auth::id())->first() != null);
     }
 
 }

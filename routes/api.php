@@ -99,3 +99,5 @@ Route::resource('admin/comments', 'CommentAPIController');
 Route::resource('admin/media', 'MediaAPIController');
 
 Route::resource('admin/news_interactions', 'NewsInteractionAPIController');
+
+Route::resource('admin/walk_throughs', 'WalkThroughAPIController');

@@ -6,6 +6,8 @@ use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property News news
+ *
  * @SWG\Definition(
  *      definition="NewsInteraction",
  *      required={"news_id", "type"},
@@ -121,4 +123,8 @@ class NewsInteraction extends Model
     ];
 
 
+    public function news()
+    {
+        return $this->belongsTo(News::class);
+    }
 }

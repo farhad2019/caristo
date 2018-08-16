@@ -55,3 +55,5 @@ Route::resource('comments', 'CommentController');
 Route::resource('media', 'MediaController');
 
 Route::resource('newsInteractions', 'NewsInteractionController');
+
+Route::resource('walkThroughs', 'WalkThroughController');

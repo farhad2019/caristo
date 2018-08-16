@@ -38,11 +38,17 @@ class NewsInteractionRepository extends BaseRepository
 
     public function createRecord($data)
     {
-        return $this->create([
+        $data = [
             'news_id' => $data['news_id'],
             'user_id' => \Auth::id(),
             'type'    => $data['type'],
-        ]);
+        ];
+        $record = $this->findWhere($data)->first();
+        if ($record) {
+            return $record->delete();
+        } else {
+            return ($this->create($data) != null);
+        }
     }
 
     public function createOrUpdate($data)
