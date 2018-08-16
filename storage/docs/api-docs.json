@@ -3119,24 +3119,18 @@
         },
         "NewsInteraction": {
             "required": [
-                "user_id",
                 "news_id",
                 "type"
             ],
             "properties": {
-                "user_id": {
-                    "description": "user_id",
-                    "type": "integer",
-                    "format": "int32"
-                },
                 "news_id": {
                     "description": "news_id",
                     "type": "integer",
                     "format": "int32"
                 },
                 "type": {
-                    "description": "type, like, favorite",
-                    "type": "string"
+                    "description": "type, 10=View, 20=like, 30=favorite",
+                    "type": "integer"
                 }
             }
         },
@@ -3281,12 +3275,7 @@
         "SocialAccounts": {
             "required": [
                 "platform",
-                "client_id",
-                "token",
-                "username",
-                "email",
-                "expires_at",
-                "image"
+                "client_id"
             ],
             "properties": {
                 "platform": {

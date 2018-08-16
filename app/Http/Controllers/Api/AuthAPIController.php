@@ -629,4 +629,83 @@ class AuthAPIController extends AppBaseController
 
         return $this->respondWithToken($token);
     }
+
+
+    /**
+     * @SWG\Post(
+     *      path="/change-password",
+     *      summary="Reset password.",
+     *      tags={"Authorization"},
+     *      description="Reset password.",
+     *      produces={"application/json"},
+     *     @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *     @SWG\Parameter(
+     *          name="old_password",
+     *          description="old password",
+     *          type="string",
+     *          required=true,
+     *          in="query"
+     *      ),@SWG\Parameter(
+     *          name="new_password",
+     *          description="new password",
+     *          type="string",
+     *          required=true,
+     *          in="query"
+     *      ),@SWG\Parameter(
+     *          name="password_confirmation",
+     *          description="confirm password",
+     *          type="string",
+     *          required=true,
+     *          in="query"
+     *      ),
+     *      @SWG\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(
+     *                  property="success",
+     *                  type="boolean"
+     *              ),
+     *
+     *              @SWG\Property(
+     *                  property="message",
+     *                  type="string"
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function changePassword(UpdateChangePasswordRequest $request)
+    {
+        $input = $request->all();
+
+        extract($input);
+        echo $old_password;
+        die();
+        $code = $request->verification_code;
+
+        $check = DB::table('password_resets')->where(['code' => $code, 'email' => $request->email])->first();
+        if (!is_null($check)) {
+            $postData['password'] = bcrypt($request->password);
+            try {
+                $data = $this->userRepository->getUserByEmail($request->email);
+                $user = $this->userRepository->update($postData, $data->id);
+                DB::table('password_resets')->where(['code' => $code, 'email' => $request->email])->delete();
+
+                return $this->sendResponse(['user' => $user], 'Password Changed');
+            } catch (\Exception $e) {
+                return $this->sendErrorWithData($e->getMessage(), 403);
+            }
+        } else {
+            return $this->sendErrorWithData('Code Is Invalid', 403);
+        }
+    }
 }

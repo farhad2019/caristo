@@ -56,6 +56,9 @@ Route::post('v1/verify-reset-code', 'AuthAPIController@verifyCode')->name('verif
 Route::post('v1/reset-password', 'AuthAPIController@updatePassword')->name('reset-password');
 
 Route::middleware('auth:api')->group(function () {
+
+    Route::post('v1/change-password', 'AuthAPIController@changePassword')->name('change-password');
+
     ## Token Required to below APIs
     Route::post('v1/logout', 'AuthAPIController@logout');
     Route::post('v1/refresh', 'AuthAPIController@refresh');
