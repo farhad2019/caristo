@@ -117,7 +117,7 @@ class News extends Model
         'user_id',
         'views_count',
         'favorite_count',
-        'like_id',
+        'like_count',
         'comments_count',
         'is_featured',
         'created_at',
