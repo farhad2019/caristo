@@ -704,24 +704,19 @@ class AuthAPIController extends AppBaseController
 
         if (!$token = auth()->guard('api')->attempt($credentials)) {
             return $this->sendErrorWithData("Wrong Old Password", 403);
-        }
-        else
-            {
-                #Changing Password
-                $postData   =   array();
-                $postData['password'] = bcrypt($new_password);
-                try {
-                    $data = $this->userRepository->getUserByEmail($userEmail);
-                    $user = $this->userRepository->update($postData, $data->id);
+        } else {
+            #Changing Password
+            $postData = array();
+            $postData['password'] = bcrypt($new_password);
+            try {
+                $data = $this->userRepository->getUserByEmail($userEmail);
+                $user = $this->userRepository->update($postData, $data->id);
 
-                    return $this->sendResponse(['user' => $user], 'Password Changed');
-                } catch (\Exception $e) {
-                    return $this->sendErrorWithData($e->getMessage(), 403);
-                }
+                return $this->sendResponse(['user' => $user], 'Password Changed');
+            } catch (\Exception $e) {
+                return $this->sendErrorWithData($e->getMessage(), 403);
             }
-
-        echo "yes";
-        die();
+        }
 
 
     }
