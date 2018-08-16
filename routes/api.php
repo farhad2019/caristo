@@ -57,7 +57,6 @@ Route::post('v1/reset-password', 'AuthAPIController@updatePassword')->name('rese
 
 Route::middleware('auth:api')->group(function () {
 
-    Route::post('v1/change-password', 'AuthAPIController@changePassword')->name('change-password');
 
     ## Token Required to below APIs
     Route::post('v1/logout', 'AuthAPIController@logout');
@@ -82,6 +81,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('v1/comments', 'CommentAPIController');
     Route::resource('v1/newsInteractions', 'NewsInteractionAPIController');
+
+    Route::post('v1/change-password', 'AuthAPIController@changePassword')->name('change-password');
 
 
 });

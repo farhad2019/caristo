@@ -7,6 +7,7 @@ use App\Http\Requests\Api\ForgotPasswordCodeRequest;
 use App\Http\Requests\Api\LoginAPIRequest;
 use App\Http\Requests\Api\RegistrationAPIRequest;
 use App\Http\Requests\Api\SocialLoginAPIRequest;
+use App\Http\Requests\Api\UpdateChangePasswordRequest;
 use App\Http\Requests\Api\UpdateForgotPasswordRequest;
 use App\Http\Requests\Api\VerifyCodeRequest;
 use App\Models\SocialAccount;
@@ -688,24 +689,40 @@ class AuthAPIController extends AppBaseController
         $input = $request->all();
 
         extract($input);
-        echo $old_password;
-        die();
+
         $code = $request->verification_code;
 
-        $check = DB::table('password_resets')->where(['code' => $code, 'email' => $request->email])->first();
-        if (!is_null($check)) {
-            $postData['password'] = bcrypt($request->password);
-            try {
-                $data = $this->userRepository->getUserByEmail($request->email);
-                $user = $this->userRepository->update($postData, $data->id);
-                DB::table('password_resets')->where(['code' => $code, 'email' => $request->email])->delete();
+        $user = \JWTAuth::parseToken()->toUser();
+        $userData = $user->toArray();
 
-                return $this->sendResponse(['user' => $user], 'Password Changed');
-            } catch (\Exception $e) {
-                return $this->sendErrorWithData($e->getMessage(), 403);
-            }
-        } else {
-            return $this->sendErrorWithData('Code Is Invalid', 403);
+        $userEmail = $userData['email'];
+
+        $credentials = [
+            'email'    => $userEmail,
+            'password' => $old_password
+        ];
+
+        if (!$token = auth()->guard('api')->attempt($credentials)) {
+            return $this->sendErrorWithData("Wrong Old Password", 403);
         }
+        else
+            {
+                #Changing Password
+                $postData   =   array();
+                $postData['password'] = bcrypt($new_password);
+                try {
+                    $data = $this->userRepository->getUserByEmail($userEmail);
+                    $user = $this->userRepository->update($postData, $data->id);
+
+                    return $this->sendResponse(['user' => $user], 'Password Changed');
+                } catch (\Exception $e) {
+                    return $this->sendErrorWithData($e->getMessage(), 403);
+                }
+            }
+
+        echo "yes";
+        die();
+
+
     }
 }
