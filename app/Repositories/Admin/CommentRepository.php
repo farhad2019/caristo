@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin;
 
 use App\Models\Comment;
+use Illuminate\Http\Request;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -39,5 +40,13 @@ class CommentRepository extends BaseRepository
     public function getNewsComments($newsId)
     {
         return Comment::where('news_id', $newsId)->get();
+    }
+
+    public function createRecord(Request $request)
+    {
+        $input = $request->all();
+        $input['user_id'] = \Auth::id();
+
+        return $this->create($input);
     }
 }

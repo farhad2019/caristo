@@ -71,7 +71,6 @@ class News extends Model
 
     protected $dates = ['deleted_at'];
 
-
     public $fillable = [
         'id',
         'category_id',
@@ -84,6 +83,17 @@ class News extends Model
      * @var array
      */
     protected $casts = [
+        'category_id'    => 'integer',
+        'user_id'        => 'int',
+        'views_count'    => 'int',
+        'favorite_count' => 'int',
+        'like_count'     => 'int',
+        'comments_count' => 'int',
+        'is_featured'    => 'int',
+        'is_liked'       => 'boolean',
+        'is_viewed'      => 'boolean',
+        'is_favorite'    => 'boolean'
+
     ];
 
     /**
@@ -102,6 +112,7 @@ class News extends Model
      */
     protected $appends = [
         'is_liked',
+        'is_viewed',
         'is_favorite',
 //        'is_favorite'
     ];
@@ -123,6 +134,7 @@ class News extends Model
         'created_at',
         'updated_at',
         'is_liked',
+        'is_viewed',
         'is_favorite',
         'media',
 //        'deleted_at'
@@ -166,6 +178,11 @@ class News extends Model
         return $this->hasMany(\App\Models\ItemVariant::class, 'item_id', 'id');
     }
 
+    public function views()
+    {
+        return $this->hasMany(NewsInteraction::class)->where('type', NewsInteraction::TYPE_VIEW);
+    }
+
     public function likes()
     {
         return $this->hasMany(NewsInteraction::class)->where('type', NewsInteraction::TYPE_LIKE);
@@ -194,6 +211,11 @@ class News extends Model
     public function getIsFavoriteAttribute()
     {
         return ($this->favorites()->where('user_id', \Auth::id())->first() != null);
+    }
+
+    public function getIsViewedAttribute()
+    {
+        return ($this->views()->where('user_id', \Auth::id())->first() != null);
     }
 
 }

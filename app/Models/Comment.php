@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @SWG\Definition(
  *      definition="Comment",
- *      required={"user_id", "news_id", "comment_text"},
- *
+ *      required={"news_id", "comment_text"},
  *      @SWG\Property(
  *          property="parent_id",
  *          description="parent_id",
@@ -19,12 +18,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      @SWG\Property(
  *          property="news_id",
  *          description="news_id",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
- *          property="user_id",
- *          description="user_id",
  *          type="integer",
  *          format="int32"
  *      ),
@@ -91,7 +84,7 @@ class Comment extends Model
      * @var array
      */
     public static $rules = [
-        'user_id'      => 'required',
+//        'user_id'      => 'required',
         'news_id'      => 'required',
         'comment_text' => 'required',
     ];
@@ -103,7 +96,7 @@ class Comment extends Model
      */
     public static $update_rules = [
         'id'           => 'required',
-        'user_id'      => 'required',
+//        'user_id'      => 'required',
         'comment_text' => 'required',
         'created_at'   => 'required'
     ];
@@ -114,7 +107,7 @@ class Comment extends Model
      * @var array
      */
     public static $api_rules = [
-        'user_id'      => 'required',
+//        'user_id'      => 'required',
         'news_id'      => 'required',
         'comment_text' => 'required'
     ];
@@ -123,6 +116,11 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function news()
+    {
+        return $this->belongsTo(News::class);
     }
 
 }

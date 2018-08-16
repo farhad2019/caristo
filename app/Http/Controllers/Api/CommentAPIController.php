@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Api\CreateCommentAPIRequest;
 use App\Http\Requests\Api\UpdateCommentAPIRequest;
 use App\Models\Comment;
 use App\Repositories\Admin\CommentRepository;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
@@ -154,7 +154,7 @@ class CommentAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $comments = $this->commentRepository->create($input);
+        $comments = $this->commentRepository->createRecord($request);
 
         return $this->sendResponse($comments->toArray(), 'Comment saved successfully');
     }

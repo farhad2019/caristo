@@ -45,6 +45,9 @@ class NewsInteractionRepository extends BaseRepository
         ];
         $record = $this->findWhere($data)->first();
         if ($record) {
+            if ($data['type'] == NewsInteraction::TYPE_VIEW) {
+                return true;
+            }
             return $record->delete();
         } else {
             return ($this->create($data) != null);
