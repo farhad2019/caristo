@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-use App\Helpers\RESTAPIHelper;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use InfyOm\Generator\Utils\ResponseUtil;
 
 class UpdateUserProfileRequest extends FormRequest
 {
@@ -27,7 +24,7 @@ class UpdateUserProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required'
+//            'email' => 'required'
         ];
     }
 

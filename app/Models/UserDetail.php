@@ -46,7 +46,7 @@ class UserDetail extends Model
      * @var array
      */
     protected $with = [
-        
+
     ];
 
     /**

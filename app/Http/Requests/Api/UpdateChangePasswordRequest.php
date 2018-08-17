@@ -4,8 +4,6 @@ namespace App\Http\Requests\Api;
 
 use App\Helpers\RESTAPIHelper;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use InfyOm\Generator\Utils\ResponseUtil;
 
 class UpdateChangePasswordRequest extends FormRequest
 {
@@ -28,7 +26,7 @@ class UpdateChangePasswordRequest extends FormRequest
     {
         return [
             'old_password' => 'required',
-            'new_password' => 'required'
+            'password'     => 'required|confirmed|different:old_password'
         ];
     }
 

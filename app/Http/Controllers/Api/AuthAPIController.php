@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helper\Utils;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Api\ForgotPasswordCodeRequest;
 use App\Http\Requests\Api\LoginAPIRequest;
@@ -661,19 +662,19 @@ class AuthAPIController extends AppBaseController
      *          description="old password",
      *          type="string",
      *          required=true,
-     *          in="query"
+     *          in="formData"
      *      ),@SWG\Parameter(
-     *          name="new_password",
+     *          name="password",
      *          description="new password",
      *          type="string",
      *          required=true,
-     *          in="query"
+     *          in="formData"
      *      ),@SWG\Parameter(
      *          name="password_confirmation",
      *          description="confirm password",
      *          type="string",
      *          required=true,
-     *          in="query"
+     *          in="formData"
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -695,39 +696,26 @@ class AuthAPIController extends AppBaseController
      */
     public function changePassword(UpdateChangePasswordRequest $request)
     {
-        $input = $request->all();
-
-        extract($input);
-
-        $code = $request->verification_code;
-
-        $user = \JWTAuth::parseToken()->toUser();
-        $userData = $user->toArray();
-
-        $userEmail = $userData['email'];
+        $old_password = $request->get('old_password');
+        $password = $request->get('password');
+        $user = \Auth::user();
 
         $credentials = [
-            'email'    => $userEmail,
+            'email'    => $user->email,
             'password' => $old_password
         ];
-
         if (!$token = auth()->guard('api')->attempt($credentials)) {
             return $this->sendErrorWithData("Wrong Old Password", 403);
         } else {
-            #Changing Password
-            $postData = array();
-            $postData['password'] = bcrypt($new_password);
+            $postData = [];
+            $postData['password'] = bcrypt($password);
             try {
-                $data = $this->userRepository->getUserByEmail($userEmail);
-                $user = $this->userRepository->update($postData, $data->id);
-
+                $user = $this->userRepository->update($postData, $user->id);
                 return $this->sendResponse(['user' => $user], 'Password Changed');
             } catch (\Exception $e) {
                 return $this->sendErrorWithData($e->getMessage(), 403);
             }
         }
-
-
     }
 
 
@@ -747,35 +735,36 @@ class AuthAPIController extends AppBaseController
      *          in="header"
      *      ),
      *     @SWG\Parameter(
-     *          name="email",
-     *          description="Email Address of user",
-     *          type="string",
-     *          required=true,
-     *          in="query"
-     *      ),@SWG\Parameter(
      *          name="name",
      *          description="Full Name of User",
      *          type="string",
      *          required=false,
-     *          in="query"
+     *          in="formData"
      *      ),@SWG\Parameter(
      *          name="country_code",
      *          description="Country Code of User's Phone (like 966, 971)",
      *          type="string",
      *          required=false,
-     *          in="query"
+     *          in="formData"
      *      ),@SWG\Parameter(
      *          name="phone",
      *          description="Phone Number of User's Phone",
      *          type="string",
      *          required=false,
-     *          in="query"
+     *          in="formData"
      *      ),@SWG\Parameter(
      *          name="about",
      *          description="About Me/Bio of User ",
      *          type="string",
      *          required=false,
-     *          in="query"
+     *          in="formData"
+     *      ),
+     *     @SWG\Parameter(
+     *          name="image",
+     *          description="Image File of the user",
+     *          type="file",
+     *          required=false,
+     *          in="formData"
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -797,48 +786,32 @@ class AuthAPIController extends AppBaseController
      */
     public function updateUserProfile(UpdateUserProfileRequest $request)
     {
-        $input = $request->all();
+        $user = \Auth::user();
+        $userData = array_filter($request->only(['name']));
+        $details = array_filter($request->only(['country_code', 'phone', 'about']));
 
-        extract($input);
-
-        $code = $request->verification_code;
-
-        $user = \JWTAuth::parseToken()->toUser();
-        $userData = $user->toArray();
-
-
-        $thisUserId = $userData['id'];
-
-        if (isset($name)) {
-            $postData = array();
-            $postData['name'] = ($name);
-
-            $user = $this->userRepository->update($postData, $thisUserId);
+        if ($request->hasFile('image')) {
+            $mediaFile = $request->file('image');
+            $media = Utils::handlePicture($mediaFile, 'profiles');
+            $details['image'] = $media['filename'];
         }
 
-        $postData = array();
-
-        if (isset($country_code)) {
-            $postData['country_code'] = $country_code;
-        }
-        if (isset($phone)) {
-            $postData['phone'] = $phone;
-        }
-        if (isset($about)) {
-            $postData['about'] = $about;
+        if (count($userData) > 0) {
+            if (!empty($userData['name'])) {
+                $details['first_name'] = $userData['name'];
+            }
+            $this->userRepository->update($userData, $user->id);
         }
 
-
-        if ((isset($about)) || isset($country_code) || isset($phone)) {
-
-            $user = $this->userDetailRepository->update($postData, $thisUserId);
+        if (count($details) > 0) {
+            if (!empty($details['phone'])) {
+                $details['phone'] = $details['country_code'] . $details['phone'];
+                unset($details['country_code']);
+            }
+            $this->userDetailRepository->update($details, $user->details->id);
         }
 
-
-        $user = \JWTAuth::parseToken()->toUser();
-        $userData = $user->toArray();
-
-        return $this->sendResponse(['user' => $userData], 'Profile Updated Successfully');
+        return $this->sendResponse(['user' => $this->userRepository->findWithoutFail($user->id)->toArray()], 'Profile Updated Successfully');
 
     }
 

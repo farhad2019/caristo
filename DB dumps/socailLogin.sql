@@ -39,7 +39,7 @@ ALTER TABLE `user_details` CHANGE `first_name` `first_name` VARCHAR(191) CHARSET
 ALTER TABLE `social_accounts` CHANGE `token` `token` VARCHAR(255) CHARSET utf8 COLLATE utf8_general_ci NULL;
 ALTER TABLE `user_devices` CHANGE `device_token` `device_token` VARCHAR(191) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
 ALTER TABLE `user_details` ADD COLUMN `social_login` BOOLEAN DEFAULT 0 NULL AFTER `email_updates`;
-
+ALTER TABLE `caristocrat`.`user_details` ADD COLUMN `about` TEXT NULL AFTER `image`;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
