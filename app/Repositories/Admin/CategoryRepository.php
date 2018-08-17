@@ -36,6 +36,11 @@ class CategoryRepository extends BaseRepository
         return Category::class;
     }
 
+    public function getRootCategories()
+    {
+        return $this->findByField('parent_id', 0);
+    }
+
     public function saveRecord(Request $request)
     {
         $input = $request->all();

@@ -14,6 +14,7 @@ use App\Http\Requests\Api\VerifyCodeRequest;
 use App\Models\SocialAccount;
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\UdeviceRepository;
 use App\Repositories\Admin\UserdetailRepository;
 use App\Repositories\Admin\UserRepository;
@@ -26,18 +27,24 @@ use Illuminate\Support\Facades\Storage;
 class AuthAPIController extends AppBaseController
 {
 
-    protected $userRepository, $userDetailRepository, $uDevice;
+    protected $userRepository, $userDetailRepository, $uDevice, $categoryRepo;
 
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct(UserRepository $userRepo, UserdetailRepository $userdetailRepo, UdeviceRepository $udeviceRepo)
+    public function __construct(
+        UserRepository $userRepo,
+        UserdetailRepository $userdetailRepo,
+        UdeviceRepository $udeviceRepo,
+        CategoryRepository $categoryRepo
+    )
     {
         $this->userRepository = $userRepo;
         $this->userDetailRepository = $userdetailRepo;
         $this->uDevice = $udeviceRepo;
+        $this->categoryRepo = $categoryRepo;
 //        $this->middleware('auth:api', ['except' => ['login']]); //
     }
 
@@ -908,15 +915,29 @@ class AuthAPIController extends AppBaseController
     {
 
         \App::setLocale($request->get('locale', 'en'));
-        $favorites = \Auth::user()->favorites()->orderBy('category_id');
         // Implement apply() method.
         $category_id = $request->get('category_id', 0);
-
         if ($category_id > 0) {
-            $favorites->where('category_id', $category_id);
+            $category = $this->categoryRepo->findWithoutFail($category_id);
+            $favorites = $this->getChildFavorites($category);
+        } else {
+            $favorites = [];
+            foreach ($this->categoryRepo->getRootCategories() as $rootCategory) {
+                $favorites = array_merge($favorites, $this->getChildFavorites($rootCategory));
+            }
         }
-        $favorites = $favorites->get();
+        return $this->sendResponse($favorites, 'Favorite News retrieved successfully');
+    }
 
-        return $this->sendResponse($favorites->toArray(), 'Favorite News retrieved successfully');
+    private function getChildFavorites($category)
+    {
+        $ret = [];
+        $query = \Auth::user()->favorites()->orderBy('news.category_id');
+        if ($category->childCategory()->count() > 0) {
+            $ret = $query->whereIn('category_id', $category->childCategory()->pluck('id')->toArray())->selectRaw("news.*, $category->id as category_id");
+        } else {
+            $ret = $query->where('category_id', $category->id);
+        }
+        return $ret->get()->toArray();
     }
 }
