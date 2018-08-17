@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\ContactUs;
 
-class CreateContactUsRequest extends FormRequest
+class CreateContactUsRequest extends BaseFormRequest
 {
 
     /**

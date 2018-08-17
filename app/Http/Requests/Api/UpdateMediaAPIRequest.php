@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Http\Requests\BaseAPIRequest;
 use App\Models\Media;
-use InfyOm\Generator\Request\APIRequest;
 
-class UpdateMediaAPIRequest extends APIRequest
+class UpdateMediaAPIRequest extends BaseAPIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

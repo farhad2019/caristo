@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class UpdateModuleConfigRequest extends FormRequest
+class UpdateModuleConfigRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,11 +19,11 @@ class UpdateModuleConfigRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.*' => 'All Name Fields Are Required',
-            'label.*' => 'All Label Fields Are Required',
-            'type.*' => 'All Type Fields Are Required',
+            'name.*'       => 'All Name Fields Are Required',
+            'label.*'      => 'All Label Fields Are Required',
+            'type.*'       => 'All Type Fields Are Required',
             'validation.*' => 'All Validation Fields Are Required',
-            'width.*' => 'Width Fields Are Required'
+            'width.*'      => 'Width Fields Are Required'
         ];
     }
 
@@ -35,11 +35,11 @@ class UpdateModuleConfigRequest extends FormRequest
     public function rules()
     {
         return [
-            'name.*' => 'required',
-            'label.*' => 'required',
-            'type.*' => 'required',
+            'name.*'       => 'required',
+            'label.*'      => 'required',
+            'type.*'       => 'required',
             'validation.*' => 'required',
-            'width.*' => 'required',
+            'width.*'      => 'required',
         ];
     }
 }

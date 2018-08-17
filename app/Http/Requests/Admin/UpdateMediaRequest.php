@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Media;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateMediaRequest extends FormRequest
 {

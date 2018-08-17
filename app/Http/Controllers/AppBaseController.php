@@ -32,7 +32,7 @@ class AppBaseController extends Controller
     public function sendErrorWithData($error, $code = 404, $data = [])
     {
         if (empty($data)) {
-            $data = ['error' => $error];
+            $data = ['errors' => ["error" => [$error]]];
         }
         return Response::json(ResponseUtil::makeError($error, $data), $code);
     }

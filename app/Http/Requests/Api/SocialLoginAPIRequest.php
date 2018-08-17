@@ -2,14 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Http\Requests\BaseAPIRequest;
 use App\Models\SocialAccount;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\ValidationException;
-use InfyOm\Generator\Request\APIRequest;
-use InfyOm\Generator\Utils\ResponseUtil;
-use \Response;
 
-class SocialLoginAPIRequest extends APIRequest
+class SocialLoginAPIRequest extends BaseAPIRequest
 {
     /**
      * Determine if the user is authorized to make this registration.
@@ -29,14 +25,5 @@ class SocialLoginAPIRequest extends APIRequest
     public function rules()
     {
         return SocialAccount::$rules;
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        $excep = new ValidationException($validator);
-        $excep->errorBag($this->errorBag)->redirectTo($this->getRedirectUrl());
-        $excep->status = 200;
-        $excep->response = Response::json(ResponseUtil::makeError("Validation Error", $excep->errors()));
-        throw $excep;
     }
 }

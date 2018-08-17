@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use App\Models\Language;
 
-class UpdateLanguageRequest extends FormRequest
+class UpdateLanguageRequest extends BaseFormRequest
 {
 
     /**

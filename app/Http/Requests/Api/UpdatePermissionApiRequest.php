@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Http\Requests\BaseAPIRequest;
 use App\Models\Permission;
-use InfyOm\Generator\Request\APIRequest;
 
-class UpdatePermissionApiRequest extends APIRequest
+class UpdatePermissionApiRequest extends BaseAPIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

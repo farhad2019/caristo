@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Module;
-
-class CreateModuleRequest extends FormRequest
+class CreateModuleRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,8 +18,8 @@ class CreateModuleRequest extends FormRequest
     {
         return [
             'table_name.required' => 'Please Select table',
-            'module.required' => 'Please Enter Module Name',
-            'icon.required' => 'Select Icon',
+            'module.required'     => 'Please Enter Module Name',
+            'icon.required'       => 'Select Icon',
         ];
     }
 
@@ -35,8 +32,8 @@ class CreateModuleRequest extends FormRequest
     {
         return [
             'table_name' => 'required',
-            'module' => 'required',
-            'icon' => 'required'
+            'module'     => 'required',
+            'icon'       => 'required'
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Http\Requests\BaseAPIRequest;
 use App\Models\Language;
-use InfyOm\Generator\Request\APIRequest;
 
-class UpdateLanguageAPIRequest extends APIRequest
+class UpdateLanguageAPIRequest extends BaseAPIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

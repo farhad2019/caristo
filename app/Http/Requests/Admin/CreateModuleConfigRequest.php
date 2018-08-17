@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class CreateModuleConfigRequest extends FormRequest
+class CreateModuleConfigRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +17,7 @@ class CreateModuleConfigRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.*' => 'All Name Fields Are Required',
+            'name.*'  => 'All Name Fields Are Required',
             'width.*' => 'width Fields Are Required'
         ];
     }
@@ -32,8 +30,8 @@ class CreateModuleConfigRequest extends FormRequest
     public function rules()
     {
         return [
-            'name.*' => 'required',
-            'width.*' => 'required',
+            'name.*'    => 'required',
+            'width.*'   => 'required',
             'is_image*' => 'required'
         ];
     }

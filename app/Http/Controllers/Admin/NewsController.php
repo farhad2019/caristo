@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helper\BreadcrumbsRegister;
 use App\DataTables\Admin\NewsDataTable;
-use App\Http\Requests\Admin;
+use App\Helper\BreadcrumbsRegister;
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Admin\CreateNewsRequest;
 use App\Http\Requests\Admin\UpdateNewsRequest;
 use App\Repositories\Admin\NewsRepository;
 use Flash;
-use App\Http\Controllers\AppBaseController;
 use Response;
 
 class NewsController extends AppBaseController
@@ -38,7 +37,7 @@ class NewsController extends AppBaseController
      */
     public function index(NewsDataTable $newsDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $newsDataTable->render('admin.news.index');
     }
 
@@ -49,7 +48,7 @@ class NewsController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.news.create');
     }
 
@@ -88,7 +87,7 @@ class NewsController extends AppBaseController
             return redirect(route('admin.news.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $news);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $news);
         return view('admin.news.show')->with('news', $news);
     }
 
@@ -109,14 +108,14 @@ class NewsController extends AppBaseController
             return redirect(route('admin.news.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $news);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $news);
         return view('admin.news.edit')->with('news', $news);
     }
 
     /**
      * Update the specified News in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateNewsRequest $request
      *
      * @return Response

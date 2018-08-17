@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\Api;
 
-use App\Helpers\RESTAPIHelper;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
+use App\Http\Requests\BaseAPIRequest;
 
-class ForgotPasswordCodeRequest extends FormRequest
+class ForgotPasswordCodeRequest extends BaseAPIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,13 +15,6 @@ class ForgotPasswordCodeRequest extends FormRequest
     {
         return true;
     }
-
-
-    protected function failedValidation(Validator $validator) {
-        $response = RESTAPIHelper::response([],404,$validator->errors()->first());
-        throw new \Illuminate\Validation\ValidationException($validator, $response);
-    }
-
 
     /**
      * Get the validation rules that apply to the request.

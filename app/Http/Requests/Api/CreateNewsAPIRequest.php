@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Http\Requests\BaseAPIRequest;
 use App\Models\News;
-use InfyOm\Generator\Request\APIRequest;
 
-class CreateNewsAPIRequest extends APIRequest
+class CreateNewsAPIRequest extends BaseAPIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Api;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseAPIRequest;
 
-class UpdateUserProfileRequest extends FormRequest
+class UpdateUserProfileRequest extends BaseAPIRequest
 {
 
     public function authorize()

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Http\Requests\BaseAPIRequest;
 use App\Models\Comment;
-use InfyOm\Generator\Request\APIRequest;
 
-class CreateCommentAPIRequest extends APIRequest
+class CreateCommentAPIRequest extends BaseAPIRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use App\Models\Category;
 
-class UpdateCategoryRequest extends FormRequest
+class UpdateCategoryRequest extends BaseFormRequest
 {
 
     /**

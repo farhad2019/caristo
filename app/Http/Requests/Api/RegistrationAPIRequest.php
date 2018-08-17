@@ -2,14 +2,11 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Http\Requests\BaseAPIRequest;
 use App\Models\Register;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\ValidationException;
-use InfyOm\Generator\Request\APIRequest;
-use InfyOm\Generator\Utils\ResponseUtil;
-use \Response;
+use Response;
 
-class RegistrationAPIRequest extends APIRequest
+class RegistrationAPIRequest extends BaseAPIRequest
 {
     /**
      * Determine if the user is authorized to make this registration.
@@ -38,12 +35,4 @@ class RegistrationAPIRequest extends APIRequest
         return Register::$rules;
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        $excep = new ValidationException($validator);
-        $excep->errorBag($this->errorBag)->redirectTo($this->getRedirectUrl());
-        $excep->status = 200;
-        $excep->response = Response::json(ResponseUtil::makeError("Validation Error", ['errors' => $excep->errors()]), 200);
-        throw $excep;
-    }
 }

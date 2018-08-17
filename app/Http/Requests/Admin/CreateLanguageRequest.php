@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Language;
 
-class CreateLanguageRequest extends FormRequest
+class CreateLanguageRequest extends BaseFormRequest
 {
 
     /**

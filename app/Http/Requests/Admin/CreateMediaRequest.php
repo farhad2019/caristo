@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Media;
 
-class CreateMediaRequest extends FormRequest
+class CreateMediaRequest extends BaseFormRequest
 {
 
     /**

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Admin;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use App\Models\Role;
 
-class CreateRoleRequest extends FormRequest
+class CreateRoleRequest extends BaseFormRequest
 {
 
     /**

@@ -116,7 +116,7 @@ class NewsInteraction extends Model
      */
     public static $api_rules = [
 //        'user_id' => 'required',
-        'news_id' => 'required',
+        'news_id' => 'required|exists:news,id',
         'type'    => [
             'required',
             'integer',

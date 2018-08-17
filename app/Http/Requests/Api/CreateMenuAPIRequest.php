@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Http\Requests\BaseAPIRequest;
 use App\Models\Menu;
-use InfyOm\Generator\Request\APIRequest;
 
-class CreateMenuAPIRequest extends APIRequest
+class CreateMenuAPIRequest extends BaseAPIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
