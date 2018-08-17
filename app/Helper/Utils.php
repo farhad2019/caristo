@@ -26,7 +26,7 @@ class Utils
         $mediaFile->move($basePath, $mediaFile->getClientOriginalName());
 
         $image = Image::make($basePath . DIRECTORY_SEPARATOR . $mediaFile->getClientOriginalName());
-        $image->save($baseFilePath, 'jpg', 100);
+        $image->save($baseFilePath, 100);
         unset($image);
         $image = null;
         unlink($basePath . DIRECTORY_SEPARATOR . $mediaFile->getClientOriginalName());

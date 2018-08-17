@@ -1,0 +1,1 @@
+Folder to keep uploaded media files here.
