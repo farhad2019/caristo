@@ -103,7 +103,7 @@ class News extends Model
      */
     protected $with = [
         'media',
-        'category'
+//        'category'
     ];
 
     /**
@@ -138,7 +138,7 @@ class News extends Model
         'is_viewed',
         'is_favorite',
         'media',
-        'category'
+//        'category'
 //        'deleted_at'
     ];
 

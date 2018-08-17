@@ -889,28 +889,11 @@ class AuthAPIController extends AppBaseController
 
         \App::setLocale($request->get('locale', 'en'));
         // Implement apply() method.
-        $category_id = $request->get('category_id', 0);
-        if ($category_id > 0) {
-            $category = $this->categoryRepo->findWithoutFail($category_id);
-            $favorites = $this->getChildFavorites($category);
-        } else {
-            $favorites = [];
-            foreach ($this->categoryRepo->getRootCategories() as $rootCategory) {
-                $favorites = array_merge($favorites, $this->getChildFavorites($rootCategory));
-            }
-        }
-        return $this->sendResponse($favorites, 'Favorite News retrieved successfully');
+        $categories = $this->userRepository->findFavoriteNews($request, $this->categoryRepo);
+
+
+        return $this->sendResponse($categories, 'Favorite News retrieved successfully');
     }
 
-    private function getChildFavorites($category)
-    {
-        $ret = [];
-        $query = \Auth::user()->favorites()->orderBy('news.category_id');
-        if ($category->childCategory()->count() > 0) {
-            $ret = $query->whereIn('category_id', $category->childCategory()->pluck('id')->toArray())->selectRaw("news.*, $category->id as category_id");
-        } else {
-            $ret = $query->where('category_id', $category->id);
-        }
-        return $ret->get()->toArray();
-    }
+
 }
