@@ -154,7 +154,8 @@ class CommentAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $comments = $this->commentRepository->createRecord($request);
+        $comment = $this->commentRepository->createRecord($request);
+        $comments = $this->commentRepository->findWithoutFail($comment->id);
 
         return $this->sendResponse($comments->toArray(), 'Comment saved successfully');
     }

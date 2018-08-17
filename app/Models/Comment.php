@@ -79,7 +79,16 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'comment_text',
+        'parent_id',
+        'news_id',
+        'user_id',
+        'created_at',
+        'updated_at',
+        'user'
+    ];
 
     /**
      * Validation create rules
