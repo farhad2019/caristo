@@ -18,6 +18,7 @@ use App\Repositories\Admin\UdeviceRepository;
 use App\Repositories\Admin\UserdetailRepository;
 use App\Repositories\Admin\UserRepository;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -832,5 +833,90 @@ class AuthAPIController extends AppBaseController
 
         return $this->sendResponse(['user' => $userData], 'Profile Updated Successfully');
 
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     *
+     * @SWG\Get(
+     *      path="/favorite-articles",
+     *      summary="Get a listing of the favorite articles.",
+     *      tags={"Authorization"},
+     *      description="Get a listing of the favorite articles",
+     *      produces={"application/json"},
+     *     @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *     @SWG\Parameter(
+     *          name="locale",
+     *          description="Response Language",
+     *          type="string",
+     *          default="en",
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="limit",
+     *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *     @SWG\Parameter(
+     *          name="offset",
+     *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="category_id",
+     *          description="Category ID if you need favorites for specific category",
+     *          type="integer",
+     *          required=false,
+     *          default=0,
+     *          in="query"
+     *      ),
+     *      @SWG\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(
+     *                  property="success",
+     *                  type="boolean"
+     *              ),
+     *              @SWG\Property(
+     *                  property="data",
+     *                  type="array",
+     *                  @SWG\Items(ref="#/definitions/News")
+     *              ),
+     *              @SWG\Property(
+     *                  property="message",
+     *                  type="string"
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function favoriteArticlesIndex(Request $request)
+    {
+
+        \App::setLocale($request->get('locale', 'en'));
+        $favorites = \Auth::user()->favorites();
+        // Implement apply() method.
+        $category_id = $request->get('category_id', 0);
+
+        if ($category_id > 0) {
+            $favorites->where('category_id', $category_id);
+        }
+        $favorites = $favorites->get();
+
+        return $this->sendResponse($favorites->toArray(), 'Favorite News retrieved successfully');
     }
 }
