@@ -102,7 +102,8 @@ class News extends Model
      * @var array
      */
     protected $with = [
-        'media'
+        'media',
+        'category'
     ];
 
     /**
@@ -137,6 +138,7 @@ class News extends Model
         'is_viewed',
         'is_favorite',
         'media',
+        'category'
 //        'deleted_at'
     ];
 
@@ -191,6 +193,12 @@ class News extends Model
     public function favorites()
     {
         return $this->hasMany(NewsInteraction::class)->where('type', NewsInteraction::TYPE_FAVORITE);
+    }
+
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function Media()

@@ -840,10 +840,10 @@ class AuthAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Get(
-     *      path="/favorite-articles",
-     *      summary="Get a listing of the favorite articles.",
+     *      path="/favorite-news",
+     *      summary="Get a listing of the favorite news.",
      *      tags={"Authorization"},
-     *      description="Get a listing of the favorite articles",
+     *      description="Get a listing of the favorite news",
      *      produces={"application/json"},
      *     @SWG\Parameter(
      *          name="Authorization",
@@ -904,11 +904,11 @@ class AuthAPIController extends AppBaseController
      *      )
      * )
      */
-    public function favoriteArticlesIndex(Request $request)
+    public function favoriteNewsIndex(Request $request)
     {
 
         \App::setLocale($request->get('locale', 'en'));
-        $favorites = \Auth::user()->favorites();
+        $favorites = \Auth::user()->favorites()->orderBy('category_id');
         // Implement apply() method.
         $category_id = $request->get('category_id', 0);
 
