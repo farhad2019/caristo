@@ -78,7 +78,7 @@ class NewsRepository extends BaseRepository
                 $media[] = Utils::handlePicture($mediaFile);
             }
             // TODO: We are deleting all other media for now.
-            $data->media->detach();
+            $data->media()->detach();
             $data->media()->createMany($media);
         }
         return $data;
