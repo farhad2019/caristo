@@ -21,7 +21,14 @@ class CategoryDataTable extends DataTable
         $dataTable->editColumn('parent.name', function (Category $model) {
             return ($model->parentCategory) ? "<span class='label label-success'>" . $model->parentCategory->name . "</span>" : "<span class='label label-default'>None</span>";
         });
-        $dataTable->rawColumns(['parent.name', 'action']);
+        $dataTable->editColumn('image', function (Category $model) {
+            if (count($model->media) > 0)
+                return "<img src='" . $model->media[0]->fileUrl . "' width='80'/>";
+            else {
+                return "<span class='label label-default'>None</span>";
+            }
+        });
+        $dataTable->rawColumns(['image', 'parent.name', 'action']);
         return $dataTable->addColumn('action', 'admin.categories.datatables_actions');
     }
 
@@ -75,6 +82,7 @@ class CategoryDataTable extends DataTable
             'id',
 //            'slug',
             'name',
+            'image',
             'parent.name' => [
                 'title' => 'Parent Category'
             ]

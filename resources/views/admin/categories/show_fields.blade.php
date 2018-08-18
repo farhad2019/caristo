@@ -14,6 +14,16 @@
 <dt>{!! Form::label('parent', 'Parent Category:') !!}</dt>
 <dd>{!! $category->parentCategory ? "<span class='label label-success'>".$category->parentCategory->name."</span>" : "<span class='label label-default'>No Parent</span>" !!}</dd>
 
+@if(isset($category) && count($category->media)>0)
+    <dt>{!! Form::label('image', 'Image:') !!}</dt>
+
+    <dd>
+        @foreach($category->media as $media)
+            <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+        @endforeach
+    </dd>
+@endif
+
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created on:') !!}</dt>
 <dd>{!! $category->created_at !!}</dd>

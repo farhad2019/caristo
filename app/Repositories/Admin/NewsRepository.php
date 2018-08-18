@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin;
 
+use App\Helper\Utils;
 use App\Models\News;
 use Illuminate\Http\Request;
 use InfyOm\Generator\Common\BaseRepository;
@@ -47,12 +48,37 @@ class NewsRepository extends BaseRepository
     {
         $input = $request->all();
         $input['user_id'] = \Auth::id();
-        return $this->create($input);
+        $data = $this->create($input);
+        // Media Data
+        if ($request->hasFile('media')) {
+            $media = [];
+            $mediaFiles = $request->file('media');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+
+            $data->media()->createMany($media);
+        }
+        return $data;
     }
 
     public function updateRecord(Request $request, $id)
     {
         $input = $request->all();
-        return $this->update($input, $id);
+        $data = $this->update($input, $id);
+        // Media Data
+        if ($request->hasFile('media')) {
+            $media = [];
+            $mediaFiles = $request->file('media');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+            $data->media()->createMany($media);
+        }
+        return $data;
     }
 }

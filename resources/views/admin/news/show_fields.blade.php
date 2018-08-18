@@ -40,6 +40,16 @@
     <span class='label label-{{App\Helper\Utils::getBoolCss($news->is_featured)}}'>{!! App\Helper\Utils::getBoolText($news->is_featured)  !!}</span>
 </dd>
 
+@if(isset($news) && count($news->media)>0)
+    <dt>{!! Form::label('image', 'Image:') !!}</dt>
+
+    <dd>
+        @foreach($news->media as $media)
+            <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+        @endforeach
+    </dd>
+@endif
+
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>
 <dd>{!! $news->created_at !!}</dd>

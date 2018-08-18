@@ -22,6 +22,13 @@ class NewsDataTable extends DataTable
         $dataTable->editColumn('category.name', function (News $model) {
             return ($model->category) ? "<span class='label label-success'>" . $model->category->name . "</span>" : "<span class='label label-default'>None</span>";
         });
+        $dataTable->editColumn('image', function (News $model) {
+            if (count($model->media) > 0)
+                return "<img src='" . $model->media[0]->fileUrl . "' width='80'/>";
+            else {
+                return "<span class='label label-default'>None</span>";
+            }
+        });
         $dataTable->editColumn('views_count', function (News $model) {
             return "<span class='badge badge-success'>" . $model->views_count . "</span>";
         });
@@ -34,7 +41,7 @@ class NewsDataTable extends DataTable
         $dataTable->editColumn('is_featured', function (News $model) {
             return "<span class='badge bg-" . Utils::getBoolCss($model->is_featured, true) . "'>" . Utils::getBoolText($model->is_featured) . "</span>";
         });
-        $dataTable->rawColumns(['category.name', 'action', 'views_count', 'like_count', 'comments_count', 'is_featured']);
+        $dataTable->rawColumns(['category.name', 'image', 'action', 'views_count', 'like_count', 'comments_count', 'is_featured']);
         return $dataTable->addColumn('action', 'admin.news.datatables_actions');
     }
 
@@ -86,10 +93,11 @@ class NewsDataTable extends DataTable
     {
         return [
             'id',
+            'headline',
             'category.name'  => [
                 'title' => 'Category'
             ],
-            'headline',
+            'image',
             'views_count'    => [
                 'title' => 'Views'
             ],

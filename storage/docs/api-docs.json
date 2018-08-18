@@ -3628,7 +3628,6 @@
             "required": [
                 "name",
                 "email",
-                "phone",
                 "address",
                 "image",
                 "password",
@@ -3641,6 +3640,10 @@
                 },
                 "address": {
                     "description": "User address",
+                    "type": "string"
+                },
+                "country_code": {
+                    "description": "User Country code for phone",
                     "type": "string"
                 },
                 "phone": {
