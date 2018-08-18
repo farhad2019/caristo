@@ -142,7 +142,7 @@ class CategoryController extends AppBaseController
             return redirect(route('admin.categories.index'));
         }
 
-        $this->categoryRepository->updateRecord($id, $request);
+        $this->categoryRepository->updateRecord($category, $request);
 //        $category = $this->categoryRepository->update($request->all(), $id);
 
         Flash::success('Category updated successfully.');

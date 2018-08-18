@@ -19,7 +19,7 @@
     {!! Form::select('parent_id', $root, (isset($category) ? $category->parent_id : null), ['class' => 'form-control select2']) !!}
 </div>
 <!-- Slug Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('media[]', 'Image:') !!}
     {!! Form::file('media[]', null, ['class' => 'form-control']) !!}
     @if(isset($category) && count($category->media)>0)

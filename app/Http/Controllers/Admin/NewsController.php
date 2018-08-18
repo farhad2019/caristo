@@ -156,7 +156,7 @@ class NewsController extends AppBaseController
             return redirect(route('admin.news.index'));
         }
 
-        $news = $this->newsRepository->updateRecord($request, $id);
+        $news = $this->newsRepository->updateRecord($request, $news);
 
         Flash::success('News updated successfully.');
 

@@ -64,7 +64,12 @@ class NewsRepository extends BaseRepository
         return $data;
     }
 
-    public function updateRecord(Request $request, $id)
+    /**
+     * @param Request $request
+     * @param News $news
+     * @return mixed
+     */
+    public function updateRecord(Request $request, $news)
     {
         $input = $request->all();
         $data = $this->update($input, $id);
@@ -78,7 +83,7 @@ class NewsRepository extends BaseRepository
                 $media[] = Utils::handlePicture($mediaFile);
             }
             // TODO: We are deleting all other media for now.
-            $data->media()->detach();
+            $news->media()->delete();
             $data->media()->createMany($media);
         }
         return $data;

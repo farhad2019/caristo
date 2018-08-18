@@ -63,12 +63,18 @@ class CategoryRepository extends BaseRepository
         return $data;
     }
 
-    public function updateRecord($id, Request $request)
+
+    /**
+     * @param Category $category
+     * @param Request $request
+     * @return mixed
+     */
+    public function updateRecord($category, Request $request)
     {
         $input = $request->all();
         $input['user_id'] = \Auth::id();
 
-        $data = $this->update($input, $id);
+        $data = $this->update($input, $category->id);
         // Media Data
         if ($request->hasFile('media')) {
             $media = [];
@@ -80,8 +86,8 @@ class CategoryRepository extends BaseRepository
             }
 
             // TODO: We are deleting all other media for now.
-            $data->media()->detach();
-            $data->media()->createMany($media);
+            $category->media()->delete();
+            $category->media()->createMany($media);
         }
         return $data;
     }
