@@ -40,6 +40,9 @@ ALTER TABLE `social_accounts` CHANGE `token` `token` VARCHAR(255) CHARSET utf8 C
 ALTER TABLE `user_devices` CHANGE `device_token` `device_token` VARCHAR(191) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
 ALTER TABLE `user_details` ADD COLUMN `social_login` BOOLEAN DEFAULT 0 NULL AFTER `email_updates`;
 ALTER TABLE `caristocrat`.`user_details` ADD COLUMN `about` TEXT NULL AFTER `image`;
+ALTER TABLE `caristocrat`.`user_details` ADD COLUMN `country_code` VARCHAR(191) NULL AFTER `last_name`;
+
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

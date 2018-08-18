@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer user_id
  * @property string first_name
  * @property string last_name
+ * @property string country_code
  * @property string phone
  * @property string address
  * @property string image
@@ -58,6 +59,7 @@ class UserDetail extends Model
         'user_id'       => 'int',
         'first_name'    => 'string',
         'last_name'     => 'string',
+        'country_code'  => 'string',
         'phone'         => 'string',
         'address'       => 'string',
         'image'         => 'string',

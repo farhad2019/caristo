@@ -97,6 +97,7 @@ class AuthAPIController extends AppBaseController
 
             $userDetails['user_id'] = $user->id;
             $userDetails['first_name'] = ucwords($request->name);
+            $userDetails['country_code'] = $request->country_code;
             $userDetails['phone'] = $request->phone;
             $userDetails['address'] = isset($request->address) ? $request->address : null;
             $userDetails['image'] = isset($request->image) ? $request->image : null;
@@ -804,10 +805,10 @@ class AuthAPIController extends AppBaseController
         }
 
         if (count($details) > 0) {
-            if (!empty($details['phone'])) {
-                $details['phone'] = $details['country_code'] . $details['phone'];
-                unset($details['country_code']);
-            }
+//            if (!empty($details['phone'])) {
+//                $details['phone'] = $details['country_code'] . $details['phone'];
+//                unset($details['country_code']);
+//            }
             $this->userDetailRepository->update($details, $user->details->id);
         }
 

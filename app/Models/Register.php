@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Hash;
-
 /**
  * @SWG\Definition(
  *      definition="Register",
- *      required={"name", "email", "phone", "address", "image", "password", "password_confirmation"},
+ *      required={"name", "email", "address", "image", "password", "password_confirmation"},
  *      @SWG\Property(
  *          property="name",
  *          description="User First Name",
@@ -15,6 +13,10 @@ use Illuminate\Support\Facades\Hash;
  *      ),@SWG\Property(
  *          property="address",
  *          description="User address",
+ *          type="string"
+ *      ),@SWG\Property(
+ *          property="country_code",
+ *          description="User Country code for phone",
  *          type="string"
  *      ),@SWG\Property(
  *          property="phone",
@@ -58,6 +60,7 @@ class Register
         'name'                  => 'required',
         'email'                 => 'required|email|unique:users,email',
         'password'              => 'min:6|required_with:password_confirmation|same:password_confirmation',
-        'password_confirmation' => 'min:6'
+        'password_confirmation' => 'min:6',
+        'device_type'           => 'required|in:ios,android,web'
     ];
 }

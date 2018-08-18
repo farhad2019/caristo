@@ -12,19 +12,15 @@ class UpdateUserProfileRequest extends BaseAPIRequest
         return true;
     }
 
-
-    /*protected function failedValidation(Validator $validator)
-    {
-//        $response = RESTAPIHelper::response([], 404, $validator->errors()->first());
-        return \Response::json(ResponseUtil::makeError('Validation Error', ['error' => $validator->errors()->first()]), 404);
-//        throw new \Illuminate\Validation\ValidationException($validator, $response);
-    }*/
-
-
     public function rules()
     {
         return [
 //            'email' => 'required'
+            'name'         => 'string',
+            'country_code' => 'string',
+            'phone'        => 'string',
+            'about'        => 'string',
+            'image'        => 'image',
         ];
     }
 
