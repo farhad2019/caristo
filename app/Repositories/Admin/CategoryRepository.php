@@ -78,6 +78,9 @@ class CategoryRepository extends BaseRepository
             foreach ($mediaFiles as $mediaFile) {
                 $media[] = Utils::handlePicture($mediaFile);
             }
+
+            // TODO: We are deleting all other media for now.
+            $data->media->detach();
             $data->media()->createMany($media);
         }
         return $data;
