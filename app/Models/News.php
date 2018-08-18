@@ -97,6 +97,19 @@ class News extends Model
     ];
 
     /**
+     * The default values that should be applied to attributes
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'views_count'    => 0,
+        'favorite_count' => 0,
+        'like_count'     => 0,
+        'comments_count' => 0,
+        'is_featured'    => 0
+    ];
+
+    /**
      * The objects that should be append to toArray.
      *
      * @var array
@@ -148,7 +161,7 @@ class News extends Model
      * @var array
      */
     public static $rules = [
-        'id'          => 'required',
+//        'id'          => 'required',
         'category_id' => 'required',
         'is_featured' => 'required'
     ];
@@ -159,7 +172,7 @@ class News extends Model
      * @var array
      */
     public static $update_rules = [
-        'id'          => 'required',
+//        'id'          => 'required',
         'category_id' => 'required',
         'is_featured' => 'required'
     ];
@@ -170,7 +183,7 @@ class News extends Model
      * @var array
      */
     public static $api_rules = [
-        'id'          => 'required',
+//        'id'          => 'required',
         'category_id' => 'required',
         'is_featured' => 'required'
     ];

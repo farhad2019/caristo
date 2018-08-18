@@ -7,6 +7,7 @@ use App\Helper\BreadcrumbsRegister;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Admin\CreateNewsRequest;
 use App\Http\Requests\Admin\UpdateNewsRequest;
+use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\NewsRepository;
 use Flash;
 use Response;
@@ -22,9 +23,13 @@ class NewsController extends AppBaseController
     /** @var  NewsRepository */
     private $newsRepository;
 
-    public function __construct(NewsRepository $newsRepo)
+    /** @var  CategoryRepository */
+    private $categoryRepository;
+
+    public function __construct(NewsRepository $newsRepo, CategoryRepository $categoryRepository)
     {
         $this->newsRepository = $newsRepo;
+        $this->categoryRepository = $categoryRepository;
         $this->ModelName = 'news';
         $this->BreadCrumbName = 'News';
     }
@@ -49,7 +54,16 @@ class NewsController extends AppBaseController
     public function create()
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return view('admin.news.create');
+        $categories = [];
+        $cats = $this->categoryRepository->getRootCategories();
+        foreach ($cats as $category) {
+            if ($category->childCategory()->count() > 0) {
+                $categories[$category->name] = $category->childCategory->pluck('name', 'id');
+            } else {
+                $categories[$category->name] = [$category->id => $category->name];
+            }
+        }
+        return view('admin.news.create')->with('categories', $categories);
     }
 
     /**
@@ -61,9 +75,7 @@ class NewsController extends AppBaseController
      */
     public function store(CreateNewsRequest $request)
     {
-        $input = $request->all();
-
-        $news = $this->newsRepository->create($input);
+        $news = $this->newsRepository->createRecord($request);
 
         Flash::success('News saved successfully.');
 
@@ -109,7 +121,21 @@ class NewsController extends AppBaseController
         }
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $news);
-        return view('admin.news.edit')->with('news', $news);
+        $categories = [];
+        $cats = $this->categoryRepository->getRootCategories();
+        foreach ($cats as $category) {
+            if ($category->childCategory()->count() > 0) {
+                $categories[$category->name] = $category->childCategory->pluck('name', 'id');
+            } else {
+                $categories[$category->name] = [$category->id => $category->name];
+            }
+        }
+
+
+        return view('admin.news.edit')->with([
+            'news'       => $news,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -130,7 +156,7 @@ class NewsController extends AppBaseController
             return redirect(route('admin.news.index'));
         }
 
-        $news = $this->newsRepository->update($request->all(), $id);
+        $news = $this->newsRepository->updateRecord($request, $id);
 
         Flash::success('News updated successfully.');
 

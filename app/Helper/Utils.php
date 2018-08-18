@@ -12,6 +12,23 @@ use Image;
 
 class Utils
 {
+
+    const BOOL_FALSE = 0;
+    const BOOL_TRUE = 1;
+
+    public static $BOOLS = [
+        self::BOOL_FALSE => "No",
+        self::BOOL_TRUE  => "Yes",
+    ];
+    public static $BOOLS_CSS = [
+        self::BOOL_FALSE => "danger",
+        self::BOOL_TRUE  => "success",
+    ];
+    public static $BOOLS_BG_CSS = [
+        self::BOOL_FALSE => "red",
+        self::BOOL_TRUE  => "green",
+    ];
+
     public static function handlePicture($mediaFile, $folder = "media_files")
     {
         $rand = time();
@@ -34,5 +51,15 @@ class Utils
             'title'    => $mediaFile->getClientOriginalName(),
             'filename' => $folder . '/' . $filename
         ];
+    }
+
+    public static function getBoolText($value)
+    {
+        return self::$BOOLS[$value];
+    }
+
+    public static function getBoolCss($value, $bg = false)
+    {
+        return $bg ? self::$BOOLS_BG_CSS[$value] : self::$BOOLS_CSS[$value];
     }
 }

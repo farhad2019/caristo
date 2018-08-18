@@ -67,6 +67,7 @@ class CategoryRepository extends BaseRepository
     {
         $input = $request->all();
         $input['user_id'] = \Auth::id();
+
         $data = $this->update($input, $id);
         // Media Data
         if ($request->hasFile('media')) {

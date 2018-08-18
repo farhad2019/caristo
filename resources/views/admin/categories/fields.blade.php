@@ -10,8 +10,24 @@
 </div>
 <!-- Slug Field -->
 <div class="form-group col-sm-6">
+    {!! Form::label('subtitle', 'Sub Title:') !!}
+    {!! Form::text('subtitle', null, ['class' => 'form-control']) !!}
+</div>
+<!-- Slug Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('parent_id', 'Parent Category:') !!}
+    {!! Form::select('parent_id', $root, (isset($category) ? $category->parent_id : null), ['class' => 'form-control select2']) !!}
+</div>
+<!-- Slug Field -->
+<div class="form-group col-sm-6">
     {!! Form::label('media[]', 'Image:') !!}
     {!! Form::file('media[]', null, ['class' => 'form-control']) !!}
+    @if(isset($category) && count($category->media)>0)
+        @foreach($category->media as $media)
+            <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+        @endforeach
+    @endif
+
 </div>
 
 <!-- Submit Field -->

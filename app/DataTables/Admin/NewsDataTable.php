@@ -2,9 +2,10 @@
 
 namespace App\DataTables\Admin;
 
+use App\Helper\Utils;
 use App\Models\News;
-use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
+use Yajra\DataTables\Services\DataTable;
 
 class NewsDataTable extends DataTable
 {
@@ -18,6 +19,22 @@ class NewsDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
+        $dataTable->editColumn('category.name', function (News $model) {
+            return ($model->category) ? "<span class='label label-success'>" . $model->category->name . "</span>" : "<span class='label label-default'>None</span>";
+        });
+        $dataTable->editColumn('views_count', function (News $model) {
+            return "<span class='badge badge-success'>" . $model->views_count . "</span>";
+        });
+        $dataTable->editColumn('like_count', function (News $model) {
+            return "<span class='badge badge-success'>" . $model->like_count . "</span>";
+        });
+        $dataTable->editColumn('comments_count', function (News $model) {
+            return "<span class='badge badge-success'>" . $model->comments_count . "</span>";
+        });
+        $dataTable->editColumn('is_featured', function (News $model) {
+            return "<span class='badge bg-" . Utils::getBoolCss($model->is_featured, true) . "'>" . Utils::getBoolText($model->is_featured) . "</span>";
+        });
+        $dataTable->rawColumns(['category.name', 'action', 'views_count', 'like_count', 'comments_count', 'is_featured']);
         return $dataTable->addColumn('action', 'admin.news.datatables_actions');
     }
 
@@ -69,12 +86,24 @@ class NewsDataTable extends DataTable
     {
         return [
             'id',
-            'category_id',
-            'views_count',
-            'favorite_count',
-            'like_count',
-            'comments_count',
-            'created_at'
+            'category.name'  => [
+                'title' => 'Category'
+            ],
+            'headline',
+            'views_count'    => [
+                'title' => 'Views'
+            ],
+//            'favorite_count' => [
+//                'title' => 'Views'
+//            ],
+            'like_count'     => [
+                'title' => 'Likes'
+            ],
+            'comments_count' => [
+                'title' => 'Comments'
+            ],
+            'is_featured'
+//            'created_at'
         ];
     }
 

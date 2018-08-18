@@ -1,34 +1,44 @@
-<!-- Id Field -->
-<dt>{!! Form::label('id', 'Id:') !!}</dt>
-<dd>{!! $news->id !!}</dd>
-
 <!-- Category Id Field -->
-<dt>{!! Form::label('category_id', 'Category Id:') !!}</dt>
-<dd>{!! $news->category_id !!}</dd>
+<dt>{!! Form::label('category_id', 'Category:') !!}</dt>
+{{--<dd>{!! $news->category->name !!}</dd>--}}
+<dd>
+    <h3 class='label label-success'>{!! $news->category->name !!}</h3>
+</dd>
 
-<!-- User Id Field -->
-<dt>{!! Form::label('user_id', 'User Id:') !!}</dt>
-<dd>{!! $news->user_id !!}</dd>
+
+<!-- Headline Field -->
+<dt>{!! Form::label('headline', 'Headline:') !!}</dt>
+<dd>{!! $news->headline !!}</dd>
+
+<!-- Headline Field -->
+<dt>{!! Form::label('description', 'Description:') !!}</dt>
+<dd>{!! nl2br($news->description) !!}</dd>
+
+<!-- Headline Field -->
+<dt>{!! Form::label('source', 'Source:') !!}</dt>
+<dd>{!! $news->source !!}</dd>
 
 <!-- Views Count Field -->
 <dt>{!! Form::label('views_count', 'Views Count:') !!}</dt>
-<dd>{!! $news->views_count !!}</dd>
+<dd><span class='badge badge-success'>{!! $news->views_count  !!}</span></dd>
 
 <!-- Favorite Count Field -->
 <dt>{!! Form::label('favorite_count', 'Favorite Count:') !!}</dt>
-<dd>{!! $news->favorite_count !!}</dd>
+<dd><span class='badge badge-success'>{!! $news->favorite_count  !!}</span></dd>
 
 <!-- Like Count Field -->
 <dt>{!! Form::label('like_count', 'Like Count:') !!}</dt>
-<dd>{!! $news->like_count !!}</dd>
+<dd><span class='badge badge-success'>{!! $news->like_count  !!}</span></dd>
 
 <!-- Comments Count Field -->
 <dt>{!! Form::label('comments_count', 'Comments Count:') !!}</dt>
-<dd>{!! $news->comments_count !!}</dd>
+<dd><span class='badge badge-success'>{!! $news->comments_count  !!}</span></dd>
 
 <!-- Is Featured Field -->
 <dt>{!! Form::label('is_featured', 'Is Featured:') !!}</dt>
-<dd>{!! $news->is_featured !!}</dd>
+<dd>
+    <span class='label label-{{App\Helper\Utils::getBoolCss($news->is_featured)}}'>{!! App\Helper\Utils::getBoolText($news->is_featured)  !!}</span>
+</dd>
 
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>
@@ -38,7 +48,7 @@
 <dt>{!! Form::label('updated_at', 'Updated At:') !!}</dt>
 <dd>{!! $news->updated_at !!}</dd>
 
-<!-- Deleted At Field -->
-<dt>{!! Form::label('deleted_at', 'Deleted At:') !!}</dt>
-<dd>{!! $news->deleted_at !!}</dd>
+{{--<!-- Deleted At Field -->--}}
+{{--<dt>{!! Form::label('deleted_at', 'Deleted At:') !!}</dt>--}}
+{{--<dd>{!! $news->deleted_at !!}</dd>--}}
 

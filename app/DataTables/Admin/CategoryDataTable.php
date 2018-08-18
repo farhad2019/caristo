@@ -18,6 +18,10 @@ class CategoryDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
+        $dataTable->editColumn('parent.name', function (Category $model) {
+            return ($model->parentCategory) ? "<span class='label label-success'>" . $model->parentCategory->name . "</span>" : "<span class='label label-default'>None</span>";
+        });
+        $dataTable->rawColumns(['parent.name', 'action']);
         return $dataTable->addColumn('action', 'admin.categories.datatables_actions');
     }
 
@@ -69,9 +73,12 @@ class CategoryDataTable extends DataTable
     {
         return [
             'id',
-            'slug',
+//            'slug',
             'name',
-            'created_at'
+            'parent.name' => [
+                'title' => 'Parent Category'
+            ]
+//            'created_at'
         ];
     }
 

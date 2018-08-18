@@ -42,8 +42,10 @@ class Category extends Model
     protected $dates = ['deleted_at'];
 
     public $fillable = [
+        'name',
         'slug',
-        'user_id'
+        'user_id',
+        'parent_id'
     ];
 
     /**
@@ -153,5 +155,4 @@ class Category extends Model
     {
         return 'category';
     }
-
 }

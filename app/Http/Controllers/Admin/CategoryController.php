@@ -22,6 +22,8 @@ class CategoryController extends AppBaseController
     /** @var  CategoryRepository */
     private $categoryRepository;
 
+    private $parent = [0 => '(No Parent)'];
+
     public function __construct(CategoryRepository $categoryRepo)
     {
         $this->categoryRepository = $categoryRepo;
@@ -49,7 +51,10 @@ class CategoryController extends AppBaseController
     public function create()
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return view('admin.categories.create');
+
+        $root = $this->parent + $this->categoryRepository->getRootCategories()->pluck('name', 'id')->toArray();
+
+        return view('admin.categories.create')->with('root', $root);
     }
 
     /**
@@ -108,7 +113,15 @@ class CategoryController extends AppBaseController
         }
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $category);
-        return view('admin.categories.edit')->with('category', $category);
+
+        $root = $this->parent + $this->categoryRepository->getRootCategories()->pluck('name', 'id')->toArray();
+
+        unset($root[$id]);
+
+        return view('admin.categories.edit')->with([
+            'category' => $category,
+            'root'     => $root
+        ]);
     }
 
     /**
