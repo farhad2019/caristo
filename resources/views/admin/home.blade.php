@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="content">
         <div class="row">
             <div class="col-lg-3 col-xs-4">
                 <!-- small box -->
@@ -38,13 +38,28 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>{{ $modules }}</h3>
-                        <p>Modules</p>
+                        <h3>{{ $categories }}</h3>
+                        <p>Categories</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
                     </div>
-                    <a href="{{ route('admin.modules.index') }}" class="small-box-footer">More info
+                    <a href="{{ route('admin.categories.index') }}" class="small-box-footer">More info
+                        <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-4">
+                <!-- small box -->
+                <div class="small-box bg-purple">
+                    <div class="inner">
+                        <h3>{{ $news }}</h3>
+                        <p>News</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="{{ route('admin.categories.index') }}" class="small-box-footer">More info
                         <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>

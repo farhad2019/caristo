@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helper\BreadcrumbsRegister;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Menu;
 use App\Models\Module;
+use App\Models\News;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
@@ -86,7 +87,14 @@ dd($rows);*/
         $users = User::all()->count();
         $roles = Role::all()->count();
         $modules = Module::all()->count();
+        $categories = Category::all()->count();
+        $news = News::all()->count();
         BreadcrumbsRegister::Register();
-        return view('admin.home')->with(['users' => $users, 'roles' => $roles, 'modules' => $modules]);
+        return view('admin.home')->with([
+            'users'      => $users,
+            'roles'      => $roles,
+            'categories' => $categories,
+            'news'       => $news,
+            'modules'    => $modules]);
     }
 }
