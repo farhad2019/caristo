@@ -72,7 +72,7 @@ class NewsRepository extends BaseRepository
     public function updateRecord(Request $request, $news)
     {
         $input = $request->all();
-        $data = $this->update($input, $id);
+        $data = $this->update($input, $news->id);
         // Media Data
         if ($request->hasFile('media')) {
             $media = [];
