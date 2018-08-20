@@ -16,9 +16,13 @@ class CategoryDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $query = $query->with('translations', 'parentCategory.translations');
         $dataTable = new EloquentDataTable($query);
 
-        $dataTable->editColumn('parent.name', function (Category $model) {
+        $dataTable->editColumn('translations.name', function (Category $model) {
+            return $model->name;
+        });
+        $dataTable->editColumn('parentCategory.translations.name', function (Category $model) {
             return ($model->parentCategory) ? "<span class='label label-success'>" . $model->parentCategory->name . "</span>" : "<span class='label label-default'>None</span>";
         });
         $dataTable->editColumn('image', function (Category $model) {
@@ -28,7 +32,7 @@ class CategoryDataTable extends DataTable
                 return "<span class='label label-default'>None</span>";
             }
         });
-        $dataTable->rawColumns(['image', 'parent.name', 'action']);
+        $dataTable->rawColumns(['image', 'parentCategory.translations.name', 'action']);
         return $dataTable->addColumn('action', 'admin.categories.datatables_actions');
     }
 
@@ -81,9 +85,14 @@ class CategoryDataTable extends DataTable
         return [
             'id',
 //            'slug',
-            'name',
-            'image',
-            'parent.name' => [
+            'translations.name'                => [
+                'title' => 'Name'
+            ],
+            'image'                            => [
+                'orderable'  => false,
+                'searchable' => false,
+            ],
+            'parentCategory.translations.name' => [
                 'title' => 'Parent Category'
             ]
 //            'created_at'
