@@ -36,16 +36,16 @@ class NewsDataTable extends DataTable
             }
         });
         $dataTable->editColumn('views_count', function (News $model) {
-            return "<span class='badge badge-success'>" . $model->views_count . "</span>";
+            return "<span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->views_count . "</span>";
         });
         $dataTable->editColumn('like_count', function (News $model) {
-            return "<span class='badge badge-success'>" . $model->like_count . "</span>";
+            return "<span class='badge badge-success'> <i class='fa fa-thumbs-up'></i> " . $model->like_count . "</span>";
         });
         $dataTable->editColumn('comments_count', function (News $model) {
-            return "<span class='badge badge-success'>" . $model->comments_count . "</span>";
+            return "<span class='badge badge-success'> <i class='fa fa-comments'></i> " . $model->comments_count . "</span>";
         });
         $dataTable->editColumn('is_featured', function (News $model) {
-            return "<span class='badge bg-" . Utils::getBoolCss($model->is_featured, true) . "'>" . Utils::getBoolText($model->is_featured) . "</span>";
+            return "<span class='badge bg-" . Utils::getBoolCss($model->is_featured, true) . "'> <i class='fa fa-" . ($model->is_featured ? "check" : "times") . "'></i> " . Utils::getBoolText($model->is_featured) . "</span>";
         });
         $dataTable->rawColumns(['category.name', 'image', 'action', 'views_count', 'like_count', 'comments_count', 'is_featured']);
         return $dataTable->addColumn('action', 'admin.news.datatables_actions');

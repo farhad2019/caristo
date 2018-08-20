@@ -20,24 +20,25 @@
 
 <!-- Views Count Field -->
 <dt>{!! Form::label('views_count', 'Views Count:') !!}</dt>
-<dd><span class='badge badge-success'>{!! $news->views_count  !!}</span></dd>
+<dd><span class='badge badge-success'> <i class='fa fa-eye'></i> {!! $news->views_count  !!}</span></dd>
 
 <!-- Favorite Count Field -->
 <dt>{!! Form::label('favorite_count', 'Favorite Count:') !!}</dt>
-<dd><span class='badge badge-success'>{!! $news->favorite_count  !!}</span></dd>
+<dd><span class='badge badge-success'>  <i class='fa fa-star'></i> {!! $news->favorite_count  !!}</span></dd>
 
 <!-- Like Count Field -->
 <dt>{!! Form::label('like_count', 'Like Count:') !!}</dt>
-<dd><span class='badge badge-success'>{!! $news->like_count  !!}</span></dd>
+<dd><span class='badge badge-success'> <i class='fa fa-thumbs-up'></i> {!! $news->like_count  !!}</span></dd>
 
 <!-- Comments Count Field -->
 <dt>{!! Form::label('comments_count', 'Comments Count:') !!}</dt>
-<dd><span class='badge badge-success'>{!! $news->comments_count  !!}</span></dd>
+<dd><span class='badge badge-success'> <i class='fa fa-comments'></i> {!! $news->comments_count  !!}</span></dd>
 
 <!-- Is Featured Field -->
 <dt>{!! Form::label('is_featured', 'Is Featured:') !!}</dt>
 <dd>
-    <span class='label label-{{App\Helper\Utils::getBoolCss($news->is_featured)}}'>{!! App\Helper\Utils::getBoolText($news->is_featured)  !!}</span>
+    <span class='label label-{{App\Helper\Utils::getBoolCss($news->is_featured)}}'> <i
+                class='fa fa-{{$news->is_featured ? "check" : "times"}}'></i> {!! App\Helper\Utils::getBoolText($news->is_featured)  !!}</span>
 </dd>
 
 @if(isset($news) && count($news->media)>0)
