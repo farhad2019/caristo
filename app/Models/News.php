@@ -188,11 +188,6 @@ class News extends Model
         'is_featured' => 'required'
     ];
 
-    public function Variants()
-    {
-        return $this->hasMany(\App\Models\ItemVariant::class, 'item_id', 'id');
-    }
-
     public function views()
     {
         return $this->hasMany(NewsInteraction::class)->where('type', NewsInteraction::TYPE_VIEW);

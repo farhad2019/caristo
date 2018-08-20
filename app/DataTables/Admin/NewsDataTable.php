@@ -17,7 +17,7 @@ class NewsDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        $query = $query->with(['translations']);
+        $query = $query->with(['translations', 'category.translations']);
 
         $dataTable = new EloquentDataTable($query);
 
@@ -100,13 +100,16 @@ class NewsDataTable extends DataTable
         return [
             'id',
             'translations.headline'      => [
-                'title' => 'Headline'
+                'orderable' => false,
+                'title'     => 'Headline'
             ],
             'category.translations.name' => [
-                'title' => 'Category'
+                'orderable' => false,
+                'title'     => 'Category'
             ],
             'image'                      => [
-                'orderable' => false,
+                'orderable'  => false,
+                'searchable' => false
             ],
             'views_count'                => [
                 'title' => 'Views'
