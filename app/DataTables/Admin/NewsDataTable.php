@@ -17,10 +17,16 @@ class NewsDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $query = $query->with(['translations']);
+
         $dataTable = new EloquentDataTable($query);
 
-        $dataTable->editColumn('category.name', function (News $model) {
-            return ($model->category) ? "<span class='label label-success'>" . $model->category->name . "</span>" : "<span class='label label-default'>None</span>";
+        $dataTable->editColumn('translations.headline', function (News $model) {
+            return $model->headline;
+        });
+        $dataTable->editColumn('category.translations.name', function (News $model) {
+//            return ($model->category) ? "<span id='category-" . $model->category_id . "' class='label label-success'>" . $model->category->name . "</span>" : "<span class='label label-default'>None</span>";
+            return $model->category->name;
         });
         $dataTable->editColumn('image', function (News $model) {
             if (count($model->media) > 0)
@@ -93,21 +99,25 @@ class NewsDataTable extends DataTable
     {
         return [
             'id',
-            'headline',
-            'category.name'  => [
+            'translations.headline'      => [
+                'title' => 'Headline'
+            ],
+            'category.translations.name' => [
                 'title' => 'Category'
             ],
-            'image',
-            'views_count'    => [
+            'image'                      => [
+                'orderable' => false,
+            ],
+            'views_count'                => [
                 'title' => 'Views'
             ],
 //            'favorite_count' => [
 //                'title' => 'Views'
 //            ],
-            'like_count'     => [
+            'like_count'                 => [
                 'title' => 'Likes'
             ],
-            'comments_count' => [
+            'comments_count'             => [
                 'title' => 'Comments'
             ],
             'is_featured'

@@ -16,11 +16,11 @@ class UpdateUserProfileRequest extends BaseAPIRequest
     {
         return [
 //            'email' => 'required'
-            'name'         => 'string',
-            'country_code' => 'string',
-            'phone'        => 'string',
-            'about'        => 'string',
-            'image'        => 'image',
+//            'name'         => 'string',
+//            'country_code' => 'string',
+//            'phone'        => 'string',
+//            'about'        => 'string',
+            'image' => 'image',
         ];
     }
 
