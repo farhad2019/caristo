@@ -233,5 +233,4 @@ class News extends Model
     {
         return ($this->views()->where('user_id', \Auth::id())->first() != null);
     }
-
 }

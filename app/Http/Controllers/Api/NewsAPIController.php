@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Criteria\NewsCriteria;
+use App\Criteria\UnreadNewsCriteria;
+use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Api\CreateNewsAPIRequest;
 use App\Http\Requests\Api\UpdateNewsAPIRequest;
 use App\Models\News;
 use App\Repositories\Admin\NewsRepository;
 use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
@@ -101,17 +103,18 @@ class NewsAPIController extends AppBaseController
 
         $this->newsRepository->pushCriteria(new RequestCriteria($request));
         $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $this->newsRepository->pushCriteria(new NewsCriteria($request));
 
-        extract($input);
-        if (isset($category_id)) {
-            $news = $this->newsRepository->getCategoryWiseNews($category_id);
-        } else {
-            $news = $this->newsRepository->all();
-        }
+        $news = $this->newsRepository->all();
+//        $this->newsRepository->resetCriteria();
+        $this->newsRepository->pushCriteria(new RequestCriteria($request));
+        $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $this->newsRepository->pushCriteria(new UnreadNewsCriteria($request));
 
+        // FIXME: Find a good way to get count.
+        $count = $this->newsRepository->all()->count();
 
-
-        return $this->sendResponse($news->toArray(), 'News retrieved successfully');
+        return $this->sendResponse(['unread_count' => $count, 'news' => $news->toArray()], 'News retrieved successfully');
     }
 
     /**
