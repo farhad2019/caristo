@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Criteria\NewsCriteria;
-use App\Criteria\UnreadNewsCriteria;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Api\CreateNewsAPIRequest;
 use App\Http\Requests\Api\UpdateNewsAPIRequest;
@@ -107,14 +106,15 @@ class NewsAPIController extends AppBaseController
 
         $news = $this->newsRepository->all();
 //        $this->newsRepository->resetCriteria();
-        $this->newsRepository->pushCriteria(new RequestCriteria($request));
-        $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $this->newsRepository->pushCriteria(new UnreadNewsCriteria($request));
+//        $this->newsRepository->pushCriteria(new RequestCriteria($request));
+//        $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
+//        $this->newsRepository->pushCriteria(new UnreadNewsCriteria($request));
 
         // FIXME: Find a good way to get count.
-        $count = $this->newsRepository->all()->count();
+//        $count = $this->newsRepository->all()->count();
 
-        return $this->sendResponse(['unread_count' => $count, 'news' => $news->toArray()], 'News retrieved successfully');
+//        return $this->sendResponse(['unread_count' => $count, 'news' => $news->toArray()], 'News retrieved successfully');
+        return $this->sendResponse($news->toArray(), 'News retrieved successfully');
     }
 
     /**
