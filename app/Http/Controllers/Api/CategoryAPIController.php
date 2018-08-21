@@ -103,7 +103,7 @@ class CategoryAPIController extends AppBaseController
         $this->categoryRepository->pushCriteria(new RequestCriteria($request));
         $this->categoryRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->categoryRepository->pushCriteria(new CategoryCriteria($request));
-        $categories = $this->categoryRepository->all();
+        $categories = $this->categoryRepository->all()->makeVisible('unread_count');
 
         return $this->sendResponse($categories->toArray(), 'Categories retrieved successfully');
     }

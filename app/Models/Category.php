@@ -76,7 +76,7 @@ class Category extends Model
      * @var array
      */
     protected $appends = [
-
+        'unread_count'
     ];
 
     /**
@@ -95,7 +95,10 @@ class Category extends Model
         'media',
         'childCategory',
 //        'deleted_at'
+//        'unread_count'
     ];
+
+    protected $hidden = ['unread_count'];
 
     /**
      * Validation create rules
@@ -154,5 +157,25 @@ class Category extends Model
     public function getMorphClass()
     {
         return 'category';
+    }
+
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
+
+    public function getUnreadCountAttribute()
+    {
+        // FIXME: Find a better way.
+        $unread = $this->news()->whereDoesntHave('views', function ($query) {
+            return $query->where('user_id', \Auth::id());
+        })->count();
+
+        // FIXME: Find a better way.
+        foreach ($this->childCategory as $child) {
+            $unread += $child->unread_count;
+        }
+
+        return $unread;
     }
 }
