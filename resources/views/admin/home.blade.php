@@ -3,6 +3,7 @@
 @section('content')
     <div class="content">
         <div class="row">
+            @ability('super-admin' ,'users.index')
             <div class="col-lg-3 col-xs-4">
                 <!-- small box -->
                 <div class="small-box bg-aqua">
@@ -19,6 +20,8 @@
                 </div>
             </div>
             <!-- ./col -->
+            @endability
+            @ability('super-admin' ,'roles.index')
             <div class="col-lg-3 col-xs-4">
                 <!-- small box -->
                 <div class="small-box bg-yellow">
@@ -34,6 +37,9 @@
                 </div>
             </div>
             <!-- ./col -->
+            @endability
+            @ability('super-admin' ,'categories.index')
+
             <div class="col-lg-3 col-xs-4">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -42,13 +48,16 @@
                         <p>Categories</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="fa fa-th-large"></i>
                     </div>
                     <a href="{{ route('admin.categories.index') }}" class="small-box-footer">More info
                         <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
+
+            @endability
+            @ability('super-admin' ,'news.index')
             <div class="col-lg-3 col-xs-4">
                 <!-- small box -->
                 <div class="small-box bg-purple">
@@ -57,13 +66,14 @@
                         <p>News</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="fa fa-th-list"></i>
                     </div>
                     <a href="{{ route('admin.categories.index') }}" class="small-box-footer">More info
                         <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
+            @endability
         </div>
     </div>
 @endsection

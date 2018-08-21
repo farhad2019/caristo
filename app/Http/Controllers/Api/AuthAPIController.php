@@ -632,7 +632,13 @@ class AuthAPIController extends AppBaseController
 
         $details = UserDetail::where('user_id', $user->id)->first();
         $details->social_login = 1;
-        $details->image = $request->input('image', null);
+        if ($request->hasFile('image')) {
+            $mediaFile = $request->file('image');
+            $media = Utils::handlePicture($mediaFile, 'profiles');
+            $details->image = $media['filename'];
+        } else {
+            $details->image = $request->input('image', null);
+        }
         $details->save();
 
         if (!$token = \JWTAuth::fromUser($user)) {
