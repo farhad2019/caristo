@@ -16,7 +16,7 @@ class UpdateChangePasswordRequest extends BaseAPIRequest
     {
         return [
             'old_password' => 'required',
-            'password'     => 'required|confirmed|different:old_password'
+            'password'     => 'required|min:6|confirmed|different:old_password'
         ];
     }
 
