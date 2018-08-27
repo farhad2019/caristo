@@ -542,7 +542,7 @@ class AuthAPIController extends AppBaseController
 
     /**
      * @SWG\Post(
-     *      path="/social_login",
+     *      path="/social-login",
      *      summary="Login With Social Account.",
      *      tags={"Authorization"},
      *      description="Login With Social Account.",
