@@ -104,6 +104,6 @@ class UserDetail extends Model
 
     public function getImageUrlAttribute()
     {
-        return ($this->image) ? route('api.resize', ['img' => $this->image]) : route('api.resize', ['img' => 'users/user.png']);
+        return ($this->image) ? route('api.resize', ['img' => $this->image]) : route('api.resize', ['img' => 'public/user.png']);
     }
 }
