@@ -639,6 +639,7 @@ class AuthAPIController extends AppBaseController
         } else {
             $details->image = $request->input('image', null);
         }
+        $details->first_name = $request->input('username', null);
         $details->save();
 
         if (!$token = \JWTAuth::fromUser($user)) {
