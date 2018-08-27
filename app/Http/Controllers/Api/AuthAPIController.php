@@ -795,7 +795,7 @@ class AuthAPIController extends AppBaseController
     {
         $user = \Auth::user();
         $userData = array_filter($request->only(['name']));
-        $details = array_filter($request->only(['country_code', 'phone', 'about']));
+        $details = $request->only(['country_code', 'phone', 'about']);
 
         if ($request->hasFile('image')) {
             $mediaFile = $request->file('image');
