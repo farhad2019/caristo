@@ -585,7 +585,7 @@ class AuthAPIController extends AppBaseController
         if ($this->uDevice->getByDeviceToken($request->device_token)) {
             $this->uDevice->deleteByDeviceToken($request->device_token);
         }
-        if ($account) {
+        if ($account && $account->user) {
             // Account found. generate token;
             $user = $account->user;
 

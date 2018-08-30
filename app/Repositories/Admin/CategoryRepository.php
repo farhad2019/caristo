@@ -39,6 +39,7 @@ class CategoryRepository extends BaseRepository
 
     public function getRootCategories()
     {
+        // FIXME: Add Condition: whereDoesntHave('news')
         return $this->findByField('parent_id', 0);
     }
 
