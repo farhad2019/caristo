@@ -8,8 +8,8 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Admin\CreateCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Repositories\Admin\CategoryRepository;
-use Flash;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class CategoryController extends AppBaseController
 {
@@ -66,11 +66,9 @@ class CategoryController extends AppBaseController
      */
     public function store(CreateCategoryRequest $request)
     {
-
         $category = $this->categoryRepository->saveRecord($request);
 
         Flash::success('Category saved successfully.');
-
         return redirect(route('admin.categories.index'));
     }
 

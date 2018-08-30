@@ -8,9 +8,9 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateLanguageRequest;
 use App\Http\Requests\Admin\UpdateLanguageRequest;
 use App\Repositories\Admin\LanguageRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class LanguageController extends AppBaseController
 {
@@ -38,7 +38,7 @@ class LanguageController extends AppBaseController
      */
     public function index(LanguageDataTable $languageDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $languageDataTable->render('admin.languages.index');
     }
 
@@ -49,7 +49,7 @@ class LanguageController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.languages.create');
     }
 
@@ -63,11 +63,9 @@ class LanguageController extends AppBaseController
     public function store(CreateLanguageRequest $request)
     {
         $input = $request->all();
-
         $language = $this->languageRepository->create($input);
 
         Flash::success('Language saved successfully.');
-
         return redirect(route('admin.languages.index'));
     }
 
@@ -81,14 +79,12 @@ class LanguageController extends AppBaseController
     public function show($id)
     {
         $language = $this->languageRepository->findWithoutFail($id);
-
         if (empty($language)) {
             Flash::error('Language not found');
-
             return redirect(route('admin.languages.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $language);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $language);
         return view('admin.languages.show')->with('language', $language);
     }
 
@@ -102,21 +98,19 @@ class LanguageController extends AppBaseController
     public function edit($id)
     {
         $language = $this->languageRepository->findWithoutFail($id);
-
         if (empty($language)) {
             Flash::error('Language not found');
-
             return redirect(route('admin.languages.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $language);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $language);
         return view('admin.languages.edit')->with('language', $language);
     }
 
     /**
      * Update the specified Language in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateLanguageRequest $request
      *
      * @return Response
@@ -124,17 +118,14 @@ class LanguageController extends AppBaseController
     public function update($id, UpdateLanguageRequest $request)
     {
         $language = $this->languageRepository->findWithoutFail($id);
-
         if (empty($language)) {
             Flash::error('Language not found');
-
             return redirect(route('admin.languages.index'));
         }
 
         $language = $this->languageRepository->update($request->all(), $id);
 
         Flash::success('Language updated successfully.');
-
         return redirect(route('admin.languages.index'));
     }
 
@@ -148,17 +139,14 @@ class LanguageController extends AppBaseController
     public function destroy($id)
     {
         $language = $this->languageRepository->findWithoutFail($id);
-
         if (empty($language)) {
             Flash::error('Language not found');
-
             return redirect(route('admin.languages.index'));
         }
 
         $this->languageRepository->delete($id);
 
         Flash::success('Language deleted successfully.');
-
         return redirect(route('admin.languages.index'));
     }
 }

@@ -6,8 +6,8 @@ function confirmDelete(form) {
         icon: "warning",
         buttons: true,
         dangerMode: true,
-    }).then(function(willDelete) {
-        if(willDelete){
+    }).then(function (willDelete) {
+        if (willDelete) {
             $(form).submit();
         }
     });
@@ -15,8 +15,9 @@ function confirmDelete(form) {
 
 function formatFaIcon(state) {
     if (!state.id) return state.text; // optgroup
-    return "<i class='fa fa-"+state.id+"'></i> " + state.text;
+    return "<i class='fa fa-" + state.id + "'></i> " + state.text;
 }
+
 function defaultFormat(state) {
     return state.text;
 }
@@ -29,19 +30,22 @@ $(function () {
         increaseArea: '20%' // optional
     });
 
-    $('.select2').each(function(){
+    $('.select2').each(function () {
+        $(this).css('width', '100%');
         var format = $(this).data('format') ? $(this).data('format') : "defaultFormat";
         $(this).select2({
             theme: "bootstrap",
             templateResult: window[format],
             templateSelection: window[format],
-            escapeMarkup: function(m) { return m; }
+            escapeMarkup: function (m) {
+                return m;
+            }
         });
     });
 
-    $('input:checkbox.checkall').on('ifToggled', function(event){
-        var newState = $(this).is(":checked") ? 'check': 'uncheck';
+    $('input:checkbox.checkall').on('ifToggled', function (event) {
+        var newState = $(this).is(":checked") ? 'check' : 'uncheck';
         var css = $(this).data('check');
-        $('input:checkbox.'+css).iCheck(newState);
+        $('input:checkbox.' + css).iCheck(newState);
     });
 });

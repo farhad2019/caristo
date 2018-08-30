@@ -132,10 +132,20 @@ class Category extends Model
 //        return $this->hasMany(\App\Models\Subcategories::class, 'item_id', 'id');
 //    }
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
     public function media()
     {
         return $this->morphMany(Media::class, 'instance');
+    }
+
+    /**
+     * @return string
+     */
+    public function getMorphClass()
+    {
+        return 'category';
     }
 
     /**
@@ -154,10 +164,6 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
 
-    public function getMorphClass()
-    {
-        return 'category';
-    }
 
     public function news()
     {

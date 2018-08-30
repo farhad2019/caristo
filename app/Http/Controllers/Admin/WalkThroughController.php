@@ -7,10 +7,15 @@ use App\Helper\BreadcrumbsRegister;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Admin\CreateWalkThroughRequest;
 use App\Http\Requests\Admin\UpdateWalkThroughRequest;
+use App\Repositories\Admin\LanguageRepository;
 use App\Repositories\Admin\WalkThroughRepository;
-use Flash;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
+/**
+ * Class WalkThroughController
+ * @package App\Http\Controllers\Admin
+ */
 class WalkThroughController extends AppBaseController
 {
     /** ModelName */
@@ -22,9 +27,13 @@ class WalkThroughController extends AppBaseController
     /** @var  WalkThroughRepository */
     private $walkThroughRepository;
 
-    public function __construct(WalkThroughRepository $walkThroughRepo)
+    /** @var  LanguageRepository */
+    private $languageRepository;
+
+    public function __construct(WalkThroughRepository $walkThroughRepo, LanguageRepository $languageRepo)
     {
         $this->walkThroughRepository = $walkThroughRepo;
+        $this->languageRepository = $languageRepo;
         $this->ModelName = 'walkThroughs';
         $this->BreadCrumbName = 'WalkThrough';
     }
@@ -61,13 +70,17 @@ class WalkThroughController extends AppBaseController
      */
     public function store(CreateWalkThroughRequest $request)
     {
-        $input = $request->all();
-
-        $walkThrough = $this->walkThroughRepository->create($input);
+        $walkThrough = $this->walkThroughRepository->saveRecord($request);
 
         Flash::success('Walk Through saved successfully.');
-
-        return redirect(route('admin.walkThroughs.index'));
+        if (isset($input['continue'])) {
+            $redirect_to = redirect(route('admin.walkThroughs.create'));
+        } elseif (isset($input['translation'])) {
+            $redirect_to = redirect(route('admin.walkThroughs.edit', $walkThrough->id));
+        } else {
+            $redirect_to = redirect(route('admin.walkThroughs.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -80,15 +93,17 @@ class WalkThroughController extends AppBaseController
     public function show($id)
     {
         $walkThrough = $this->walkThroughRepository->findWithoutFail($id);
-
         if (empty($walkThrough)) {
             Flash::error('Walk Through not found');
-
             return redirect(route('admin.walkThroughs.index'));
         }
+        $locales = $this->languageRepository->findWhere(['status' => 1]);
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $walkThrough);
-        return view('admin.walk_throughs.show')->with('walkThrough', $walkThrough);
+        return view('admin.walk_throughs.show')->with([
+            'walkThrough' => $walkThrough,
+            'locales'     => $locales
+        ]);
     }
 
     /**
@@ -101,15 +116,17 @@ class WalkThroughController extends AppBaseController
     public function edit($id)
     {
         $walkThrough = $this->walkThroughRepository->findWithoutFail($id);
-
         if (empty($walkThrough)) {
             Flash::error('Walk Through not found');
-
             return redirect(route('admin.walkThroughs.index'));
         }
-
+        $locales = $this->languageRepository->orderBy('updated_at', 'asc')->findWhere(['status' => 1]);
+        
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $walkThrough);
-        return view('admin.walk_throughs.edit')->with('walkThrough', $walkThrough);
+        return view('admin.walk_throughs.edit')->with([
+            'walkThrough' => $walkThrough,
+            'locales'     => $locales
+        ]);
     }
 
     /**
@@ -123,17 +140,14 @@ class WalkThroughController extends AppBaseController
     public function update($id, UpdateWalkThroughRequest $request)
     {
         $walkThrough = $this->walkThroughRepository->findWithoutFail($id);
-
         if (empty($walkThrough)) {
             Flash::error('Walk Through not found');
-
             return redirect(route('admin.walkThroughs.index'));
         }
 
-        $walkThrough = $this->walkThroughRepository->update($request->all(), $id);
+        $walkThrough = $this->walkThroughRepository->updateRecord($request, $walkThrough);
 
         Flash::success('Walk Through updated successfully.');
-
         return redirect(route('admin.walkThroughs.index'));
     }
 
@@ -147,17 +161,14 @@ class WalkThroughController extends AppBaseController
     public function destroy($id)
     {
         $walkThrough = $this->walkThroughRepository->findWithoutFail($id);
-
         if (empty($walkThrough)) {
             Flash::error('Walk Through not found');
-
             return redirect(route('admin.walkThroughs.index'));
         }
 
-        $this->walkThroughRepository->delete($id);
+        $this->walkThroughRepository->deleteRecord($id);
 
         Flash::success('Walk Through deleted successfully.');
-
         return redirect(route('admin.walkThroughs.index'));
     }
 }

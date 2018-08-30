@@ -2,10 +2,22 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property integer id
+ * @property integer instance_id
+ * @property string instance_type
+ * @property string title
+ * @property string filename
+ * @property string file_url
+ * @property string created_at
+ * @property string updated_at
+ * @property string deleted_at
+ *
+ * @property string instance
+ *
  * @SWG\Definition(
  *      definition="Media",
  *      required={"id", "instance_id", "instance_type", "title", "filename", "created_at"},
@@ -41,20 +53,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Media extends Model
 {
     use SoftDeletes;
-
     public $table = 'media_files';
-
 
     protected $dates = ['deleted_at'];
 
-
     public $fillable = [
-        'id',
         'instance_id',
         'instance_type',
         'title',
         'filename',
-        'created_at'
+        'file_url'
     ];
 
     /**
@@ -132,17 +140,21 @@ class Media extends Model
      *
      * @var array
      */
-    public static $api_rules = [
-        'id'            => 'required',
-        'instance_id'   => 'required',
-        'instance_type' => 'required',
-        'title'         => 'required',
-        'filename'      => 'required',
-        'created_at'    => 'required'
-    ];
+    public static $api_rules = [];
 
+    /**
+     * @return string
+     */
     public function getFileUrlAttribute()
     {
         return ($this->filename) ? route('api.resize', ['img' => $this->filename]) : route('api.resize', ['img' => 'users/user.png']);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function instance()
+    {
+        return $this->morphTo();
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Dimsav\Translatable\Translatable;
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -12,6 +12,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int type
  * @property string title
  * @property string content
+ * @property string created_at
+ * @property string updated_at
+ * @property string deleted_at
+ *
+ * @property string type_text
+ *
+ * @property Media media
  *
  * @SWG\Definition(
  *      definition="WalkThrough",
@@ -53,13 +60,12 @@ class WalkThrough extends Model
     ];
 
     public $table = 'walkthrough';
-
     protected $dates = ['deleted_at'];
-
     public $translatedAttributes = ['title', 'content'];
 
     public $fillable = [
-        'id'
+        'sort',
+        'type'
     ];
 
     /**
@@ -98,7 +104,8 @@ class WalkThrough extends Model
      * @var array
      */
     public static $rules = [
-//        'id' => 'required'
+        'type'  => 'required',
+        'title' => 'required'
     ];
 
     /**
@@ -106,22 +113,36 @@ class WalkThrough extends Model
      *
      * @var array
      */
-    public static $update_rules = [
-//        'id' => 'required'
-    ];
+    public static $update_rules = [];
 
     /**
      * Validation api rules
      *
      * @var array
      */
-    public static $api_rules = [
-//        'id' => 'required'
-    ];
+    public static $api_rules = [];
 
-
+    /**
+     * @return mixed
+     */
     public function getTypeTextAttribute()
     {
         return self::$TYPES_TEXT[$this->type];
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'instance');
+    }
+
+    /**
+     * @return \Illuminate\Config\Repository|mixed|string
+     */
+    public function getMorphClass()
+    {
+        return 'walkThrough';
     }
 }

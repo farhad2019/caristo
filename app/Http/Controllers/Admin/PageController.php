@@ -11,10 +11,13 @@ use App\Repositories\Admin\LanguageRepository;
 use App\Repositories\Admin\PageRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\PageTranslationRepository;
-use Carbon\Carbon;
+use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
-use Response;
 
+/**
+ * Class PageController
+ * @package App\Http\Controllers\Admin
+ */
 class PageController extends AppBaseController
 {
     /** ModelName */
@@ -74,11 +77,9 @@ class PageController extends AppBaseController
     public function store(CreatePageRequest $request)
     {
         $input = $request->all();
-
         $page = $this->pageRepository->create($input);
 
         Flash::success('Page saved successfully.');
-
         if (isset($input['continue'])) {
             $redirect_to = redirect(route('admin.pages.create'));
         } elseif (isset($input['translation'])) {
@@ -99,7 +100,6 @@ class PageController extends AppBaseController
     public function show($id)
     {
         $page = $this->pageRepository->findWithoutFail($id);
-
         if (empty($page)) {
             Flash::error('Page not found');
 
@@ -120,7 +120,6 @@ class PageController extends AppBaseController
     public function edit($id)
     {
         $page = $this->pageRepository->findWithoutFail($id);
-
         if (empty($page)) {
             Flash::error('Page not found');
             return redirect(route('admin.pages.index'));
