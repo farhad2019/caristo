@@ -87,17 +87,17 @@ Route::middleware('auth:api')->group(function () {
     Route::post('v1/update-profile', 'AuthAPIController@updateUserProfile')->name('update-profile');
 
     Route::get('v1/favorite-news', 'AuthAPIController@favoriteNewsIndex');
+
+    Route::resource('v1/pages', 'PageAPIController');
+
+    Route::resource('v1/news', 'NewsAPIController');
+
+    Route::resource('v1/comments', 'CommentAPIController');
+
+    Route::resource('v1/media', 'MediaAPIController');
+
+    Route::resource('v1/news_interactions', 'NewsInteractionAPIController');
+
+    Route::resource('v1/walkThroughs', 'WalkThroughAPIController');
 });
 
-Route::resource('v1/pages', 'PageAPIController');
-
-
-Route::resource('admin/news', 'NewsAPIController');
-
-Route::resource('admin/comments', 'CommentAPIController');
-
-Route::resource('admin/media', 'MediaAPIController');
-
-Route::resource('admin/news_interactions', 'NewsInteractionAPIController');
-
-Route::resource('admin/walk_throughs', 'WalkThroughAPIController');

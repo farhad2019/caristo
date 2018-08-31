@@ -8,15 +8,14 @@ use App\Models\WalkThrough;
 use App\Repositories\Admin\WalkThroughRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Http\Response;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Response;
 
 /**
  * Class WalkThroughController
  * @package App\Http\Controllers\Api
  */
-
 class WalkThroughAPIController extends AppBaseController
 {
     /** @var  WalkThroughRepository */
@@ -29,7 +28,8 @@ class WalkThroughAPIController extends AppBaseController
 
     /**
      * @param Request $request
-     * @return Response
+     * @return mixed
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
      * @SWG\Get(
      *      path="/walkThroughs",
@@ -38,13 +38,21 @@ class WalkThroughAPIController extends AppBaseController
      *      description="Get all WalkThroughs",
      *      produces={"application/json"},
      *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=false,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *      @SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
@@ -86,33 +94,33 @@ class WalkThroughAPIController extends AppBaseController
      * @param CreateWalkThroughAPIRequest $request
      * @return Response
      *
-     * @SWG\Post(
+     * //@SWG\Post(
      *      path="/walkThroughs",
      *      summary="Store a newly created WalkThrough in storage",
      *      tags={"WalkThrough"},
      *      description="Store WalkThrough",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="WalkThrough that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/WalkThrough")
+     *          //@SWG\Schema(ref="#/definitions/WalkThrough")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/WalkThrough"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -139,6 +147,14 @@ class WalkThroughAPIController extends AppBaseController
      *      tags={"WalkThrough"},
      *      description="Get WalkThrough",
      *      produces={"application/json"},
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=false,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Parameter(
      *          name="id",
      *          description="id of WalkThrough",
@@ -184,40 +200,40 @@ class WalkThroughAPIController extends AppBaseController
      * @param UpdateWalkThroughAPIRequest $request
      * @return Response
      *
-     * @SWG\Put(
+     * //@SWG\Put(
      *      path="/walkThroughs/{id}",
      *      summary="Update the specified WalkThrough in storage",
      *      tags={"WalkThrough"},
      *      description="Update WalkThrough",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of WalkThrough",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="WalkThrough that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/WalkThrough")
+     *          //@SWG\Schema(ref="#/definitions/WalkThrough")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/WalkThrough"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -245,33 +261,33 @@ class WalkThroughAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
-     * @SWG\Delete(
+     * //@SWG\Delete(
      *      path="/walkThroughs/{id}",
      *      summary="Remove the specified WalkThrough from storage",
      *      tags={"WalkThrough"},
      *      description="Delete WalkThrough",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of WalkThrough",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="string"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )

@@ -7,8 +7,10 @@ use App\Helper\BreadcrumbsRegister;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Admin\CreateWalkThroughRequest;
 use App\Http\Requests\Admin\UpdateWalkThroughRequest;
+use App\Models\Media;
 use App\Repositories\Admin\LanguageRepository;
 use App\Repositories\Admin\WalkThroughRepository;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
 
@@ -47,7 +49,7 @@ class WalkThroughController extends AppBaseController
     public function index(WalkThroughDataTable $walkThroughDataTable)
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return $walkThroughDataTable->render('admin.walk_throughs.index');
+        return $walkThroughDataTable->render('admin.walk_throughs.index', ['title' => $this->BreadCrumbName]);
     }
 
     /**
@@ -58,7 +60,9 @@ class WalkThroughController extends AppBaseController
     public function create()
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return view('admin.walk_throughs.create');
+        return view('admin.walk_throughs.create')->with([
+            'title' => $this->BreadCrumbName
+        ]);
     }
 
     /**
@@ -97,7 +101,7 @@ class WalkThroughController extends AppBaseController
             Flash::error('Walk Through not found');
             return redirect(route('admin.walkThroughs.index'));
         }
-        $locales = $this->languageRepository->findWhere(['status' => 1]);
+        $locales = $this->languageRepository->orderBy('updated_at', 'asc')->findWhere(['status' => 1]);
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $walkThrough);
         return view('admin.walk_throughs.show')->with([
@@ -121,9 +125,10 @@ class WalkThroughController extends AppBaseController
             return redirect(route('admin.walkThroughs.index'));
         }
         $locales = $this->languageRepository->orderBy('updated_at', 'asc')->findWhere(['status' => 1]);
-        
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $walkThrough);
         return view('admin.walk_throughs.edit')->with([
+            'title'       => $this->BreadCrumbName,
             'walkThrough' => $walkThrough,
             'locales'     => $locales
         ]);
@@ -145,10 +150,15 @@ class WalkThroughController extends AppBaseController
             return redirect(route('admin.walkThroughs.index'));
         }
 
-        $walkThrough = $this->walkThroughRepository->updateRecord($request, $walkThrough);
+        $this->walkThroughRepository->updateRecord($request, $walkThrough);
 
         Flash::success('Walk Through updated successfully.');
-        return redirect(route('admin.walkThroughs.index'));
+        if (isset($input['continue'])) {
+            $redirect_to = redirect(route('admin.walkThroughs.create'));
+        } else {
+            $redirect_to = redirect(route('admin.walkThroughs.index'));
+        }
+        return $redirect_to->with(['title' => $this->BreadCrumbName]);
     }
 
     /**
@@ -170,5 +180,46 @@ class WalkThroughController extends AppBaseController
 
         Flash::success('Walk Through deleted successfully.');
         return redirect(route('admin.walkThroughs.index'));
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     */
+    public function deleteImage($id)
+    {
+        $propertyMedia = Media::find($id);
+
+        if (empty($propertyMedia)) {
+            return response('Not Found');
+        }
+
+        $propertyMedia->delete($id);
+        return response('Success');
+    }
+
+    public function updatePosition(Request $request)
+    {
+        $response['msg'] = false;
+        $input = $request->all();
+
+        if (!empty($input['rowId']) && !empty($input['rowPosition']) && !empty($input['prevRowId']) && !empty($input['prevRowPosition'])) {
+            //TODO: current Row
+            $row1_id = $input['rowId']; //18
+            $row1_position['sort'] = $input['rowPosition']; //18
+
+            //TODO: Previous Row
+            $row2_id = $input['prevRowId']; //19
+            $row2_position['sort'] = $input['prevRowPosition']; //19
+
+            //TODO: Swapping
+            $row1 = $this->walkThroughRepository->update($row1_position, $row2_id);
+            $row2 = $this->walkThroughRepository->update($row2_position, $row1_id);
+
+            if ($row1 && $row2) {
+                $response['msg'] = true;
+            }
+        }
+        return $response;
     }
 }

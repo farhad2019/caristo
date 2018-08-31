@@ -185,6 +185,9 @@
 <!-- SweetAlert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<!-- SweetAlert -->
+<script src="{{ url('public/vendor/live_url/jquery.liveurl.js') }}"></script>
+
 {{--    @yield('scripts')--}}
 @stack('scripts')
 <script src="{{ url('public/js/admin/custom.js') }}"></script>

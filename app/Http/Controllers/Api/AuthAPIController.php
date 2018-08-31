@@ -35,6 +35,13 @@ class AuthAPIController extends AppBaseController
      *
      * @return void
      */
+    /**
+     * AuthAPIController constructor.
+     * @param UserRepository $userRepo
+     * @param UserdetailRepository $userdetailRepo
+     * @param UdeviceRepository $udeviceRepo
+     * @param CategoryRepository $categoryRepo
+     */
     public function __construct(
         UserRepository $userRepo,
         UserdetailRepository $userdetailRepo,

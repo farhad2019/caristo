@@ -41,7 +41,7 @@ Route::resource('notifications', 'NotificationController');
 Route::resource('menus', 'MenuController');
 
 
-//Menu #TODO need to be fixed
+//Menu #TODO update Menu rout need to be fixed
 Route::get('statusChange/{id}', 'MenuController@statusChange');
 
 Route::post('updateChannelPosition', 'MenuController@update_channel_position')->name('channels');
@@ -57,3 +57,7 @@ Route::resource('media', 'MediaController');
 Route::resource('newsInteractions', 'NewsInteractionController');
 
 Route::resource('walkThroughs', 'WalkThroughController');
+Route::get('deleteWTimage/{id}', 'WalkThroughController@deleteImage');
+
+#TODO set it up in resource - update
+Route::post('updatePosition', 'WalkThroughController@updatePosition');

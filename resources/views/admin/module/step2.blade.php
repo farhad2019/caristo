@@ -207,15 +207,15 @@
                             'large' => 'Large Text'
                             ], 'text', ['class'=>'form-control type select2', 'required']) }}
                     </td>
-                    {{--<td>--}}
-                    {{--{{ Form::select('join_table[]', $tables, '', ['class'=>'form-control join_table select2', 'placeholder'=> 'Input Field Name']) }}--}}
-                    {{--</td>--}}
-                    {{--<td>--}}
-                    {{--<input value='' type='text' name='join_field[]' onclick='showTableField(this)'--}}
-                    {{--onKeyUp='showTableFieldLike(this)' placeholder='Field Name Shown'--}}
-                    {{--class='join_field form-control notfocus' value=''/>--}}
-                    {{--</td>--}}
                     {{--<td>
+                    {{ Form::select('join_table[]', $tables, '', ['class'=>'form-control join_table select2', 'placeholder'=> 'Input Field Name']) }}
+                    </td>
+                    <td>
+                    <input value='' type='text' name='join_field[]' onclick='showTableField(this)'
+                    onKeyUp='showTableFieldLike(this)' placeholder='Field Name Shown'
+                    class='join_field form-control notfocus' value=''/>
+                    </td>
+                    <td>
                         {{ Form::select('join_table[]', $tables, '', ['class'=>'form-control join_table select2', 'required', 'placeholder'=> 'Input Field Name']) }}
                     </td>
                     <td>

@@ -4,7 +4,7 @@
         "title": "Laravel Generator APIs",
         "version": "1.0.0"
     },
-    "basePath": "/api/v1",
+    "basePath": "/CaristoCratApp/api/v1",
     "paths": {
         "/register": {
             "post": {
@@ -345,7 +345,7 @@
                 }
             }
         },
-        "/social_login": {
+        "/social-login": {
             "post": {
                 "tags": [
                     "Authorization"
@@ -3067,6 +3067,14 @@
                 ],
                 "parameters": [
                     {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": false,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
@@ -3103,46 +3111,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "WalkThrough"
-                ],
-                "summary": "Store a newly created WalkThrough in storage",
-                "description": "Store WalkThrough",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "WalkThrough that should be stored",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/WalkThrough"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/WalkThrough"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
             }
         },
         "/walkThroughs/{id}": {
@@ -3157,91 +3125,14 @@
                 ],
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of WalkThrough",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/WalkThrough"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "WalkThrough"
-                ],
-                "summary": "Update the specified WalkThrough in storage",
-                "description": "Update WalkThrough",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of WalkThrough",
-                        "required": true,
-                        "type": "integer"
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": false,
+                        "type": "string",
+                        "default": "Bearer ABC123"
                     },
                     {
-                        "name": "body",
-                        "in": "body",
-                        "description": "WalkThrough that should be updated",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/WalkThrough"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/WalkThrough"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "WalkThrough"
-                ],
-                "summary": "Remove the specified WalkThrough from storage",
-                "description": "Delete WalkThrough",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
                         "name": "id",
                         "in": "path",
                         "description": "id of WalkThrough",
@@ -3258,7 +3149,7 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "type": "string"
+                                    "$ref": "#/definitions/WalkThrough"
                                 },
                                 "message": {
                                     "type": "string"

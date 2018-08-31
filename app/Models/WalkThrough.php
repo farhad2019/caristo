@@ -89,14 +89,24 @@ class WalkThrough extends Model
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'type_text'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'sort',
+        'type',
+        'type_text',
+        'title',
+        'content',
+        'created_at',
+    ];
 
     /**
      * Validation create rules

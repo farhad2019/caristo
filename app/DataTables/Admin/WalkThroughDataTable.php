@@ -18,10 +18,18 @@ class WalkThroughDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        $dataTable->editColumn('translations.title', function (WalkThrough $model) {
-            return $model->title;
+        /*$dataTable->editColumn('sort_by', function (Menu $menu) {
+            return '<span class="hidden">' . $menu->sort_by . '</span><input type="hidden" data-id="' . $menu->id . '" class="inputSort" value="' . $menu->sort_by . '"><a href="javascript:void(0)" class="btn btn-success btn-up"><i class="fa fa-arrow-up"></i></a><a href="javascript:void(0)" class="btn btn-success btn-down"><i class="fa fa-arrow-down"></i></a>';
+        });*/
+        $dataTable->editColumn('sort', function ($query) {
+            return '<input type="hidden" data-id="' . $query->id . '" class="inputSort" value="' . $query->sort . '"><a href="javascript:void(0)" class="btn btn-success btn-up"><i class="fa fa-arrow-up"></i></a><a href="javascript:void(0)" class="btn btn-success btn-down"><i class="fa fa-arrow-down"></i></a>';
         });
-        
+
+        $dataTable->editColumn('translations.title', function ($query) {
+            return $query->title;
+        });
+
+        $dataTable->rawColumns(['sort', 'action']);
         return $dataTable->addColumn('action', 'admin.walk_throughs.datatables_actions');
     }
 

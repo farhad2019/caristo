@@ -4,7 +4,6 @@ namespace App\Repositories\Admin;
 
 use App\Helper\Utils;
 use App\Models\WalkThrough;
-use App\Models\WalkThroughTranslation;
 use Illuminate\Support\Facades\App;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -70,8 +69,8 @@ class WalkThroughRepository extends BaseRepository
 //        $walkThrough = $this->update($input, $walkThrough->id);
 
         $input = $request->all();
-        $languageRepository = App::make(LanguageRepository::class);
-        $walkThroughTranslationRepository = App::make(WalkThroughTranslation::class);
+        //$languageRepository = App::make(LanguageRepository::class);
+        $walkThroughTranslationRepository = App::make(WalkThroughTranslationRepository::class);
         $localeList = [];
         foreach ($walkThrough->translations as $translation) {
             $localeList[$translation->id] = $translation->locale;
@@ -79,18 +78,30 @@ class WalkThroughRepository extends BaseRepository
         #TODO: Test It
         foreach ($input['title'] as $key => $title) {
             if ($title != '') {
-                $locale = $languageRepository->findWhere(['code' => $key])->first()->code;
-                $update_data['city_id'] = $walkThrough->id;
-                $update_data['locale'] = $locale;
+//                $locale = $languageRepository->findWhere(['code' => $key])->first()->code;
+                $update_data['walk_through_id'] = $walkThrough->id;
+                $update_data['locale'] = $key;
                 $update_data['title'] = $title;
                 $update_data['content'] = $input['content'][$key] ?? null;
-                if (array_search($locale, $localeList)) {
-                    $translation_id = array_search($locale, $localeList);
+                if (array_search($key, $localeList)) {
+                    $translation_id = array_search($key, $localeList);
                     $walkThroughTranslationRepository->update($update_data, $translation_id);
                 } else {
                     $walkThroughTranslationRepository->create($update_data);
                 }
             }
+        }
+
+        // Media Data
+        if ($request->hasFile('media')) {
+            $media = [];
+            $mediaFiles = $request->file('media');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+            $walkThrough->media()->createMany($media);
         }
         return $walkThrough;
     }

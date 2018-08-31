@@ -1,9 +1,11 @@
 @if($model->status == 1)
-<input type="checkbox" name="status" data-toggle="toggle" data-on="Enabled" data-off="Disabled" class="status" data-value="{{ $model->id }}" checked id="get_status{{ $model->id }}">
+    <input type="checkbox" name="status" data-toggle="toggle" data-on="Enabled" data-off="Disabled" class="status"
+           data-value="{{ $model->id }}" checked id="get_status{{ $model->id }}">
 
-    @else
+@else
 
-    <input type="checkbox" name="status" data-toggle="toggle" data-on="Enabled" data-off="Disabled" class="status" data-value="{{ $model->id }}" id="get_status{{ $model->id }}">
+    <input type="checkbox" name="status" data-toggle="toggle" data-on="Enabled" data-off="Disabled" class="status"
+           data-value="{{ $model->id }}" id="get_status{{ $model->id }}">
 
 @endif
 
@@ -42,11 +44,8 @@
         });
     }
 
-
     $(function () {
-
         $(document).on('click', '.btn-up', function () {
-
             var tr = $(this).parents('tr');
             var trPrev = tr.prev('tr');
 
