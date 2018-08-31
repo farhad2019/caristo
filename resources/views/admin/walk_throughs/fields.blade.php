@@ -48,7 +48,7 @@
         <!-- Content Field -->
         <div class="form-group col-sm-12 screenContent">
             {!! Form::label('content', 'Content:') !!}
-            {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
+            {!! Form::textarea('content', null, ['class' => 'form-control textarea']) !!}
         </div>
     @else
         <div class="col-md-12">

@@ -24,7 +24,7 @@ function defaultFormat(state) {
 
 $(function () {
 
-    $('textarea').liveUrl({
+    $('.liveUrl').liveUrl({
         success: function (data) {
             console.log(data);
             // this return the first found url data

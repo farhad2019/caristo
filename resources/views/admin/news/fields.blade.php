@@ -17,7 +17,7 @@
 <!-- Source Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('source', 'Source:') !!}
-    {!! Form::text('source', null, ['class' => 'form-control']) !!}
+    {!! Form::text('source', null, ['class' => 'form-control liveUrl']) !!}
 </div>
 
 <!-- Is Featured Field -->

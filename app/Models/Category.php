@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Dimsav\Translatable\Translatable;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -31,14 +32,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Category extends Model
 {
-    use SoftDeletes;
-
-    use Translatable;
+    use SoftDeletes, CascadeSoftDeletes, Translatable;
 
     public $table = 'category';
-
+    protected $cascadeDeletes = ['media', 'news'];
     public $translatedAttributes = ['name', 'subtitle'];
-
     protected $dates = ['deleted_at'];
 
     public $fillable = [
@@ -163,7 +161,6 @@ class Category extends Model
     {
         return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
-
 
     public function news()
     {
