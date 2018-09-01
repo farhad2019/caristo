@@ -36,6 +36,10 @@ class UserRepository extends BaseRepository
         return User::class;
     }
 
+    /**
+     * @param $userId
+     * @param $roleId
+     */
     public function attachRole($userId, $roleId)
     {
         $user = $this->findWithoutFail($userId);
@@ -43,6 +47,10 @@ class UserRepository extends BaseRepository
         $user->save();
     }
 
+    /**
+     * @param $userId
+     * @param $roleId
+     */
     public function detachRole($userId, $roleId)
     {
         $user = $this->findWithoutFail($userId);
@@ -50,12 +58,20 @@ class UserRepository extends BaseRepository
         $user->save();
     }
 
+    /**
+     * @param $email
+     * @return mixed
+     */
     public function getUserByEmail($email)
     {
         return $this->model->whereEmail($email)->first();
     }
 
-
+    /**
+     * @param Request $request
+     * @param CategoryRepository $categoryRepo
+     * @return array
+     */
     public function findFavoriteNews(Request $request, CategoryRepository $categoryRepo)
     {
         $limit = $request->get('limit', null);
@@ -78,11 +94,16 @@ class UserRepository extends BaseRepository
         return $categories;
     }
 
+    /**
+     * @param Category $category
+     * @param null $limit
+     * @param null $offset
+     * @return mixed
+     */
     private function getChildFavorites(Category $category, $limit = null, $offset = null)
     {
         $ret = [];
         $query = \Auth::user()->favorites()->orderBy('news.category_id');
-
 
         if ($limit) {
             $query->limit($limit);

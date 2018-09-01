@@ -147,7 +147,8 @@ class Media extends Model
      */
     public function getFileUrlAttribute()
     {
-        return ($this->filename) ? route('api.resize', ['img' => $this->filename]) : route('api.resize', ['img' => 'users/user.png']);
+        return ($this->filename && file_exists(storage_path('app/' . $this->filename))) ? route('api.resize', ['img' => $this->filename, 'w=80', 'h=80']) : route('api.resize', ['img' => 'public/no_image.png', 'w=50', 'h=50']);
+        /*return ($this->filename) ? route('api.resize', ['img' => $this->filename]) : route('api.resize', ['img' => 'users/user.png']);*/
     }
 
     /**

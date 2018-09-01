@@ -7,6 +7,7 @@ use App\Helper\BreadcrumbsRegister;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Admin\CreateCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
+use App\Models\Category;
 use App\Repositories\Admin\CategoryRepository;
 use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
@@ -50,10 +51,8 @@ class CategoryController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-
         $root = $this->parent + $this->categoryRepository->getRootCategories()->pluck('name', 'id')->toArray();
-
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.categories.create')->with('root', $root);
     }
 
@@ -82,10 +81,8 @@ class CategoryController extends AppBaseController
     public function show($id)
     {
         $category = $this->categoryRepository->findWithoutFail($id);
-
         if (empty($category)) {
             Flash::error('Category not found');
-
             return redirect(route('admin.categories.index'));
         }
 
@@ -103,19 +100,15 @@ class CategoryController extends AppBaseController
     public function edit($id)
     {
         $category = $this->categoryRepository->findWithoutFail($id);
-
         if (empty($category)) {
             Flash::error('Category not found');
-
             return redirect(route('admin.categories.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $category);
-
         $root = $this->parent + $this->categoryRepository->getRootCategories()->pluck('name', 'id')->toArray();
-
         unset($root[$id]);
 
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $category);
         return view('admin.categories.edit')->with([
             'category' => $category,
             'root'     => $root
@@ -133,18 +126,14 @@ class CategoryController extends AppBaseController
     public function update($id, UpdateCategoryRequest $request)
     {
         $category = $this->categoryRepository->findWithoutFail($id);
-
         if (empty($category)) {
             Flash::error('Category not found');
-
             return redirect(route('admin.categories.index'));
         }
 
         $this->categoryRepository->updateRecord($category, $request);
-//        $category = $this->categoryRepository->update($request->all(), $id);
 
         Flash::success('Category updated successfully.');
-
         return redirect(route('admin.categories.index'));
     }
 
@@ -158,17 +147,14 @@ class CategoryController extends AppBaseController
     public function destroy($id)
     {
         $category = $this->categoryRepository->findWithoutFail($id);
-
         if (empty($category)) {
             Flash::error('Category not found');
-
             return redirect(route('admin.categories.index'));
         }
 
-        $this->categoryRepository->delete($id);
+        $this->categoryRepository->deleteRecord($id);
 
         Flash::success('Category deleted successfully.');
-
         return redirect(route('admin.categories.index'));
     }
 }

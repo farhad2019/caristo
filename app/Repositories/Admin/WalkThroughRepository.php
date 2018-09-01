@@ -75,7 +75,7 @@ class WalkThroughRepository extends BaseRepository
         foreach ($walkThrough->translations as $translation) {
             $localeList[$translation->id] = $translation->locale;
         }
-        #TODO: Test It
+
         foreach ($input['title'] as $key => $title) {
             if ($title != '') {
 //                $locale = $languageRepository->findWhere(['code' => $key])->first()->code;

@@ -901,12 +901,9 @@ class AuthAPIController extends AppBaseController
      */
     public function favoriteNewsIndex(Request $request)
     {
-
         \App::setLocale($request->get('locale', 'en'));
         // Implement apply() method.
         $categories = $this->userRepository->findFavoriteNews($request, $this->categoryRepo);
-
-
         return $this->sendResponse($categories, 'Favorite News retrieved successfully');
     }
 

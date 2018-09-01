@@ -27,7 +27,7 @@ class CategoryDataTable extends DataTable
         });
         $dataTable->editColumn('image', function (Category $model) {
             if (count($model->media) > 0)
-                return "<img src='" . $model->media[0]->fileUrl . "' width='80'/>";
+                return "<img src='" . $model->media[0]->fileUrl . "'/>";
             else {
                 return "<span class='label label-default'>None</span>";
             }

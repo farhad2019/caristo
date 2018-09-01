@@ -37,12 +37,28 @@ class CategoryRepository extends BaseRepository
         return Category::class;
     }
 
+    /**
+     * @return mixed
+     */
     public function getRootCategories()
     {
-        // FIXME: Add Condition: whereDoesntHave('news')
+        /*$root = [];
+        $categories = $this->all();
+        foreach ($categories as $category) {
+            if ($category->news()->count() == 0) {
+                $root[] = $category;
+            }
+        }
+        //FIXME: Add Condition: whereDoesntHave('news')
         return $this->findByField('parent_id', 0);
+        return $root;*/
+        return $this->model->whereDoesntHave('news')->get();
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function saveRecord(Request $request)
     {
         $input = $request->all();
@@ -63,7 +79,6 @@ class CategoryRepository extends BaseRepository
         }
         return $data;
     }
-
 
     /**
      * @param Category $category
@@ -93,4 +108,13 @@ class CategoryRepository extends BaseRepository
         return $data;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function deleteRecord($id)
+    {
+        $this->delete($id);
+        return $id;
+    }
 }

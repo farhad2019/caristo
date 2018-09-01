@@ -8,6 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property integer id
+ * @property integer user_id
+ * @property integer parent_id
+ * @property string name
+ * @property string slug
+ * @property string created_at
+ * @property string updated_at
+ * @property string deleted_at
+ *
+ * @property Media media
+ * @property News news
+ *
+ * @property string parent_category
+ * @property string child_category
+ * @property string unread_count
+ *
  * @SWG\Definition(
  *      definition="Category",
  *      required={"slug"},
@@ -162,11 +178,17 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function news()
     {
         return $this->hasMany(News::class);
     }
 
+    /**
+     * @return int
+     */
     public function getUnreadCountAttribute()
     {
         // FIXME: Find a better way.
