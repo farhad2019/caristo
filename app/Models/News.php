@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Dimsav\Translatable\Translatable;
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -62,13 +62,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class News extends Model
 {
-    use SoftDeletes;
-    use Translatable;
+    use SoftDeletes, Translatable;
 
     public $table = 'news';
-
     public $translatedAttributes = ['headline', 'description', 'source'];
-
     protected $dates = ['deleted_at'];
 
     public $fillable = [

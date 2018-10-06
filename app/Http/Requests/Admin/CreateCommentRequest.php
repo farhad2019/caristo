@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\Comment;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCommentRequest extends BaseFormRequest
+class CreateCommentRequest extends FormRequest
 {
 
     /**

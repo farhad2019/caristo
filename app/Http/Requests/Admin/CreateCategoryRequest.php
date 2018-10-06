@@ -4,8 +4,9 @@ namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\BaseFormRequest;
 use App\Models\Category;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCategoryRequest extends BaseFormRequest
+class CreateCategoryRequest extends FormRequest
 {
 
     /**

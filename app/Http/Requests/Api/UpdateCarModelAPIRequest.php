@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Api;
 
-use App\Models\Media;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Models\CarModel;
+use App\Http\Requests\BaseAPIRequest;
 
-class CreateMediaRequest extends FormRequest
+class UpdateCarModelAPIRequest extends BaseAPIRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,6 +24,6 @@ class CreateMediaRequest extends FormRequest
      */
     public function rules()
     {
-        return Media::$rules;
+        return CarModel::$api_rules;
     }
 }

@@ -61,3 +61,7 @@ Route::get('deleteWTimage/{id}', 'WalkThroughController@deleteImage');
 
 #TODO set it up in resource - update
 Route::post('updatePosition', 'WalkThroughController@updatePosition');
+
+Route::resource('carBrands', 'CarBrandController');
+
+Route::resource('carModels', 'CarModelController');

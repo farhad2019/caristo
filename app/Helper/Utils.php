@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rehmanali
- * Date: 8/17/2018
- * Time: 3:07
- */
 
 namespace App\Helper;
 
@@ -12,7 +6,6 @@ use Image;
 
 class Utils
 {
-
     const BOOL_FALSE = 0;
     const BOOL_TRUE = 1;
 
@@ -29,6 +22,11 @@ class Utils
         self::BOOL_TRUE  => "green",
     ];
 
+    /**
+     * @param $mediaFile
+     * @param string $folder
+     * @return array
+     */
     public static function handlePicture($mediaFile, $folder = "media_files")
     {
         $rand = time();
@@ -53,11 +51,20 @@ class Utils
         ];
     }
 
+    /**
+     * @param $value
+     * @return mixed
+     */
     public static function getBoolText($value)
     {
         return self::$BOOLS[$value];
     }
 
+    /**
+     * @param $value
+     * @param bool $bg
+     * @return mixed
+     */
     public static function getBoolCss($value, $bg = false)
     {
         return $bg ? self::$BOOLS_BG_CSS[$value] : self::$BOOLS_CSS[$value];

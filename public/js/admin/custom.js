@@ -21,15 +21,7 @@ function defaultFormat(state) {
     return state.text;
 }
 
-
 $(function () {
-
-    $('.liveUrl').liveUrl({
-        success: function (data) {
-            console.log(data);
-            // this return the first found url data
-        }
-    });
 
     $('input:checkbox, input:radio').iCheck({
         checkboxClass: 'icheckbox_square-blue',

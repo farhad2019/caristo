@@ -44,8 +44,7 @@ class Login
     public static $rules = [
         'email'        => 'required|email',
         'password'     => 'required',
-        'device_type'  => 'required|string|in:ios,android,web',
-        'device_token' => 'string',
+        'device_type'  => 'required|string|in:ios,android,web'
     ];
 
 }

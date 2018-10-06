@@ -99,5 +99,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/news_interactions', 'NewsInteractionAPIController');
 
     Route::resource('v1/walkThroughs', 'WalkThroughAPIController');
-});
 
+    Route::resource('v1/carBrands', 'CarBrandAPIController');
+    
+    Route::resource('v1/carModels', 'CarModelAPIController');
+});

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Models\Media;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
+use App\Models\CarModel;
 
-class CreateMediaRequest extends FormRequest
+class CreateCarModelRequest extends BaseFormRequest
 {
 
     /**
@@ -25,6 +25,6 @@ class CreateMediaRequest extends FormRequest
      */
     public function rules()
     {
-        return Media::$rules;
+        return CarModel::$rules;
     }
 }

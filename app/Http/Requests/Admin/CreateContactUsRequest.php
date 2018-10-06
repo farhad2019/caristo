@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\BaseFormRequest;
 use App\Models\ContactUs;
 
 class CreateContactUsRequest extends BaseFormRequest

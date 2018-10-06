@@ -27,27 +27,38 @@ use Illuminate\Support\Facades\Storage;
 
 class AuthAPIController extends AppBaseController
 {
+    /**
+     * @var UserRepository
+     */
+    protected $userRepository;
 
-    protected $userRepository, $userDetailRepository, $uDevice, $categoryRepo;
+    /**
+     * @var UserdetailRepository
+     */
+    protected $userDetailRepository;
+
+    /**
+     * @var UdeviceRepository
+     */
+    protected $uDevice;
+
+    /**
+     * @var CategoryRepository
+     */
+    protected $categoryRepo;
 
     /**
      * Create a new AuthController instance.
      *
      * @return void
-     */
-    /**
+     *
      * AuthAPIController constructor.
      * @param UserRepository $userRepo
      * @param UserdetailRepository $userdetailRepo
      * @param UdeviceRepository $udeviceRepo
      * @param CategoryRepository $categoryRepo
      */
-    public function __construct(
-        UserRepository $userRepo,
-        UserdetailRepository $userdetailRepo,
-        UdeviceRepository $udeviceRepo,
-        CategoryRepository $categoryRepo
-    )
+    public function __construct(UserRepository $userRepo, UserdetailRepository $userdetailRepo, UdeviceRepository $udeviceRepo, CategoryRepository $categoryRepo)
     {
         $this->userRepository = $userRepo;
         $this->userDetailRepository = $userdetailRepo;
@@ -57,6 +68,9 @@ class AuthAPIController extends AppBaseController
     }
 
     /**
+     * @param RegistrationAPIRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     *
      * @SWG\Post(
      *      path="/register",
      *      summary="Register a new user.",
@@ -168,9 +182,10 @@ class AuthAPIController extends AppBaseController
     }
 
     /**
-     * Get a JWT via given credentials.
-     *
+     * @param LoginAPIRequest $request
      * @return \Illuminate\Http\JsonResponse
+     *
+     * Get a JWT via given credentials.
      *
      * @SWG\Post(
      *      path="/login",
@@ -211,9 +226,7 @@ class AuthAPIController extends AppBaseController
         $credentials = $request->only(['email', 'password']);
 
         if (!$token = auth()->guard('api')->attempt($credentials)) {
-//        if (!$token = auth()->attempt($credentials)) {
             return $this->sendErrorWithData("Invalid Login Credentials", 403);
-//            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -365,6 +378,9 @@ class AuthAPIController extends AppBaseController
     }
 
     /**
+     * @param ForgotPasswordCodeRequest $request
+     * @return mixed
+     *
      * @SWG\Get(
      *      path="/forget-password",
      *      summary="Forget password request.",
@@ -429,6 +445,9 @@ class AuthAPIController extends AppBaseController
     }
 
     /**
+     * @param VerifyCodeRequest $request
+     * @return mixed
+     *
      * @SWG\Post(
      *      path="/verify-reset-code",
      *      summary="verify forget password request code.",
@@ -476,6 +495,9 @@ class AuthAPIController extends AppBaseController
     }
 
     /**
+     * @param UpdateForgotPasswordRequest $request
+     * @return mixed
+     *
      * @SWG\Post(
      *      path="/reset-password",
      *      summary="Reset password.",
@@ -548,6 +570,9 @@ class AuthAPIController extends AppBaseController
     }
 
     /**
+     * @param SocialLoginAPIRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     *
      * @SWG\Post(
      *      path="/social-login",
      *      summary="Login With Social Account.",
@@ -656,8 +681,10 @@ class AuthAPIController extends AppBaseController
         return $this->respondWithToken($token);
     }
 
-
     /**
+     * @param UpdateChangePasswordRequest $request
+     * @return mixed
+     *
      * @SWG\Post(
      *      path="/change-password",
      *      summary="Reset password.",
@@ -733,8 +760,10 @@ class AuthAPIController extends AppBaseController
         }
     }
 
-
     /**
+     * @param UpdateUserProfileRequest $request
+     * @return mixed
+     *
      * @SWG\Post(
      *      path="/update-profile",
      *      summary="Reset password.",
@@ -906,6 +935,4 @@ class AuthAPIController extends AppBaseController
         $categories = $this->userRepository->findFavoriteNews($request, $this->categoryRepo);
         return $this->sendResponse($categories, 'Favorite News retrieved successfully');
     }
-
-
 }

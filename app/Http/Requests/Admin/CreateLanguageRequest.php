@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\Language;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CreateLanguageRequest extends BaseFormRequest
+class CreateLanguageRequest extends FormRequest
 {
 
     /**

@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\Menu;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CreateMenuRequest extends BaseFormRequest
+class CreateMenuRequest extends FormRequest
 {
 
     /**

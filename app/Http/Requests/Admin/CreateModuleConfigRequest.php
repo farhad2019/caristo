@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-class CreateModuleConfigRequest extends BaseFormRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class CreateModuleConfigRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
