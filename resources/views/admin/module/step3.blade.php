@@ -54,7 +54,7 @@
             'Dimensions (Image Files)': 'dimensions:min_width=100,min_height=200_or_dimensions:ratio=3/2',
             'Distinct': 'distinct',
             'E-Mail': 'email',
-            'Exists': 'exists:table,column',
+            'Exists': 'exists:table,id',
             'File': 'file',
             'Filled': 'filled',
             'Image (File)': 'image',

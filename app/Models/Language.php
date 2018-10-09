@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string code
  * @property string name
  * @property integer status
+ * @property integer created_at
+ * @property integer updated_at
+ * @property integer deleted_at
  *
  * @SWG\Definition(
  *      definition="Language",
@@ -53,9 +56,7 @@ class Language extends Model
 
     public $table = 'locales';
 
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'code',
@@ -97,7 +98,13 @@ class Language extends Model
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'code',
+        'title',
+        'native_name',
+        'direction'
+    ];
 
     /**
      * Validation create rules

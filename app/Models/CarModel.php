@@ -29,12 +29,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          description="brand_id",
  *          type="integer",
  *          format="int32"
- *      ),
- *      @SWG\Property(
- *          property="year",
- *          description="year",
- *          type="string",
- *          format="date"
  *      )
  * )
  */
@@ -64,7 +58,9 @@ class CarModel extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'brand'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -78,7 +74,11 @@ class CarModel extends Model
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'name',
+        'brand'
+    ];
 
     /**
      * Validation create rules

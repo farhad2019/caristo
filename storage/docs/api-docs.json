@@ -75,15 +75,12 @@
                         "schema": {
                             "properties": {
                                 "success": {
-                                    "description": "Get a JWT via given credentials.",
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "description": "Get a JWT via given credentials.",
                                     "$ref": "#/definitions/Login"
                                 },
                                 "message": {
-                                    "description": "Get a JWT via given credentials.",
                                     "type": "string"
                                 }
                             },
@@ -592,6 +589,343 @@
                 }
             }
         },
+        "/carAttributes": {
+            "get": {
+                "tags": [
+                    "CarAttribute"
+                ],
+                "summary": "Get a listing of the CarAttributes.",
+                "description": "Get all CarAttributes",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Change the locale.",
+                        "required": false,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/CarAttribute"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/carBrands": {
+            "get": {
+                "tags": [
+                    "CarBrand"
+                ],
+                "summary": "Get a listing of the CarBrands.",
+                "description": "Get all CarBrands",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Change the locale.",
+                        "required": false,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/CarBrand"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/carFeatures": {
+            "get": {
+                "tags": [
+                    "CarFeature"
+                ],
+                "summary": "Get a listing of the CarFeatures.",
+                "description": "Get all CarFeatures",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Change the locale.",
+                        "required": false,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/CarFeature"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/carModels": {
+            "get": {
+                "tags": [
+                    "CarModel"
+                ],
+                "summary": "Get a listing of the CarModels.",
+                "description": "Get all CarModels",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Change the locale.",
+                        "required": false,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "brand_id",
+                        "in": "query",
+                        "description": "Get brand's models.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/CarModel"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/carTypes": {
+            "get": {
+                "tags": [
+                    "CarType"
+                ],
+                "summary": "Get a listing of the CarTypes.",
+                "description": "Get all CarTypes",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Change the locale.",
+                        "required": false,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/CarType"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/categories": {
             "get": {
                 "tags": [
@@ -1084,54 +1418,6 @@
             }
         },
         "/contactus": {
-            "get": {
-                "tags": [
-                    "ContactUs"
-                ],
-                "summary": "Get a listing of the contactus.",
-                "description": "Get all contactus",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
-                        "required": false,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/ContactUs"
-                                    }
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
             "post": {
                 "tags": [
                     "ContactUs"
@@ -1173,107 +1459,45 @@
                 }
             }
         },
-        "/contactus/{id}": {
+        "/engineTypes": {
             "get": {
                 "tags": [
-                    "ContactUs"
+                    "EngineType"
                 ],
-                "summary": "Display the specified ContactUs",
-                "description": "Get ContactUs",
+                "summary": "Get a listing of the EngineTypes.",
+                "description": "Get all EngineTypes",
                 "produces": [
                     "application/json"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of ContactUs",
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
                         "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/ContactUs"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "ContactUs"
-                ],
-                "summary": "Update the specified ContactUs in storage",
-                "description": "Update ContactUs",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of ContactUs",
-                        "required": true,
+                        "name": "locale",
+                        "in": "query",
+                        "description": "Change the locale.",
+                        "required": false,
+                        "type": "string",
+                        "default": "en"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
                         "type": "integer"
                     },
                     {
-                        "name": "body",
-                        "in": "body",
-                        "description": "ContactUs that should be updated",
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
                         "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/ContactUs"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/ContactUs"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "ContactUs"
-                ],
-                "summary": "Remove the specified ContactUs from storage",
-                "description": "Delete ContactUs",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of ContactUs",
-                        "required": true,
                         "type": "integer"
                     }
                 ],
@@ -1286,7 +1510,10 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "type": "string"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/EngineType"
+                                    }
                                 },
                                 "message": {
                                     "type": "string"
@@ -1346,184 +1573,27 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "Language"
-                ],
-                "summary": "Store a newly created Language in storage",
-                "description": "Store Language",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Language that should be stored",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/Language"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/Language"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
             }
         },
-        "/languages/{id}": {
+        "/myCars": {
             "get": {
                 "tags": [
-                    "Language"
+                    "MyCar"
                 ],
-                "summary": "Display the specified Language",
-                "description": "Get Language",
+                "summary": "Get a listing of the MyCars.",
+                "description": "Get all MyCars",
                 "produces": [
                     "application/json"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of Language",
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
                         "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/Language"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Language"
-                ],
-                "summary": "Update the specified Language in storage",
-                "description": "Update Language",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of Language",
-                        "required": true,
-                        "type": "integer"
+                        "type": "string",
+                        "default": "Bearer ABC123"
                     },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Language that should be updated",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/Language"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/Language"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Language"
-                ],
-                "summary": "Remove the specified Language from storage",
-                "description": "Delete Language",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of Language",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "type": "string"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            }
-        },
-        "/media": {
-            "get": {
-                "tags": [
-                    "Media"
-                ],
-                "summary": "Get a listing of the Media.",
-                "description": "Get all Media",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
                     {
                         "name": "limit",
                         "in": "query",
@@ -1550,7 +1620,7 @@
                                 "data": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/Media"
+                                        "$ref": "#/definitions/MyCar"
                                     }
                                 },
                                 "message": {
@@ -1564,21 +1634,29 @@
             },
             "post": {
                 "tags": [
-                    "Media"
+                    "MyCar"
                 ],
-                "summary": "Store a newly created Media in storage",
-                "description": "Store Media",
+                "summary": "Store a newly created MyCar in storage",
+                "description": "Store MyCar",
                 "produces": [
                     "application/json"
                 ],
                 "parameters": [
                     {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
                         "name": "body",
                         "in": "body",
-                        "description": "Media that should be stored",
+                        "description": "MyCar that should be stored",
                         "required": false,
                         "schema": {
-                            "$ref": "#/definitions/Media"
+                            "$ref": "#/definitions/MyCar"
                         }
                     }
                 ],
@@ -1591,7 +1669,7 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/Media"
+                                    "$ref": "#/definitions/MyCar"
                                 },
                                 "message": {
                                     "type": "string"
@@ -1603,21 +1681,29 @@
                 }
             }
         },
-        "/media/{id}": {
+        "/myCars/{id}": {
             "get": {
                 "tags": [
-                    "Media"
+                    "MyCar"
                 ],
-                "summary": "Display the specified Media",
-                "description": "Get Media",
+                "summary": "Display the specified MyCar",
+                "description": "Get MyCar",
                 "produces": [
                     "application/json"
                 ],
                 "parameters": [
                     {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
-                        "description": "id of Media",
+                        "description": "id of MyCar",
                         "required": true,
                         "type": "integer"
                     }
@@ -1631,7 +1717,7 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/Media"
+                                    "$ref": "#/definitions/MyCar"
                                 },
                                 "message": {
                                     "type": "string"
@@ -1644,28 +1730,36 @@
             },
             "put": {
                 "tags": [
-                    "Media"
+                    "MyCar"
                 ],
-                "summary": "Update the specified Media in storage",
-                "description": "Update Media",
+                "summary": "Update the specified MyCar in storage",
+                "description": "Update MyCar",
                 "produces": [
                     "application/json"
                 ],
                 "parameters": [
                     {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
                         "name": "id",
                         "in": "path",
-                        "description": "id of Media",
+                        "description": "id of MyCar",
                         "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "body",
                         "in": "body",
-                        "description": "Media that should be updated",
+                        "description": "MyCar that should be updated",
                         "required": false,
                         "schema": {
-                            "$ref": "#/definitions/Media"
+                            "$ref": "#/definitions/MyCar"
                         }
                     }
                 ],
@@ -1678,7 +1772,7 @@
                                     "type": "boolean"
                                 },
                                 "data": {
-                                    "$ref": "#/definitions/Media"
+                                    "$ref": "#/definitions/MyCar"
                                 },
                                 "message": {
                                     "type": "string"
@@ -1691,233 +1785,26 @@
             },
             "delete": {
                 "tags": [
-                    "Media"
+                    "MyCar"
                 ],
-                "summary": "Remove the specified Media from storage",
-                "description": "Delete Media",
+                "summary": "Remove the specified MyCar from storage",
+                "description": "Delete MyCar",
                 "produces": [
                     "application/json"
                 ],
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of Media",
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
                         "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "type": "string"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            }
-        },
-        "/menus": {
-            "get": {
-                "tags": [
-                    "Menu"
-                ],
-                "summary": "Get a listing of the Menus.",
-                "description": "Get all Menus",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
-                        "required": false,
-                        "type": "integer"
+                        "type": "string",
+                        "default": "Bearer ABC123"
                     },
                     {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
-                        "required": false,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/Menu"
-                                    }
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Menu"
-                ],
-                "summary": "Store a newly created Menu in storage",
-                "description": "Store Menu",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Menu that should be stored",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/Menu"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/Menu"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            }
-        },
-        "/menus/{id}": {
-            "get": {
-                "tags": [
-                    "Menu"
-                ],
-                "summary": "Display the specified Menu",
-                "description": "Get Menu",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
                         "name": "id",
                         "in": "path",
-                        "description": "id of Menu",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/Menu"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Menu"
-                ],
-                "summary": "Update the specified Menu in storage",
-                "description": "Update Menu",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of Menu",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Menu that should be updated",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/Menu"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/Menu"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Menu"
-                ],
-                "summary": "Remove the specified Menu from storage",
-                "description": "Delete Menu",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of Menu",
+                        "description": "id of MyCar",
                         "required": true,
                         "type": "integer"
                     }
@@ -2832,6 +2719,64 @@
                 }
             }
         },
+        "/regions": {
+            "get": {
+                "tags": [
+                    "Region"
+                ],
+                "summary": "Get a listing of the Regions.",
+                "description": "Get all Regions",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Region"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -3163,6 +3108,77 @@
         }
     },
     "definitions": {
+        "CarAttribute": {
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "type": {
+                    "description": "type",
+                    "type": "string"
+                }
+            }
+        },
+        "CarBrand": {
+            "required": [
+                "created_at"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "CarFeature": {
+            "required": [
+                "id",
+                "updated_at"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "CarModel": {
+            "required": [
+                "brand_id",
+                "created_at"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "brand_id": {
+                    "description": "brand_id",
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "CarType": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
         "Category": {
             "required": [
                 "slug"
@@ -3214,11 +3230,6 @@
                 "message"
             ],
             "properties": {
-                "id": {
-                    "description": "id",
-                    "type": "integer",
-                    "format": "int32"
-                },
                 "name": {
                     "description": "name",
                     "type": "string"
@@ -3234,10 +3245,18 @@
                 "message": {
                     "description": "message",
                     "type": "string"
-                },
-                "status": {
-                    "description": "status",
-                    "type": "boolean"
+                }
+            }
+        },
+        "EngineType": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
                 }
             }
         },
@@ -3370,6 +3389,86 @@
                 "status": {
                     "description": "status",
                     "type": "boolean"
+                }
+            }
+        },
+        "MyCarAttributes": {
+            "properties": {
+                "KEY": {
+                    "description": "KEY",
+                    "type": "string",
+                    "default": "VALUE"
+                }
+            }
+        },
+        "MyCar": {
+            "required": [
+                "type_id",
+                "model_id",
+                "engine_type_id",
+                "year",
+                "transmission_type",
+                "name",
+                "email",
+                "country_code",
+                "phone"
+            ],
+            "properties": {
+                "name": {
+                    "description": "name",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "email",
+                    "type": "string"
+                },
+                "country_code": {
+                    "description": "country_code",
+                    "type": "string"
+                },
+                "phone": {
+                    "description": "phone",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "type_id": {
+                    "description": "Car Type Id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "model_id": {
+                    "description": "Car Model Id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "engine_type_id": {
+                    "description": "Car Engine Type Id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "year": {
+                    "description": "car Model's year",
+                    "type": "string",
+                    "format": "date"
+                },
+                "transmission_type": {
+                    "description": "transmission_type: 10:Manual, 20:Automatic",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "car_attributes": {
+                    "description": "attributes id - CSV [1,2,3]",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MyCarAttributes"
+                    }
+                },
+                "car_features": {
+                    "description": "Features id",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
         },
@@ -3512,6 +3611,23 @@
                     "description": "id",
                     "type": "integer",
                     "format": "int32"
+                }
+            }
+        },
+        "Region": {
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "name": {
+                    "description": "name",
+                    "type": "string"
                 }
             }
         },

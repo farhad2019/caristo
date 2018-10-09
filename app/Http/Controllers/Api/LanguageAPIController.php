@@ -8,15 +8,14 @@ use App\Models\Language;
 use App\Repositories\Admin\LanguageRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Http\Response;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Response;
 
 /**
  * Class LanguageController
  * @package App\Http\Controllers\Api
  */
-
 class LanguageAPIController extends AppBaseController
 {
     /** @var  LanguageRepository */
@@ -30,6 +29,7 @@ class LanguageAPIController extends AppBaseController
     /**
      * @param Request $request
      * @return Response
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
      * @SWG\Get(
      *      path="/languages",
@@ -44,7 +44,7 @@ class LanguageAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
@@ -77,7 +77,7 @@ class LanguageAPIController extends AppBaseController
     {
         $this->languageRepository->pushCriteria(new RequestCriteria($request));
         $this->languageRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $languages = $this->languageRepository->all();
+        $languages = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
 
         return $this->sendResponse($languages->toArray(), 'Languages retrieved successfully');
     }
@@ -86,33 +86,33 @@ class LanguageAPIController extends AppBaseController
      * @param CreateLanguageAPIRequest $request
      * @return Response
      *
-     * @SWG\Post(
+     * //@SWG\Post(
      *      path="/languages",
      *      summary="Store a newly created Language in storage",
      *      tags={"Language"},
      *      description="Store Language",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="Language that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/Language")
+     *          //@SWG\Schema(ref="#/definitions/Language")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/Language"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -133,33 +133,33 @@ class LanguageAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/languages/{id}",
      *      summary="Display the specified Language",
      *      tags={"Language"},
      *      description="Get Language",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of Language",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/Language"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -184,40 +184,40 @@ class LanguageAPIController extends AppBaseController
      * @param UpdateLanguageAPIRequest $request
      * @return Response
      *
-     * @SWG\Put(
+     * //@SWG\Put(
      *      path="/languages/{id}",
      *      summary="Update the specified Language in storage",
      *      tags={"Language"},
      *      description="Update Language",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of Language",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="Language that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/Language")
+     *          //@SWG\Schema(ref="#/definitions/Language")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/Language"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -244,34 +244,35 @@ class LanguageAPIController extends AppBaseController
     /**
      * @param int $id
      * @return Response
+     * @throws \Exception
      *
-     * @SWG\Delete(
+     * //@SWG\Delete(
      *      path="/languages/{id}",
      *      summary="Remove the specified Language from storage",
      *      tags={"Language"},
      *      description="Delete Language",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of Language",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="string"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property Media media
  * @property CarModel car_models
  *
  * @SWG\Definition(
@@ -53,7 +54,9 @@ class CarBrand extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'media'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -67,7 +70,11 @@ class CarBrand extends Model
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'name',
+        'media'
+    ];
 
     /**
      * Validation create rules
@@ -96,6 +103,25 @@ class CarBrand extends Model
         'name' => 'required'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'instance');
+    }
+
+    /**
+     * @return string
+     */
+    public function getMorphClass()
+    {
+        return 'brands';
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function carModels()
     {
         return $this->hasMany(CarModel::class);

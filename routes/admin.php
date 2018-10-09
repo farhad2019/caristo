@@ -65,3 +65,15 @@ Route::post('updatePosition', 'WalkThroughController@updatePosition');
 Route::resource('carBrands', 'CarBrandController');
 
 Route::resource('carModels', 'CarModelController');
+
+Route::resource('carAttributes', 'CarAttributeController');
+
+Route::resource('carFeatures', 'CarFeatureController');
+
+Route::resource('carTypes', 'CarTypeController');
+
+Route::resource('engineTypes', 'EngineTypeController');
+
+Route::resource('myCars', 'MyCarController');
+
+Route::resource('regions', 'RegionController');
