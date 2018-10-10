@@ -143,10 +143,16 @@ class CarBrandController extends AppBaseController
             return redirect(route('admin.carBrands.index'));
         }
 
-        $carBrand = $this->brandTranslationRepository->updateRecord($request, $carBrand);
+        $carBrand = $this->carBrandRepository->updateRecord($request, $carBrand);
+        $this->brandTranslationRepository->updateRecord($request, $carBrand);
 
         Flash::success('Car Brand updated successfully.');
-        return redirect(route('admin.carBrands.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.carBrands.create'));
+        } else {
+            $redirect_to = redirect(route('admin.carBrands.index'));
+        }
+        return $redirect_to;
     }
 
     /**

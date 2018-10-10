@@ -1,3 +1,13 @@
+<!-- Created At Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('name', 'Logo:') !!}
+    {!! Form::file('media', null, ['class' => 'form-control']) !!}
+    @if(isset($carBrand) && count($carBrand->media)>0)
+        <img class="pull-right" src="{{$carBrand->media()->orderby('created_at', 'desc')->first()->fileUrl}}"
+             alt="{{$carBrand->media()->orderby('created_at', 'desc')->first()->title}}" width="150">
+    @endif
+</div>
+<div class="clearfix"></div>
 @if(!isset($carBrand))
     <!-- Created At Field -->
     <div class="form-group col-sm-6">

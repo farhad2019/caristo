@@ -17,7 +17,14 @@ class CarBrandDataTable extends DataTable
     public function dataTable($query)
     {
         $dataTable = new EloquentDataTable($query);
-
+        $dataTable->editColumn('logo', function (CarBrand $model) {
+            if (count($model->media) > 0)
+                return "<img src='" . $model->media()->orderby('created_at', 'desc')->first()->fileUrl . "' width='80'/>";
+            else {
+                return "<span class='label label-default'>None</span>";
+            }
+        });
+        $dataTable->rawColumns(['logo', 'action']);
         return $dataTable->addColumn('action', 'admin.car_brands.datatables_actions');
     }
 
@@ -69,7 +76,8 @@ class CarBrandDataTable extends DataTable
     {
         return [
             'id',
-            'name'
+            'name',
+            'logo'
         ];
     }
 

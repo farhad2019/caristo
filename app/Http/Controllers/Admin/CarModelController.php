@@ -66,9 +66,10 @@ class CarModelController extends AppBaseController
     {
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return view('admin.car_models.create')->with([
-            'brands' => $brands
-        ]);
+        return view('admin.car_models.create')->with(
+            [
+                'brands' => $brands
+            ]);
     }
 
     /**
@@ -83,8 +84,14 @@ class CarModelController extends AppBaseController
         $carModel = $this->carModelRepository->saveRecord($request);
 
         Flash::success('Car Model saved successfully.');
-
-        return redirect(route('admin.carModels.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.carModels.create'));
+        } elseif (isset($request->translation)) {
+            $redirect_to = redirect(route('admin.carModels.edit', $carModel->id));
+        } else {
+            $redirect_to = redirect(route('admin.carModels.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -100,7 +107,6 @@ class CarModelController extends AppBaseController
 
         if (empty($carModel)) {
             Flash::error('Car Model not found');
-
             return redirect(route('admin.carModels.index'));
         }
 
@@ -120,12 +126,12 @@ class CarModelController extends AppBaseController
         $carModel = $this->carModelRepository->findWithoutFail($id);
         if (empty($carModel)) {
             Flash::error('Car Model not found');
-
             return redirect(route('admin.carModels.index'));
         }
 
         $locales = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
         $brands = $this->brandRepository->all()->pluck('name', 'id');
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carModel);
         return view('admin.car_models.edit')->with([
             'carModel' => $carModel,
@@ -148,15 +154,18 @@ class CarModelController extends AppBaseController
 
         if (empty($carModel)) {
             Flash::error('Car Model not found');
-
             return redirect(route('admin.carModels.index'));
         }
 
         $carModel = $this->carModelTranslationRepository->updateRecord($request, $carModel);
 
         Flash::success('Car Model updated successfully.');
-
-        return redirect(route('admin.carModels.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.carModels.create'));
+        } else {
+            $redirect_to = redirect(route('admin.carModels.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -172,14 +181,12 @@ class CarModelController extends AppBaseController
 
         if (empty($carModel)) {
             Flash::error('Car Model not found');
-
             return redirect(route('admin.carModels.index'));
         }
 
         $this->carModelRepository->delete($id);
 
         Flash::success('Car Model deleted successfully.');
-
         return redirect(route('admin.carModels.index'));
     }
 }

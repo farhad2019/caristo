@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin;
 
+use App\Helper\Utils;
 use App\Models\CarBrand;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -36,13 +37,36 @@ class CarBrandRepository extends BaseRepository
     {
         $input = $request->all();
         $carBrand = $this->create($input);
+        // Media Data
+        if ($request->hasFile('media')) {
+            $media = [];
+            $mediaFiles = $request->file('media');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+//                $media[] = $this->handlePicture($mediaFile);
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+
+            $carBrand->media()->createMany($media);
+        }
         return $carBrand;
     }
 
     public function updateRecord($request, $carBrand)
     {
-        $input = $request->all();
-        $this->update($input, $carBrand->id);
+        if ($request->hasFile('media')) {
+            $media = [];
+            $mediaFiles = $request->file('media');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+//                $media[] = $this->handlePicture($mediaFile);
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+
+            $carBrand->media()->createMany($media);
+        }
         return $carBrand;
     }
 }

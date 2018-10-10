@@ -8,9 +8,9 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateCarTypeRequest;
 use App\Http\Requests\Admin\UpdateCarTypeRequest;
 use App\Repositories\Admin\CarTypeRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class CarTypeController extends AppBaseController
 {
@@ -38,7 +38,7 @@ class CarTypeController extends AppBaseController
      */
     public function index(CarTypeDataTable $carTypeDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $carTypeDataTable->render('admin.car_types.index');
     }
 
@@ -49,7 +49,7 @@ class CarTypeController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.car_types.create');
     }
 
@@ -67,8 +67,14 @@ class CarTypeController extends AppBaseController
         $carType = $this->carTypeRepository->create($input);
 
         Flash::success('Car Type saved successfully.');
-
-        return redirect(route('admin.carTypes.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.carTypes.create'));
+        } elseif (isset($request->translation)) {
+            $redirect_to = redirect(route('admin.carTypes.edit', $carType->id));
+        } else {
+            $redirect_to = redirect(route('admin.carTypes.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -84,11 +90,10 @@ class CarTypeController extends AppBaseController
 
         if (empty($carType)) {
             Flash::error('Car Type not found');
-
             return redirect(route('admin.carTypes.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $carType);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carType);
         return view('admin.car_types.show')->with('carType', $carType);
     }
 
@@ -105,18 +110,17 @@ class CarTypeController extends AppBaseController
 
         if (empty($carType)) {
             Flash::error('Car Type not found');
-
             return redirect(route('admin.carTypes.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $carType);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carType);
         return view('admin.car_types.edit')->with('carType', $carType);
     }
 
     /**
      * Update the specified CarType in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateCarTypeRequest $request
      *
      * @return Response
@@ -127,15 +131,18 @@ class CarTypeController extends AppBaseController
 
         if (empty($carType)) {
             Flash::error('Car Type not found');
-
             return redirect(route('admin.carTypes.index'));
         }
 
         $carType = $this->carTypeRepository->update($request->all(), $id);
 
         Flash::success('Car Type updated successfully.');
-
-        return redirect(route('admin.carTypes.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.carTypes.create'));
+        } else {
+            $redirect_to = redirect(route('admin.carTypes.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -151,14 +158,12 @@ class CarTypeController extends AppBaseController
 
         if (empty($carType)) {
             Flash::error('Car Type not found');
-
             return redirect(route('admin.carTypes.index'));
         }
 
         $this->carTypeRepository->delete($id);
 
         Flash::success('Car Type deleted successfully.');
-
         return redirect(route('admin.carTypes.index'));
     }
 }

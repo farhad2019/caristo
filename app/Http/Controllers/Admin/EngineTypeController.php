@@ -8,9 +8,9 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateEngineTypeRequest;
 use App\Http\Requests\Admin\UpdateEngineTypeRequest;
 use App\Repositories\Admin\EngineTypeRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class EngineTypeController extends AppBaseController
 {
@@ -63,12 +63,17 @@ class EngineTypeController extends AppBaseController
     public function store(CreateEngineTypeRequest $request)
     {
         $input = $request->all();
-
         $engineType = $this->engineTypeRepository->create($input);
 
         Flash::success('Engine Type saved successfully.');
-
-        return redirect(route('admin.engineTypes.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.engineTypes.create'));
+        } elseif (isset($request->translation)) {
+            $redirect_to = redirect(route('admin.engineTypes.edit', $engineType->id));
+        } else {
+            $redirect_to = redirect(route('admin.engineTypes.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -84,7 +89,6 @@ class EngineTypeController extends AppBaseController
 
         if (empty($engineType)) {
             Flash::error('Engine Type not found');
-
             return redirect(route('admin.engineTypes.index'));
         }
 
@@ -105,7 +109,6 @@ class EngineTypeController extends AppBaseController
 
         if (empty($engineType)) {
             Flash::error('Engine Type not found');
-
             return redirect(route('admin.engineTypes.index'));
         }
 
@@ -127,15 +130,18 @@ class EngineTypeController extends AppBaseController
 
         if (empty($engineType)) {
             Flash::error('Engine Type not found');
-
             return redirect(route('admin.engineTypes.index'));
         }
 
         $engineType = $this->engineTypeRepository->update($request->all(), $id);
 
         Flash::success('Engine Type updated successfully.');
-
-        return redirect(route('admin.engineTypes.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.engineTypes.create'));
+        } else {
+            $redirect_to = redirect(route('admin.engineTypes.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -151,14 +157,12 @@ class EngineTypeController extends AppBaseController
 
         if (empty($engineType)) {
             Flash::error('Engine Type not found');
-
             return redirect(route('admin.engineTypes.index'));
         }
 
         $this->engineTypeRepository->delete($id);
 
         Flash::success('Engine Type deleted successfully.');
-
         return redirect(route('admin.engineTypes.index'));
     }
 }

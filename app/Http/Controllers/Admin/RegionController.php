@@ -8,9 +8,9 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateRegionRequest;
 use App\Http\Requests\Admin\UpdateRegionRequest;
 use App\Repositories\Admin\RegionRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class RegionController extends AppBaseController
 {
@@ -38,7 +38,7 @@ class RegionController extends AppBaseController
      */
     public function index(RegionDataTable $regionDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $regionDataTable->render('admin.regions.index');
     }
 
@@ -49,7 +49,7 @@ class RegionController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.regions.create');
     }
 
@@ -67,7 +67,6 @@ class RegionController extends AppBaseController
         $region = $this->regionRepository->create($input);
 
         Flash::success('Region saved successfully.');
-
         return redirect(route('admin.regions.index'));
     }
 
@@ -84,11 +83,10 @@ class RegionController extends AppBaseController
 
         if (empty($region)) {
             Flash::error('Region not found');
-
             return redirect(route('admin.regions.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $region);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $region);
         return view('admin.regions.show')->with('region', $region);
     }
 
@@ -105,18 +103,17 @@ class RegionController extends AppBaseController
 
         if (empty($region)) {
             Flash::error('Region not found');
-
             return redirect(route('admin.regions.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $region);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $region);
         return view('admin.regions.edit')->with('region', $region);
     }
 
     /**
      * Update the specified Region in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateRegionRequest $request
      *
      * @return Response
@@ -127,14 +124,12 @@ class RegionController extends AppBaseController
 
         if (empty($region)) {
             Flash::error('Region not found');
-
             return redirect(route('admin.regions.index'));
         }
 
         $region = $this->regionRepository->update($request->all(), $id);
 
         Flash::success('Region updated successfully.');
-
         return redirect(route('admin.regions.index'));
     }
 
@@ -151,14 +146,12 @@ class RegionController extends AppBaseController
 
         if (empty($region)) {
             Flash::error('Region not found');
-
             return redirect(route('admin.regions.index'));
         }
 
         $this->regionRepository->delete($id);
 
         Flash::success('Region deleted successfully.');
-
         return redirect(route('admin.regions.index'));
     }
 }

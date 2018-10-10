@@ -8,9 +8,9 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateRegionalSpecificationRequest;
 use App\Http\Requests\Admin\UpdateRegionalSpecificationRequest;
 use App\Repositories\Admin\RegionalSpecificationRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class RegionalSpecificationController extends AppBaseController
 {
@@ -38,7 +38,7 @@ class RegionalSpecificationController extends AppBaseController
      */
     public function index(RegionalSpecificationDataTable $regionalSpecificationDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $regionalSpecificationDataTable->render('admin.regional_specifications.index');
     }
 
@@ -49,7 +49,7 @@ class RegionalSpecificationController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.regional_specifications.create');
     }
 
@@ -67,8 +67,14 @@ class RegionalSpecificationController extends AppBaseController
         $regionalSpecification = $this->regionalSpecificationRepository->create($input);
 
         Flash::success('Regional Specification saved successfully.');
-
-        return redirect(route('admin.regionalSpecifications.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.regionalSpecifications.create'));
+        } elseif (isset($request->translation)) {
+            $redirect_to = redirect(route('admin.regionalSpecifications.edit', $regionalSpecification->id));
+        } else {
+            $redirect_to = redirect(route('admin.regionalSpecifications.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -84,11 +90,10 @@ class RegionalSpecificationController extends AppBaseController
 
         if (empty($regionalSpecification)) {
             Flash::error('Regional Specification not found');
-
             return redirect(route('admin.regionalSpecifications.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $regionalSpecification);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $regionalSpecification);
         return view('admin.regional_specifications.show')->with('regionalSpecification', $regionalSpecification);
     }
 
@@ -105,18 +110,17 @@ class RegionalSpecificationController extends AppBaseController
 
         if (empty($regionalSpecification)) {
             Flash::error('Regional Specification not found');
-
             return redirect(route('admin.regionalSpecifications.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $regionalSpecification);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $regionalSpecification);
         return view('admin.regional_specifications.edit')->with('regionalSpecification', $regionalSpecification);
     }
 
     /**
      * Update the specified RegionalSpecification in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateRegionalSpecificationRequest $request
      *
      * @return Response
@@ -127,15 +131,18 @@ class RegionalSpecificationController extends AppBaseController
 
         if (empty($regionalSpecification)) {
             Flash::error('Regional Specification not found');
-
             return redirect(route('admin.regionalSpecifications.index'));
         }
 
         $regionalSpecification = $this->regionalSpecificationRepository->update($request->all(), $id);
 
         Flash::success('Regional Specification updated successfully.');
-
-        return redirect(route('admin.regionalSpecifications.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.regionalSpecifications.create'));
+        } else {
+            $redirect_to = redirect(route('admin.regionalSpecifications.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -151,14 +158,12 @@ class RegionalSpecificationController extends AppBaseController
 
         if (empty($regionalSpecification)) {
             Flash::error('Regional Specification not found');
-
             return redirect(route('admin.regionalSpecifications.index'));
         }
 
         $this->regionalSpecificationRepository->delete($id);
 
         Flash::success('Regional Specification deleted successfully.');
-
         return redirect(route('admin.regionalSpecifications.index'));
     }
 }

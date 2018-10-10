@@ -8,9 +8,9 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateCarAttributeRequest;
 use App\Http\Requests\Admin\UpdateCarAttributeRequest;
 use App\Repositories\Admin\CarAttributeRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class CarAttributeController extends AppBaseController
 {
@@ -63,12 +63,17 @@ class CarAttributeController extends AppBaseController
     public function store(CreateCarAttributeRequest $request)
     {
         $input = $request->all();
-
         $carAttribute = $this->carAttributeRepository->create($input);
 
         Flash::success('Car Attribute saved successfully.');
-
-        return redirect(route('admin.carAttributes.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.carAttributes.create'));
+        } elseif (isset($request->translation)) {
+            $redirect_to = redirect(route('admin.carAttributes.edit', $carAttribute->id));
+        } else {
+            $redirect_to = redirect(route('admin.carAttributes.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -84,7 +89,6 @@ class CarAttributeController extends AppBaseController
 
         if (empty($carAttribute)) {
             Flash::error('Car Attribute not found');
-
             return redirect(route('admin.carAttributes.index'));
         }
 
@@ -105,7 +109,6 @@ class CarAttributeController extends AppBaseController
 
         if (empty($carAttribute)) {
             Flash::error('Car Attribute not found');
-
             return redirect(route('admin.carAttributes.index'));
         }
 
@@ -127,15 +130,18 @@ class CarAttributeController extends AppBaseController
 
         if (empty($carAttribute)) {
             Flash::error('Car Attribute not found');
-
             return redirect(route('admin.carAttributes.index'));
         }
 
         $carAttribute = $this->carAttributeRepository->update($request->all(), $id);
 
         Flash::success('Car Attribute updated successfully.');
-
-        return redirect(route('admin.carAttributes.index'));
+        if (isset($request->continue)) {
+            $redirect_to = redirect(route('admin.carAttributes.create'));
+        } else {
+            $redirect_to = redirect(route('admin.carAttributes.index'));
+        }
+        return $redirect_to;
     }
 
     /**
@@ -151,14 +157,12 @@ class CarAttributeController extends AppBaseController
 
         if (empty($carAttribute)) {
             Flash::error('Car Attribute not found');
-
             return redirect(route('admin.carAttributes.index'));
         }
 
         $this->carAttributeRepository->delete($id);
 
         Flash::success('Car Attribute deleted successfully.');
-
         return redirect(route('admin.carAttributes.index'));
     }
 }

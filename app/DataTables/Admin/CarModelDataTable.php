@@ -76,6 +76,7 @@ class CarModelDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            'id',
             'translations.name'       => [
                 'title' => 'Name'
             ],

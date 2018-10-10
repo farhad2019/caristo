@@ -87,7 +87,8 @@ class CarModel extends Model
      * @var array
      */
     public static $rules = [
-        'brand_id' => 'required|exists:brands,id'
+        'brand_id' => 'required|exists:brands,id',
+        'name'     => 'required'
     ];
 
     /**
@@ -96,7 +97,8 @@ class CarModel extends Model
      * @var array
      */
     public static $update_rules = [
-        'brand_id' => 'required|exists:brands,id'
+        'brand_id' => 'required|exists:brands,id',
+        'name'     => 'required'
     ];
 
     /**
@@ -105,7 +107,8 @@ class CarModel extends Model
      * @var array
      */
     public static $api_rules = [
-        'brand_id' => 'required|exists:brands,id'
+        'brand_id' => 'required|exists:brands,id',
+        'name'     => 'required'
     ];
 
     /**

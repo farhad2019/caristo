@@ -11,9 +11,9 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'admin.carBrands.store']) !!}
+                    {!! Form::open(['route' => 'admin.carBrands.store', 'files' => true]) !!}
 
-                        @include('admin.car_brands.fields')
+                    @include('admin.car_brands.fields')
 
                     {!! Form::close() !!}
                 </div>
