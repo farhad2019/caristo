@@ -117,3 +117,6 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::resource('v1/languages', 'LanguageAPIController');
+
+
+Route::resource('v1/regionalSpecifications', 'RegionalSpecificationAPIController');

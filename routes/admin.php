@@ -77,3 +77,5 @@ Route::resource('engineTypes', 'EngineTypeController');
 Route::resource('myCars', 'MyCarController');
 
 Route::resource('regions', 'RegionController');
+
+Route::resource('regionalSpecifications', 'RegionalSpecificationController');
