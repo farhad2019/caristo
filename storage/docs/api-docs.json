@@ -655,6 +655,49 @@
                 }
             }
         },
+        "/attribute-options/{id}": {
+            "get": {
+                "tags": [
+                    "CarAttribute"
+                ],
+                "summary": "Get a listing of the Car Attributes Options.",
+                "description": "Get all Car Attributes Options",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Car Attribute",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/CarAttribute"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/carBrands": {
             "get": {
                 "tags": [
@@ -3566,6 +3609,11 @@
                 },
                 "transmission_type": {
                     "description": "transmission_type: 10:Manual, 20:Automatic",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "regional_specification_id": {
+                    "description": "regional specification id",
                     "type": "integer",
                     "format": "int32"
                 },
