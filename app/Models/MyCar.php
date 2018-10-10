@@ -104,6 +104,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          format="int32"
  *      ),
  *      @SWG\Property(
+ *          property="regional_specification_id",
+ *          description="regional specification id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
  *          property="car_attributes",
  *          description="attributes id - CSV [1,2,3]",
  *          type="array",
@@ -157,6 +163,7 @@ class MyCar extends Model
         'phone',
         'owner_id',
         'notes',
+        'regional_specification_id',
         'owner_type'
     ];
 
@@ -252,17 +259,18 @@ class MyCar extends Model
      * @var array
      */
     public static $api_rules = [
-        'name'              => 'required',
-        'email'             => 'required|email',
-        'country_code'      => 'required',
-        'phone'             => 'required',
-        'type_id'           => 'required|exists:car_types,id',
-        'model_id'          => 'required|exists:car_models,id',
-        'engine_type_id'    => 'required|exists:engine_types,id',
-        'year'              => 'required',
+        'name'                      => 'required',
+        'email'                     => 'required|email',
+        'country_code'              => 'required',
+        'phone'                     => 'required',
+        'type_id'                   => 'required|exists:car_types,id',
+        'regional_specification_id' => 'required|exists:regional_specifications,id',
+        'model_id'                  => 'required|exists:car_models,id',
+        'engine_type_id'            => 'required|exists:engine_types,id',
+        'year'                      => 'required',
 //        'car_attributes.*.*' => 'required|exists:attributes,id',
 //        'car_features.*'     => 'required|exists:features,id',
-        'transmission_type' => 'required|in:10,20'
+        'transmission_type'         => 'required|in:10,20'
     ];
 
     /**
