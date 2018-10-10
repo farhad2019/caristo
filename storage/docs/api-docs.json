@@ -4,7 +4,7 @@
         "title": "Laravel Generator APIs",
         "version": "1.0.0"
     },
-    "basePath": "/CaristoCratApp/api/v1",
+    "basePath": "/api/v1",
     "paths": {
         "/register": {
             "post": {
@@ -3436,6 +3436,11 @@
                     "type": "integer",
                     "format": "int32"
                 },
+                "chassis": {
+                    "description": "Car chassis number",
+                    "type": "string",
+                    "format": "int32"
+                },
                 "model_id": {
                     "description": "Car Model Id",
                     "type": "integer",
@@ -3469,6 +3474,17 @@
                     "items": {
                         "type": "integer"
                     }
+                },
+                "media": {
+                    "description": "attach car media here",
+                    "type": "array",
+                    "items": {
+                        "type": "file"
+                    }
+                },
+                "notes": {
+                    "description": "add if any extra notes",
+                    "type": "string"
                 }
             }
         },

@@ -7,11 +7,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer id
- * @property string year
- * @property integer transmission_type
- * @property string country_code
+ * @property integer model_id
+ * @property integer type_id
+ * @property integer engine_type_id
  * @property string name
  * @property string email
+ * @property string country_code
+ * @property integer phone
+ * @property string chassis
+ * @property string year
+ * @property integer transmission_type
+ * @property integer owner_id
  * @property integer owner_type
  * @property string created_at
  * @property string updated_at
@@ -25,6 +31,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property CarType car_type
  * @property CarModel car_model
  * @property EngineType engine_type
+ * @property Media media
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -33,7 +40,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          description="KEY",
  *          type="string",
  *          default="VALUE"
- *      )
+ *     )
  * )
  *
  * @SWG\Definition(
@@ -64,6 +71,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          property="type_id",
  *          description="Car Type Id",
  *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="chassis",
+ *          description="Car chassis number",
+ *          type="string",
  *          format="int32"
  *      ),
  *      @SWG\Property(
@@ -101,6 +114,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          description="Features id",
  *          type="array",
  *          @SWG\Items(type="integer")
+ *      ),
+ *      @SWG\Property(
+ *          property="media",
+ *          description="attach car media here",
+ *          type="array",
+ *          @SWG\Items(type="file")
+ *      ),
+ *      @SWG\Property(
+ *          property="notes",
+ *          description="add if any extra notes",
+ *          type="string"
  *      )
  * )
  */
@@ -125,12 +149,14 @@ class MyCar extends Model
         'model_id',
         'engine_type_id',
         'year',
+        'chassis',
         'transmission_type',
         'name',
         'email',
         'country_code',
         'phone',
         'owner_id',
+        'notes',
         'owner_type'
     ];
 
@@ -152,6 +178,7 @@ class MyCar extends Model
         'owner',
         'carModel',
         'carType',
+        'media',
         'engineType'
     ];
 
@@ -181,6 +208,7 @@ class MyCar extends Model
         'carType',
         'carModel',
         'owner',
+        'media',
         'created_at'
     ];
 
@@ -253,6 +281,22 @@ class MyCar extends Model
         'year'              => 'required',
         'transmission_type' => 'required|in:10,20'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'instance');
+    }
+
+    /**
+     * @return string
+     */
+    public function getMorphClass()
+    {
+        return 'car';
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin;
 
+use App\Helper\Utils;
 use App\Models\MyCar;
 use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Common\BaseRepository;
@@ -41,7 +42,7 @@ class MyCarRepository extends BaseRepository
      */
     public function saveRecord($request)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes']);
 
         $user = Auth::user();
         $input['owner_id'] = $user->id;
@@ -52,6 +53,21 @@ class MyCarRepository extends BaseRepository
         }
 
         $myCar = $this->create($input);
+
+        // Media Data
+        if ($request->hasFile('media')) {
+            $media = [];
+            $mediaFiles = $request->file('media');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+//                $media[] = $this->handlePicture($mediaFile);
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+
+            $myCar->media()->createMany($media);
+        }
+
         return $myCar;
     }
 
