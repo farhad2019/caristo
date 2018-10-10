@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string deleted_at
  *
  * @property MyCar cars
+ * @property AttributeOption options
  *
  * @SWG\Definition(
  *      definition="CarAttribute",
@@ -58,14 +59,18 @@ class CarAttribute extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'options'
+    ];
 
     /**
      * The attributes that should be append to toArray.
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'option_array'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
@@ -74,7 +79,9 @@ class CarAttribute extends Model
      */
     protected $visible = [
         'id',
-        'name'
+        'name',
+        'option_array'
+//        'options'
     ];
 
     /**
@@ -110,5 +117,18 @@ class CarAttribute extends Model
     public function cars()
     {
         return $this->belongsToMany(MyCar::class, 'car_attributes', 'car_id', 'attribute_id', 'id', 'id')->withPivot('value');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function options()
+    {
+        return $this->hasMany(AttributeOption::class, 'attribute_id');
+    }
+
+    public function getOptionArrayAttribute()
+    {
+        return !empty($this->options) ? $this->options->pluck('option_array') : null;
     }
 }

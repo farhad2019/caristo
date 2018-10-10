@@ -314,34 +314,34 @@ class CarAttributeAPIController extends AppBaseController
 
     /**
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/attribute-options/{id}",
      *      summary="Get a listing of the Car Attributes Options.",
      *      tags={"CarAttribute"},
      *      description="Get all Car Attributes Options",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of Car Attribute",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/CarAttribute")
+     *                  //@SWG\Items(ref="#/definitions/CarAttribute")
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -349,10 +349,10 @@ class CarAttributeAPIController extends AppBaseController
      *      )
      * )
      */
-    public function getAttributeOptions($id)
+    /*public function getAttributeOptions($id)
     {
         $attributeOption = AttributeOption::where('attribute_id', $id)->get();
         //\App::setLocale($request->get('locale', 'en'));
         return $this->sendResponse($attributeOption->toArray(), 'Car Attributes retrieved successfully');
-    }
+    }*/
 }

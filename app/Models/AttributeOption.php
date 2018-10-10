@@ -54,10 +54,10 @@ class AttributeOption extends Model
      * @var array
      */
     protected $visible = [
-        'id',
-        'attribute_id',
-        'option',
-        //'option_array'
+//        'id',
+//        'attribute_id',
+//        'option',
+        'option_array'
     ];
 
     /**
