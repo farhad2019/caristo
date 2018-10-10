@@ -6,6 +6,7 @@ use App\Http\Requests\Api\CreateMyCarAPIRequest;
 use App\Http\Requests\Api\UpdateMyCarAPIRequest;
 use App\Models\MyCar;
 use App\Repositories\Admin\CarAttributeRepository;
+use App\Repositories\Admin\CarFeatureRepository;
 use App\Repositories\Admin\MyCarRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -25,10 +26,14 @@ class MyCarAPIController extends AppBaseController
     /** @var  CarAttributeRepository */
     private $attributeRepository;
 
-    public function __construct(MyCarRepository $myCarRepo, CarAttributeRepository $attributeRepo)
+    /** @var  CarFeatureRepository */
+    private $featureRepository;
+
+    public function __construct(MyCarRepository $myCarRepo, CarAttributeRepository $attributeRepo, CarFeatureRepository $featureRepo)
     {
         $this->myCarRepository = $myCarRepo;
         $this->attributeRepository = $attributeRepo;
+        $this->featureRepository = $featureRepo;
     }
 
     /**
@@ -141,7 +146,7 @@ class MyCarAPIController extends AppBaseController
      *      )
      * )
      */
-    public function store(Request $request)
+    public function store(CreateMyCarAPIRequest $request)
     {
         $myCars = $this->myCarRepository->saveRecord($request);
 
@@ -153,7 +158,16 @@ class MyCarAPIController extends AppBaseController
                 }
             }
         }
-        #TODO: Check For Features too as attributes
+
+        if (!empty($request->car_features)) {
+//            foreach ($request->car_features as $key => $car_feature) {
+//                $feature = $this->featureRepository->findWhere(['id' => $car_feature]);
+//                if ($feature->count() > 0) {
+//
+//                }
+//            }
+            $myCars->carFeatures()->attach($request->car_features);
+        }
         return $this->sendResponse($myCars, 'My Car saved successfully');
     }
 

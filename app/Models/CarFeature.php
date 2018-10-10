@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property MyCar cars
+ *
  * @SWG\Definition(
  *      definition="CarFeature",
  *      required={"id", "updated_at"},
@@ -95,5 +97,11 @@ class CarFeature extends Model
     public static $api_rules = [
     ];
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function cars()
+    {
+        return $this->belongsToMany(MyCar::class, 'car_features', 'car_id', 'feature_id', 'id', 'id');
+    }
 }

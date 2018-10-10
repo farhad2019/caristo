@@ -17,8 +17,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property string transmission_type_text
+ *
  * @property CarAttribute car_attributes
+ * @property CarFeature car_features
  * @property User owner
+ * @property CarType car_type
+ * @property CarModel car_model
+ * @property EngineType engine_type
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -106,6 +112,14 @@ class MyCar extends Model
 
     protected $dates = ['deleted_at'];
 
+    const MANUAL = 10;
+    const AUTOMATIC = 20;
+
+    public static $TRANSMISSION_TYPE_TEXT = [
+        self::MANUAL    => 'Manual',
+        self::AUTOMATIC => 'Automatic'
+    ];
+
     public $fillable = [
         'type_id',
         'model_id',
@@ -134,21 +148,41 @@ class MyCar extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'owner',
+        'carModel',
+        'carType',
+        'engineType'
+    ];
 
     /**
      * The attributes that should be append to toArray.
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'transmission_type_text'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'name',
+        'email',
+        'country_code',
+        'phone',
+        'year',
+        'transmission_type_text',
+        'engineType',
+        'carType',
+        'carModel',
+        'owner',
+        'created_at'
+    ];
 
     /**
      * Validation create rules
@@ -198,6 +232,8 @@ class MyCar extends Model
         'model_id'          => 'required|exists:car_models,id',
         'engine_type_id'    => 'required|exists:engine_types,id',
         'year'              => 'required',
+//        'car_attributes.*.*' => 'required|exists:attributes,id',
+//        'car_features.*'     => 'required|exists:features,id',
         'transmission_type' => 'required|in:10,20'
     ];
 
@@ -218,6 +254,9 @@ class MyCar extends Model
         'transmission_type' => 'required|in:10,20'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');
@@ -229,5 +268,45 @@ class MyCar extends Model
     public function carAttributes()
     {
         return $this->belongsToMany(CarAttribute::class, 'car_attributes', 'car_id', 'attribute_id', 'id', 'id')->withPivot('value');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function carFeatures()
+    {
+        return $this->belongsToMany(CarFeature::class, 'car_features', 'car_id', 'feature_id', 'id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function carModel()
+    {
+        return $this->belongsTo(CarModel::class, 'model_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function carType()
+    {
+        return $this->belongsTo(CarType::class, 'type_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function engineType()
+    {
+        return $this->belongsTo(EngineType::class, 'engine_type_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransmissionTypeTextAttribute()
+    {
+        return self::$TRANSMISSION_TYPE_TEXT[$this->transmission_type];
     }
 }

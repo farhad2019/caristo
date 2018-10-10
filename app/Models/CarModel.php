@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string deleted_at
  *
  * @property CarBrand brand
+ * @property MyCar cars
  *
  * @SWG\Definition(
  *      definition="CarModel",
@@ -113,5 +114,13 @@ class CarModel extends Model
     public function brand()
     {
         return $this->belongsTo(CarBrand::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cars()
+    {
+        return $this->hasMany(MyCar::class, 'model_id');
     }
 }

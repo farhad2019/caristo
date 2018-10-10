@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property MyCar cars
  * @SWG\Definition(
  *      definition="EngineType",
  *      required={"id"},
@@ -97,5 +98,11 @@ class EngineType extends Model
         'id' => 'required'
     ];
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cars()
+    {
+        return $this->hasMany(MyCar::class, 'engine_type_id');
+    }
 }

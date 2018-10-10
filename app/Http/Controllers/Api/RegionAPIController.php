@@ -16,7 +16,6 @@ use Illuminate\Http\Response;
  * Class RegionController
  * @package App\Http\Controllers\Api
  */
-
 class RegionAPIController extends AppBaseController
 {
     /** @var  RegionRepository */
