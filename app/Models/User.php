@@ -18,9 +18,24 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property string updated_at
  * @property string deleted_at
  *
- * @property Role Role
+ * @property string roles_csv
+ *
+ * @property Role roles
  * @property UserDetail details
  * @property UserDevice devices
+ * @property MyCar cars
+ * @property Region regions
+ *
+ * @SWG\Definition(
+ *     definition="UserRegions",
+ *     required={"region_id"},
+ *     @SWG\Property(
+ *          property="region_id",
+ *          description="Region id",
+ *          type="array",
+ *          @SWG\Items(type="integer")
+ *     )
+ * )
  *
  * @SWG\Definition(
  *      definition="User",
@@ -113,16 +128,25 @@ class User extends Authenticatable implements JWTSubject
         $this->restoreB();
     }
 
+    /**
+     * @return string
+     */
     public function getRolesCsvAttribute()
     {
         return implode(",", $this->roles->pluck('display_name')->all());
     }
 
-    public function Roles()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
     {
         return $this->belongsToMany('App\Models\Role');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function details()
     {
         return $this->hasOne(UserDetail::class);
@@ -148,6 +172,9 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function devices()
     {
         return $this->hasMany(UserDevice::class);
@@ -158,8 +185,19 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasManyThrough(News::class, NewsInteraction::class, 'user_id', 'id', 'id', 'news_id')->where(['news_interactions.type' => NewsInteraction::TYPE_FAVORITE]);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function cars()
     {
         return $this->hasMany(MyCar::class, 'owner_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function regions()
+    {
+        return $this->belongsToMany(Region::class);
     }
 }

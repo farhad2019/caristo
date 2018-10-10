@@ -8,9 +8,10 @@ use App\Models\User;
 use App\Repositories\Admin\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Response;
 
 /**
  * Class UserController
@@ -29,6 +30,7 @@ class UserAPIController extends AppBaseController
     /**
      * @param Request $request
      * @return Response
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
      * @SWG\Get(
      *      path="/users",
@@ -298,5 +300,60 @@ class UserAPIController extends AppBaseController
         $user->delete();
 
         return $this->sendResponse($id, 'User deleted successfully');
+    }
+
+    /**
+     * @param CreateUserAPIRequest $request
+     * @return Response
+     *
+     * @SWG\Post(
+     *      path="/users-regions",
+     *      summary="Store a newly created Customer in storage",
+     *      tags={"User"},
+     *      description="Store User",
+     *      produces={"application/json"},
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="region",
+     *          in="body",
+     *          description="Add user region.",
+     *          required=false,
+     *          @SWG\Schema(ref="#/definitions/UserRegions")
+     *      ),
+     *      @SWG\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(
+     *                  property="success",
+     *                  type="boolean"
+     *              ),
+     *              @SWG\Property(
+     *                  property="data",
+     *                  ref="#/definitions/User"
+     *              ),
+     *              @SWG\Property(
+     *                  property="message",
+     *                  type="string"
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function addRegion(Request $request)
+    {
+        $users = Auth::user();
+        $input = $request->all();
+
+        $users->regions()->sync($input['region_id']);
+        return $this->sendResponse($users->toArray(), "User's region saved successfully");
     }
 }

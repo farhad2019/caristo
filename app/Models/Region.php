@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property User user
+ *
  * @SWG\Definition(
  *      definition="Region",
  *      required={"id", "name"},
@@ -32,7 +34,7 @@ class Region extends Model
     use SoftDeletes;
 
     public $table = 'regions';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -56,7 +58,7 @@ class Region extends Model
      *
      * @var array
      */
-     protected $with = [];
+    protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
@@ -78,7 +80,7 @@ class Region extends Model
      * @var array
      */
     public static $rules = [
-        'id' => 'required',
+        'id'   => 'required',
         'name' => 'required'
     ];
 
@@ -88,7 +90,7 @@ class Region extends Model
      * @var array
      */
     public static $update_rules = [
-        'id' => 'required',
+        'id'   => 'required',
         'name' => 'required'
     ];
 
@@ -98,9 +100,15 @@ class Region extends Model
      * @var array
      */
     public static $api_rules = [
-        'id' => 'required',
+        'id'   => 'required',
         'name' => 'required'
     ];
 
-    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function user()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

@@ -4,7 +4,7 @@
         "title": "Laravel Generator APIs",
         "version": "1.0.0"
     },
-    "basePath": "/api/v1",
+    "basePath": "/CaristoCratApp/api/v1",
     "paths": {
         "/register": {
             "post": {
@@ -3000,6 +3000,56 @@
                 }
             }
         },
+        "/users-regions": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Store a newly created Customer in storage",
+                "description": "Store User",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "region",
+                        "in": "body",
+                        "description": "Add user region.",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/UserRegions"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/walkThroughs": {
             "get": {
                 "tags": [
@@ -3753,6 +3803,20 @@
                 "expires_at": {
                     "description": "expires_at",
                     "type": "string"
+                }
+            }
+        },
+        "UserRegions": {
+            "required": [
+                "region_id"
+            ],
+            "properties": {
+                "region_id": {
+                    "description": "Region id",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
         },
