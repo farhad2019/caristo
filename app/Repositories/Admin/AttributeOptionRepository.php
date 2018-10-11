@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Admin;
 
-use App\Models\CarAttribute;
+use App\Models\AttributeOption;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -10,11 +10,11 @@ use InfyOm\Generator\Common\BaseRepository;
  * @package App\Repositories\Admin
  * @version October 8, 2018, 5:01 am UTC
  *
- * @method CarAttribute findWithoutFail($id, $columns = ['*'])
- * @method CarAttribute find($id, $columns = ['*'])
- * @method CarAttribute first($columns = ['*'])
+ * @method AttributeOption findWithoutFail($id, $columns = ['*'])
+ * @method AttributeOption find($id, $columns = ['*'])
+ * @method AttributeOption first($columns = ['*'])
  */
-class CarAttributeRepository extends BaseRepository
+class AttributeOptionRepository extends BaseRepository
 {
     /**
      * @var array
@@ -29,7 +29,7 @@ class CarAttributeRepository extends BaseRepository
      **/
     public function model()
     {
-        return CarAttribute::class;
+        return AttributeOption::class;
     }
 
     public function saveRecord($request)

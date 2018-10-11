@@ -63,8 +63,9 @@ class CarAttributeController extends AppBaseController
      */
     public function store(CreateCarAttributeRequest $request)
     {
-        $input = $request->all();
-        $carAttribute = $this->carAttributeRepository->create($input);
+        $carAttribute = $this->carAttributeRepository->saveRecord($request);
+        //$input['options'] = array_values(array_filter($input['options']));
+        $carAttribute = $this->carAttributeRepository->saveRecord($request);
 
         Flash::success('Car Attribute saved successfully.');
         if (isset($request->continue)) {

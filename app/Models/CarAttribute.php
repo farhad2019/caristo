@@ -56,7 +56,8 @@ class CarAttribute extends Model
         self::NUMBER   => 'number',
         self::SELECT   => 'select',
         self::CHECKBOX => 'checkbox',
-        self::RADIO    => 'radio'
+        self::RADIO    => 'radio',
+        self::FILE     => 'file',
     ];
 
     public $fillable = [

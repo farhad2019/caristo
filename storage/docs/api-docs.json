@@ -3518,11 +3518,8 @@
         },
         "MyCar": {
             "required": [
-                "type_id",
                 "model_id",
-                "engine_type_id",
                 "year",
-                "transmission_type",
                 "name",
                 "email",
                 "country_code",
@@ -3546,11 +3543,6 @@
                     "type": "integer",
                     "format": "int32"
                 },
-                "type_id": {
-                    "description": "Car Type Id",
-                    "type": "integer",
-                    "format": "int32"
-                },
                 "chassis": {
                     "description": "Car chassis number",
                     "type": "string",
@@ -3566,11 +3558,6 @@
                     "type": "string",
                     "format": "date",
                     "default": "2018"
-                },
-                "transmission_type": {
-                    "description": "transmission_type: 10:Manual, 20:Automatic",
-                    "type": "integer",
-                    "format": "int32"
                 },
                 "regional_specification_id": {
                     "description": "regional specification id",

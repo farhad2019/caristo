@@ -45,7 +45,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @SWG\Definition(
  *      definition="MyCar",
- *      required={"type_id", "model_id", "engine_type_id", "year", "transmission_type", "name", "email", "country_code", "phone"},
+ *      required={"model_id", "year", "name", "email", "country_code", "phone"},
  *      @SWG\Property(
  *          property="name",
  *          description="name",
@@ -68,12 +68,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="type_id",
- *          description="Car Type Id",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
  *          property="chassis",
  *          description="Car chassis number",
  *          type="string",
@@ -91,12 +85,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          type="string",
  *          default="2018",
  *          format="date"
- *      ),
- *      @SWG\Property(
- *          property="transmission_type",
- *          description="transmission_type: 10:Manual, 20:Automatic",
- *          type="integer",
- *          format="int32"
  *      ),
  *      @SWG\Property(
  *          property="regional_specification_id",
@@ -190,7 +178,7 @@ class MyCar extends Model
      * @var array
      */
     protected $appends = [
-        'transmission_type_text'
+//        'transmission_type_text'
     ];
 
     /**
@@ -205,7 +193,7 @@ class MyCar extends Model
         'country_code',
         'phone',
         'year',
-        'transmission_type_text',
+//        'transmission_type_text',
         'engineType',
         'carType',
         'carModel',
@@ -258,14 +246,14 @@ class MyCar extends Model
         'email'                     => 'required|email',
         'country_code'              => 'required',
         'phone'                     => 'required',
-        'type_id'                   => 'required|exists:car_types,id',
-        'regional_specification_id' => 'required|exists:regional_specifications,id',
         'model_id'                  => 'required|exists:car_models,id',
-        //'engine_type_id'            => 'sometimes|exists:engine_types,id',
         'year'                      => 'required',
+        'regional_specification_id' => 'required|exists:regional_specifications,id',
+//        'type_id'                   => 'required|exists:car_types,id',
+//        'engine_type_id'            => 'sometimes|exists:engine_types,id',
 //        'car_attributes.*.*' => 'required|exists:attributes,id',
 //        'car_features.*'     => 'required|exists:features,id',
-        'transmission_type'         => 'required|in:10,20'
+//        'transmission_type'         => 'required|in:10,20'
     ];
 
     /**
@@ -354,6 +342,6 @@ class MyCar extends Model
      */
     public function getTransmissionTypeTextAttribute()
     {
-        return self::$TRANSMISSION_TYPE_TEXT[$this->transmission_type];
+        return ($this->transmission_type) ? self::$TRANSMISSION_TYPE_TEXT[$this->transmission_type] : null;
     }
 }

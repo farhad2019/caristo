@@ -2,19 +2,19 @@
 
 namespace App\Repositories\Admin;
 
-use App\Models\CarAttribute;
+use App\Models\AttributeOptionTranslation;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
- * Class CarAttributeRepository
+ * Class AttributeOptionTranslationRepository
  * @package App\Repositories\Admin
  * @version October 8, 2018, 5:01 am UTC
  *
- * @method CarAttribute findWithoutFail($id, $columns = ['*'])
- * @method CarAttribute find($id, $columns = ['*'])
- * @method CarAttribute first($columns = ['*'])
+ * @method AttributeOptionTranslation findWithoutFail($id, $columns = ['*'])
+ * @method AttributeOptionTranslation find($id, $columns = ['*'])
+ * @method AttributeOptionTranslation first($columns = ['*'])
  */
-class CarAttributeRepository extends BaseRepository
+class AttributeOptionTranslationRepository extends BaseRepository
 {
     /**
      * @var array
@@ -29,7 +29,7 @@ class CarAttributeRepository extends BaseRepository
      **/
     public function model()
     {
-        return CarAttribute::class;
+        return AttributeOptionTranslation::class;
     }
 
     public function saveRecord($request)
