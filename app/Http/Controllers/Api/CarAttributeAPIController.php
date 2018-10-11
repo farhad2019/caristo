@@ -311,48 +311,4 @@ class CarAttributeAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Car Attribute deleted successfully');
     }
-
-    /**
-     *
-     * //@SWG\Get(
-     *      path="/attribute-options/{id}",
-     *      summary="Get a listing of the Car Attributes Options.",
-     *      tags={"CarAttribute"},
-     *      description="Get all Car Attributes Options",
-     *      produces={"application/json"},
-     *      //@SWG\Parameter(
-     *          name="id",
-     *          description="id of Car Attribute",
-     *          type="integer",
-     *          required=true,
-     *          in="path"
-     *      ),
-     *      //@SWG\Response(
-     *          response=200,
-     *          description="successful operation",
-     *          //@SWG\Schema(
-     *              type="object",
-     *              //@SWG\Property(
-     *                  property="success",
-     *                  type="boolean"
-     *              ),
-     *              //@SWG\Property(
-     *                  property="data",
-     *                  type="array",
-     *                  //@SWG\Items(ref="#/definitions/CarAttribute")
-     *              ),
-     *              //@SWG\Property(
-     *                  property="message",
-     *                  type="string"
-     *              )
-     *          )
-     *      )
-     * )
-     */
-    /*public function getAttributeOptions($id)
-    {
-        $attributeOption = AttributeOption::where('attribute_id', $id)->get();
-        //\App::setLocale($request->get('locale', 'en'));
-        return $this->sendResponse($attributeOption->toArray(), 'Car Attributes retrieved successfully');
-    }*/
 }

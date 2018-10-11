@@ -115,9 +115,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('v1/users-regions', 'UserAPIController@addRegion');
 });
-//Route::get('v1/attribute-options/{id}', 'CarAttributeAPIController@getAttributeOptions');
 
 Route::resource('v1/languages', 'LanguageAPIController');
-
 
 Route::resource('v1/regionalSpecifications', 'RegionalSpecificationAPIController');

@@ -1,7 +1,7 @@
 <!-- Type Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('type', 'Type:') !!}
-    {!! Form::select('type', [], null, ['class' => 'form-control']) !!}
+    {!! Form::select('type', $types, null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Name Field -->

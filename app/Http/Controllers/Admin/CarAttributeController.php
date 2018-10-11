@@ -7,6 +7,7 @@ use App\DataTables\Admin\CarAttributeDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateCarAttributeRequest;
 use App\Http\Requests\Admin\UpdateCarAttributeRequest;
+use App\Models\CarAttribute;
 use App\Repositories\Admin\CarAttributeRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
@@ -38,7 +39,7 @@ class CarAttributeController extends AppBaseController
      */
     public function index(CarAttributeDataTable $carAttributeDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $carAttributeDataTable->render('admin.car_attributes.index');
     }
 
@@ -49,8 +50,8 @@ class CarAttributeController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
-        return view('admin.car_attributes.create');
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        return view('admin.car_attributes.create')->with(['types' => CarAttribute::$ATTRIBUTE_TYPES]);
     }
 
     /**
@@ -92,7 +93,7 @@ class CarAttributeController extends AppBaseController
             return redirect(route('admin.carAttributes.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $carAttribute);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carAttribute);
         return view('admin.car_attributes.show')->with('carAttribute', $carAttribute);
     }
 
@@ -112,14 +113,14 @@ class CarAttributeController extends AppBaseController
             return redirect(route('admin.carAttributes.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $carAttribute);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carAttribute);
         return view('admin.car_attributes.edit')->with('carAttribute', $carAttribute);
     }
 
     /**
      * Update the specified CarAttribute in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateCarAttributeRequest $request
      *
      * @return Response

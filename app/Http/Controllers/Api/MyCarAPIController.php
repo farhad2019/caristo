@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Criteria\CarsFilterCriteria;
 use App\Http\Requests\Api\CreateMyCarAPIRequest;
 use App\Http\Requests\Api\UpdateMyCarAPIRequest;
 use App\Models\MyCar;
@@ -69,6 +70,13 @@ class MyCarAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="ownerType",
+     *          description="filter by owner type: 10=showroom; 20=user",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
@@ -95,6 +103,7 @@ class MyCarAPIController extends AppBaseController
     {
         $this->myCarRepository->pushCriteria(new RequestCriteria($request));
         $this->myCarRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $this->myCarRepository->pushCriteria(new CarsFilterCriteria($request));
         $myCars = $this->myCarRepository->all();
 
         return $this->sendResponse($myCars->toArray(), 'My Cars retrieved successfully');

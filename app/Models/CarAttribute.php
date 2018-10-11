@@ -41,6 +41,21 @@ class CarAttribute extends Model
     protected $translatedAttributes = ['name'];
     protected $translationForeignKey = 'attribute_id';
 
+    const TEXT = 10;
+    const NUMBER = 20;
+    const SELECT = 30;
+    const CHECKBOX = 40;
+    const RADIO = 50;
+    const FILE = 60;
+
+    public static $ATTRIBUTE_TYPES = [
+        self::TEXT     => 'text',
+        self::NUMBER   => 'number',
+        self::SELECT   => 'select',
+        self::CHECKBOX => 'checkbox',
+        self::RADIO    => 'radio'
+    ];
+
     public $fillable = [
         'type'
     ];
