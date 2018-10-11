@@ -80,8 +80,9 @@ class CarAttributeController extends AppBaseController
     public function store(CreateCarAttributeRequest $request)
     {
         $carAttribute = $this->carAttributeRepository->saveRecord($request);
-
-        $this->optionRepository->saveRecord($request, $carAttribute);
+        if (!empty(array_values(array_filter($request->options)))) {
+            $this->optionRepository->saveRecord($request, $carAttribute);
+        }
 
         Flash::success('Car Attribute saved successfully.');
         if (isset($request->continue)) {
@@ -131,7 +132,10 @@ class CarAttributeController extends AppBaseController
         }
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carAttribute);
-        return view('admin.car_attributes.edit')->with('carAttribute', $carAttribute);
+        return view('admin.car_attributes.edit')->with([
+            'types'        => CarAttribute::$ATTRIBUTE_TYPES,
+            'carAttribute' => $carAttribute
+        ]);
     }
 
     /**

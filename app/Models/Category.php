@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer parent_id
  * @property string name
  * @property string slug
+ * @property integer type
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string parent_category
  * @property string child_category
  * @property string unread_count
+ * @property string type_text
  *
  * @SWG\Definition(
  *      definition="Category",
@@ -54,6 +56,16 @@ class Category extends Model
     protected $cascadeDeletes = ['media', 'news'];
     public $translatedAttributes = ['name', 'subtitle'];
     protected $dates = ['deleted_at'];
+
+    const NEWS = 10;
+    const COMPARE = 20;
+    const LUX_MARKET = 30;
+
+    public static $TYPE_TEXT = [
+        self::NEWS       => 'News',
+        self::COMPARE    => 'Comparision',
+        self::LUX_MARKET => 'Luxury Market'
+    ];
 
     public $fillable = [
         'name',
@@ -90,7 +102,8 @@ class Category extends Model
      * @var array
      */
     protected $appends = [
-        'unread_count'
+        'unread_count',
+        'type_text'
     ];
 
     /**
@@ -103,6 +116,8 @@ class Category extends Model
         'name',
         'user_id',
         'slug',
+        'type',
+        'type_text',
         'created_at',
         'updated_at',
 //        'parentCategory',
@@ -202,5 +217,10 @@ class Category extends Model
         }
 
         return $unread;
+    }
+
+    public function getTypeTextAttribute()
+    {
+        return self::$TYPE_TEXT[$this->type];
     }
 }

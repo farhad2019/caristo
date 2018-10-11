@@ -9,8 +9,8 @@ use App\Http\Requests\Admin\CreateNewsRequest;
 use App\Http\Requests\Admin\UpdateNewsRequest;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\NewsRepository;
-use Flash;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class NewsController extends AppBaseController
 {
@@ -78,7 +78,6 @@ class NewsController extends AppBaseController
         $news = $this->newsRepository->createRecord($request);
 
         Flash::success('News saved successfully.');
-
         return redirect(route('admin.news.index'));
     }
 
@@ -113,14 +112,11 @@ class NewsController extends AppBaseController
     public function edit($id)
     {
         $news = $this->newsRepository->findWithoutFail($id);
-
         if (empty($news)) {
             Flash::error('News not found');
-
             return redirect(route('admin.news.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $news);
         $categories = [];
         $cats = $this->categoryRepository->getRootCategories();
         foreach ($cats as $category) {
@@ -131,7 +127,7 @@ class NewsController extends AppBaseController
             }
         }
 
-
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $news);
         return view('admin.news.edit')->with([
             'news'       => $news,
             'categories' => $categories

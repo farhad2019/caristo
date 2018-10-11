@@ -42,17 +42,7 @@ class CategoryRepository extends BaseRepository
      */
     public function getRootCategories()
     {
-        /*$root = [];
-        $categories = $this->all();
-        foreach ($categories as $category) {
-            if ($category->news()->count() == 0) {
-                $root[] = $category;
-            }
-        }
-        //FIXME: Add Condition: whereDoesntHave('news')
-        return $this->findByField('parent_id', 0);
-        return $root;*/
-        return $this->model->whereDoesntHave('news')->get();
+        return $this->model->whereDoesntHave('news')->where('type', 10)->get();
     }
 
     /**

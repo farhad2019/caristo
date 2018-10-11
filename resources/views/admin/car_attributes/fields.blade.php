@@ -12,19 +12,37 @@
 
 <div class="clearfix"></div>
 <div id="clone-div" style="display: none">
-    <div>
-        <!-- Options Field -->
-        <div class="form-group col-sm-4">
-            {!! Form::label('options', 'Options:') !!}
-            {!! Form::text('options[]', null, ['class'=>'form-control']) !!}
-        </div>
+    @if(isset($carAttribute))
+        @foreach($carAttribute->options as $option)
+            <div>
+                <!-- Options Field -->
+                <div class="form-group col-sm-4">
+                    {!! Form::label('options', 'Options:') !!}
+                    {!! Form::text('options[]', null, ['class'=>'form-control']) !!}
+                </div>
 
-        <div class="col-sm-2" style="margin-top: 23px;">
-            <a href="javascript:void(0)" class="btn btn-info add_row"><i class="fa fa-plus"></i></a>
-            <a href="javascript:void(0)" class="btn btn-danger delete_row"><i class="fa fa-trash"></i></a>
+                <div class="col-sm-2" style="margin-top: 23px;">
+                    <a href="javascript:void(0)" class="btn btn-info add_row"><i class="fa fa-plus"></i></a>
+                    <a href="javascript:void(0)" class="btn btn-danger delete_row"><i class="fa fa-trash"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        @endforeach
+    @else
+        <div>
+            <!-- Options Field -->
+            <div class="form-group col-sm-4">
+                {!! Form::label('options', 'Options:') !!}
+                {!! Form::text('options[]', null, ['class'=>'form-control']) !!}
+            </div>
+
+            <div class="col-sm-2" style="margin-top: 23px;">
+                <a href="javascript:void(0)" class="btn btn-info add_row"><i class="fa fa-plus"></i></a>
+                <a href="javascript:void(0)" class="btn btn-danger delete_row"><i class="fa fa-trash"></i></a>
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
-    </div>
+    @endif
     <div class="" id="clone-row-sample" style="display: none;">
         <!-- Options Field -->
         <div class="form-group col-sm-4">
