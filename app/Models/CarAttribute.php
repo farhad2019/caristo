@@ -80,6 +80,7 @@ class CarAttribute extends Model
     protected $visible = [
         'id',
         'name',
+        'type',
         'option_array'
 //        'options'
     ];

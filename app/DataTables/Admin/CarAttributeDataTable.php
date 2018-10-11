@@ -16,8 +16,11 @@ class CarAttributeDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $query = $query->with(['translations']);
         $dataTable = new EloquentDataTable($query);
-
+        $dataTable->editColumn('translations.name', function ($carModel) {
+            return $carModel->name;
+        });
         return $dataTable->addColumn('action', 'admin.car_attributes.datatables_actions');
     }
 
@@ -69,6 +72,9 @@ class CarAttributeDataTable extends DataTable
     {
         return [
             'id',
+            'translations.name' => [
+                'title' => 'Name'
+            ],
             'type'
         ];
     }

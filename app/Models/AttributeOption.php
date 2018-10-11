@@ -83,6 +83,6 @@ class AttributeOption extends Model
 
     public function getOptionArrayAttribute()
     {
-        return [$this->id => $this->option];
+        return ['id' => $this->id, 'name' => $this->option];
     }
 }
