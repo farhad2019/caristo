@@ -86,15 +86,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          format="int32"
  *      ),
  *      @SWG\Property(
- *          property="engine_type_id",
- *          description="Car Engine Type Id",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
  *          property="year",
  *          description="car Model's year",
  *          type="string",
+ *          default="2018",
  *          format="date"
  *      ),
  *      @SWG\Property(
@@ -266,7 +261,7 @@ class MyCar extends Model
         'type_id'                   => 'required|exists:car_types,id',
         'regional_specification_id' => 'required|exists:regional_specifications,id',
         'model_id'                  => 'required|exists:car_models,id',
-        'engine_type_id'            => 'required|exists:engine_types,id',
+        //'engine_type_id'            => 'sometimes|exists:engine_types,id',
         'year'                      => 'required',
 //        'car_attributes.*.*' => 'required|exists:attributes,id',
 //        'car_features.*'     => 'required|exists:features,id',

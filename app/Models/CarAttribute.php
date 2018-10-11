@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property string option_array
+ * @property string type_text
+ *
  * @property MyCar cars
  * @property AttributeOption options
  *
@@ -84,7 +87,8 @@ class CarAttribute extends Model
      * @var array
      */
     protected $appends = [
-        'option_array'
+        'option_array',
+        'type_text'
     ];
 
     /**
@@ -143,8 +147,19 @@ class CarAttribute extends Model
         return $this->hasMany(AttributeOption::class, 'attribute_id');
     }
 
+    /**
+     * @return mixed
+     */
     public function getOptionArrayAttribute()
     {
-        return !empty($this->options) ? $this->options->pluck('option_array') : null;
+        return (!empty($this->options)) ? $this->options->pluck('option_array') : null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTypeTextAttribute()
+    {
+        return self::$ATTRIBUTE_TYPES[$this->type];
     }
 }

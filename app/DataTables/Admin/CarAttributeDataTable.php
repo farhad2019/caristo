@@ -18,8 +18,13 @@ class CarAttributeDataTable extends DataTable
     {
         $query = $query->with(['translations']);
         $dataTable = new EloquentDataTable($query);
-        $dataTable->editColumn('translations.name', function ($carModel) {
-            return $carModel->name;
+
+        $dataTable->editColumn('translations.name', function ($model) {
+            return $model->name;
+        });
+
+        $dataTable->editColumn('type', function ($model) {
+            return $model->type_text;
         });
         return $dataTable->addColumn('action', 'admin.car_attributes.datatables_actions');
     }
@@ -55,7 +60,7 @@ class CarAttributeDataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->addAction(['width' => '80px'])
+            ->addAction(['width' => '80px', 'printable' => false])
             ->parameters([
                 'dom'     => 'Bfrtip',
                 'order'   => [[0, 'desc']],

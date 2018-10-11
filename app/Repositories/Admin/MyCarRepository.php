@@ -42,7 +42,7 @@ class MyCarRepository extends BaseRepository
      */
     public function saveRecord($request)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id']);
 
         $user = Auth::user();
         $input['owner_id'] = $user->id;
