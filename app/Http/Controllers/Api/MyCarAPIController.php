@@ -177,7 +177,8 @@ class MyCarAPIController extends AppBaseController
 //            }
             $myCars->carFeatures()->attach($request->car_features);
         }
-        return $this->sendResponse($myCars, 'My Car saved successfully');
+        $myCars = $this->myCarRepository->findWithoutFail($myCars->id);
+        return $this->sendResponse($myCars->toArray(), 'My Car saved successfully');
     }
 
     /**

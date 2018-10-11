@@ -13,6 +13,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property string option_array
+ *
+ * @property CarAttribute car_attribute
+ *
  */
 class AttributeOption extends Model
 {
@@ -23,7 +27,9 @@ class AttributeOption extends Model
     protected $translatedAttributes = ['option'];
     protected $translationForeignKey = 'attribute_option_id';
 
-    public $fillable = [];
+    public $fillable = [
+        'attribute_id'
+    ];
 
     /**
      * The attributes that should be casted to native types.
@@ -81,6 +87,14 @@ class AttributeOption extends Model
      */
     public static $api_rules = [];
 
+    public function carAttribute()
+    {
+        return $this->belongsTo(CarAttribute::class, 'attribute_id');
+    }
+
+    /**
+     * @return array
+     */
     public function getOptionArrayAttribute()
     {
         return ['id' => $this->id, 'name' => $this->option];

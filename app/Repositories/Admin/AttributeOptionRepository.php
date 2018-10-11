@@ -32,10 +32,23 @@ class AttributeOptionRepository extends BaseRepository
         return AttributeOption::class;
     }
 
-    public function saveRecord($request)
+    /**
+     * @param $request
+     * @param $carAttribute
+     * @return mixed
+     */
+    public function saveRecord($request, $carAttribute)
     {
-        $input = $request->all();
-        $carAttribute = $this->create($input);
+        $input = $request->only('options');
+        $input['options'] = array_values(array_filter($input['options']));
+
+        if (!empty($input['options'])) {
+            foreach ($input['options'] as $key => $item) {
+                $data['option'] = $item;
+                $data['attribute_id'] = $carAttribute->id;
+                $this->create($data);
+            }
+        }
         return $carAttribute;
     }
 }

@@ -1,10 +1,10 @@
-<!-- Id Field -->
-<dt>{!! Form::label('id', 'Id:') !!}</dt>
-<dd>{!! $carAttribute->id !!}</dd>
+<!-- Name Field -->
+<dt>{!! Form::label('name', 'Name:') !!}</dt>
+<dd>{!! $carAttribute->name !!}</dd>
 
 <!-- Type Field -->
 <dt>{!! Form::label('type', 'Type:') !!}</dt>
-<dd>{!! $carAttribute->type !!}</dd>
+<dd>{!! $carAttribute->type_text !!}</dd>
 
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>
@@ -13,8 +13,3 @@
 <!-- Updated At Field -->
 <dt>{!! Form::label('updated_at', 'Updated At:') !!}</dt>
 <dd>{!! $carAttribute->updated_at !!}</dd>
-
-<!-- Deleted At Field -->
-<dt>{!! Form::label('deleted_at', 'Deleted At:') !!}</dt>
-<dd>{!! $carAttribute->deleted_at !!}</dd>
-

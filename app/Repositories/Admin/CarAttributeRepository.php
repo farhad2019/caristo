@@ -20,7 +20,6 @@ class CarAttributeRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'id',
         'type'
     ];
 
@@ -34,7 +33,7 @@ class CarAttributeRepository extends BaseRepository
 
     public function saveRecord($request)
     {
-        $input = $request->all();
+        $input = $request->only('name','type');
         $carAttribute = $this->create($input);
         return $carAttribute;
     }

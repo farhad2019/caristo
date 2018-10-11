@@ -8,8 +8,12 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateCarAttributeRequest;
 use App\Http\Requests\Admin\UpdateCarAttributeRequest;
 use App\Models\CarAttribute;
+use App\Models\CarAttributeTranslation;
+use App\Repositories\Admin\AttributeOptionRepository;
+use App\Repositories\Admin\AttributeOptionTranslationRepository;
 use App\Repositories\Admin\CarAttributeRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\Admin\CarAttributeTranslationRepository;
 use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
 
@@ -24,9 +28,21 @@ class CarAttributeController extends AppBaseController
     /** @var  CarAttributeRepository */
     private $carAttributeRepository;
 
-    public function __construct(CarAttributeRepository $carAttributeRepo)
+    /** @var  AttributeOptionRepository */
+    private $optionRepository;
+
+    /** @var  CarAttributeTranslationRepository */
+    private $attributeTranslationRepository;
+
+    /** @var  AttributeOptionTranslationRepository */
+    private $optionTranslationRepository;
+
+    public function __construct(CarAttributeRepository $carAttributeRepo, CarAttributeTranslationRepository $attributeTranslationRepo, AttributeOptionRepository $optionRepo, AttributeOptionTranslationRepository $optionTranslationRepo)
     {
         $this->carAttributeRepository = $carAttributeRepo;
+        $this->optionRepository = $optionRepo;
+        $this->attributeTranslationRepository = $attributeTranslationRepo;
+        $this->optionTranslationRepository = $optionTranslationRepo;
         $this->ModelName = 'carAttributes';
         $this->BreadCrumbName = 'CarAttribute';
     }
@@ -64,8 +80,8 @@ class CarAttributeController extends AppBaseController
     public function store(CreateCarAttributeRequest $request)
     {
         $carAttribute = $this->carAttributeRepository->saveRecord($request);
-        //$input['options'] = array_values(array_filter($input['options']));
-        $carAttribute = $this->carAttributeRepository->saveRecord($request);
+
+        $this->optionRepository->saveRecord($request, $carAttribute);
 
         Flash::success('Car Attribute saved successfully.');
         if (isset($request->continue)) {
