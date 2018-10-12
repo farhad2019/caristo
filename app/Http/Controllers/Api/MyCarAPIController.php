@@ -159,24 +159,51 @@ class MyCarAPIController extends AppBaseController
     {
         $myCars = $this->myCarRepository->saveRecord($request);
 
-        if (!empty($request->car_attributes)) {
-            foreach ($request->car_attributes as $key => $car_attribute) {
-                $attribute = $this->attributeRepository->findWhere(['id' => array_keys($car_attribute)[0]]);
-                if ($attribute->count() > 0) {
-                    $myCars->carAttributes()->attach(array_keys($car_attribute)[0], ['value' => array_values($car_attribute)[0]]);
+        if (is_string($request->car_attributes)) {
+            if (!empty(json_decode($request->car_attributes))) {
+                foreach (json_decode($request->car_attributes) as $key => $car_attribute) {
+                    $attribute = $this->attributeRepository->findWhere(['id' => array_keys(get_object_vars($car_attribute))[0]]);
+                    if ($attribute->count() > 0) {
+                        $myCars->carAttributes()->attach(array_keys(get_object_vars($car_attribute))[0], ['value' => array_values(get_object_vars($car_attribute))[0]]);
+                    }
+                }
+            }
+        } elseif (is_array($request->car_attributes)) {
+            if (!empty($request->car_attributes)) {
+                foreach ($request->car_attributes as $key => $car_attribute) {
+                    $attribute = $this->attributeRepository->findWhere(['id' => array_keys($car_attribute)[0]]);
+                    if ($attribute->count() > 0) {
+                        $myCars->carAttributes()->attach(array_keys($car_attribute)[0], ['value' => array_values($car_attribute)[0]]);
+                    }
                 }
             }
         }
 
-        if (!empty($request->car_features)) {
+        if (is_string($request->car_features)) {
+            if (!empty(json_decode($request->car_features))) {
+                $myCars->carFeatures()->attach(json_decode($request->car_features));
+            }
+        } elseif (is_array($request->car_features)) {
+            if (!empty($request->car_features)) {
+                $myCars->carFeatures()->attach($request->car_features);
+            }
+        }
+
+        /*if (!empty($request->car_features)) {
 //            foreach ($request->car_features as $key => $car_feature) {
 //                $feature = $this->featureRepository->findWhere(['id' => $car_feature]);
 //                if ($feature->count() > 0) {
 //
 //                }
 //            }
-            $myCars->carFeatures()->attach($request->car_features);
-        }
+            if (is_string($request->car_attributes)) {
+                $bool = empty(json_decode($request->car_features));
+                $features = json_decode($request->car_features);
+            } elseif (is_array($request->car_attributes)) {
+                $features = $request->car_features;
+            }
+            $myCars->carFeatures()->attach($features);
+        }*/
         $myCars = $this->myCarRepository->findWithoutFail($myCars->id);
         return $this->sendResponse($myCars->toArray(), 'My Car saved successfully');
     }
@@ -227,7 +254,8 @@ class MyCarAPIController extends AppBaseController
      *      )
      * )
      */
-    public function show($id)
+    public
+    function show($id)
     {
         /** @var MyCar $myCar */
         $myCar = $this->myCarRepository->findWithoutFail($id);
@@ -293,7 +321,8 @@ class MyCarAPIController extends AppBaseController
      *      )
      * )
      */
-    public function update($id, UpdateMyCarAPIRequest $request)
+    public
+    function update($id, UpdateMyCarAPIRequest $request)
     {
         /** @var MyCar $myCar */
         $myCar = $this->myCarRepository->findWithoutFail($id);
@@ -352,7 +381,8 @@ class MyCarAPIController extends AppBaseController
      *      )
      * )
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         /** @var MyCar $myCar */
         $myCar = $this->myCarRepository->findWithoutFail($id);

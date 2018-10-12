@@ -103,7 +103,7 @@ class Category extends Model
      */
     protected $appends = [
         'unread_count',
-        'type_text'
+//        'type_text'
     ];
 
     /**
@@ -127,6 +127,9 @@ class Category extends Model
 //        'unread_count'
     ];
 
+    /**
+     * @var array
+     */
     protected $hidden = ['unread_count'];
 
     /**
@@ -219,6 +222,9 @@ class Category extends Model
         return $unread;
     }
 
+    /**
+     * @return mixed
+     */
     public function getTypeTextAttribute()
     {
         return self::$TYPE_TEXT[$this->type];

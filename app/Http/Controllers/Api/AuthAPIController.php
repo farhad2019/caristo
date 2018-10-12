@@ -852,7 +852,7 @@ class AuthAPIController extends AppBaseController
 //                $details['phone'] = $details['country_code'] . $details['phone'];
 //                unset($details['country_code']);
 //            }
-            $this->userDetailRepository->update($details, $user->details->id);
+            //$this->userDetailRepository->update($details, $user->details->id);
         }
 
         return $this->sendResponse(['user' => $this->userRepository->findWithoutFail($user->id)->toArray()], 'Profile Updated Successfully');

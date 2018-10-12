@@ -17,12 +17,12 @@ class CategoryCriteria implements CriteriaInterface
 
     public function apply($model, RepositoryInterface $repository)
     {
-        // Implement apply() method.
         $parent_id = $this->request->get('parent_id', -1);
 
         if ($parent_id >= 0) {
             $model = $model->where('parent_id', $parent_id);
         }
+
         return $model;
     }
 
