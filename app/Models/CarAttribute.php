@@ -46,18 +46,18 @@ class CarAttribute extends Model
 
     const TEXT = 10;
     const NUMBER = 20;
-    const SELECT = 30;
-    const CHECKBOX = 40;
-    const RADIO = 50;
-    const FILE = 60;
+    const SELECT_SINGLE = 30;
+    const SELECT_MULTIPLE = 40;
+    const FILE_SINGLE = 50;
+    const FILE_MULTIPLE = 60;
 
     public static $ATTRIBUTE_TYPES = [
-        self::TEXT     => 'text',
-        self::NUMBER   => 'number',
-        self::SELECT   => 'select',
-        self::CHECKBOX => 'checkbox',
-        self::RADIO    => 'radio',
-        self::FILE     => 'file',
+        self::TEXT            => 'text',
+        self::NUMBER          => 'number',
+        self::SELECT_SINGLE   => 'select - single',
+        self::SELECT_MULTIPLE => 'select - multiple',
+        self::FILE_SINGLE     => 'file - single',
+        self::FILE_MULTIPLE   => 'file - multiple'
     ];
 
     public $fillable = [

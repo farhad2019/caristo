@@ -42,7 +42,15 @@ class CategoryRepository extends BaseRepository
      */
     public function getRootCategories()
     {
-        return $this->model->whereDoesntHave('news')->where('type', 10)->get();
+        return $this->model->whereDoesntHave('news')->where('type', Category::NEWS)->get();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCarCategories()
+    {
+        return $this->model->where('type', Category::LUX_MARKET)->whereNotIn('parent_id', [0])->get();
     }
 
     /**

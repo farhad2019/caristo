@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Api;
 
-use App\Http\Requests\BaseFormRequest;
-use App\Models\MyCar;
+use App\Models\MakeBid;
+use App\Http\Requests\BaseAPIRequest;
 
-/**
- * @property mixed attribute
- */
-class CreateMyCarRequest extends BaseFormRequest
+class UpdateMakeBidAPIRequest extends BaseAPIRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,6 +24,6 @@ class CreateMyCarRequest extends BaseFormRequest
      */
     public function rules()
     {
-        return MyCar::$rules;
+        return MakeBid::$api_rules;
     }
 }

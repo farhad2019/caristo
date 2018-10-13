@@ -3,12 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\BaseFormRequest;
-use App\Models\MyCar;
+use App\Models\MakeBid;
 
-/**
- * @property mixed attribute
- */
-class CreateMyCarRequest extends BaseFormRequest
+class CreateMakeBidRequest extends BaseFormRequest
 {
 
     /**
@@ -28,6 +25,6 @@ class CreateMyCarRequest extends BaseFormRequest
      */
     public function rules()
     {
-        return MyCar::$rules;
+        return [];//MakeBid::$rules;
     }
 }

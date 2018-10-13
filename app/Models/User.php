@@ -25,6 +25,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property UserDevice devices
  * @property MyCar cars
  * @property Region regions
+ * @property MakeBid bids
  *
  * @SWG\Definition(
  *     definition="UserRegions",
@@ -60,6 +61,9 @@ class User extends Authenticatable implements JWTSubject
     }
 
     protected $cascadeDeletes = ['details', 'devices'];
+
+    const SHOWROOM_OWNER = 10;
+    const RANDOM_USER = 20;
 
     /**
      * The attributes that are mass assignable.
@@ -199,5 +203,13 @@ class User extends Authenticatable implements JWTSubject
     public function regions()
     {
         return $this->belongsToMany(Region::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bids()
+    {
+        return $this->hasMany(MakeBid::class);
     }
 }

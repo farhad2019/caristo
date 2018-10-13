@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property CarModel car_model
  * @property EngineType engine_type
  * @property Media media
+ * @property MakeBid bids
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -169,6 +170,7 @@ class MyCar extends Model
         'carModel',
         'carType',
         'media',
+        'bids',
         'engineType'
     ];
 
@@ -199,6 +201,7 @@ class MyCar extends Model
         'carModel',
         'owner',
         'media',
+        'bids',
         'created_at'
     ];
 
@@ -208,15 +211,14 @@ class MyCar extends Model
      * @var array
      */
     public static $rules = [
-        'type_id'           => 'required|exists:car_types,id',
-        'model_id'          => 'required|exists:car_models,id',
-        'engine_type_id'    => 'required|exists:engine_types,id',
-        'year'              => 'required',
-        'transmission_type' => 'required|in:10,20',
-        'name'              => 'required',
-        'email'             => 'required|email',
-        'country_code'      => 'required',
-        'phone'             => 'required'
+        'name'                      => 'required',
+        'email'                     => 'required|email',
+        'country_code'              => 'required',
+        'phone'                     => 'required',
+        'model_id'                  => 'required|exists:car_models,id',
+        'engine_type_id'            => 'required|exists:engine_types,id',
+        'year'                      => 'required',
+        'regional_specification_id' => 'required|exists:regional_specifications,id'
     ];
 
     /**
@@ -335,6 +337,19 @@ class MyCar extends Model
     public function engineType()
     {
         return $this->belongsTo(EngineType::class, 'engine_type_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function regionalSpecs()
+    {
+        return $this->belongsTo(RegionalSpecification::class, 'regional_specification_id');
+    }
+
+    public function bids()
+    {
+        return $this->hasMany(MakeBid::class, 'car_id');
     }
 
     /**

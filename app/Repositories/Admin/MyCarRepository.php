@@ -4,6 +4,7 @@ namespace App\Repositories\Admin;
 
 use App\Helper\Utils;
 use App\Models\MyCar;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -46,10 +47,10 @@ class MyCarRepository extends BaseRepository
 
         $user = Auth::user();
         $input['owner_id'] = $user->id;
-        $input['owner_type'] = 20;
+        $input['owner_type'] = User::RANDOM_USER;
 
         if ($user->hasRole('showroom_owner')) {
-            $input['owner_type'] = 10;
+            $input['owner_type'] = User::SHOWROOM_OWNER;
         }
 
         $myCar = $this->create($input);

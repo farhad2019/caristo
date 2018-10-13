@@ -91,4 +91,9 @@ class RegionalSpecification extends Model
      * @var array
      */
     public static $api_rules = [];
+
+    public function cars()
+    {
+        return $this->hasMany(MyCar::class, 'regional_specification_id');
+    }
 }

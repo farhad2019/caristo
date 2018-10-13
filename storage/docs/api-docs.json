@@ -1575,6 +1575,112 @@
                 }
             }
         },
+        "/makeBids": {
+            "get": {
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Get a listing of the Car.",
+                "description": "Get all MakeBids",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/MakeBid"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/makeBids/{id}": {
+            "get": {
+                "tags": [
+                    "Cars"
+                ],
+                "summary": "Display the specified Car",
+                "description": "Get MakeBid",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Car",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/MakeBid"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/myCars": {
             "get": {
                 "tags": [
@@ -1605,13 +1711,6 @@
                         "name": "offset",
                         "in": "query",
                         "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "ownerType",
-                        "in": "query",
-                        "description": "filter by owner type: 10=showroom; 20=user",
                         "required": false,
                         "type": "integer"
                     }
@@ -3433,6 +3532,92 @@
                 },
                 "device_token": {
                     "description": "device_token",
+                    "type": "string"
+                }
+            }
+        },
+        "MakeBid": {
+            "required": [
+                "model_id",
+                "engine_type_id",
+                "regional_specification_id",
+                "owner_id",
+                "year",
+                "chassis",
+                "transmission_type",
+                "name",
+                "email",
+                "country_code",
+                "phone",
+                "owner_type"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "type_id": {
+                    "description": "type_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "model_id": {
+                    "description": "model_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "engine_type_id": {
+                    "description": "engine_type_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "regional_specification_id": {
+                    "description": "regional_specification_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "owner_id": {
+                    "description": "owner_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "year": {
+                    "description": "year",
+                    "type": "string",
+                    "format": "date"
+                },
+                "chassis": {
+                    "description": "chassis",
+                    "type": "string"
+                },
+                "transmission_type": {
+                    "description": "transmission_type",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "name",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "email",
+                    "type": "string"
+                },
+                "country_code": {
+                    "description": "country_code",
+                    "type": "string"
+                },
+                "phone": {
+                    "description": "phone",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "owner_type": {
+                    "description": "owner_type",
+                    "type": "boolean"
+                },
+                "notes": {
+                    "description": "notes",
                     "type": "string"
                 }
             }

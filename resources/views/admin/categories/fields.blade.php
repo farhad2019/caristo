@@ -3,21 +3,25 @@
     {!! Form::label('name', 'Name:') !!}
     {!! Form::text('name', null, ['class' => 'form-control', 'autofocus']) !!}
 </div>
+
 <!-- Slug Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('slug', 'Slug:') !!}
     {!! Form::text('slug', null, ['class' => 'form-control']) !!}
 </div>
+
 <!-- Slug Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('subtitle', 'Sub Title:') !!}
     {!! Form::text('subtitle', null, ['class' => 'form-control']) !!}
 </div>
+
 <!-- Slug Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('parent_id', 'Parent Category:') !!}
     {!! Form::select('parent_id', $root, (isset($category) ? $category->parent_id : null), ['class' => 'form-control select2']) !!}
 </div>
+
 <!-- Slug Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('media[]', 'Image:') !!}
@@ -27,7 +31,6 @@
             <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
         @endforeach
     @endif
-
 </div>
 
 <!-- Submit Field -->

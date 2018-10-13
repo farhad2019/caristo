@@ -60,7 +60,7 @@ $(function () {
         });
     });
 
-    $('.select2').each(function () {
+    /*$('.select2').each(function () {
         $(this).css('width', '100%');
         var format = $(this).data('format') ? $(this).data('format') : "defaultFormat";
         $(this).select2({
@@ -71,7 +71,7 @@ $(function () {
                 return m;
             }
         });
-    });
+    });*/
 
     $('input:checkbox.checkall').on('ifToggled', function (event) {
         var newState = $(this).is(":checked") ? 'check' : 'uncheck';
@@ -166,6 +166,73 @@ $(function () {
 
         }
     });
+});
+$(document).ready(function () {
+
+    $('.select2').css('width', '100%');
+
+    $.fn.customLoad = function () {
+
+        $('.select2').each(function () {
+            var format = $(this).data('format') ? $(this).data('format') : "defaultFormat";
+            var thisSelectElement = this;
+            var options = {
+                theme: "bootstrap",
+                templateResult: window[format],
+                templateSelection: window[format],
+                escapeMarkup: function (m) {
+                    return m;
+                }
+            };
+
+            if ($(thisSelectElement).data('url')) {
+                var depends;
+                if ($(thisSelectElement).data('depends')) {
+                    depends = $('[name=' + $(thisSelectElement).data('depends') + ']');
+                    depends.on('change', function () {
+                        $(thisSelectElement).val(null).trigger('change')
+                        // $(thisSelectElement).trigger('change');
+                    });
+                }
+                var url = $(thisSelectElement).data('url');
+
+                options.ajax = {
+                    url: url,
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            term: params.term,
+                            locale: 'en',
+                            depends: $('option:selected', depends).val()
+                        }
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data.data, function (obj, id) {
+                                return {id: obj.id, text: obj.name};
+                            })
+                        };
+                    }
+
+                }
+            }
+
+            var tabindex = $(thisSelectElement).attr('tabindex');
+
+            $(thisSelectElement).select2(options);
+
+            $(thisSelectElement).attr('tabindex', tabindex);
+            $(thisSelectElement).on(
+                'select2:select', (
+                    function () {
+                        $(this).focus();
+                    }
+                )
+            );
+        });
+    };
+
+    $(document).customLoad();
 });
 
 function swappingRequest(prevRowPos, prevRowId, rowPos, rowId, cb) {

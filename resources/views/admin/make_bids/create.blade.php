@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    My Car
+    Make Bid
 @endsection
 
 @section('content')
@@ -11,9 +11,9 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'admin.myCars.store', 'files' => true]) !!}
+                    {!! Form::open(['route' => 'admin.makeBids.store']) !!}
 
-                    @include('admin.my_cars.fields')
+                        @include('admin.make_bids.fields')
 
                     {!! Form::close() !!}
                 </div>

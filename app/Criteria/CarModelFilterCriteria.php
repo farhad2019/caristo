@@ -19,10 +19,12 @@ class CarModelFilterCriteria implements CriteriaInterface
     {
         // Implement apply() method.
         $brand_id = $this->request->get('brand_id', -1);
+        $depends = $this->request->get('depends', -1);
 
-        if ($brand_id > 0) {
-            $model = $model->where('brand_id', $brand_id);
-        }
+        $model = $model->when(($brand_id > 0 || $depends > 0), function ($model) use ($depends, $brand_id) {
+            return $model->whereIn('brand_id', [$depends, $brand_id]);
+        });
+
         return $model;
     }
 

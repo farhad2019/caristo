@@ -7,10 +7,16 @@ use App\DataTables\Admin\MyCarDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateMyCarRequest;
 use App\Http\Requests\Admin\UpdateMyCarRequest;
+use App\Models\RegionalSpecification;
+use App\Repositories\Admin\CarAttributeRepository;
+use App\Repositories\Admin\CarBrandRepository;
+use App\Repositories\Admin\CategoryRepository;
+use App\Repositories\Admin\EngineTypeRepository;
 use App\Repositories\Admin\MyCarRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use App\Repositories\Admin\RegionalSpecificationRepository;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class MyCarController extends AppBaseController
 {
@@ -23,9 +29,29 @@ class MyCarController extends AppBaseController
     /** @var  MyCarRepository */
     private $myCarRepository;
 
-    public function __construct(MyCarRepository $myCarRepo)
+    /** @var  CategoryRepository */
+    private $categoryRepository;
+
+    /** @var  CarBrandRepository */
+    private $brandRepository;
+
+    /** @var  RegionalSpecificationRepository */
+    private $regionalSpecRepository;
+
+    /** @var  EngineTypeRepository */
+    private $engineTypeRepository;
+
+    /** @var  CarAttributeRepository */
+    private $attributeRepository;
+
+    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo)
     {
         $this->myCarRepository = $myCarRepo;
+        $this->categoryRepository = $categoryRepo;
+        $this->brandRepository = $brandRepo;
+        $this->regionalSpecRepository = $regionalSpecRepo;
+        $this->engineTypeRepository = $engineTypeRepo;
+        $this->attributeRepository = $attributeRepo;
         $this->ModelName = 'myCars';
         $this->BreadCrumbName = 'MyCar';
     }
@@ -38,7 +64,7 @@ class MyCarController extends AppBaseController
      */
     public function index(MyCarDataTable $myCarDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $myCarDataTable->render('admin.my_cars.index');
     }
 
@@ -49,8 +75,20 @@ class MyCarController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
-        return view('admin.my_cars.create');
+        $brands = $this->brandRepository->all()->pluck('name', 'id');
+        $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
+        $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
+        $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
+        $attributes = $this->attributeRepository->all();
+
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        return view('admin.my_cars.create')->with([
+            'categories'     => $categories,
+            'regional_specs' => $regional_specs,
+            'engineType'     => $engineType,
+            'attributes'     => $attributes,
+            'brands'         => $brands
+        ]);
     }
 
     /**
@@ -62,12 +100,15 @@ class MyCarController extends AppBaseController
      */
     public function store(CreateMyCarRequest $request)
     {
-        $input = $request->all();
+        $myCar = $this->myCarRepository->saveRecord($request);
 
-        $myCar = $this->myCarRepository->create($input);
+        if (!empty($request->attribute)) {
+            foreach ($request->attribute as $key => $item) {
+                $myCar->carAttributes()->attach($key, ['value' => $item]);
+            }
+        }
 
         Flash::success('My Car saved successfully.');
-
         return redirect(route('admin.myCars.index'));
     }
 
@@ -88,7 +129,7 @@ class MyCarController extends AppBaseController
             return redirect(route('admin.myCars.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $myCar);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
         return view('admin.my_cars.show')->with('myCar', $myCar);
     }
 
@@ -109,14 +150,14 @@ class MyCarController extends AppBaseController
             return redirect(route('admin.myCars.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $myCar);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
         return view('admin.my_cars.edit')->with('myCar', $myCar);
     }
 
     /**
      * Update the specified MyCar in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateMyCarRequest $request
      *
      * @return Response

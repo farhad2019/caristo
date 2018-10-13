@@ -2,12 +2,14 @@
 
 namespace App\DataTables\Admin;
 
+use App\Models\MakeBid;
 use App\Models\MyCar;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
-class MyCarDataTable extends DataTable
+class MakeBidDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,7 +25,11 @@ class MyCarDataTable extends DataTable
         $dataTable->editColumn('carModel.name', function ($model) {
             return $model->name;
         });
-        return $dataTable->addColumn('action', 'admin.my_cars.datatables_actions');
+
+        $dataTable->editColumn('status', function ($model) {
+            return ($model->bids()->where('user_id', Auth::id())->count() > 0) ? 'Pending' : 'NEW';
+        });
+        return $dataTable->addColumn('action', 'admin.make_bids.datatables_actions');
     }
 
     /**
@@ -34,8 +40,7 @@ class MyCarDataTable extends DataTable
      */
     public function query(MyCar $model)
     {
-        $id = Auth::id();
-        return $model->where('owner_id', $id)->newQuery();
+        return $model->where('owner_type', User::RANDOM_USER)->newQuery();
     }
 
     /**
@@ -46,7 +51,7 @@ class MyCarDataTable extends DataTable
     public function html()
     {
         $buttons = [];
-        if (\Entrust::can('my_cars.create') || \Entrust::hasRole('super-admin')) {
+        /*if (\Entrust::can('make_bids.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
         $buttons = array_merge($buttons, [
@@ -54,15 +59,19 @@ class MyCarDataTable extends DataTable
             'print',
             'reset',
             'reload',
-        ]);
+        ]);*/
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->addAction(['width' => '80px', 'printable' => false])
             ->parameters([
-                'dom'     => 'Bfrtip',
-                'order'   => [[0, 'desc']],
-                'buttons' => $buttons,
+                'dom'       => 'Bfrtip',
+                'order'     => [[2, 'desc']],
+//                'bFilter'   => false,
+//                'paging'    => false,
+                'searching' => false,
+//                'info'      => false,
+                'buttons'   => $buttons,
             ]);
     }
 
@@ -74,12 +83,14 @@ class MyCarDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id',
+            'name',
             'car_model.name' => [
                 'title' => 'Model'
             ],
             'year',
-            'name'
+            'status'         => [
+                'title' => 'Bid Status'
+            ]
         ];
     }
 
@@ -90,6 +101,6 @@ class MyCarDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'my_carsdatatable_' . time();
+        return 'make_bidsdatatable_' . time();
     }
 }

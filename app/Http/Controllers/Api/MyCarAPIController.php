@@ -70,13 +70,6 @@ class MyCarAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Parameter(
-     *          name="ownerType",
-     *          description="filter by owner type: 10=showroom; 20=user",
-     *          type="integer",
-     *          required=false,
-     *          in="query"
-     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
