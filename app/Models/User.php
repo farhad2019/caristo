@@ -26,6 +26,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property MyCar cars
  * @property Region regions
  * @property MakeBid bids
+ * @property UserShowroom showroom_details
  *
  * @SWG\Definition(
  *     definition="UserRegions",
@@ -211,5 +212,13 @@ class User extends Authenticatable implements JWTSubject
     public function bids()
     {
         return $this->hasMany(MakeBid::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function showroomDetails()
+    {
+        return $this->hasOne(UserShowroom::class);
     }
 }

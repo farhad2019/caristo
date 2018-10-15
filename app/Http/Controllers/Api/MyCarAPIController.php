@@ -247,8 +247,7 @@ class MyCarAPIController extends AppBaseController
      *      )
      * )
      */
-    public
-    function show($id)
+    public function show($id)
     {
         /** @var MyCar $myCar */
         $myCar = $this->myCarRepository->findWithoutFail($id);
@@ -314,8 +313,7 @@ class MyCarAPIController extends AppBaseController
      *      )
      * )
      */
-    public
-    function update($id, UpdateMyCarAPIRequest $request)
+    public function update($id, UpdateMyCarAPIRequest $request)
     {
         /** @var MyCar $myCar */
         $myCar = $this->myCarRepository->findWithoutFail($id);
@@ -374,8 +372,7 @@ class MyCarAPIController extends AppBaseController
      *      )
      * )
      */
-    public
-    function destroy($id)
+    public function destroy($id)
     {
         /** @var MyCar $myCar */
         $myCar = $this->myCarRepository->findWithoutFail($id);

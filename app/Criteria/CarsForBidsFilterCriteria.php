@@ -42,6 +42,18 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             return $query->where('type_id', $car_type);
         });
 
+        $max_year = $this->request->get('max_year', -1);
+        $min_year = $this->request->get('min_year', -1);
+        $model = $model->when(($max_year > 0 && $min_year > 0 && $max_year > $min_year), function ($query) use ($max_year, $min_year) {
+            return $query->whereBetween('year', [$max_year, $min_year]);
+        });
+
+        $max_price = $this->request->get('max_price', -1);
+        $min_price = $this->request->get('min_price', -1);
+        $model = $model->when(($max_price > 0 && $min_price > 0 && $max_price > $min_price), function ($query) use ($max_price, $min_price) {
+            return $query->whereBetween('amount', [$max_price, $min_price]);
+        });
+
         return $model;
     }
 }

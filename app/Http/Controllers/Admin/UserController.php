@@ -4,16 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\UserDataTable;
 use App\Helper\BreadcrumbsRegister;
+use App\Helper\Utils;
 use App\Http\Requests\Admin\CreateUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Repositories\Admin\RoleRepository;
 use App\Repositories\Admin\UserRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Request;
+use App\Repositories\Admin\UserShowroomRepository;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Response;
 
 class UserController extends AppBaseController
 {
@@ -29,10 +30,14 @@ class UserController extends AppBaseController
     /** @var  RoleRepository */
     private $roleRepository;
 
-    public function __construct(UserRepository $userRepo, RoleRepository $roleRepo)
+    /** @var  UserShowroomRepository */
+    private $showroomRepository;
+
+    public function __construct(UserRepository $userRepo, RoleRepository $roleRepo, UserShowroomRepository $showroomRepo)
     {
         $this->userRepository = $userRepo;
         $this->roleRepository = $roleRepo;
+        $this->showroomRepository = $showroomRepo;
         $this->ModelName = 'users';
         $this->BreadCrumbName = 'Users';
     }
@@ -77,7 +82,6 @@ class UserController extends AppBaseController
         $user = $this->userRepository->create($input);
 
         Flash::success('User saved successfully.');
-
         return redirect(route('admin.users.index'));
     }
 
@@ -94,7 +98,6 @@ class UserController extends AppBaseController
 
         if (empty($user)) {
             Flash::error('User not found');
-
             return redirect(route('admin.users.index'));
         }
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $user);
@@ -140,6 +143,7 @@ class UserController extends AppBaseController
         }
 
         $data = $request->all();
+
         if ($request->has('password') && $request->get('password', null) === null) {
             unset($data['password']);
         } else {
@@ -154,18 +158,38 @@ class UserController extends AppBaseController
             $existingRoles = $user->roles->pluck('id')->all();
             $newRoles = array_diff($selectedRoles, $existingRoles);
             $rolesToBeDeleted = array_diff($existingRoles, $selectedRoles);
+
             foreach ($newRoles as $newRole) {
                 $this->userRepository->attachRole($user->id, $newRole);
             }
+
             foreach ($rolesToBeDeleted as $roleToBeDeleted) {
                 $this->userRepository->detachRole($user->id, $roleToBeDeleted);
             }
         }
 
+        // Media Data
+        if ($request->hasFile('image')) {
+            $media = [];
+            $mediaFiles = $request->file('image');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+//                $media[] = $this->handlePicture($mediaFile);
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+            $data['image'] = $media[0]['filename'];
+            $user->details->update($data);
+
+        }
+
         $user = $this->userRepository->update($data, $id);
 
-        Flash::success('User updated successfully.');
+        if (isset($request->showroom)) {
+            $showRoom = $this->showroomRepository->updateRecord($request, $id);
+        }
 
+        Flash::success('User updated successfully.');
         return redirect(route('admin.users.index'));
     }
 
@@ -179,17 +203,14 @@ class UserController extends AppBaseController
     public function destroy($id)
     {
         $user = $this->userRepository->findWithoutFail($id);
-
         if (empty($user)) {
             Flash::error('User not found');
-
             return redirect(route('admin.users.index'));
         }
 
         $this->userRepository->delete($id);
 
         Flash::success('User deleted successfully.');
-
         return redirect(route('admin.users.index'));
     }
 
@@ -200,6 +221,7 @@ class UserController extends AppBaseController
             Flash::error('User not found');
             return redirect(route('admin.users.index'));
         }
+
         $this->BreadCrumbName = 'Profile';
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.users.edit')->with('user', $user);

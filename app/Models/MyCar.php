@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string deleted_at
  *
  * @property string transmission_type_text
+ * @property string top_bids
  *
  * @property CarAttribute car_attributes
  * @property CarFeature car_features
@@ -174,7 +175,7 @@ class MyCar extends Model
         'carModel',
         'carType',
         'media',
-        'bids',
+//        'bids',
         'engineType'
     ];
 
@@ -206,7 +207,7 @@ class MyCar extends Model
         'carModel',
         'owner',
         'media',
-        'bids',
+//        'bids',
         'top_bids',
         'created_at'
     ];
@@ -361,6 +362,9 @@ class MyCar extends Model
         return $this->hasMany(MakeBid::class, 'car_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
     public function getTopBidsAttribute()
     {
         return $this->bids()->orderBy('created_at', 'desc')
