@@ -3789,6 +3789,11 @@
                     "type": "string",
                     "format": "int32"
                 },
+                "kilometre": {
+                    "description": "Car  kilometre",
+                    "type": "number",
+                    "format": "float"
+                },
                 "model_id": {
                     "description": "Car Model Id",
                     "type": "integer",

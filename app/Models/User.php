@@ -92,7 +92,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $with = [
-        'details'
+        'details',
+        'showroomDetails'
     ];
 
     /**
@@ -124,6 +125,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'details',
+        'showroomDetails',
         'created_at',
     ];
 

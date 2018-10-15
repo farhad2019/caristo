@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer transmission_type
  * @property integer owner_id
  * @property integer owner_type
+ * @property double kilometre
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -75,6 +76,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          description="Car chassis number",
  *          type="string",
  *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="kilometre",
+ *          description="Car kilometre",
+ *          type="number",
+ *          format="float"
  *      ),
  *      @SWG\Property(
  *          property="model_id",
@@ -153,6 +160,7 @@ class MyCar extends Model
         'owner_type',
         'average_mkp',
         'amount',
+        'kilometre',
         'category_id'
     ];
 
@@ -208,6 +216,8 @@ class MyCar extends Model
         'owner',
         'media',
 //        'bids',
+        'chassis',
+        'kilometre',
         'top_bids',
         'created_at'
     ];

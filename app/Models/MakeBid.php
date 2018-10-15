@@ -129,7 +129,9 @@ class MakeBid extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'user'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -143,7 +145,13 @@ class MakeBid extends Model
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'car_id',
+        'amount',
+        'created_at',
+        'user'
+    ];
 
     /**
      * Validation create rules
