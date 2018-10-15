@@ -148,7 +148,10 @@ class MyCar extends Model
         'owner_id',
         'notes',
         'regional_specification_id',
-        'owner_type'
+        'owner_type',
+        'average_mkp',
+        'amount',
+        'category_id'
     ];
 
     /**

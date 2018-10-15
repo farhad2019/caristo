@@ -7,9 +7,12 @@ use App\DataTables\Admin\MyCarDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateMyCarRequest;
 use App\Http\Requests\Admin\UpdateMyCarRequest;
+use App\Models\MyCar;
 use App\Models\RegionalSpecification;
 use App\Repositories\Admin\CarAttributeRepository;
 use App\Repositories\Admin\CarBrandRepository;
+use App\Repositories\Admin\CarModelRepository;
+use App\Repositories\Admin\CarTypeRepository;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\EngineTypeRepository;
 use App\Repositories\Admin\MyCarRepository;
@@ -44,7 +47,13 @@ class MyCarController extends AppBaseController
     /** @var  CarAttributeRepository */
     private $attributeRepository;
 
-    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo)
+    /** @var  CarTypeRepository */
+    private $carTypeRepository;
+
+    /** @var  CarModelRepository */
+    private $modelRepository;
+
+    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo)
     {
         $this->myCarRepository = $myCarRepo;
         $this->categoryRepository = $categoryRepo;
@@ -52,6 +61,8 @@ class MyCarController extends AppBaseController
         $this->regionalSpecRepository = $regionalSpecRepo;
         $this->engineTypeRepository = $engineTypeRepo;
         $this->attributeRepository = $attributeRepo;
+        $this->carTypeRepository = $carTypeRepo;
+        $this->modelRepository = $modelRepo;
         $this->ModelName = 'myCars';
         $this->BreadCrumbName = 'MyCar';
     }
@@ -80,14 +91,17 @@ class MyCarController extends AppBaseController
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
         $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
         $attributes = $this->attributeRepository->all();
+        $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.my_cars.create')->with([
-            'categories'     => $categories,
-            'regional_specs' => $regional_specs,
-            'engineType'     => $engineType,
-            'attributes'     => $attributes,
-            'brands'         => $brands
+            'categories'        => $categories,
+            'regional_specs'    => $regional_specs,
+            'engineType'        => $engineType,
+            'attributes'        => $attributes,
+            'transmission_type' => MyCar::$TRANSMISSION_TYPE_TEXT,
+            'carTypes'          => $carTypes,
+            'brands'            => $brands
         ]);
     }
 
@@ -143,15 +157,31 @@ class MyCarController extends AppBaseController
     public function edit($id)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
-
         if (empty($myCar)) {
             Flash::error('My Car not found');
-
             return redirect(route('admin.myCars.index'));
         }
 
+        $brands = $this->brandRepository->all()->pluck('name', 'id');
+        $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
+        $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
+        $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
+        $attributes = $this->attributeRepository->all();
+        $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
+        $carModels = $this->modelRepository->all()->pluck('name', 'id');
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
-        return view('admin.my_cars.edit')->with('myCar', $myCar);
+        return view('admin.my_cars.edit')->with([
+            'myCar'             => $myCar,
+            'categories'        => $categories,
+            'regional_specs'    => $regional_specs,
+            'engineType'        => $engineType,
+            'attributes'        => $attributes,
+            'transmission_type' => MyCar::$TRANSMISSION_TYPE_TEXT,
+            'carTypes'          => $carTypes,
+            'carModels'         => $carModels,
+            'brands'            => $brands
+        ]);
     }
 
     /**

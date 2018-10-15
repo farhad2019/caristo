@@ -13,13 +13,25 @@
 <!-- Model Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('model_id', 'Model:') !!}
-    {!! Form::select('model_id', [], null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand']) !!}
+    {!! Form::select('model_id', $carModels, null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand']) !!}
 </div>
 
 <!-- Year Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('year', 'Year:') !!}
     {!! Form::text('year', null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Engine Type Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('transmission_type', 'Transmission Type:') !!}
+    {!! Form::select('transmission_type', $transmission_type, null, ['class' => 'form-control select2']) !!}
+</div>
+
+<!-- Engine Type Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('type_id', 'Car Type:') !!}
+    {!! Form::select('type_id', $carTypes, null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Engine Type Field -->
@@ -37,7 +49,7 @@
 <!-- Average MKP Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('avg_mkp', 'Average MKP(AED):') !!}
-    {!! Form::number('avg_mkp', null, ['class' => 'form-control']) !!}
+    {!! Form::number('average_mkp', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Name Field -->

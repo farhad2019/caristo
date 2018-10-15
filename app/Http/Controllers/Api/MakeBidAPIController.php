@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Criteria\CarsFilterCriteria;
+use App\Criteria\CarsForBidsFilterCriteria;
 use App\Http\Requests\Api\CreateMakeBidAPIRequest;
 use App\Http\Requests\Api\UpdateMakeBidAPIRequest;
 use App\Models\MakeBid;
@@ -65,6 +67,62 @@ class MakeBidAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="category_id",
+     *          description="Category Id",
+     *          type="integer",
+     *          required=true,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="brand_ids",
+     *          description="Filter by Brands, CSV, [1,2,3]",
+     *          required=false,
+     *          type="string",
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="transmission_type",
+     *          description="car transmission type: 10=Manual, 20=Automatic",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="min_price",
+     *          description="car price min",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="max_price",
+     *          description="car price max",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="min_year",
+     *          description="car year min",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="max_year",
+     *          description="car year max",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="car_type",
+     *          description="car type",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
@@ -91,7 +149,8 @@ class MakeBidAPIController extends AppBaseController
     {
         $this->carRepository->pushCriteria(new RequestCriteria($request));
         $this->carRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $makeBids = $this->carRepository->findWhere(['owner_type' => User::SHOWROOM_OWNER]);
+        $this->carRepository->pushCriteria(new CarsForBidsFilterCriteria($request));
+        $makeBids = $this->carRepository->all();
 
         return $this->sendResponse($makeBids->toArray(), 'Make Bids retrieved successfully');
     }

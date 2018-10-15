@@ -1607,6 +1607,62 @@
                         "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
                         "required": false,
                         "type": "integer"
+                    },
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "description": "Category Id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "brand_ids",
+                        "in": "query",
+                        "description": "Filter by Brands, CSV, [1,2,3]",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "transmission_type",
+                        "in": "query",
+                        "description": "car transmission type: 10=Manual, 20=Automatic",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "min_price",
+                        "in": "query",
+                        "description": "car price min",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "max_price",
+                        "in": "query",
+                        "description": "car price max",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "min_year",
+                        "in": "query",
+                        "description": "car year min",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "max_year",
+                        "in": "query",
+                        "description": "car year max",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "car_type",
+                        "in": "query",
+                        "description": "car type",
+                        "required": false,
+                        "type": "integer"
                     }
                 ],
                 "responses": {

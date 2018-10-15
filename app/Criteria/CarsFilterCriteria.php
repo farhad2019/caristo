@@ -21,11 +21,15 @@ class CarsFilterCriteria implements CriteriaInterface
         $user = Auth::user();
         $model = $model->where('owner_id', $user->id);
 
-        /*$ownerType = $this->request->get('ownerType', -1);
+        $category_id = $this->request->get('category_id', -1);
 
-        $model = $model->when($ownerType == 10 || $ownerType == 20, function ($query) use ($ownerType) {
-            return $query->where('owner_type', $ownerType);
-        });*/
+        $model = $model->when(($category_id > 0), function ($query) use ($category_id) {
+            return $query->where('category_id', $category_id);
+        });
+
+        var_dump($model->getBindings());
+        var_dump($model->toSql());
+        exit();
 
         return $model;
     }
