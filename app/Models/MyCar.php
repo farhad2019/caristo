@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property EngineType engine_type
  * @property Media media
  * @property MakeBid bids
+ * @property RegionalSpecification regional_specs
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -184,6 +185,7 @@ class MyCar extends Model
      */
     protected $appends = [
 //        'transmission_type_text'
+        'top_bids'
     ];
 
     /**
@@ -205,6 +207,7 @@ class MyCar extends Model
         'owner',
         'media',
         'bids',
+        'top_bids',
         'created_at'
     ];
 
@@ -350,9 +353,19 @@ class MyCar extends Model
         return $this->belongsTo(RegionalSpecification::class, 'regional_specification_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function bids()
     {
         return $this->hasMany(MakeBid::class, 'car_id');
+    }
+
+    public function getTopBidsAttribute()
+    {
+        return $this->bids()->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
     }
 
     /**

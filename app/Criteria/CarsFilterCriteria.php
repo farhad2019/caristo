@@ -27,10 +27,6 @@ class CarsFilterCriteria implements CriteriaInterface
             return $query->where('category_id', $category_id);
         });
 
-        var_dump($model->getBindings());
-        var_dump($model->toSql());
-        exit();
-
         return $model;
     }
 }
