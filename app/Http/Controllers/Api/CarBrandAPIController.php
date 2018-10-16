@@ -9,6 +9,7 @@ use App\Repositories\Admin\CarBrandRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 
@@ -91,10 +92,11 @@ class CarBrandAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        \App::setLocale($request->get('locale', 'en'));
+        App::setLocale($request->get('locale', 'en'));
         $this->carBrandRepository->pushCriteria(new RequestCriteria($request));
         $this->carBrandRepository->pushCriteria(new LimitOffsetCriteria($request));
         $carBrands = CarBrand::join('brand_translations as t', 't.brand_id', '=', 'brands.id')
+            ->where('t.locale', App::getLocale('en'))
             ->orderBy('t.name', 'asc')
             ->with('translations')
             ->get();

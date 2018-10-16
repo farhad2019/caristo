@@ -213,6 +213,8 @@ class MyCar extends Model
         'engineType',
         'carType',
         'carModel',
+        'amount',
+        'average_mkp',
         'owner',
         'media',
 //        'bids',
