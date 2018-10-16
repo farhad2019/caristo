@@ -95,7 +95,8 @@ class CarBrandAPIController extends AppBaseController
         App::setLocale($request->get('locale', 'en'));
         $this->carBrandRepository->pushCriteria(new RequestCriteria($request));
         $this->carBrandRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $carBrands = CarBrand::join('brand_translations as t', 't.brand_id', '=', 'brands.id')
+        $carBrands = CarBrand::select('brands.*', 't.name')
+            ->join('brand_translations as t', 't.brand_id', '=', 'brands.id')
             ->where('t.locale', App::getLocale('en'))
             ->orderBy('t.name', 'asc')
             ->with('translations')
