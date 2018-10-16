@@ -2,11 +2,15 @@
     {{ Form::label('icon', 'Icon') }}
     {{ Form::file('icon', ['class'=>'form-control']) }}
 </div>
+<div class="form-group col-sm-3">
+    @if(isset($carFeature))
+        @if($carFeature->media->count() > 0)
+            <img src="{{ $carFeature->media[0]->file_url }}" width="50">
+        @endif
+    @endif
+</div>
 
 @if(!isset($carFeature))
-    <div class="form-group col-sm-3">
-
-    </div>
     <!-- Name Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('name', 'Name:') !!}
@@ -21,12 +25,6 @@
         <a href="{!! route('admin.carFeatures.index') !!}" class="btn btn-default">{{ __('Cancel') }}</a>
     </div>
 @else
-    <div class="form-group col-sm-3">
-        @if($carFeature->media->count() > 0)
-            <img src="{{ $carFeature->media[0]->file_url }}" width="50">
-        @endif
-    </div>
-
     <div class="clearfix"></div>
     <div class="box">
         <div class="box-body">

@@ -10,6 +10,7 @@ use App\Repositories\Admin\CarAttributeRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 
@@ -92,7 +93,7 @@ class CarAttributeAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        \App::setLocale($request->get('locale', 'en'));
+        App::setLocale($request->get('locale', 'en'));
         $this->carAttributeRepository->pushCriteria(new RequestCriteria($request));
         $this->carAttributeRepository->pushCriteria(new LimitOffsetCriteria($request));
         $carAttributes = $this->carAttributeRepository->all();

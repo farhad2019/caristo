@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property MyCar cars
  * @property AttributeOption options
+ * @property Media media
  *
  * @SWG\Definition(
  *      definition="CarAttribute",
@@ -131,6 +132,22 @@ class CarAttribute extends Model
     public static $api_rules = [
         'type' => 'required'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'instance');
+    }
+
+    /**
+     * @return string
+     */
+    public function getMorphClass()
+    {
+        return 'attribute';
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

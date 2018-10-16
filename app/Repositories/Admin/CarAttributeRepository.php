@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin;
 
+use App\Helper\Utils;
 use App\Models\CarAttribute;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -39,6 +40,18 @@ class CarAttributeRepository extends BaseRepository
     {
         $input = $request->only('name', 'type');
         $carAttribute = $this->create($input);
+
+        if ($request->hasFile('icon')) {
+            $media = [];
+            $mediaFiles = $request->file('icon');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+
+            $carAttribute->media()->createMany($media);
+        }
         return $carAttribute;
     }
 
@@ -51,6 +64,18 @@ class CarAttributeRepository extends BaseRepository
     {
         $input = $request->only('name', 'type');
         $carAttribute = $this->update($input, $carAttribute->id);
+
+        if ($request->hasFile('icon')) {
+            $media = [];
+            $mediaFiles = $request->file('icon');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+            $carAttribute->media()->delete();
+            $carAttribute->media()->createMany($media);
+        }
         return $carAttribute;
     }
 }

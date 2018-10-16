@@ -1,3 +1,16 @@
+<!-- Icon Field -->
+<div class="form-group col-sm-3">
+    {!! Form::label('icon', 'Icon:') !!}
+    {!! Form::file('icon', null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group col-sm-3">
+    @if(isset($carAttribute))
+        @if($carAttribute->media->count() > 0)
+            <img src="{{ $carAttribute->media[0]->file_url }}" width="50">
+        @endif
+    @endif
+</div>
+
 <!-- Name Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('name', 'Name:') !!}
