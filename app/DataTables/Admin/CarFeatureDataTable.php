@@ -16,8 +16,18 @@ class CarFeatureDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $query = $query->with(['translations']);
         $dataTable = new EloquentDataTable($query);
 
+        $dataTable->editColumn('translations.name', function ($model) {
+            return $model->name;
+        });
+
+        $dataTable->editColumn('icon', function ($model) {
+            return $model->icon ? '<img src="' . $model->icon . '" width="35">' : null;
+        });
+
+        $dataTable->rawColumns(['icon', 'action']);
         return $dataTable->addColumn('action', 'admin.car_features.datatables_actions');
     }
 
@@ -68,7 +78,11 @@ class CarFeatureDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id'
+            'id',
+            'translations.name' => [
+                'title' => 'Name'
+            ],
+            'icon'
         ];
     }
 

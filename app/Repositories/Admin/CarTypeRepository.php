@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin;
 
+use App\Helper\Utils;
 use App\Models\CarType;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -13,7 +14,7 @@ use InfyOm\Generator\Common\BaseRepository;
  * @method CarType findWithoutFail($id, $columns = ['*'])
  * @method CarType find($id, $columns = ['*'])
  * @method CarType first($columns = ['*'])
-*/
+ */
 class CarTypeRepository extends BaseRepository
 {
     /**
@@ -29,5 +30,49 @@ class CarTypeRepository extends BaseRepository
     public function model()
     {
         return CarType::class;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function saveRecord($request)
+    {
+        $input = $request->only('name');
+        $carType = $this->create($input);
+
+        if ($request->hasFile('image')) {
+            $media = [];
+            $mediaFiles = $request->file('image');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+
+            $carType->media()->createMany($media);
+        }
+        return $carType;
+    }
+
+    /**
+     * @param $request
+     * @param $carType
+     * @return mixed
+     */
+    public function updateRecord($request, $carType)
+    {
+        if ($request->hasFile('image')) {
+            $media = [];
+            $mediaFiles = $request->file('image');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+            $carType->media()->delete();
+            $carType->media()->createMany($media);
+        }
+        return $carType;
     }
 }

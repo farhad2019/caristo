@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin;
 
+use App\Helper\Utils;
 use App\Models\CarFeature;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -13,7 +14,7 @@ use InfyOm\Generator\Common\BaseRepository;
  * @method CarFeature findWithoutFail($id, $columns = ['*'])
  * @method CarFeature find($id, $columns = ['*'])
  * @method CarFeature first($columns = ['*'])
-*/
+ */
 class CarFeatureRepository extends BaseRepository
 {
     /**
@@ -29,5 +30,49 @@ class CarFeatureRepository extends BaseRepository
     public function model()
     {
         return CarFeature::class;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function saveRecord($request)
+    {
+        $input = $request->only('name');
+        $carFeature = $this->create($input);
+
+        if ($request->hasFile('icon')) {
+            $media = [];
+            $mediaFiles = $request->file('icon');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+
+            $carFeature->media()->createMany($media);
+        }
+        return $carFeature;
+    }
+
+    /**
+     * @param $request
+     * @param $carFeature
+     * @return mixed
+     */
+    public function updateRecord($request, $carFeature)
+    {
+        if ($request->hasFile('icon')) {
+            $media = [];
+            $mediaFiles = $request->file('icon');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+            $carFeature->media()->delete();
+            $carFeature->media()->createMany($media);
+        }
+        return $carFeature;
     }
 }

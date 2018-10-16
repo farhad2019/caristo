@@ -12,7 +12,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property string image
+ *
  * @property MyCar cars
+ * @property Media media
  *
  * @SWG\Definition(
  *      definition="CarType",
@@ -60,7 +63,9 @@ class CarType extends Model
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'image'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
@@ -69,7 +74,8 @@ class CarType extends Model
      */
     protected $visible = [
         'id',
-        'name'
+        'name',
+        'image'
     ];
 
     /**
@@ -78,7 +84,7 @@ class CarType extends Model
      * @var array
      */
     public static $rules = [
-        'id' => 'required'
+        'name' => 'required'
     ];
 
     /**
@@ -87,7 +93,7 @@ class CarType extends Model
      * @var array
      */
     public static $update_rules = [
-        'id' => 'required'
+        'name' => 'required'
     ];
 
     /**
@@ -96,7 +102,7 @@ class CarType extends Model
      * @var array
      */
     public static $api_rules = [
-        'id' => 'required'
+        'name' => 'required'
     ];
 
     /**
@@ -105,5 +111,29 @@ class CarType extends Model
     public function cars()
     {
         return $this->hasMany(MyCar::class, 'type_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'instance');
+    }
+
+    /**
+     * @return string
+     */
+    public function getMorphClass()
+    {
+        return 'carType';
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getImageAttribute()
+    {
+        return !empty($this->media()->first()) ? $this->media()->first()->file_url : null;
     }
 }

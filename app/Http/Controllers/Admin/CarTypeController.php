@@ -9,6 +9,8 @@ use App\Http\Requests\Admin\CreateCarTypeRequest;
 use App\Http\Requests\Admin\UpdateCarTypeRequest;
 use App\Repositories\Admin\CarTypeRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\Admin\CarTypeTranslationRepository;
+use App\Repositories\Admin\LanguageRepository;
 use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
 
@@ -23,9 +25,17 @@ class CarTypeController extends AppBaseController
     /** @var  CarTypeRepository */
     private $carTypeRepository;
 
-    public function __construct(CarTypeRepository $carTypeRepo)
+    /** @var  CarTypeTranslationRepository */
+    private $carTypeTranslationRepository;
+
+    /** @var  LanguageRepository */
+    private $languageRepository;
+
+    public function __construct(CarTypeRepository $carTypeRepo, CarTypeTranslationRepository $carTypeTranslationRepo, LanguageRepository $languageRepo)
     {
         $this->carTypeRepository = $carTypeRepo;
+        $this->carTypeTranslationRepository = $carTypeTranslationRepo;
+        $this->languageRepository = $languageRepo;
         $this->ModelName = 'carTypes';
         $this->BreadCrumbName = 'CarType';
     }
@@ -62,9 +72,7 @@ class CarTypeController extends AppBaseController
      */
     public function store(CreateCarTypeRequest $request)
     {
-        $input = $request->all();
-
-        $carType = $this->carTypeRepository->create($input);
+        $carType = $this->carTypeRepository->saveRecord($request);
 
         Flash::success('Car Type saved successfully.');
         if (isset($request->continue)) {
@@ -87,14 +95,17 @@ class CarTypeController extends AppBaseController
     public function show($id)
     {
         $carType = $this->carTypeRepository->findWithoutFail($id);
-
         if (empty($carType)) {
             Flash::error('Car Type not found');
             return redirect(route('admin.carTypes.index'));
         }
 
+        $locales = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carType);
-        return view('admin.car_types.show')->with('carType', $carType);
+        return view('admin.car_types.show')->with([
+            'carType' => $carType,
+            'locales' => $locales
+        ]);
     }
 
     /**
@@ -107,14 +118,17 @@ class CarTypeController extends AppBaseController
     public function edit($id)
     {
         $carType = $this->carTypeRepository->findWithoutFail($id);
-
         if (empty($carType)) {
             Flash::error('Car Type not found');
             return redirect(route('admin.carTypes.index'));
         }
 
+        $locales = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carType);
-        return view('admin.car_types.edit')->with('carType', $carType);
+        return view('admin.car_types.edit')->with([
+            'carType' => $carType,
+            'locales' => $locales
+        ]);
     }
 
     /**
@@ -128,13 +142,13 @@ class CarTypeController extends AppBaseController
     public function update($id, UpdateCarTypeRequest $request)
     {
         $carType = $this->carTypeRepository->findWithoutFail($id);
-
         if (empty($carType)) {
             Flash::error('Car Type not found');
             return redirect(route('admin.carTypes.index'));
         }
 
-        $carType = $this->carTypeRepository->update($request->all(), $id);
+        $carType = $this->carTypeRepository->updateRecord($request, $carType);
+        $this->carTypeTranslationRepository->updateRecord($request, $carType);
 
         Flash::success('Car Type updated successfully.');
         if (isset($request->continue)) {

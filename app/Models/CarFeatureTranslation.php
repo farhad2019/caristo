@@ -25,6 +25,9 @@ class CarFeatureTranslation extends Model
     protected $translatedAttributes = ['name'];
 
     public $fillable = [
+        'locale',
+        'feature_id',
+        'name'
     ];
 
     /**

@@ -184,7 +184,8 @@ class MyCar extends Model
         'carType',
         'media',
 //        'bids',
-        'engineType'
+        'engineType',
+        'carAttributes'
     ];
 
     /**
@@ -221,6 +222,7 @@ class MyCar extends Model
         'chassis',
         'kilometre',
         'top_bids',
+        'carAttributes',
         'created_at'
     ];
 

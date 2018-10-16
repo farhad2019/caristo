@@ -9,6 +9,8 @@ use App\Http\Requests\Admin\CreateCarFeatureRequest;
 use App\Http\Requests\Admin\UpdateCarFeatureRequest;
 use App\Repositories\Admin\CarFeatureRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\Admin\CarFeatureTranslationRepository;
+use App\Repositories\Admin\LanguageRepository;
 use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
 
@@ -23,9 +25,17 @@ class CarFeatureController extends AppBaseController
     /** @var  CarFeatureRepository */
     private $carFeatureRepository;
 
-    public function __construct(CarFeatureRepository $carFeatureRepo)
+    /** @var  LanguageRepository */
+    private $languageRepository;
+
+    /** @var  CarFeatureTranslationRepository */
+    private $featureTranslationRepository;
+
+    public function __construct(CarFeatureRepository $carFeatureRepo, CarFeatureTranslationRepository $featureTranslationRepo, LanguageRepository $languageRepo)
     {
         $this->carFeatureRepository = $carFeatureRepo;
+        $this->languageRepository = $languageRepo;
+        $this->featureTranslationRepository = $featureTranslationRepo;
         $this->ModelName = 'carFeatures';
         $this->BreadCrumbName = 'CarFeature';
     }
@@ -62,9 +72,7 @@ class CarFeatureController extends AppBaseController
      */
     public function store(CreateCarFeatureRequest $request)
     {
-        $input = $request->all();
-
-        $carFeature = $this->carFeatureRepository->create($input);
+        $carFeature = $this->carFeatureRepository->saveRecord($request);
 
         Flash::success('Car Feature saved successfully.');
         if (isset($request->continue)) {
@@ -87,14 +95,17 @@ class CarFeatureController extends AppBaseController
     public function show($id)
     {
         $carFeature = $this->carFeatureRepository->findWithoutFail($id);
-
         if (empty($carFeature)) {
             Flash::error('Car Feature not found');
             return redirect(route('admin.carFeatures.index'));
         }
 
+        $locales = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carFeature);
-        return view('admin.car_features.show')->with('carFeature', $carFeature);
+        return view('admin.car_features.show')->with([
+            'carFeature' => $carFeature,
+            'locales'    => $locales
+        ]);
     }
 
     /**
@@ -113,8 +124,12 @@ class CarFeatureController extends AppBaseController
             return redirect(route('admin.carFeatures.index'));
         }
 
+        $locales = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carFeature);
-        return view('admin.car_features.edit')->with('carFeature', $carFeature);
+        return view('admin.car_features.edit')->with([
+            'carFeature' => $carFeature,
+            'locales'    => $locales
+        ]);
     }
 
     /**
@@ -128,13 +143,13 @@ class CarFeatureController extends AppBaseController
     public function update($id, UpdateCarFeatureRequest $request)
     {
         $carFeature = $this->carFeatureRepository->findWithoutFail($id);
-
         if (empty($carFeature)) {
             Flash::error('Car Feature not found');
             return redirect(route('admin.carFeatures.index'));
         }
 
-        $carFeature = $this->carFeatureRepository->update($request->all(), $id);
+        $carFeature = $this->carFeatureRepository->updateRecord($request, $carFeature);
+        $this->featureTranslationRepository->updateRecord($request, $carFeature);
 
         Flash::success('Car Feature updated successfully.');
         if (isset($request->continue)) {

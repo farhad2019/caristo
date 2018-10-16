@@ -12,7 +12,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property string icon
+ *
  * @property MyCar cars
+ * @property Media media
  *
  * @SWG\Definition(
  *      definition="CarFeature",
@@ -37,7 +40,7 @@ class CarFeature extends Model
 
 
     public $fillable = [
-        'id'
+        'name'
     ];
 
     /**
@@ -61,7 +64,9 @@ class CarFeature extends Model
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'icon'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
@@ -70,6 +75,7 @@ class CarFeature extends Model
      */
     protected $visible = [
         'id',
+        'icon',
         'name'
     ];
 
@@ -98,10 +104,34 @@ class CarFeature extends Model
     ];
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'instance');
+    }
+
+    /**
+     * @return string
+     */
+    public function getMorphClass()
+    {
+        return 'carFeature';
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function cars()
     {
         return $this->belongsToMany(MyCar::class, 'car_features', 'car_id', 'feature_id', 'id', 'id');
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getIconAttribute()
+    {
+        return !empty($this->media()->first()) ? $this->media()->first()->file_url : null;
     }
 }
