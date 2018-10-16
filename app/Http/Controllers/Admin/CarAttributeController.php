@@ -80,6 +80,7 @@ class CarAttributeController extends AppBaseController
     public function store(CreateCarAttributeRequest $request)
     {
         $carAttribute = $this->carAttributeRepository->saveRecord($request);
+
         if (!empty(array_values(array_filter($request->options)))) {
             $this->optionRepository->saveRecord($request, $carAttribute);
         }
@@ -155,7 +156,10 @@ class CarAttributeController extends AppBaseController
             return redirect(route('admin.carAttributes.index'));
         }
 
-        $carAttribute = $this->carAttributeRepository->update($request->all(), $id);
+        $carAttribute = $this->carAttributeRepository->updateRecord($request, $carAttribute);
+        if (!empty(array_values(array_filter($request->opt)))) {
+            $this->optionRepository->saveRecord($request, $carAttribute);
+        }
 
         Flash::success('Car Attribute updated successfully.');
         if (isset($request->continue)) {

@@ -54,7 +54,7 @@ class Category extends Model
 
     public $table = 'category';
     protected $cascadeDeletes = ['media', 'news'];
-    public $translatedAttributes = ['name', 'subtitle'];
+    public $translatedAttributes = ['name', 'subtitle', 'description'];
     protected $dates = ['deleted_at'];
 
     const NEWS = 10;
@@ -118,6 +118,7 @@ class Category extends Model
         'slug',
         'type',
         'type_text',
+        'description',
         'created_at',
         'updated_at',
 //        'parentCategory',

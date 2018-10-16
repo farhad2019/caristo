@@ -39,16 +39,35 @@ class AttributeOptionRepository extends BaseRepository
      */
     public function saveRecord($request, $carAttribute)
     {
-        $input = $request->only('options');
-        $input['options'] = array_values(array_filter($input['options']));
+        $input = $request->only('opt');
+        $input['options'] = array_values(array_filter($input['opt']));
 
         if (!empty($input['options'])) {
+            $carAttribute->options()->delete();
             foreach ($input['options'] as $key => $item) {
                 $data['option'] = $item;
                 $data['attribute_id'] = $carAttribute->id;
                 $this->create($data);
             }
         }
+        return $carAttribute;
+    }
+
+    public function updateRecord($request, $carAttribute)
+    {
+        $input = $request->only('opt');
+        $optionIds = array_keys($input['opt']);
+        $input['options'] = array_values(array_filter($input['opt']));
+
+        if (!empty($input['options'])) {
+            foreach ($input['options'] as $key => $item) {
+                $data['option'] = $item;
+                $data['attribute_id'] = $carAttribute->id;
+                $asdasd[] = $data;
+                $this->model->updateOrCreate(['id' => $optionIds[$key], 'attribute_id' => $carAttribute->id], $data);
+            }
+        }
+        dd($asdasd);
         return $carAttribute;
     }
 }

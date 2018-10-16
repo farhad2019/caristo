@@ -31,10 +31,26 @@ class CarAttributeRepository extends BaseRepository
         return CarAttribute::class;
     }
 
+    /**
+     * @param $request
+     * @return mixed
+     */
     public function saveRecord($request)
     {
-        $input = $request->only('name','type');
+        $input = $request->only('name', 'type');
         $carAttribute = $this->create($input);
+        return $carAttribute;
+    }
+
+    /**
+     * @param $request
+     * @param $carAttribute
+     * @return mixed
+     */
+    public function updateRecord($request, $carAttribute)
+    {
+        $input = $request->only('name', 'type');
+        $carAttribute = $this->update($input, $carAttribute->id);
         return $carAttribute;
     }
 }

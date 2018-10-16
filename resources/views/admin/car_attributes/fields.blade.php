@@ -11,19 +11,22 @@
 </div>
 
 <div class="clearfix"></div>
-<div id="clone-div" style="display: none">
-    @if(isset($carAttribute))
-        @foreach($carAttribute->options as $option)
+<div id="clone-div" {{ isset($carAttribute->options)?'':'style=display:none' }}>
+    @if(isset($carAttribute->options))
+        @foreach($carAttribute->options as $key => $option)
             <div>
                 <!-- Options Field -->
                 <div class="form-group col-sm-4">
                     {!! Form::label('options', 'Options:') !!}
-                    {!! Form::text('options[]', null, ['class'=>'form-control']) !!}
+                    {!! Form::text('opt[' . $option->option_array['id'] . ']', $option->option_array['name'] , ['class'=>'form-control']) !!}
                 </div>
 
                 <div class="col-sm-2" style="margin-top: 23px;">
-                    <a href="javascript:void(0)" class="btn btn-info add_row"><i class="fa fa-plus"></i></a>
-                    <a href="javascript:void(0)" class="btn btn-danger delete_row"><i class="fa fa-trash"></i></a>
+                    @if($key==0)
+                        <a href="javascript:void(0)" class="btn btn-info add_row"><i class="fa fa-plus"></i></a>
+                    @else
+                        <a href="javascript:void(0)" class="btn btn-danger delete_row"><i class="fa fa-trash"></i></a>
+                    @endif
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -38,7 +41,7 @@
 
             <div class="col-sm-2" style="margin-top: 23px;">
                 <a href="javascript:void(0)" class="btn btn-info add_row"><i class="fa fa-plus"></i></a>
-                <a href="javascript:void(0)" class="btn btn-danger delete_row"><i class="fa fa-trash"></i></a>
+                {{--<a href="javascript:void(0)" class="btn btn-danger delete_row"><i class="fa fa-trash"></i></a>--}}
             </div>
             <div class="clearfix"></div>
         </div>
@@ -47,7 +50,7 @@
         <!-- Options Field -->
         <div class="form-group col-sm-4">
             {!! Form::label('options', 'Options:') !!}
-            {!! Form::text('options[]', null, ['class'=>'form-control']) !!}
+            {!! Form::text('opt[]', null, ['class'=>'form-control']) !!}
         </div>
 
         <div class="col-sm-2" style="margin-top: 23px;">
@@ -81,8 +84,7 @@
                 var type = $(this).val();
                 if (type >= 30 && type < 60) {
                     $('#clone-div').show();
-                }
-                if (type < 30) {
+                } else {
                     $('#clone-div').hide();
                 }
 

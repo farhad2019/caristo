@@ -3790,7 +3790,7 @@
                     "format": "int32"
                 },
                 "kilometre": {
-                    "description": "Car  kilometre",
+                    "description": "Car kilometre",
                     "type": "number",
                     "format": "float"
                 },
