@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property string option_array
  * @property string type_text
+ * @property string image
  *
  * @property MyCar cars
  * @property AttributeOption options
@@ -90,6 +91,7 @@ class CarAttribute extends Model
      */
     protected $appends = [
         'option_array',
+        'image',
         'type_text'
     ];
 
@@ -102,6 +104,7 @@ class CarAttribute extends Model
         'id',
         'name',
         'type',
+        'image',
         'option_array'
 //        'options'
     ];
@@ -179,5 +182,13 @@ class CarAttribute extends Model
     public function getTypeTextAttribute()
     {
         return self::$ATTRIBUTE_TYPES[$this->type];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageAttribute()
+    {
+        return ($this->media->count() > 0) ? $this->media[0]->file_url : null;
     }
 }
