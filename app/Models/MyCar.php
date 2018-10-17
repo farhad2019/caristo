@@ -224,7 +224,7 @@ class MyCar extends Model
         'kilometre',
         'top_bids',
 //        'carAttributes',
-//        'myCarAttributes',
+        'myCarAttributes',
         'created_at'
     ];
 

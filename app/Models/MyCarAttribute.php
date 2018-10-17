@@ -44,7 +44,9 @@ class MyCarAttribute extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'carAttribute'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -53,7 +55,8 @@ class MyCarAttribute extends Model
      */
     protected $appends = [
         'attr_id',
-        'attr_name'
+        'attr_name',
+        'attr_option'
 //        'option_array'
     ];
 
@@ -65,6 +68,7 @@ class MyCarAttribute extends Model
     protected $visible = [
         'attr_id',
         'attr_name',
+        'attr_option',
         'value'
     ];
 
@@ -119,5 +123,14 @@ class MyCarAttribute extends Model
     public function getAttrIdAttribute()
     {
         return $this->carAttribute->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAttrOptionAttribute()
+    {
+        $id = $this->value;
+        return $this->carAttribute->options()->where('id', $id)->get()->first()->option;
     }
 }
