@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property integer id
@@ -140,7 +141,7 @@ class Region extends Model
 
     public function getIsMyRegionAttribute()
     {
-        return ($this->user()->first()) ? 1 : 0;
+        return ($this->user()->where('id', Auth::id())->count() > 0) ? 1 : 0;
     }
 
     /**

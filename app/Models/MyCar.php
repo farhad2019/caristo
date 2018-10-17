@@ -184,6 +184,7 @@ class MyCar extends Model
         'carModel',
         'carType',
         'media',
+        'myCarAttributes',
 //        'bids',
         'engineType'
     ];
@@ -223,7 +224,7 @@ class MyCar extends Model
         'kilometre',
         'top_bids',
 //        'carAttributes',
-//        'my_car_attributes',
+//        'myCarAttributes',
         'created_at'
     ];
 
@@ -328,13 +329,13 @@ class MyCar extends Model
         return $this->belongsToMany(CarAttribute::class, 'car_attributes', 'car_id', 'attribute_id', 'id', 'id')->withPivot('value');
     }
 
-//    public function getMyCarAttributesAttribute()
-//    {
-//        return $this->carAttributes;
-//        /*return $this->carAttributes()->whereHas('options', function ($query) use () {
-//            return $query->where('id', );
-//        });*/
-//    }
+    public function myCarAttributes()
+    {
+        return $this->hasMany(MyCarAttribute::class, 'car_id');
+        /*return $this->carAttributes()->whereHas('options', function ($query) use () {
+            return $query->where('id', );
+        });*/
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
