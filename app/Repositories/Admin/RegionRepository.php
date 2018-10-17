@@ -72,6 +72,7 @@ class RegionRepository extends BaseRepository
                 $media[] = Utils::handlePicture($mediaFile);
             }
 
+            $region->media()->delete();
             $region->media()->createMany($media);
         }
         return $region;

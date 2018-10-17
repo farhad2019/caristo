@@ -7,8 +7,10 @@ use App\DataTables\Admin\RegionalSpecificationDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateRegionalSpecificationRequest;
 use App\Http\Requests\Admin\UpdateRegionalSpecificationRequest;
+use App\Repositories\Admin\LanguageRepository;
 use App\Repositories\Admin\RegionalSpecificationRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\Admin\RegionalSpecificationTranslationRepository;
 use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
 
@@ -23,9 +25,17 @@ class RegionalSpecificationController extends AppBaseController
     /** @var  RegionalSpecificationRepository */
     private $regionalSpecificationRepository;
 
-    public function __construct(RegionalSpecificationRepository $regionalSpecificationRepo)
+    /** @var  RegionalSpecificationTranslationRepository */
+    private $translationRepository;
+
+    /** @var  LanguageRepository */
+    private $languageRepository;
+
+    public function __construct(RegionalSpecificationRepository $regionalSpecificationRepo, RegionalSpecificationTranslationRepository $translationRepo, LanguageRepository $languageRepo)
     {
         $this->regionalSpecificationRepository = $regionalSpecificationRepo;
+        $this->translationRepository = $translationRepo;
+        $this->languageRepository = $languageRepo;
         $this->ModelName = 'regionalSpecifications';
         $this->BreadCrumbName = 'RegionalSpecification';
     }
@@ -92,9 +102,12 @@ class RegionalSpecificationController extends AppBaseController
             Flash::error('Regional Specification not found');
             return redirect(route('admin.regionalSpecifications.index'));
         }
-
+        $locales = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $regionalSpecification);
-        return view('admin.regional_specifications.show')->with('regionalSpecification', $regionalSpecification);
+        return view('admin.regional_specifications.show')->with([
+            'regionalSpecification' => $regionalSpecification,
+            'locales'               => $locales
+        ]);
     }
 
     /**
@@ -112,9 +125,12 @@ class RegionalSpecificationController extends AppBaseController
             Flash::error('Regional Specification not found');
             return redirect(route('admin.regionalSpecifications.index'));
         }
-
+        $locales = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $regionalSpecification);
-        return view('admin.regional_specifications.edit')->with('regionalSpecification', $regionalSpecification);
+        return view('admin.regional_specifications.edit')->with([
+            'regionalSpecification' => $regionalSpecification,
+            'locales'               => $locales
+        ]);
     }
 
     /**
@@ -128,13 +144,12 @@ class RegionalSpecificationController extends AppBaseController
     public function update($id, UpdateRegionalSpecificationRequest $request)
     {
         $regionalSpecification = $this->regionalSpecificationRepository->findWithoutFail($id);
-
         if (empty($regionalSpecification)) {
             Flash::error('Regional Specification not found');
             return redirect(route('admin.regionalSpecifications.index'));
         }
 
-        $regionalSpecification = $this->regionalSpecificationRepository->update($request->all(), $id);
+        $regionalSpecification = $this->translationRepository->updateRecord($request, $regionalSpecification);
 
         Flash::success('Regional Specification updated successfully.');
         if (isset($request->continue)) {

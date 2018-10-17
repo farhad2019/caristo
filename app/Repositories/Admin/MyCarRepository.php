@@ -62,7 +62,6 @@ class MyCarRepository extends BaseRepository
             $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
             foreach ($mediaFiles as $mediaFile) {
-//                $media[] = $this->handlePicture($mediaFile);
                 $media[] = Utils::handlePicture($mediaFile);
             }
 
@@ -79,8 +78,22 @@ class MyCarRepository extends BaseRepository
      */
     public function updateRecord($request, $myCar)
     {
-        $input = $request->all();
+        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount']);
+
         $myCar = $this->update($input, $myCar->id);
+
+        // Media Data
+        if ($request->hasFile('media')) {
+            $media = [];
+            $mediaFiles = $request->file('media');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                $media[] = Utils::handlePicture($mediaFile);
+            }
+
+            $myCar->media()->createMany($media);
+        }
         return $myCar;
     }
 }

@@ -2,10 +2,6 @@
 
 namespace App\Repositories\Admin;
 
-use App\Models\CarBrand;
-use App\Models\CarBrandTranslation;
-use App\Models\CarFeatureTranslation;
-use App\Models\CarTypeTranslation;
 use App\Models\EngineTypeTranslation;
 use InfyOm\Generator\Common\BaseRepository;
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use function foo\func;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -184,8 +185,7 @@ class MyCar extends Model
         'carType',
         'media',
 //        'bids',
-        'engineType',
-        'carAttributes'
+        'engineType'
     ];
 
     /**
@@ -222,7 +222,8 @@ class MyCar extends Model
         'chassis',
         'kilometre',
         'top_bids',
-        'carAttributes',
+//        'carAttributes',
+//        'my_car_attributes',
         'created_at'
     ];
 
@@ -248,15 +249,14 @@ class MyCar extends Model
      * @var array
      */
     public static $update_rules = [
-        'type_id'           => 'required|exists:car_types,id',
-        'model_id'          => 'required|exists:car_models,id',
-        'engine_type_id'    => 'required|exists:engine_types,id',
-        'year'              => 'required',
-        'transmission_type' => 'required|in:10,20',
-        'name'              => 'required',
-        'email'             => 'required|email',
-        'country_code'      => 'required',
-        'phone'             => 'required'
+        'name'                      => 'required',
+        'email'                     => 'required|email',
+        'country_code'              => 'required',
+        'phone'                     => 'required',
+        'model_id'                  => 'required|exists:car_models,id',
+        'engine_type_id'            => 'required|exists:engine_types,id',
+        'year'                      => 'required',
+        'regional_specification_id' => 'required|exists:regional_specifications,id'
     ];
 
     /**
@@ -327,6 +327,14 @@ class MyCar extends Model
     {
         return $this->belongsToMany(CarAttribute::class, 'car_attributes', 'car_id', 'attribute_id', 'id', 'id')->withPivot('value');
     }
+
+//    public function getMyCarAttributesAttribute()
+//    {
+//        return $this->carAttributes;
+//        /*return $this->carAttributes()->whereHas('options', function ($query) use () {
+//            return $query->where('id', );
+//        });*/
+//    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

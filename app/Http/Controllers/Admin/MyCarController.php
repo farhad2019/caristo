@@ -122,7 +122,7 @@ class MyCarController extends AppBaseController
             }
         }
 
-        Flash::success('My Car saved successfully.');
+        Flash::success('Car saved successfully.');
         return redirect(route('admin.myCars.index'));
     }
 
@@ -138,7 +138,7 @@ class MyCarController extends AppBaseController
         $myCar = $this->myCarRepository->findWithoutFail($id);
 
         if (empty($myCar)) {
-            Flash::error('My Car not found');
+            Flash::error('Car not found');
 
             return redirect(route('admin.myCars.index'));
         }
@@ -158,7 +158,7 @@ class MyCarController extends AppBaseController
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
         if (empty($myCar)) {
-            Flash::error('My Car not found');
+            Flash::error('Car not found');
             return redirect(route('admin.myCars.index'));
         }
 
@@ -195,17 +195,14 @@ class MyCarController extends AppBaseController
     public function update($id, UpdateMyCarRequest $request)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
-
         if (empty($myCar)) {
-            Flash::error('My Car not found');
-
+            Flash::error('Car not found');
             return redirect(route('admin.myCars.index'));
         }
 
-        $myCar = $this->myCarRepository->update($request->all(), $id);
+        $myCar = $this->myCarRepository->updateRecord($request, $myCar);
 
-        Flash::success('My Car updated successfully.');
-
+        Flash::success('Car updated successfully.');
         return redirect(route('admin.myCars.index'));
     }
 
@@ -219,17 +216,14 @@ class MyCarController extends AppBaseController
     public function destroy($id)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
-
         if (empty($myCar)) {
-            Flash::error('My Car not found');
-
+            Flash::error('Car not found');
             return redirect(route('admin.myCars.index'));
         }
 
         $this->myCarRepository->delete($id);
 
-        Flash::success('My Car deleted successfully.');
-
+        Flash::success('Car deleted successfully.');
         return redirect(route('admin.myCars.index'));
     }
 }

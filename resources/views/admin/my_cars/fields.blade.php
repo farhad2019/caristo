@@ -7,7 +7,7 @@
 <!-- Brand Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('brand', 'Brand:') !!}
-    {!! Form::select('brand', $brands, null, ['class' => 'form-control select2']) !!}
+    {!! Form::select('brand', $brands, (isset($myCar))? $myCar->carModel->brand->id: null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Model Id Field -->
@@ -87,7 +87,7 @@
     @if($attribute->type == 10)
         <div class="form-group col-sm-6">
             {!! Form::label('phone', $attribute->name.':') !!}
-            {!! Form::text('attribute['.$attribute->id.']', null, ['class' => 'form-control']) !!}
+            {!! Form::text('attribute['.$attribute->id.']', (isset($myCar))? $myCar->carAttributes: null, ['class' => 'form-control']) !!}
         </div>
     @elseif($attribute->type == 20)
         <div class="form-group col-sm-6">

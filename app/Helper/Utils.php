@@ -30,7 +30,7 @@ class Utils
     public static function handlePicture($mediaFile, $folder = "media_files")
     {
         $rand = time();
-        $filename = $rand . '.jpg';
+        $filename = $rand . '.png';
 
         $path = implode(DIRECTORY_SEPARATOR, ['storage', 'app', $folder]);
         $basePath = base_path() . DIRECTORY_SEPARATOR . $path;
