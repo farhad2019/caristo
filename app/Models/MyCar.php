@@ -222,7 +222,7 @@ class MyCar extends Model
 //        'bids',
         'chassis',
         'kilometre',
-        'top_bids',
+//        'top_bids',
 //        'carAttributes',
         'myCarAttributes',
         'created_at'

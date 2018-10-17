@@ -83,36 +83,72 @@
     {!! Form::select('regional_specification_id', $regional_specs, null, ['class' => 'form-control select2']) !!}
 </div>
 
-@foreach($attributes as $attribute)
-    @if($attribute->type == 10)
-        <div class="form-group col-sm-6">
-            {!! Form::label('phone', $attribute->name.':') !!}
-            {!! Form::text('attribute['.$attribute->id.']', (isset($myCar))? $myCar->carAttributes: null, ['class' => 'form-control']) !!}
-        </div>
-    @elseif($attribute->type == 20)
-        <div class="form-group col-sm-6">
-            {!! Form::label('phone', $attribute->name.':') !!}
-            {!! Form::number('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'step' =>0.1]) !!}
-        </div>
-    @elseif($attribute->type == 30 || $attribute->type == 40)
-        @foreach($attribute->option_array as $item)
-            @php($options[$item['id']] = $item['name'])
-        @endforeach
-        <!-- Regional Specification Field -->
-        <div class="form-group col-sm-6">
-            {!! Form::label($attribute->name, $attribute->name.':') !!}
-            {!! Form::select('attribute['.$attribute->id.']', $options, null, ['class' => 'form-control select2', ($attribute->type == 40)?
-            'multiple':'']) !!}
-        </div>
-        @php($options = [])
-    @else
-        <div class="form-group col-sm-6">
-            {!! Form::label('phone', $attribute->name.':') !!}
-            {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
-            'multiple':'']) !!}
-        </div>
-    @endif
-@endforeach
+@if(!isset($myCar))
+    @foreach($attributes as $attribute)
+        @if($attribute->type == 10)
+            <div class="form-group col-sm-6">
+                {!! Form::label('phone', $attribute->name.':') !!}
+                {!! Form::text('attribute['.$attribute->id.']', null, ['class' => 'form-control']) !!}
+            </div>
+        @elseif($attribute->type == 20)
+            <div class="form-group col-sm-6">
+                {!! Form::label('phone', $attribute->name.':') !!}
+                {!! Form::number('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'step' =>0.1]) !!}
+            </div>
+        @elseif($attribute->type == 30 || $attribute->type == 40)
+            @foreach($attribute->option_array as $item)
+                @php($options[$item['id']] = $item['name'])
+            @endforeach
+            <!-- Regional Specification Field -->
+            <div class="form-group col-sm-6">
+                {!! Form::label($attribute->name, $attribute->name.':') !!}
+                {!! Form::select('attribute['.$attribute->id.']', $options, null, ['class' => 'form-control select2', ($attribute->type == 40)?
+                'multiple':'']) !!}
+            </div>
+            @php($options = [])
+        @else
+            <div class="form-group col-sm-6">
+                {!! Form::label('phone', $attribute->name.':') !!}
+                {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
+                'multiple':'']) !!}
+            </div>
+        @endif
+    @endforeach
+@else
+    @foreach($myCar->myCarAttributes as $attribute)
+        @if($attribute->attr_option)
+            {{ dd('asdasd') }}
+        @endif
+        @if($attribute->type == 10)
+            <div class="form-group col-sm-6">
+                {!! Form::label('phone', $attribute->name.':') !!}
+                {!! Form::text('attribute['.$attribute->id.']', $attribute->value, ['class' => 'form-control']) !!}
+            </div>
+        @elseif($attribute->type == 20)
+            <div class="form-group col-sm-6">
+                {!! Form::label('phone', $attribute->name.':') !!}
+                {!! Form::number('attribute['.$attribute->id.']', $attribute->value, ['class' => 'form-control', 'step' =>0.1]) !!}
+            </div>
+        @elseif($attribute->type == 30 || $attribute->type == 40)
+            @foreach($attribute->option_array as $item)
+                @php($options[$item['id']] = $item['name'])
+            @endforeach
+            <!-- Regional Specification Field -->
+            <div class="form-group col-sm-6">
+                {!! Form::label($attribute->name, $attribute->name.':') !!}
+                {!! Form::select('attribute['.$attribute->id.']', $options, $attribute->value, ['class' => 'form-control select2', ($attribute->type == 40)?
+                'multiple':'']) !!}
+            </div>
+            @php($options = [])
+        @else
+            <div class="form-group col-sm-6">
+                {!! Form::label('phone', $attribute->name.':') !!}
+                {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
+                'multiple':'']) !!}
+            </div>
+        @endif
+    @endforeach
+@endif
 
 <!-- Media Field -->
 <div class="form-group col-sm-6">
