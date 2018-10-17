@@ -185,6 +185,7 @@ class MyCar extends Model
         'carType',
         'media',
         'myCarAttributes',
+        'regionalSpecs',
 //        'bids',
         'engineType'
     ];
@@ -211,7 +212,6 @@ class MyCar extends Model
         'country_code',
         'phone',
         'year',
-//        'transmission_type_text',
         'engineType',
         'carType',
         'carModel',
@@ -219,11 +219,13 @@ class MyCar extends Model
         'average_mkp',
         'owner',
         'media',
-//        'bids',
         'chassis',
         'kilometre',
-//        'top_bids',
-//        'carAttributes',
+        'top_bids',
+        /*'bids',
+        'transmission_type_text',
+        'carAttributes',*/
+        'regionalSpecs',
         'myCarAttributes',
         'created_at'
     ];
@@ -332,9 +334,6 @@ class MyCar extends Model
     public function myCarAttributes()
     {
         return $this->hasMany(MyCarAttribute::class, 'car_id');
-        /*return $this->carAttributes()->whereHas('options', function ($query) use () {
-            return $query->where('id', );
-        });*/
     }
 
     /**
