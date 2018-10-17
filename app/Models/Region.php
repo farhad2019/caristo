@@ -11,7 +11,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property string is_my_region
+ * @property string flag
+ *
  * @property User user
+ * @property Media media
  *
  * @SWG\Definition(
  *      definition="Region",
@@ -34,14 +38,12 @@ class Region extends Model
     use SoftDeletes;
 
     public $table = 'regions';
-
-
     protected $dates = ['deleted_at'];
 
 
     public $fillable = [
-        'id',
-        'name'
+        'name',
+        'image'
     ];
 
     /**
@@ -65,14 +67,22 @@ class Region extends Model
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'is_my_region',
+        'flag'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'name',
+        'flag',
+        'is_my_region'
+    ];
 
     /**
      * Validation create rules
@@ -80,8 +90,8 @@ class Region extends Model
      * @var array
      */
     public static $rules = [
-        'id'   => 'required',
-        'name' => 'required'
+        'name' => 'required',
+        'flag' => 'required'
     ];
 
     /**
@@ -90,8 +100,8 @@ class Region extends Model
      * @var array
      */
     public static $update_rules = [
-        'id'   => 'required',
-        'name' => 'required'
+        'name' => 'required',
+        'flag' => 'required'
     ];
 
     /**
@@ -100,8 +110,8 @@ class Region extends Model
      * @var array
      */
     public static $api_rules = [
-        'id'   => 'required',
-        'name' => 'required'
+        'name' => 'required',
+        'flag' => 'required'
     ];
 
     /**
@@ -110,5 +120,34 @@ class Region extends Model
     public function user()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'instance');
+    }
+
+    /**
+     * @return string
+     */
+    public function getMorphClass()
+    {
+        return 'region';
+    }
+
+    public function getIsMyRegionAttribute()
+    {
+        return ($this->user()->first()) ? 1 : 0;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getFlagAttribute()
+    {
+        return $this->media()->first() ? $this->media()->first()->file_url : null;
     }
 }

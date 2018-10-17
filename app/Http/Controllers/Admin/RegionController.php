@@ -62,9 +62,7 @@ class RegionController extends AppBaseController
      */
     public function store(CreateRegionRequest $request)
     {
-        $input = $request->all();
-
-        $region = $this->regionRepository->create($input);
+        $region = $this->regionRepository->saveRecord($request);
 
         Flash::success('Region saved successfully.');
         return redirect(route('admin.regions.index'));
@@ -121,13 +119,12 @@ class RegionController extends AppBaseController
     public function update($id, UpdateRegionRequest $request)
     {
         $region = $this->regionRepository->findWithoutFail($id);
-
         if (empty($region)) {
             Flash::error('Region not found');
             return redirect(route('admin.regions.index'));
         }
 
-        $region = $this->regionRepository->update($request->all(), $id);
+        $region = $this->regionRepository->updateRecord($request, $region);
 
         Flash::success('Region updated successfully.');
         return redirect(route('admin.regions.index'));

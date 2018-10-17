@@ -77,7 +77,7 @@ class EngineType extends Model
      * @var array
      */
     public static $rules = [
-        'id' => 'required'
+        'name' => 'required'
     ];
 
     /**
@@ -86,7 +86,7 @@ class EngineType extends Model
      * @var array
      */
     public static $update_rules = [
-        'id' => 'required'
+        'name' => 'required'
     ];
 
     /**
@@ -95,7 +95,7 @@ class EngineType extends Model
      * @var array
      */
     public static $api_rules = [
-        'id' => 'required'
+        'name' => 'required'
     ];
 
     /**

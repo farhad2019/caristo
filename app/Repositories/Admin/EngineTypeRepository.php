@@ -13,7 +13,7 @@ use InfyOm\Generator\Common\BaseRepository;
  * @method EngineType findWithoutFail($id, $columns = ['*'])
  * @method EngineType find($id, $columns = ['*'])
  * @method EngineType first($columns = ['*'])
-*/
+ */
 class EngineTypeRepository extends BaseRepository
 {
     /**
@@ -29,5 +29,16 @@ class EngineTypeRepository extends BaseRepository
     public function model()
     {
         return EngineType::class;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function saveRecord($request)
+    {
+        $input = $request->all();
+        $engineType = $this->create($input);
+        return $engineType;
     }
 }

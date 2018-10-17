@@ -16,7 +16,12 @@ class RegionalSpecificationDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $query = $query->with(['translations']);
         $dataTable = new EloquentDataTable($query);
+
+        $dataTable->editColumn('translations.name', function ($model) {
+            return $model->name;
+        });
 
         return $dataTable->addColumn('action', 'admin.regional_specifications.datatables_actions');
     }
@@ -68,7 +73,10 @@ class RegionalSpecificationDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id'
+            'id',
+            'translations.name' => [
+                'title' => 'Name'
+            ]
         ];
     }
 

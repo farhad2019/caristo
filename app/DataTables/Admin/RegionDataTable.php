@@ -18,6 +18,14 @@ class RegionDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
+        $dataTable->editColumn('flag', function ($model) {
+            if ($model->flag)
+                return "<img src='" . $model->flag . "' width='30'/>";
+            else {
+                return "<span class='label label-default'>None</span>";
+            }
+        });
+        $dataTable->rawColumns(['flag', 'action']);
         return $dataTable->addColumn('action', 'admin.regions.datatables_actions');
     }
 
@@ -69,7 +77,8 @@ class RegionDataTable extends DataTable
     {
         return [
             'id',
-            'name'
+            'name',
+            'flag'
         ];
     }
 

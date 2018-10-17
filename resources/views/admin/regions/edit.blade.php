@@ -10,7 +10,7 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($region, ['route' => ['admin.regions.update', $region->id], 'method' => 'patch']) !!}
+                   {!! Form::model($region, ['route' => ['admin.regions.update', $region->id], 'method' => 'patch', 'files' => true]) !!}
 
                         @include('admin.regions.fields')
 

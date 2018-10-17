@@ -9,6 +9,8 @@ use App\Http\Requests\Admin\CreateEngineTypeRequest;
 use App\Http\Requests\Admin\UpdateEngineTypeRequest;
 use App\Repositories\Admin\EngineTypeRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\Admin\EngineTypeTranslationRepository;
+use App\Repositories\Admin\LanguageRepository;
 use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
 
@@ -23,9 +25,17 @@ class EngineTypeController extends AppBaseController
     /** @var  EngineTypeRepository */
     private $engineTypeRepository;
 
-    public function __construct(EngineTypeRepository $engineTypeRepo)
+    /** @var  EngineTypeTranslationRepository */
+    private $translationRepository;
+
+    /** @var  LanguageRepository */
+    private $languageRepository;
+
+    public function __construct(EngineTypeRepository $engineTypeRepo, EngineTypeTranslationRepository $translationRepo, LanguageRepository $languageRepo)
     {
         $this->engineTypeRepository = $engineTypeRepo;
+        $this->translationRepository = $translationRepo;
+        $this->languageRepository = $languageRepo;
         $this->ModelName = 'engineTypes';
         $this->BreadCrumbName = 'EngineType';
     }
@@ -38,7 +48,7 @@ class EngineTypeController extends AppBaseController
      */
     public function index(EngineTypeDataTable $engineTypeDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $engineTypeDataTable->render('admin.engine_types.index');
     }
 
@@ -49,7 +59,7 @@ class EngineTypeController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.engine_types.create');
     }
 
@@ -62,8 +72,7 @@ class EngineTypeController extends AppBaseController
      */
     public function store(CreateEngineTypeRequest $request)
     {
-        $input = $request->all();
-        $engineType = $this->engineTypeRepository->create($input);
+        $engineType = $this->engineTypeRepository->saveRecord($request);
 
         Flash::success('Engine Type saved successfully.');
         if (isset($request->continue)) {
@@ -91,9 +100,12 @@ class EngineTypeController extends AppBaseController
             Flash::error('Engine Type not found');
             return redirect(route('admin.engineTypes.index'));
         }
-
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $engineType);
-        return view('admin.engine_types.show')->with('engineType', $engineType);
+        $locales = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $engineType);
+        return view('admin.engine_types.show')->with([
+            'engineType' => $engineType,
+            'locales'    => $locales
+        ]);
     }
 
     /**
@@ -112,14 +124,18 @@ class EngineTypeController extends AppBaseController
             return redirect(route('admin.engineTypes.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $engineType);
-        return view('admin.engine_types.edit')->with('engineType', $engineType);
+        $locales = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $engineType);
+        return view('admin.engine_types.edit')->with([
+            'engineType' => $engineType,
+            'locales'    => $locales
+        ]);
     }
 
     /**
      * Update the specified EngineType in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateEngineTypeRequest $request
      *
      * @return Response
@@ -133,7 +149,7 @@ class EngineTypeController extends AppBaseController
             return redirect(route('admin.engineTypes.index'));
         }
 
-        $engineType = $this->engineTypeRepository->update($request->all(), $id);
+        $engineType = $this->translationRepository->updateRecord($request, $engineType);
 
         Flash::success('Engine Type updated successfully.');
         if (isset($request->continue)) {

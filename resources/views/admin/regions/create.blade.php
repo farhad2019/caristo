@@ -11,7 +11,7 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'admin.regions.store']) !!}
+                    {!! Form::open(['route' => 'admin.regions.store', 'files' => true]) !!}
 
                         @include('admin.regions.fields')
 
