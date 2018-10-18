@@ -115,6 +115,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('v1/users-regions', 'UserAPIController@addRegion');
 
     Route::resource('v1/makeBids', 'MakeBidAPIController');
+
+    Route::resource('v1/carInteractions', 'CarInteractionAPIController');
 });
 
 Route::resource('v1/carModels', 'CarModelAPIController');
@@ -122,3 +124,4 @@ Route::resource('v1/carModels', 'CarModelAPIController');
 Route::resource('v1/languages', 'LanguageAPIController');
 
 Route::resource('v1/regionalSpecifications', 'RegionalSpecificationAPIController');
+

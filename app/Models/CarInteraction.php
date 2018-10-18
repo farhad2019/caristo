@@ -6,29 +6,39 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @property News news
+ * @property integer id
+ * @property integer user_id
+ * @property integer car_id
+ * @property integer type
+ * @property string created_at
+ * @property string updated_at
+ * @property string deleted_at
+ *
+ * @property MyCar cars
  *
  * @SWG\Definition(
- *      definition="NewsInteraction",
- *      required={"news_id", "type"},
+ *      definition="CarInteraction",
+ *      required={"car_id", "type"},
  *      @SWG\Property(
- *          property="news_id",
- *          description="news_id",
+ *          property="car_id",
+ *          description="car_id",
  *          type="integer",
  *          format="int32"
  *      ),
  *      @SWG\Property(
  *          property="type",
  *          description="type, 10=View, 20=like, 30=favorite",
- *          type="integer"
+ *          type="integer",
+ *          format="int32"
  *      )
  * )
  */
-class NewsInteraction extends Model
+class CarInteraction extends Model
 {
     use SoftDeletes;
 
-    public $table = 'news_interactions';
+    public $table = 'car_interactions';
+    protected $dates = ['deleted_at'];
 
     const TYPE_VIEW = 10;
     const TYPE_LIKE = 20;
@@ -40,13 +50,10 @@ class NewsInteraction extends Model
         self::TYPE_FAVORITE => "Favorite",
     ];
 
-    protected $dates = ['deleted_at'];
-
-
     public $fillable = [
         'id',
         'user_id',
-        'news_id',
+        'car_id',
         'type',
         'created_at'
     ];
@@ -58,7 +65,7 @@ class NewsInteraction extends Model
      */
     protected $casts = [
         'user_id' => 'int',
-        'news_id' => 'int',
+        'car_id'  => 'int',
         'type'    => 'int'
     ];
 
@@ -90,7 +97,7 @@ class NewsInteraction extends Model
      */
     public static $rules = [
         'user_id' => 'required',
-        'news_id' => 'required',
+        'car_id'  => 'required',
         'type'    => 'required'
     ];
 
@@ -100,10 +107,10 @@ class NewsInteraction extends Model
      * @var array
      */
     public static $update_rules = [
-        'id'      => 'required',
+        'id'     => 'required',
+        'car_id' => 'required',
+        'type'   => 'required',
 //        'user_id'    => 'required',
-        'news_id' => 'required',
-        'type'    => 'required',
 //        'created_at' => 'required',
 //        'updated_at' => 'required',
 //        'deleted_at' => 'required'
@@ -116,17 +123,19 @@ class NewsInteraction extends Model
      */
     public static $api_rules = [
 //        'user_id' => 'required',
-        'news_id' => 'required|exists:news,id',
-        'type'    => [
+        'car_id' => 'required|exists:cars,id',
+        'type'   => [
             'required',
             'integer',
             'in:10,20,30',
         ]
     ];
 
-
-    public function news()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function cars()
     {
-        return $this->belongsTo(News::class);
+        return $this->belongsTo(MyCar::class);
     }
 }

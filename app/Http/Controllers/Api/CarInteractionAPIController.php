@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\Api\CreateNewsInteractionAPIRequest;
-use App\Http\Requests\Api\UpdateNewsInteractionAPIRequest;
-use App\Models\NewsInteraction;
-use App\Repositories\Admin\NewsInteractionRepository;
+use App\Http\Requests\Api\CreateCarInteractionAPIRequest;
+use App\Http\Requests\Api\UpdateCarInteractionAPIRequest;
+use App\Models\CarInteraction;
+use App\Repositories\Admin\CarInteractionRepository;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Illuminate\Http\Response;
 
 /**
- * Class NewsInteractionController
+ * Class CarInteractionController
  * @package App\Http\Controllers\Api
  */
-class NewsInteractionAPIController extends AppBaseController
+class CarInteractionAPIController extends AppBaseController
 {
-    /** @var  NewsInteractionRepository */
-    private $newsInteractionRepository;
+    /** @var  CarInteractionRepository */
+    private $carInteractionRepository;
 
-    public function __construct(NewsInteractionRepository $newsInteractionRepo)
+    public function __construct(CarInteractionRepository $carInteractionRepo)
     {
-        $this->newsInteractionRepository = $newsInteractionRepo;
+        $this->carInteractionRepository = $carInteractionRepo;
     }
 
     /**
@@ -32,11 +32,19 @@ class NewsInteractionAPIController extends AppBaseController
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
      * @SWG\Get(
-     *      path="/newsInteractions",
-     *      summary="Get a listing of the NewsInteractions.",
-     *      tags={"NewsInteraction"},
-     *      description="Get all NewsInteractions",
+     *      path="/carInteractions",
+     *      summary="Get a listing of the CarInteractions.",
+     *      tags={"CarInteraction"},
+     *      description="Get all CarInteractions",
      *      produces={"application/json"},
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
@@ -44,7 +52,7 @@ class NewsInteractionAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
@@ -63,7 +71,7 @@ class NewsInteractionAPIController extends AppBaseController
      *              @SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/NewsInteraction")
+     *                  @SWG\Items(ref="#/definitions/CarInteraction")
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -75,24 +83,24 @@ class NewsInteractionAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->newsInteractionRepository->pushCriteria(new RequestCriteria($request));
-        $this->newsInteractionRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $newsInteractions = $this->newsInteractionRepository->all();
+        $this->carInteractionRepository->pushCriteria(new RequestCriteria($request));
+        $this->carInteractionRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $carInteractions = $this->carInteractionRepository->all();
 
-        return $this->sendResponse($newsInteractions->toArray(), 'News Interactions retrieved successfully');
+        return $this->sendResponse($carInteractions->toArray(), 'Car Interactions retrieved successfully');
     }
 
     /**
-     * @param CreateNewsInteractionAPIRequest $request
+     * @param CreateCarInteractionAPIRequest $request
      * @return Response
      *
      * @SWG\Post(
-     *      path="/newsInteractions",
-     *      summary="Store a newly created NewsInteraction in storage",
-     *      tags={"NewsInteraction"},
-     *      description="Store NewsInteraction",
+     *      path="/carInteractions",
+     *      summary="Store a newly created CarInteraction in storage",
+     *      tags={"CarInteraction"},
+     *      description="Store CarInteraction",
      *      produces={"application/json"},
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -103,9 +111,9 @@ class NewsInteractionAPIController extends AppBaseController
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
-     *          description="NewsInteraction that should be stored",
+     *          description="CarInteraction that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/NewsInteraction")
+     *          @SWG\Schema(ref="#/definitions/CarInteraction")
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -118,7 +126,7 @@ class NewsInteractionAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/NewsInteraction"
+     *                  ref="#/definitions/CarInteraction"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -128,13 +136,13 @@ class NewsInteractionAPIController extends AppBaseController
      *      )
      * )
      */
-    public function store(CreateNewsInteractionAPIRequest $request)
+    public function store(CreateCarInteractionAPIRequest $request)
     {
         $input = $request->all();
 
-        $newsInteractions = $this->newsInteractionRepository->createRecord($input);
+        $carInteractions = $this->carInteractionRepository->createRecord($input);
 
-        return $this->sendResponse($newsInteractions, 'News Interaction saved successfully');
+        return $this->sendResponse($carInteractions, 'Car Interaction saved successfully');
     }
 
     /**
@@ -142,14 +150,14 @@ class NewsInteractionAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Get(
-     *      path="/newsInteractions/{id}",
-     *      summary="Display the specified NewsInteraction",
-     *      tags={"NewsInteraction"},
-     *      description="Get NewsInteraction",
+     *      path="/carInteractions/{id}",
+     *      summary="Display the specified CarInteraction",
+     *      tags={"CarInteraction"},
+     *      description="Get CarInteraction",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of NewsInteraction",
+     *          description="id of CarInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -165,7 +173,7 @@ class NewsInteractionAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/NewsInteraction"
+     *                  ref="#/definitions/CarInteraction"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -177,29 +185,29 @@ class NewsInteractionAPIController extends AppBaseController
      */
     public function show($id)
     {
-        /** @var NewsInteraction $newsInteraction */
-        $newsInteraction = $this->newsInteractionRepository->findWithoutFail($id);
-        if (empty($newsInteraction)) {
-            return $this->sendError('News Interaction not found');
+        /** @var CarInteraction $carInteraction */
+        $carInteraction = $this->carInteractionRepository->findWithoutFail($id);
+        if (empty($carInteraction)) {
+            return $this->sendError('Car Interaction not found');
         }
 
-        return $this->sendResponse($newsInteraction->toArray(), 'News Interaction retrieved successfully');
+        return $this->sendResponse($carInteraction->toArray(), 'Car Interaction retrieved successfully');
     }
 
     /**
      * @param int $id
-     * @param UpdateNewsInteractionAPIRequest $request
+     * @param UpdateCarInteractionAPIRequest $request
      * @return Response
      *
      * @SWG\Put(
-     *      path="/newsInteractions/{id}",
-     *      summary="Update the specified NewsInteraction in storage",
-     *      tags={"NewsInteraction"},
-     *      description="Update NewsInteraction",
+     *      path="/carInteractions/{id}",
+     *      summary="Update the specified CarInteraction in storage",
+     *      tags={"CarInteraction"},
+     *      description="Update CarInteraction",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of NewsInteraction",
+     *          description="id of CarInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -207,9 +215,9 @@ class NewsInteractionAPIController extends AppBaseController
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
-     *          description="NewsInteraction that should be updated",
+     *          description="CarInteraction that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/NewsInteraction")
+     *          @SWG\Schema(ref="#/definitions/CarInteraction")
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -222,7 +230,7 @@ class NewsInteractionAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/NewsInteraction"
+     *                  ref="#/definitions/CarInteraction"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -232,20 +240,20 @@ class NewsInteractionAPIController extends AppBaseController
      *      )
      * )
      */
-    public function update($id, UpdateNewsInteractionAPIRequest $request)
+    public function update($id, UpdateCarInteractionAPIRequest $request)
     {
         $input = $request->all();
 
-        /** @var NewsInteraction $newsInteraction */
-        $newsInteraction = $this->newsInteractionRepository->findWithoutFail($id);
+        /** @var CarInteraction $carInteraction */
+        $carInteraction = $this->carInteractionRepository->findWithoutFail($id);
 
-        if (empty($newsInteraction)) {
-            return $this->sendError('News Interaction not found');
+        if (empty($carInteraction)) {
+            return $this->sendError('Car Interaction not found');
         }
 
-        $newsInteraction = $this->newsInteractionRepository->update($input, $id);
+        $carInteraction = $this->carInteractionRepository->update($input, $id);
 
-        return $this->sendResponse($newsInteraction->toArray(), 'NewsInteraction updated successfully');
+        return $this->sendResponse($carInteraction->toArray(), 'CarInteraction updated successfully');
     }
 
     /**
@@ -254,14 +262,14 @@ class NewsInteractionAPIController extends AppBaseController
      * @throws \Exception
      *
      * @SWG\Delete(
-     *      path="/newsInteractions/{id}",
-     *      summary="Remove the specified NewsInteraction from storage",
-     *      tags={"NewsInteraction"},
-     *      description="Delete NewsInteraction",
+     *      path="/carInteractions/{id}",
+     *      summary="Remove the specified CarInteraction from storage",
+     *      tags={"CarInteraction"},
+     *      description="Delete CarInteraction",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of NewsInteraction",
+     *          description="id of CarInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -289,15 +297,15 @@ class NewsInteractionAPIController extends AppBaseController
      */
     public function destroy($id)
     {
-        /** @var NewsInteraction $newsInteraction */
-        $newsInteraction = $this->newsInteractionRepository->findWithoutFail($id);
+        /** @var CarInteraction $carInteraction */
+        $carInteraction = $this->carInteractionRepository->findWithoutFail($id);
 
-        if (empty($newsInteraction)) {
-            return $this->sendError('News Interaction not found');
+        if (empty($carInteraction)) {
+            return $this->sendError('Car Interaction not found');
         }
 
-        $newsInteraction->delete();
+        $carInteraction->delete();
 
-        return $this->sendResponse($id, 'News Interaction deleted successfully');
+        return $this->sendResponse($id, 'Car Interaction deleted successfully');
     }
 }

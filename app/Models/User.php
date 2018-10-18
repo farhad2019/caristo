@@ -192,6 +192,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasManyThrough(News::class, NewsInteraction::class, 'user_id', 'id', 'id', 'news_id')->where(['news_interactions.type' => NewsInteraction::TYPE_FAVORITE]);
     }
 
+    public function favoriteCars()
+    {
+        return $this->hasManyThrough(MyCar::class, CarInteraction::class, 'user_id', 'id', 'id', 'car_id')->where(['car_interactions.type' => CarInteraction::TYPE_FAVORITE]);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

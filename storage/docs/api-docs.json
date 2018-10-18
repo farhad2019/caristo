@@ -787,6 +787,237 @@
                 }
             }
         },
+        "/carInteractions": {
+            "get": {
+                "tags": [
+                    "CarInteraction"
+                ],
+                "summary": "Get a listing of the CarInteractions.",
+                "description": "Get all CarInteractions",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/CarInteraction"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "CarInteraction"
+                ],
+                "summary": "Store a newly created CarInteraction in storage",
+                "description": "Store CarInteraction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "CarInteraction that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CarInteraction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/CarInteraction"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/carInteractions/{id}": {
+            "get": {
+                "tags": [
+                    "CarInteraction"
+                ],
+                "summary": "Display the specified CarInteraction",
+                "description": "Get CarInteraction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of CarInteraction",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/CarInteraction"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "CarInteraction"
+                ],
+                "summary": "Update the specified CarInteraction in storage",
+                "description": "Update CarInteraction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of CarInteraction",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "CarInteraction that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CarInteraction"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/CarInteraction"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "CarInteraction"
+                ],
+                "summary": "Remove the specified CarInteraction from storage",
+                "description": "Delete CarInteraction",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of CarInteraction",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/carModels": {
             "get": {
                 "tags": [
@@ -3414,6 +3645,24 @@
             "properties": {
                 "id": {
                     "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "CarInteraction": {
+            "required": [
+                "car_id",
+                "type"
+            ],
+            "properties": {
+                "car_id": {
+                    "description": "car_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "type": {
+                    "description": "type, 10=View, 20=like, 30=favorite",
                     "type": "integer",
                     "format": "int32"
                 }

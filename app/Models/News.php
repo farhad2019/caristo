@@ -200,7 +200,6 @@ class News extends Model
         return $this->hasMany(NewsInteraction::class)->where('type', NewsInteraction::TYPE_FAVORITE);
     }
 
-
     public function category()
     {
         return $this->belongsTo(Category::class);

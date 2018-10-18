@@ -197,7 +197,10 @@ class MyCar extends Model
      */
     protected $appends = [
 //        'transmission_type_text'
-        'top_bids'
+        'top_bids',
+        'is_liked',
+        'is_viewed',
+        'is_favorite',
     ];
 
     /**
@@ -227,6 +230,9 @@ class MyCar extends Model
         'carAttributes',*/
         'regionalSpecs',
         'myCarAttributes',
+        'is_liked',
+        'is_viewed',
+        'is_favorite',
         'created_at'
     ];
 
@@ -382,6 +388,36 @@ class MyCar extends Model
     public function bids()
     {
         return $this->hasMany(MakeBid::class, 'car_id');
+    }
+
+    public function views()
+    {
+        return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_VIEW);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_LIKE);
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_FAVORITE);
+    }
+
+    public function getIsLikedAttribute()
+    {
+        return ($this->likes()->where('user_id', \Auth::id())->first() != null);
+    }
+
+    public function getIsFavoriteAttribute()
+    {
+        return ($this->favorites()->where('user_id', \Auth::id())->first() != null);
+    }
+
+    public function getIsViewedAttribute()
+    {
+        return ($this->views()->where('user_id', \Auth::id())->first() != null);
     }
 
     /**
