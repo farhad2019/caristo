@@ -152,33 +152,41 @@ class CarAttributeAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
-     * //@SWG\Get(
+     * @SWG\Get(
      *      path="/carAttributes/{id}",
      *      summary="Display the specified CarAttribute",
      *      tags={"CarAttribute"},
      *      description="Get CarAttribute",
      *      produces={"application/json"},
-     *      //@SWG\Parameter(
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *      @SWG\Parameter(
      *          name="id",
      *          description="id of CarAttribute",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      //@SWG\Response(
+     *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          //@SWG\Schema(
+     *          @SWG\Schema(
      *              type="object",
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/CarAttribute"
      *              ),
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -190,7 +198,6 @@ class CarAttributeAPIController extends AppBaseController
     {
         /** @var CarAttribute $carAttribute */
         $carAttribute = $this->carAttributeRepository->findWithoutFail($id);
-
         if (empty($carAttribute)) {
             return $this->sendError('Car Attribute not found');
         }

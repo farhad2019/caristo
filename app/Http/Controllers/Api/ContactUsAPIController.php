@@ -16,7 +16,6 @@ use Prettus\Repository\Criteria\RequestCriteria;
  * Class ContactUsController
  * @package App\Http\Controllers\Api
  */
-
 class ContactUsAPIController extends AppBaseController
 {
     /** @var  ContactUsRepository */
@@ -94,6 +93,14 @@ class ContactUsAPIController extends AppBaseController
      *      description="Store ContactUs",
      *      produces={"application/json"},
      *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *      @SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="ContactUs that should be stored",
@@ -123,11 +130,9 @@ class ContactUsAPIController extends AppBaseController
      */
     public function store(CreateContactUsAPIRequest $request)
     {
-        $input = $request->all();
+        $contactUs = $this->contactUsRepository->saveRecord($request);
 
-        $contactus = $this->contactUsRepository->create($input);
-
-        return $this->sendResponse($contactus->toArray(), 'Contact Us saved successfully');
+        return $this->sendResponse($contactUs->toArray(), 'Contact Us saved successfully');
     }
 
     /**

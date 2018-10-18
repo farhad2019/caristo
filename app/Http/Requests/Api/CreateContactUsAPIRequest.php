@@ -24,6 +24,6 @@ class CreateContactUsAPIRequest extends BaseAPIRequest
      */
     public function rules()
     {
-        return ContactUs::$rules;
+        return ContactUs::$api_rules;
     }
 }

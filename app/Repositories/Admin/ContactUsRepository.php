@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin;
 
 use App\Models\ContactUs;
+use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -13,7 +14,7 @@ use InfyOm\Generator\Common\BaseRepository;
  * @method ContactUs findWithoutFail($id, $columns = ['*'])
  * @method ContactUs find($id, $columns = ['*'])
  * @method ContactUs first($columns = ['*'])
-*/
+ */
 class ContactUsRepository extends BaseRepository
 {
     /**
@@ -34,5 +35,15 @@ class ContactUsRepository extends BaseRepository
     public function model()
     {
         return ContactUs::class;
+    }
+
+    public function saveRecord($request)
+    {
+        $input = $request->all();
+        if (Auth::id()) {
+            $input['user_id'] = Auth::id();
+        }
+        $contactUs = $this->create($input);
+        return $contactUs;
     }
 }

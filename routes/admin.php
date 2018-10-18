@@ -83,3 +83,5 @@ Route::resource('regionalSpecifications', 'RegionalSpecificationController');
 Route::resource('makeBids', 'MakeBidController');
 
 Route::resource('carInteractions', 'CarInteractionController');
+
+Route::resource('reportRequests', 'ReportRequestController');
