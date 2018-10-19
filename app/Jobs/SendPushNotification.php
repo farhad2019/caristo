@@ -20,7 +20,7 @@ class SendPushNotification implements ShouldQueue
      */
     protected $deviceTokens = array(), $msg, $extraPayLoadData = array(), $notificationHelper;
 
-    public $tries = 5;
+//    public $tries = 5;
 
     /**
      * SendPushNotification constructor.
@@ -33,7 +33,6 @@ class SendPushNotification implements ShouldQueue
         $this->deviceTokens = $deviceToken;
         $this->msg = $msg;
         $this->extraPayLoadData = $extraData;
-        $this->notificationHelper = new Helper\NotificationsHelper();
     }
 
     /**
@@ -43,6 +42,7 @@ class SendPushNotification implements ShouldQueue
      */
     public function handle()
     {
+        $this->notificationHelper = new Helper\NotificationsHelper();
         $this->notificationHelper->sendPushNotifications($this->msg, $this->deviceTokens, $this->extraPayLoadData);
     }
 }

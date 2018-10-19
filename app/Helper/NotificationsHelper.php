@@ -11,8 +11,9 @@ class NotificationsHelper
     {
         $androidDeviceToken = [];
         $iosDeviceToken = [];
+        $deviceObject = isset($deviceObject[0]) ? $deviceObject : [$deviceObject];
 
-        foreach ([$deviceObject] as $device):
+        foreach ($deviceObject as $device):
             if (strtolower($device['device_type']) == 'android') {
                 $androidDeviceToken[] = $device['device_token'];
             } elseif (strtolower($device['device_type']) == 'ios') {
@@ -20,9 +21,19 @@ class NotificationsHelper
             }
         endforeach;
 
-        if ($androidDeviceToken) {
+        if (!empty($androidDeviceToken)) {
+            /*exit(json_encode([
+                'notification' => [
+                    'title' => config('app.name'),
+                    'body'  => $msg,
+                    'sound' => 'default',
+                    'data'  => [
+                        'extra_payload' => $extraPayLoadData,
+                    ],
+                ]
+            ]));*/
             $push = new PushNotification('fcm');
-            $push->setMessage([
+            /*$push->setMessage([
                 'notification' => [
                     'title' => config('app.name'),
                     'body'  => $msg,
@@ -37,11 +48,23 @@ class NotificationsHelper
                         'click_action' => 'MainActivity'
                     ]
                 ]
+            ])*/
+            $push->setMessage([
+                'notification' => [
+                    'title' => config('app.name'),
+                    'body'  => $msg,
+                    'sound' => 'default',
+                    'data'  => [
+                        'extra_payload' => $extraPayLoadData,
+                    ],
+                ]
             ])
                 ->setApiKey(Config::get('pushNotification.fcm.apiKey'))
                 ->setConfig(['dry_run' => false])
                 ->setDevicesToken($androidDeviceToken)
                 ->send();
+            var_dump($push->getFeedback());
+            exit;
         }
 
         /*if ($androidDeviceToken) {

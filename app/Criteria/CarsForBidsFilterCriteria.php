@@ -21,7 +21,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
     {
         $model = $model->where('owner_type', User::SHOWROOM_OWNER);
 
-        /*$user_id = Auth::id();
+        $user_id = Auth::id();
 
         $favorite = $this->request->get('favorite', -1);
         $model = $model->when(($favorite > 0), function ($query) use ($user_id) {
@@ -31,7 +31,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         });
 
         var_dump($model->toSql());
-        exit();*/
+        exit();
 
         $category_id = $this->request->get('category_id', -1);
         $model = $model->when(($category_id > 0), function ($query) use ($category_id) {
