@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Criteria\NotificationCriteria;
 use App\Http\Requests\Api\CreateNotificationAPIRequest;
 use App\Http\Requests\Api\UpdateNotificationAPIRequest;
 use App\Models\Notification;
@@ -85,6 +86,7 @@ class NotificationAPIController extends AppBaseController
     {
         $this->notificationRepository->pushCriteria(new RequestCriteria($request));
         $this->notificationRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $this->notificationRepository->pushCriteria(new NotificationCriteria($request));
         $notifications = $this->notificationRepository->all();
 
         return $this->sendResponse($notifications->toArray(), 'Notifications retrieved successfully');
