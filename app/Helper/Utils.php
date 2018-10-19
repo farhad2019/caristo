@@ -29,7 +29,7 @@ class Utils
      */
     public static function handlePicture($mediaFile, $folder = "media_files")
     {
-        $rand = time();
+        $rand = microtime();
         $filename = $rand . '.png';
 
         $path = implode(DIRECTORY_SEPARATOR, ['storage', 'app', $folder]);

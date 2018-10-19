@@ -30,6 +30,12 @@ class MyCarAPIController extends AppBaseController
     /** @var  CarFeatureRepository */
     private $featureRepository;
 
+    /**
+     * MyCarAPIController constructor.
+     * @param MyCarRepository $myCarRepo
+     * @param CarAttributeRepository $attributeRepo
+     * @param CarFeatureRepository $featureRepo
+     */
     public function __construct(MyCarRepository $myCarRepo, CarAttributeRepository $attributeRepo, CarFeatureRepository $featureRepo)
     {
         $this->myCarRepository = $myCarRepo;
@@ -156,6 +162,7 @@ class MyCarAPIController extends AppBaseController
             if (!empty(json_decode($request->car_attributes))) {
                 foreach (json_decode($request->car_attributes) as $key => $car_attribute) {
                     $attribute = $this->attributeRepository->findWhere(['id' => array_keys(get_object_vars($car_attribute))[0]]);
+
                     if ($attribute->count() > 0) {
                         $myCars->carAttributes()->attach(array_keys(get_object_vars($car_attribute))[0], ['value' => array_values(get_object_vars($car_attribute))[0]]);
                     }
@@ -171,7 +178,7 @@ class MyCarAPIController extends AppBaseController
                 }
             }
         }
-
+        
         if (is_string($request->car_features)) {
             if (!empty(json_decode($request->car_features))) {
                 $myCars->carFeatures()->attach(json_decode($request->car_features));

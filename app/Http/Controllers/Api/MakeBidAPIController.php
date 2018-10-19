@@ -68,6 +68,13 @@ class MakeBidAPIController extends AppBaseController
      *          in="query"
      *      ),
      *      @SWG\Parameter(
+     *          name="favorite",
+     *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
      *          name="category_id",
      *          description="Category Id",
      *          type="integer",

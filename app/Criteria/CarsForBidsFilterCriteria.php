@@ -4,6 +4,7 @@ namespace App\Criteria;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
@@ -19,6 +20,18 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
         $model = $model->where('owner_type', User::SHOWROOM_OWNER);
+
+        /*$user_id = Auth::id();
+
+        $favorite = $this->request->get('favorite', -1);
+        $model = $model->when(($favorite > 0), function ($query) use ($user_id) {
+            return $query->whereHas('favorites', function ($favorites) use ($user_id) {
+                return $favorites->where('user_id', $user_id);
+            });
+        });
+
+        var_dump($model->toSql());
+        exit();*/
 
         $category_id = $this->request->get('category_id', -1);
         $model = $model->when(($category_id > 0), function ($query) use ($category_id) {
