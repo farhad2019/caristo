@@ -2786,171 +2786,6 @@
                         }
                     }
                 }
-            },
-            "post": {
-                "tags": [
-                    "Notification"
-                ],
-                "summary": "Store a newly created Notification in storage",
-                "description": "Store Notification",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Notification that should be stored",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/Notification"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/Notification"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            }
-        },
-        "/notifications/{id}": {
-            "get": {
-                "tags": [
-                    "Notification"
-                ],
-                "summary": "Display the specified Notification",
-                "description": "Get Notification",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of Notification",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/Notification"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "Notification"
-                ],
-                "summary": "Update the specified Notification in storage",
-                "description": "Update Notification",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of Notification",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Notification that should be updated",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/Notification"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/Notification"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "Notification"
-                ],
-                "summary": "Remove the specified Notification from storage",
-                "description": "Delete Notification",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of Notification",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "type": "string"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
             }
         },
         "/pages": {
@@ -3285,12 +3120,12 @@
             }
         },
         "/reportRequests": {
-            "get": {
+            "post": {
                 "tags": [
                     "ReportRequest"
                 ],
-                "summary": "Get a listing of the ReportRequests.",
-                "description": "Get all ReportRequests",
+                "summary": "Store a newly created ReportRequest in storage",
+                "description": "Store ReportRequest",
                 "produces": [
                     "application/json"
                 ],
@@ -3303,54 +3138,6 @@
                         "type": "string",
                         "default": "Bearer ABC123"
                     },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
-                        "required": false,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
-                        "required": false,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/definitions/ReportRequest"
-                                    }
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "ReportRequest"
-                ],
-                "summary": "Store a newly created ReportRequest in storage",
-                "description": "Store ReportRequest",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
                     {
                         "name": "body",
                         "in": "body",
@@ -3371,131 +3158,6 @@
                                 },
                                 "data": {
                                     "$ref": "#/definitions/ReportRequest"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            }
-        },
-        "/reportRequests/{id}": {
-            "get": {
-                "tags": [
-                    "ReportRequest"
-                ],
-                "summary": "Display the specified ReportRequest",
-                "description": "Get ReportRequest",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of ReportRequest",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/ReportRequest"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "ReportRequest"
-                ],
-                "summary": "Update the specified ReportRequest in storage",
-                "description": "Update ReportRequest",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of ReportRequest",
-                        "required": true,
-                        "type": "integer"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "ReportRequest that should be updated",
-                        "required": false,
-                        "schema": {
-                            "$ref": "#/definitions/ReportRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "$ref": "#/definitions/ReportRequest"
-                                },
-                                "message": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "ReportRequest"
-                ],
-                "summary": "Remove the specified ReportRequest from storage",
-                "description": "Delete ReportRequest",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id of ReportRequest",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "properties": {
-                                "success": {
-                                    "type": "boolean"
-                                },
-                                "data": {
-                                    "type": "string"
                                 },
                                 "message": {
                                     "type": "string"
@@ -4599,21 +4261,10 @@
         },
         "ReportRequest": {
             "required": [
-                "user_id",
                 "car_id",
                 "message"
             ],
             "properties": {
-                "id": {
-                    "description": "id",
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "user_id": {
-                    "description": "user_id",
-                    "type": "integer",
-                    "format": "int32"
-                },
                 "car_id": {
                     "description": "car_id",
                     "type": "integer",
@@ -4622,10 +4273,6 @@
                 "message": {
                     "description": "message",
                     "type": "string"
-                },
-                "status": {
-                    "description": "status",
-                    "type": "boolean"
                 }
             }
         },

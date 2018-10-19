@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin;
 
 use App\Models\Notification;
+use App\Models\NotificationUser;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -13,7 +14,7 @@ use InfyOm\Generator\Common\BaseRepository;
  * @method Notification findWithoutFail($id, $columns = ['*'])
  * @method Notification find($id, $columns = ['*'])
  * @method Notification first($columns = ['*'])
-*/
+ */
 class NotificationRepository extends BaseRepository
 {
     /**
@@ -34,5 +35,24 @@ class NotificationRepository extends BaseRepository
     public function model()
     {
         return Notification::class;
+    }
+
+
+    /**
+     * @param $notification
+     * @param $receiver_id
+     * @return bool
+     */
+    public function notification($notification, $receiver_id)
+    {
+        $notification = $this->create($notification);
+
+        NotificationUser::create([
+            'notification_id' => $notification->id,
+            'user_id'         => $receiver_id,
+            'status'          => 20
+        ]);
+
+        return true;
     }
 }

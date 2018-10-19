@@ -68,6 +68,12 @@ class Notification extends Model
 
     protected $dates = ['deleted_at'];
 
+    const NOTIFICATION_TYPE_NEW_BID = 10;
+
+    public static $NOTIFICATION_MESSAGE = [
+        self::NOTIFICATION_TYPE_NEW_BID => 'You have new bid on your car.'
+    ];
+
     public $fillable = [
         'sender_id',
         'url',

@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Models\Comment;
 use App\Models\Module;
 use App\Models\NewsInteraction;
+use App\Models\NotificationUser;
 use App\Observers\CommentObserver;
 use App\Observers\ModuleObserver;
 use App\Observers\NewsInteractionObserver;
+use App\Observers\NotificationObserver;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Module::observe(ModuleObserver::class);
         NewsInteraction::observe(NewsInteractionObserver::class);
         Comment::observe(CommentObserver::class);
+        NotificationUser::observe(NotificationObserver::class);
     }
 
     /**

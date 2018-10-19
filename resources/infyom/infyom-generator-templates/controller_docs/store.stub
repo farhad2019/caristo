@@ -9,6 +9,14 @@
      *      description="Store $MODEL_NAME$",
      *      produces={"application/json"},
      *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *      @SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="$MODEL_NAME$ that should be stored",
