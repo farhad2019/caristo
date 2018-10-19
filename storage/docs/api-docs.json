@@ -2750,6 +2750,14 @@
                 ],
                 "parameters": [
                     {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
                         "name": "limit",
                         "in": "query",
                         "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
