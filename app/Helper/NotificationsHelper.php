@@ -63,8 +63,6 @@ class NotificationsHelper
                 ->setConfig(['dry_run' => false])
                 ->setDevicesToken($androidDeviceToken)
                 ->send();
-            var_dump($push->getFeedback());
-            exit;
         }
 
         /*if ($androidDeviceToken) {
