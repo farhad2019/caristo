@@ -2,14 +2,12 @@
 
 namespace App\Jobs;
 
-use App\Models\NotificationUser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Helper;
-use Illuminate\Support\Facades\Auth;
 
 class SendPushNotification implements ShouldQueue
 {
@@ -22,7 +20,7 @@ class SendPushNotification implements ShouldQueue
      */
     protected $deviceTokens = array(), $msg, $extraPayLoadData = array(), $badgeCount, $notificationHelper;
 
-//    public $tries = 5;
+    public $tries = 5;
 
     /**
      * SendPushNotification constructor.
@@ -34,8 +32,6 @@ class SendPushNotification implements ShouldQueue
     {
         $this->deviceTokens = $deviceToken;
         $this->msg = $msg;
-//        $this->badgeCount = Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count();
-//        dd($this->badgeCount);
         $this->extraPayLoadData = $extraData;
     }
 

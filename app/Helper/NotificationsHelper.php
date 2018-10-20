@@ -5,6 +5,7 @@ namespace App\Helper;
 use App\Models\NotificationUser;
 use Edujugon\PushNotification\PushNotification;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationsHelper
 {
@@ -32,9 +33,8 @@ class NotificationsHelper
                         'extra_payload' => $extraPayLoadData,
                     ],
                 ]
-            ]));*/
-            $push = new PushNotification('fcm');
-            /*$push->setMessage([
+            ]));
+            $push->setMessage([
                 'notification' => [
                     'title' => config('app.name'),
                     'body'  => $msg,
@@ -50,11 +50,12 @@ class NotificationsHelper
                     ]
                 ]
             ])*/
+            $push = new PushNotification('fcm');
             $push->setMessage([
                 'notification' => [
                     'title' => config('app.name'),
                     'body'  => $msg,
-                    'badge' => 0,//count(NotificationUser::findAll(['user_id' => $this->receiver->id, 'is_read' => 0, 'deleted_at' => null])),
+                    'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
                     'sound' => 'default',
                     'data'  => [
                         'extra_payload' => $extraPayLoadData,
