@@ -34,8 +34,8 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
 
         $mostViewed = $this->request->get('most_viewed', -1);
         $model = $model->when(($mostViewed > 0), function ($query) {
-            return $query->select('cars.*', DB::raw('COUNT(car_interactions.id) as views_count'))->leftJoin('car_interactions', 'car_interactions.car_id', 'cars.id')->where('car_interactions.type', CarInteraction::TYPE_VIEW)->groupBy('cars.id');
-        })->orderBy('views_count', 'ASC');
+            return $query->select('cars.*', DB::raw('COUNT(car_interactions.id) as views_count'))->leftJoin('car_interactions', 'car_interactions.car_id', 'cars.id')->where('car_interactions.type', CarInteraction::TYPE_VIEW)->groupBy('cars.id')->orderBy('views_count', 'ASC');
+        });
 
         $category_id = $this->request->get('category_id', -1);
         $model = $model->when(($category_id > 0), function ($query) use ($category_id) {
