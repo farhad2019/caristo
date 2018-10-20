@@ -69,7 +69,14 @@ class MakeBidAPIController extends AppBaseController
      *      ),
      *      @SWG\Parameter(
      *          name="favorite",
-     *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
+     *          description="get only user's favorite car lists: favorite = 1",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="most_viewed",
+     *          description="get cars by most viewed first, set most_viewed = 1",
      *          type="integer",
      *          required=false,
      *          in="query"
@@ -78,7 +85,7 @@ class MakeBidAPIController extends AppBaseController
      *          name="category_id",
      *          description="Category Id",
      *          type="integer",
-     *          required=true,
+     *          required=false,
      *          in="query"
      *      ),
      *      @SWG\Parameter(
