@@ -1898,7 +1898,14 @@
                     {
                         "name": "favorite",
                         "in": "query",
-                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "description": "get only user's favorite car lists: favorite = 1",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "most_viewed",
+                        "in": "query",
+                        "description": "get cars by most viewed first, set most_viewed = 1",
                         "required": false,
                         "type": "integer"
                     },
@@ -1906,7 +1913,7 @@
                         "name": "category_id",
                         "in": "query",
                         "description": "Category Id",
-                        "required": true,
+                        "required": false,
                         "type": "integer"
                     },
                     {

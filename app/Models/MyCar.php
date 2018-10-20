@@ -197,6 +197,7 @@ class MyCar extends Model
      */
     protected $appends = [
 //        'transmission_type_text'
+        'views_count',
         'top_bids',
         'is_liked',
         'is_viewed',
@@ -232,6 +233,7 @@ class MyCar extends Model
         'myCarAttributes',
         'is_liked',
         'is_viewed',
+        'views_count',
         'is_favorite',
         'created_at'
     ];
@@ -393,6 +395,11 @@ class MyCar extends Model
     public function views()
     {
         return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_VIEW);
+    }
+
+    public function getViewsCountAttribute()
+    {
+        return $this->views()->count();
     }
 
     public function likes()
