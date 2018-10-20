@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string deleted_at
  *
  * @property string option_array
+ * @property string attr_option
+ * @property string attr_id
+ * @property string attr_name
  *
  * @property CarAttribute car_attribute
  * @property MyCar myCar

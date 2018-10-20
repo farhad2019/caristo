@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use App\Models\NotificationUser;
 use Edujugon\PushNotification\PushNotification;
 use Illuminate\Support\Facades\Config;
 
@@ -53,6 +54,7 @@ class NotificationsHelper
                 'notification' => [
                     'title' => config('app.name'),
                     'body'  => $msg,
+                    'badge' => 0,//count(NotificationUser::findAll(['user_id' => $this->receiver->id, 'is_read' => 0, 'deleted_at' => null])),
                     'sound' => 'default',
                     'data'  => [
                         'extra_payload' => $extraPayLoadData,

@@ -27,6 +27,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property Region regions
  * @property MakeBid bids
  * @property UserShowroom showroom_details
+ * @property NotificationUser notifications
  *
  * @SWG\Definition(
  *     definition="UserRegions",
@@ -227,5 +228,13 @@ class User extends Authenticatable implements JWTSubject
     public function showroomDetails()
     {
         return $this->hasOne(UserShowroom::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function notifications()
+    {
+        return $this->hasMany(NotificationUser::class, 'user_id');
     }
 }
