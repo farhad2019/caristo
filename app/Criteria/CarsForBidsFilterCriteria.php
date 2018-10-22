@@ -56,7 +56,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
 
         $car_type = $this->request->get('car_type', -1);
         $model = $model->when(($car_type > 0), function ($query) use ($car_type) {
-            return $query->where('type_id', $car_type);
+            return $query->whereIn('type_id', explode(',', $car_type));
         });
 
         $max_year = $this->request->get('max_year', -1);
