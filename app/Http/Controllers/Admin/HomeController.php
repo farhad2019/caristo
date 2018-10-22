@@ -31,53 +31,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /*$row = 0;
-$rows = [];
-$autoLineEndings = ini_get('auto_detect_line_endings');
-ini_set('auto_detect_line_endings', TRUE);
-
-if (($handle = fopen(public_path() . '/csv/new.csv', "r")) !== FALSE) {
-    while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
-        if (count($data) <= 1) {
-            continue;
-        }
-        $row++;
-        if ($row == 1) {
-            continue;
-        }
-        $rows[] = $data;
-    }
-    fclose($handle);
-}
-ini_set('auto_detect_line_endings', $autoLineEndings);
-dd($rows);*/
-
-        /*$row = 0;
-        $rows = [];
-        if (($handle1 = fopen(public_path() . '/csv/new.csv', "r")) !== FALSE) {
-//            if (($handle2 = fopen(public_path() . '/csv/new.csv', "w")) !== FALSE) {
-            while (($data = fgetcsv($handle1, 1000, ",")) !== FALSE) {
-                if (count($data) <= 1) {
-                    continue;
-                }
-                $row++;
-                if ($row == 1) {
-                    continue;
-                }
-                // Alter your data
-                $rows[] = $data;
-                $newRow[0] = '3';
-                $newRow[1] = 'Mohsin';
-                $newRow[2] = 'mohsin@asd.com';
-                $newRow[3] = 'asd qwe12341';
-                // Write back to CSV format
-//                    fputcsv($handle2, $data);
-            }
-//                fclose($handle2);
-//            }
-            fclose($handle1);
-        }
-        dd($rows, $newRow);*/
         if (App::environment() == 'staging') {
             $menu = Menu::find(5);
             $menu->status = 0;
