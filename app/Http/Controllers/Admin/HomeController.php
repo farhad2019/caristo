@@ -78,7 +78,6 @@ dd($rows);*/
             fclose($handle1);
         }
         dd($rows, $newRow);*/
-        exec('php artisan queue:work --stop-when-empty');
         if (App::environment() == 'staging') {
             $menu = Menu::find(5);
             $menu->status = 0;
