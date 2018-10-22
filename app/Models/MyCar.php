@@ -225,6 +225,7 @@ class MyCar extends Model
         'media',
         'chassis',
         'kilometre',
+        'notes',
         'top_bids',
         /*'bids',
         'transmission_type_text',
