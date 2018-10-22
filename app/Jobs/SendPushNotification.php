@@ -20,7 +20,7 @@ class SendPushNotification implements ShouldQueue
      */
     protected $deviceTokens = array(), $msg, $extraPayLoadData = array(), $badgeCount, $notificationHelper;
 
-    public $tries = 5;
+//    public $tries = 5;
 
     /**
      * SendPushNotification constructor.
@@ -39,6 +39,7 @@ class SendPushNotification implements ShouldQueue
      * Execute the job.
      *
      * @return void
+     * @throws \Exception
      */
     public function handle()
     {

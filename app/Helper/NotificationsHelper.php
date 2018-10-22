@@ -59,7 +59,7 @@ class NotificationsHelper
                     'sound' => 'default',
                     'data'  => [
                         'extra_payload' => $extraPayLoadData,
-                    ],
+                    ]
                 ]
             ])
                 ->setApiKey(Config::get('pushNotification.fcm.apiKey'))
