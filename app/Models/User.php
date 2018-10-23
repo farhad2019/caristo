@@ -128,7 +128,7 @@ class User extends Authenticatable implements JWTSubject
         'details',
         'showroomDetails',
         'created_at',
-        //'push_notification'
+        'push_notification'
     ];
 
     public function restore()

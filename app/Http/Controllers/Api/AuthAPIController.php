@@ -21,6 +21,7 @@ use App\Repositories\Admin\UserdetailRepository;
 use App\Repositories\Admin\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -227,6 +228,23 @@ class AuthAPIController extends AppBaseController
 
         if (!$token = auth()->guard('api')->attempt($credentials)) {
             return $this->sendErrorWithData("Invalid Login Credentials", 403);
+        }
+
+        // check if device token exists in in coming  params
+        if (isset($request->device_token) && isset($request->device_token)) {
+            // check if device token exists
+            if ($this->uDevice->getByDeviceToken($request->device_token)) {
+                $this->uDevice->deleteByDeviceToken($request->device_token);
+            }
+
+            $user = auth()->guard('api')->setToken($token)->user()->toArray();
+            $deviceData['user_id'] = $user['id'];
+            $deviceData['device_token'] = $request->device_token;;
+            $deviceData['device_type'] = $request->device_type;
+            $deviceData['push_notification'] = $user['push_notification'];
+
+            $this->uDevice->create($deviceData);
+
         }
 
         return $this->respondWithToken($token);
