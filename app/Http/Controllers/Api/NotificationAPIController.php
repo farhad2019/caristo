@@ -6,6 +6,7 @@ use App\Criteria\NotificationCriteria;
 use App\Http\Requests\Api\CreateNotificationAPIRequest;
 use App\Http\Requests\Api\UpdateNotificationAPIRequest;
 use App\Models\Notification;
+use App\Repositories\Admin\MyCarRepository;
 use App\Repositories\Admin\NotificationRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -22,9 +23,13 @@ class NotificationAPIController extends AppBaseController
     /** @var  NotificationRepository */
     private $notificationRepository;
 
-    public function __construct(NotificationRepository $notificationRepo)
+    /** @var  MyCarRepository */
+    private $carRepository;
+
+    public function __construct(NotificationRepository $notificationRepo, MyCarRepository $carRepo)
     {
         $this->notificationRepository = $notificationRepo;
+        $this->carRepository = $carRepo;
     }
 
     /**
@@ -88,8 +93,18 @@ class NotificationAPIController extends AppBaseController
         $this->notificationRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->notificationRepository->pushCriteria(new NotificationCriteria($request));
         $notifications = $this->notificationRepository->all();
+        $extraData = [];
+        foreach ($notifications as $notification) {
+            $carData = $this->carRepository->findWithoutFail($notification->ref_id);
+            $extraData[] = array_merge($notification->toArray(), [
+                'image_url'  => isset($carData->media[0]) ? $carData->media[0]->file_url : null,
+                'car_name'   => $carData->name,
+                'model_year' => $carData->year,
+                'chassis'    => $carData->chassis
+            ]);
+        }
 
-        return $this->sendResponse($notifications->toArray(), 'Notifications retrieved successfully');
+        return $this->sendResponse($extraData, 'Notifications retrieved successfully');
     }
 
     /**

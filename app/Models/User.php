@@ -113,7 +113,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $appends = [
-
+        'push_notification'
     ];
 
     /**
@@ -128,6 +128,7 @@ class User extends Authenticatable implements JWTSubject
         'details',
         'showroomDetails',
         'created_at',
+        'push_notification'
     ];
 
     public function restore()
@@ -188,11 +189,17 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(UserDevice::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasManyThrough
+     */
     public function favorites()
     {
         return $this->hasManyThrough(News::class, NewsInteraction::class, 'user_id', 'id', 'id', 'news_id')->where(['news_interactions.type' => NewsInteraction::TYPE_FAVORITE]);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasManyThrough
+     */
     public function favoriteCars()
     {
         return $this->hasManyThrough(MyCar::class, CarInteraction::class, 'user_id', 'id', 'id', 'car_id')->where(['car_interactions.type' => CarInteraction::TYPE_FAVORITE]);
@@ -236,5 +243,10 @@ class User extends Authenticatable implements JWTSubject
     public function notifications()
     {
         return $this->hasMany(NotificationUser::class, 'user_id');
+    }
+
+    public function getPushNotificationAttribute()
+    {
+        return $this->devices->first()->push_notification;
     }
 }

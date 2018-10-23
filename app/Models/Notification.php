@@ -9,13 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer id
  * @property integer sender_id
  * @property integer ref_id
- * @property string action_type
+ * @property integer action_type
  * @property string url
  * @property string message
  * @property integer status
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
+ *
+ * @property string users_csv
  *
  * @SWG\Definition(
  *      definition="Notification",
@@ -92,7 +94,7 @@ class Notification extends Model
         'sender_id'   => 'int',
         'url'         => 'string',
         'ref_id'      => 'int',
-        'action_type' => 'string',
+        'action_type' => 'int',
         'message'     => 'string',
         'status'      => 'boolean'
     ];
@@ -116,7 +118,13 @@ class Notification extends Model
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'action_type',
+        'ref_id',
+        'message',
+        'created_at',
+    ];
 
     /**
      * Validation create rules
@@ -148,11 +156,17 @@ class Notification extends Model
         'message'     => 'required'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function users()
     {
         return $this->belongsToMany(User::class, 'notification_users')->withPivot('status');
     }
 
+    /**
+     * @return string
+     */
     public function getUsersCsvAttribute()
     {
         return implode(",", $this->users->pluck('name')->all());
