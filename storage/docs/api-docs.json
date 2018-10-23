@@ -1961,9 +1961,9 @@
                     {
                         "name": "car_type",
                         "in": "query",
-                        "description": "car type",
+                        "description": "car type, CSV(1,2,3)",
                         "required": false,
-                        "type": "integer"
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -3441,6 +3441,54 @@
                         "schema": {
                             "$ref": "#/definitions/UserRegions"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/update-push-notification": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update the specified User's push notification in storage",
+                "description": "Update User's push notification",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "push_notification",
+                        "in": "query",
+                        "description": "Set Push Notification: 0,1",
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {

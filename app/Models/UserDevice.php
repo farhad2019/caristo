@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 /**
  * @property integer id
  * @property integer user_id
  * @property string device_type
  * @property string device_token
+ * @property string push_notification
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -29,7 +29,7 @@ class UserDevice extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'device_type', 'device_token'
+        'user_id', 'device_type', 'device_token', 'push_notification'
     ];
 
     public static $rules = [];
@@ -39,17 +39,14 @@ class UserDevice extends Model
      *
      * @var array
      */
-    protected $with = [
-    ];
+    protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
      *
      * @var array
      */
-    protected $appends = [
-
-    ];
+    protected $appends = [];
 
     /**
      * The attributes that should be casted to native types.
@@ -57,9 +54,10 @@ class UserDevice extends Model
      * @var array
      */
     protected $casts = [
-        'user_id'      => 'int',
-        'device_type'  => 'string',
-        'device_token' => 'string',
+        'user_id'           => 'int',
+        'device_type'       => 'string',
+        'device_token'      => 'string',
+        'push_notification' => 'int'
     ];
 
     /**
@@ -67,10 +65,20 @@ class UserDevice extends Model
      *
      * @var array
      */
-    protected $visible = [
+    protected $visible = [];
 
+    /**
+     * Validation api rules
+     *
+     * @var array
+     */
+    public static $api_rules = [
+        'push_notification' => 'required|in:0,1'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

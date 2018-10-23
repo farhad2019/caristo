@@ -28,13 +28,27 @@ class UdeviceRepository extends BaseRepository
 
     /***********************************************API***********************************************/
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function getByDeviceToken($data)
     {
         return $this->model->where('device_token', $data)->get();
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function deleteByDeviceToken($data)
     {
         return $this->model->where('device_token', $data)->delete();
+    }
+
+    public function updatePushNotification($user_id, $push_notification)
+    {
+        $pushNotification = $this->model->where('user_id', $user_id)->update(['push_notification' => $push_notification]);
+        return $pushNotification;
     }
 }

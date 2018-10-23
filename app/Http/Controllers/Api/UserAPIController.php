@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\API\CreateUserApiRequest;
 use App\Http\Requests\API\UpdateUserApiRequest;
+use App\Http\Requests\Api\UpdateUserDeviceRequest;
 use App\Models\User;
+use App\Repositories\Admin\UdeviceRepository;
 use App\Repositories\Admin\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -22,9 +24,13 @@ class UserAPIController extends AppBaseController
     /** @var  UserRepository */
     private $userRepository;
 
-    public function __construct(UserRepository $userRepo)
+    /** @var  UdeviceRepository */
+    private $userDeviceRepository;
+
+    public function __construct(UserRepository $userRepo, UdeviceRepository $userDeviceRepo)
     {
         $this->userRepository = $userRepo;
+        $this->userDeviceRepository = $userDeviceRepo;
     }
 
     /**
@@ -355,5 +361,64 @@ class UserAPIController extends AppBaseController
 
         $users->regions()->sync($input['region_id']);
         return $this->sendResponse($users->toArray(), "User's region saved successfully");
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     *
+     * @SWG\Post(
+     *      path="/update-push-notification",
+     *      summary="Update the specified User's push notification in storage",
+     *      tags={"User"},
+     *      description="Update User's push notification",
+     *      produces={"application/json"},
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="push_notification",
+     *          description="Set Push Notification: 0,1",
+     *          type="integer",
+     *          required=true,
+     *          in="query"
+     *      ),
+     *      @SWG\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @SWG\Schema(
+     *              type="object",
+     *              @SWG\Property(
+     *                  property="success",
+     *                  type="boolean"
+     *              ),
+     *              @SWG\Property(
+     *                  property="data",
+     *                  ref="#/definitions/User"
+     *              ),
+     *              @SWG\Property(
+     *                  property="message",
+     *                  type="string"
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function updatePushNotification(UpdateUserDeviceRequest $request)
+    {
+        $userDevice = $this->userDeviceRepository->findWhere(['user_id' => Auth::id()]);
+
+        if ($userDevice->count() == 0) {
+            return $this->sendError("User's device not found");
+        }
+
+        $this->userDeviceRepository->updatePushNotification(Auth::id(), $request->push_notification);
+
+        return $this->sendResponse(['push_notification' => (int)$request->push_notification], 'User updated successfully');
     }
 }

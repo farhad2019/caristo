@@ -214,6 +214,9 @@ class UserController extends AppBaseController
         return redirect(route('admin.users.index'));
     }
 
+    /**
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function profile()
     {
         $user = Auth::user();

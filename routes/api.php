@@ -62,6 +62,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('v1/logout', 'AuthAPIController@logout');
     Route::post('v1/refresh', 'AuthAPIController@refresh');
     Route::post('v1/me', 'AuthAPIController@me');
+    Route::post('v1/update-push-notification', 'UserAPIController@updatePushNotification');
 
     Route::resource('v1/users', 'UserAPIController');
 
