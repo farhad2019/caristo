@@ -5,6 +5,9 @@ namespace App\Http\Requests\Admin;
 use App\Http\Requests\BaseFormRequest;
 use App\Models\CarAttribute;
 
+/**
+ * @property mixed options
+ */
 class CreateCarAttributeRequest extends BaseFormRequest
 {
 
