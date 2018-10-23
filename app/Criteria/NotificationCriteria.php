@@ -22,9 +22,8 @@ class NotificationCriteria implements CriteriaInterface
         $user_id = Auth::id();
         $model = $model->whereHas('users', function ($notificationUser) use ($user_id) {
             return $notificationUser->where('user_id', $user_id);
-        })->orderBy('created_at', 'ASC');
+        })->orderBy('created_at', 'DESC');
 
         return $model;
     }
-
 }
