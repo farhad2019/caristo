@@ -49,7 +49,7 @@ class MyCarRepository extends BaseRepository
         $input['owner_id'] = $user->id;
         $input['owner_type'] = User::RANDOM_USER;
 
-        if ($user->hasRole('showroom_owner')) {
+        if ($user->hasRole('showroom-owner')) {
             $input['owner_type'] = User::SHOWROOM_OWNER;
         }
 

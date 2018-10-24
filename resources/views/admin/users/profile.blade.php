@@ -8,7 +8,7 @@
 @section('content')
     <div class="content">
         @include('adminlte-templates::common.errors')
-        @if($user->hasRole('showroom_owner'))
+        @if($user->hasRole('showroom-owner'))
             <div class="row">
                 <div class="col-md-12">
                     <!-- Custom Tabs -->

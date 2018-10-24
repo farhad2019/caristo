@@ -44,7 +44,7 @@
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#tab_1" data-toggle="tab">Profile</a></li>
-                @if($user->hasRole('showroom_owner'))
+                @if($user->hasRole('showroom-owner'))
                     <li><a href="#tab_2" data-toggle="tab">Show Room Details</a></li>
                 @endif
             </ul>
@@ -126,7 +126,7 @@
                     </div>
                 </div>
                 <!-- /.tab-pane -->
-                @if($user->hasRole('showroom_owner'))
+                @if($user->hasRole('showroom-owner'))
                     <div class="tab-pane clearfix" id="tab_2">
                         <!-- Name Field -->
                         <div class="form-group col-sm-6">

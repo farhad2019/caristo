@@ -48,7 +48,7 @@ class CarModelDataTable extends DataTable
     public function html()
     {
         $buttons = [];
-        if (\Entrust::can('car_models.create') || \Entrust::hasRole('super-admin')) {
+        if (\Entrust::can('carModels.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
         $buttons = array_merge($buttons, [

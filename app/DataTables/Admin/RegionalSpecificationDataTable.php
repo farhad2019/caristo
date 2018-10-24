@@ -45,7 +45,7 @@ class RegionalSpecificationDataTable extends DataTable
     public function html()
     {
         $buttons = [];
-        if (\Entrust::can('regional_specifications.create') || \Entrust::hasRole('super-admin')) {
+        if (\Entrust::can('regionalSpecifications.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
         $buttons = array_merge($buttons, [

@@ -45,7 +45,7 @@ class EngineTypeDataTable extends DataTable
     public function html()
     {
         $buttons = [];
-        if (\Entrust::can('engine_types.create') || \Entrust::hasRole('super-admin')) {
+        if (\Entrust::can('engineTypes.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
         $buttons = array_merge($buttons, [
