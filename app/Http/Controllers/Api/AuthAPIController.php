@@ -234,7 +234,7 @@ class AuthAPIController extends AppBaseController
         if (isset($request->device_token) && isset($request->device_token)) {
 
             $user = auth()->guard('api')->setToken($token)->user()->toArray();
-            
+
             // check if device token exists
             if ($this->uDevice->getByDeviceToken($request->device_token)) {
                 $this->uDevice->deleteByDeviceToken($request->device_token);

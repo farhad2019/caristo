@@ -247,6 +247,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function getPushNotificationAttribute()
     {
-        return $this->devices->first()->push_notification;
+        return $this->devices->first()->push_notification??0;
     }
 }
