@@ -232,12 +232,14 @@ class AuthAPIController extends AppBaseController
 
         // check if device token exists in in coming  params
         if (isset($request->device_token) && isset($request->device_token)) {
+
+            $user = auth()->guard('api')->setToken($token)->user()->toArray();
+            
             // check if device token exists
             if ($this->uDevice->getByDeviceToken($request->device_token)) {
                 $this->uDevice->deleteByDeviceToken($request->device_token);
             }
 
-            $user = auth()->guard('api')->setToken($token)->user()->toArray();
             $deviceData['user_id'] = $user['id'];
             $deviceData['device_token'] = $request->device_token;;
             $deviceData['device_type'] = $request->device_type;
