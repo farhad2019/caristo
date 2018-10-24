@@ -13,7 +13,7 @@
 <!-- Model Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('model_id', 'Model:') !!}
-    {!! Form::select('model_id', $carModels, null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand']) !!}
+    {!! Form::select('model_id', [], null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand']) !!}
 </div>
 
 <!-- Year Field -->
