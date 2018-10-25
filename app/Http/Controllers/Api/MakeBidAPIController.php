@@ -90,7 +90,7 @@ class MakeBidAPIController extends AppBaseController
      *      ),
      *      @SWG\Parameter(
      *          name="brand_ids",
-     *          description="Filter by Brands, CSV, [1,2,3]",
+     *          description="Filter by Brands, CSV 1,2,3",
      *          required=false,
      *          type="string",
      *          in="query"
@@ -132,7 +132,7 @@ class MakeBidAPIController extends AppBaseController
      *      ),
      *      @SWG\Parameter(
      *          name="car_type",
-     *          description="car type, CSV(1,2,3)",
+     *          description="car type, CSV 1,2,3",
      *          type="string",
      *          required=false,
      *          in="query"

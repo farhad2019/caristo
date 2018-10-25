@@ -1919,7 +1919,7 @@
                     {
                         "name": "brand_ids",
                         "in": "query",
-                        "description": "Filter by Brands, CSV, [1,2,3]",
+                        "description": "Filter by Brands, CSV 1,2,3",
                         "required": false,
                         "type": "string"
                     },
@@ -1961,7 +1961,7 @@
                     {
                         "name": "car_type",
                         "in": "query",
-                        "description": "car type, CSV(1,2,3)",
+                        "description": "car type, CSV 1,2,3",
                         "required": false,
                         "type": "string"
                     }
