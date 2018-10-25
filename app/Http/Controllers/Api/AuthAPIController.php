@@ -868,11 +868,11 @@ class AuthAPIController extends AppBaseController
         }
 
         if (count($details) > 0) {
-//            if (!empty($details['phone'])) {
-//                $details['phone'] = $details['country_code'] . $details['phone'];
-//                unset($details['country_code']);
-//            }
-            //$this->userDetailRepository->update($details, $user->details->id);
+            if (!empty($details['phone'])) {
+                $details['phone'] = $details['country_code'] . $details['phone'];
+                unset($details['country_code']);
+            }
+            $this->userDetailRepository->update($details, $user->details->id);
         }
 
         return $this->sendResponse(['user' => $this->userRepository->findWithoutFail($user->id)->toArray()], 'Profile Updated Successfully');
