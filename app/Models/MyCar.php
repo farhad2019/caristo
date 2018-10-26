@@ -188,6 +188,7 @@ class MyCar extends Model
         'media',
         'myCarAttributes',
         'regionalSpecs',
+        'myCarFeatures',
 //        'bids',
         'engineType'
     ];
@@ -239,6 +240,8 @@ class MyCar extends Model
         'views_count',
         'is_favorite',
         'bid_close_at',
+        'myCarFeatures',
+//        'carFeatures',
         'created_at'
     ];
 
@@ -356,6 +359,14 @@ class MyCar extends Model
     public function carFeatures()
     {
         return $this->belongsToMany(CarFeature::class, 'car_features', 'car_id', 'feature_id', 'id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function myCarFeatures()
+    {
+        return $this->hasMany(MyCarFeature::class, 'car_id');
     }
 
     /**

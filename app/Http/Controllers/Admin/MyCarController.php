@@ -11,6 +11,7 @@ use App\Models\MyCar;
 use App\Models\RegionalSpecification;
 use App\Repositories\Admin\CarAttributeRepository;
 use App\Repositories\Admin\CarBrandRepository;
+use App\Repositories\Admin\CarFeatureRepository;
 use App\Repositories\Admin\CarModelRepository;
 use App\Repositories\Admin\CarTypeRepository;
 use App\Repositories\Admin\CategoryRepository;
@@ -53,7 +54,10 @@ class MyCarController extends AppBaseController
     /** @var  CarModelRepository */
     private $modelRepository;
 
-    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo)
+    /** @var  CarFeatureRepository */
+    private $featureRepository;
+
+    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo)
     {
         $this->myCarRepository = $myCarRepo;
         $this->categoryRepository = $categoryRepo;
@@ -63,6 +67,7 @@ class MyCarController extends AppBaseController
         $this->attributeRepository = $attributeRepo;
         $this->carTypeRepository = $carTypeRepo;
         $this->modelRepository = $modelRepo;
+        $this->featureRepository = $featureRepo;
         $this->ModelName = 'myCars';
         $this->BreadCrumbName = 'MyCar';
     }
@@ -91,7 +96,9 @@ class MyCarController extends AppBaseController
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
         $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
         $attributes = $this->attributeRepository->all();
+        $features = $this->featureRepository->all();
         $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
+        $carModels = $this->modelRepository->all()->pluck('name', 'id');
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.my_cars.create')->with([
@@ -99,8 +106,10 @@ class MyCarController extends AppBaseController
             'regional_specs'    => $regional_specs,
             'engineType'        => $engineType,
             'attributes'        => $attributes,
+            'features'          => $features,
             'transmission_type' => MyCar::$TRANSMISSION_TYPE_TEXT,
             'carTypes'          => $carTypes,
+            'carModels'         => $carModels,
             'brands'            => $brands
         ]);
     }
@@ -167,6 +176,7 @@ class MyCarController extends AppBaseController
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
         $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
         $attributes = $this->attributeRepository->all();
+        $features = $this->featureRepository->all();
         $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
 
@@ -177,6 +187,7 @@ class MyCarController extends AppBaseController
             'regional_specs'    => $regional_specs,
             'engineType'        => $engineType,
             'attributes'        => $attributes,
+            'features'          => $features,
             'transmission_type' => MyCar::$TRANSMISSION_TYPE_TEXT,
             'carTypes'          => $carTypes,
             'carModels'         => $carModels,
