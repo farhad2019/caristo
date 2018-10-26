@@ -3,10 +3,12 @@
 namespace App\Repositories\Admin;
 
 use App\Helper\Utils;
+use App\Models\MakeBid;
 use App\Models\MyCar;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Common\BaseRepository;
+use Carbon\Carbon;
 
 /**
  * Class MyCarRepository
@@ -52,6 +54,32 @@ class MyCarRepository extends BaseRepository
         if ($user->hasRole('showroom-owner')) {
             $input['owner_type'] = User::SHOWROOM_OWNER;
         }
+
+        // current date + 1
+        $date = Carbon::now()->addDay();
+
+        // day name in string
+        $day = $date->format('l');
+
+        //matches is this day is weekend
+        if (in_array($day, MakeBid::WEEK_END)) {
+
+            // add 1 more day
+            $expire_at = $date->addDay();
+
+            // day name in string
+            $expire_at_day = $expire_at->format('l');
+
+            //matches is this day is weekend
+            if (in_array($expire_at_day, MakeBid::WEEK_END)) {
+
+                // add 1 more day
+                $expire_at = $date->addDay();
+            }
+        } else {
+            $expire_at = $date;
+        }
+        $input['bid_close_at'] = $expire_at;
 
         $myCar = $this->create($input);
 

@@ -2,16 +2,13 @@
 
 namespace App\DataTables\Admin;
 
-use App\Models\MakeBid;
+use App\Models\BidsHistory;
 use App\Models\MyCar;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
-class MakeBidDataTable extends DataTable
+class BidsHistoryDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -31,16 +28,16 @@ class MakeBidDataTable extends DataTable
             return $model->carModel->brand->name . ' ' . $model->carModel->name . ' (' . $model->year . ')';
         });
 
-        $dataTable->editColumn('kilometre', function ($model) {
-            return $model->kilometre ?? '-';
-        });
-
         $dataTable->editColumn('bid_close_at', function ($model) {
             return $model->bid_close_at->diffForHumans();
         });
 
+        $dataTable->editColumn('amount', function ($model) {
+            return number_format($model->bids()->where('user_id', Auth::id())->first()->amount, 2);
+        });
+
         $dataTable->rawColumns(['image', 'action']);
-        return $dataTable->addColumn('action', 'admin.make_bids.datatables_actions');
+        return $dataTable->addColumn('action', 'admin.bids_histories.datatables_actions');
     }
 
     /**
@@ -52,7 +49,7 @@ class MakeBidDataTable extends DataTable
     public function query(MyCar $model)
     {
         $car_ids = Auth::user()->bids()->pluck('car_id')->toArray();
-        return $model->where('owner_type', User::RANDOM_USER)->whereRaw(DB::raw('(bid_close_at > NOW()) > 0'))->whereNotIn('id', $car_ids)->orderBy('created_at', 'desc')->newQuery();
+        return $model->whereIn('id', $car_ids)->newQuery();
     }
 
     /**
@@ -63,7 +60,7 @@ class MakeBidDataTable extends DataTable
     public function html()
     {
         $buttons = [];
-        /*if (\Entrust::can('make_bids.create') || \Entrust::hasRole('super-admin')) {
+        /*if (\Entrust::can('bidsHistories.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
         $buttons = array_merge($buttons, [
@@ -77,13 +74,9 @@ class MakeBidDataTable extends DataTable
             ->minifiedAjax()
             ->addAction(['width' => '80px', 'printable' => false])
             ->parameters([
-                'dom'       => 'Bfrtip',
-                'order'     => [[2, 'desc']],
-//                'bFilter'   => false,
-//                'paging'    => false,
-                'searching' => false,
-//                'info'      => false,
-                'buttons'   => $buttons,
+                'dom'     => 'Bfrtip',
+                'order'   => [[0, 'desc']],
+                'buttons' => $buttons,
             ]);
     }
 
@@ -95,7 +88,7 @@ class MakeBidDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id' => [
+            'id'     => [
                 'visible' => false
             ],
             'image',
@@ -103,6 +96,9 @@ class MakeBidDataTable extends DataTable
             'Model',
             'kilometre',
             'bid_close_at',
+            'amount' => [
+                'title' => 'Amount (AED)'
+            ],
         ];
     }
 
@@ -113,6 +109,6 @@ class MakeBidDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'make_bidsdatatable_' . time();
+        return 'bids_historiesdatatable_' . time();
     }
 }

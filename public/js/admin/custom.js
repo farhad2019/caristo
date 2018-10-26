@@ -253,3 +253,55 @@ function swappingRequest(prevRowPos, prevRowId, rowPos, rowId, cb) {
         success: cb
     });
 }
+
+
+$(function () {
+    var imgNum = 0;
+    /* BOOTSTRAP SLIDER */
+    $('.slider').slider();
+
+    $('#imageGallery .prev').click(function () {
+        imgNum--;
+        if (imgNum < 1) {
+            imgNum = $('.mySlides', $('#imageGallery')).length;
+        }
+        $.next();
+    });
+    $('#imageGallery .next').click(function () {
+        imgNum++;
+        if (imgNum > $('.mySlides', $('#imageGallery')).length) {
+            imgNum = 1;
+        }
+        $.next();
+    });
+
+    $('#imageGallery').on('show.bs.modal', function () {
+        //showDivs(1);
+        imgNum = 1;
+        $.next();
+    });
+
+
+    $.next = function () {
+        var imagesGallery = $('#imageGallery');
+        $('.mySlides', imagesGallery).hide();
+        $('img.mySlides:nth-child(' + imgNum + ')', imagesGallery).show();
+    };
+
+    $('body').on('click', 'a.showGallery', function () {
+        // TODO: Add Content in Modal Body
+        var thisid = $(this).data('id');
+        $('#displayImage img', $('#imageGallery')).remove();
+        $('.showGallery[data-id="' + thisid + '"]').each(function () {
+            var src = $(this).find('img').attr('src');
+            console.log(src);
+
+            $('#displayImage', $('#imageGallery')).append(
+                '<img class="mySlides" src="' + src + '" width="550"/>'
+            )
+        });
+
+        $('#imageGallery').show();
+        // showDivs(1);
+    })
+});

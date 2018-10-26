@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer owner_id
  * @property integer owner_type
  * @property double kilometre
+ * @property string bid_close_at
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -134,7 +135,7 @@ class MyCar extends Model
 
     public $table = 'cars';
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'bid_close_at'];
 
     const MANUAL = 10;
     const AUTOMATIC = 20;
@@ -162,6 +163,7 @@ class MyCar extends Model
         'average_mkp',
         'amount',
         'kilometre',
+        'bid_close_at',
         'category_id'
     ];
 
@@ -196,7 +198,7 @@ class MyCar extends Model
      * @var array
      */
     protected $appends = [
-//        'transmission_type_text'
+        'transmission_type_text',
         'views_count',
         'top_bids',
         'is_liked',
@@ -227,15 +229,16 @@ class MyCar extends Model
         'kilometre',
         'notes',
         'top_bids',
-        /*'bids',
+//        'bids',
         'transmission_type_text',
-        'carAttributes',*/
+//        'carAttributes',
         'regionalSpecs',
         'myCarAttributes',
         'is_liked',
         'is_viewed',
         'views_count',
         'is_favorite',
+        'bid_close_at',
         'created_at'
     ];
 
@@ -247,6 +250,7 @@ class MyCar extends Model
     public static $rules = [
         'name'                      => 'required',
         'email'                     => 'required|email',
+        'media.*'                   => 'sometimes|image|mimes:jpg,jpeg,png',
         'country_code'              => 'required',
         'phone'                     => 'required',
         'model_id'                  => 'required|exists:car_models,id',
@@ -263,6 +267,7 @@ class MyCar extends Model
     public static $update_rules = [
         'name'                      => 'required',
         'email'                     => 'required|email',
+        'media.*'                   => 'sometimes|image|mimes:jpg,jpeg,png',
         'country_code'              => 'required',
         'phone'                     => 'required',
         'model_id'                  => 'required|exists:car_models,id',

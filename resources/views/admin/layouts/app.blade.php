@@ -122,7 +122,33 @@
             <strong>Copyright © {{ date('Y')  }} <a href="#">{{ config('app.name')  }}</a>.</strong> All rights
             reserved.
         </footer>
+        <!-- Modal2 -->
+        <div class="modal fade" id="imageGallery" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-width" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
 
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="w3-content w3-display-container" id="displayImage">
+                            {{-- Images display here --}}
+                        </div>
+
+                        <button class="w3-button w3-black w3-display-left prev">&#10094;</button>
+                        <button class="w3-button w3-black w3-display-right next">&#10095;
+                        </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- End Modal2 -->
     </div>
 @else
     <nav class="navbar navbar-default navbar-static-top">
@@ -179,6 +205,9 @@
 
 <!-- AdminLTE App -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js"></script>
+
+
+<script src="https://adminlte.io/themes/AdminLTE/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>

@@ -116,8 +116,7 @@
     @endforeach
 @else
     @foreach($myCar->myCarAttributes as $attribute)
-        @if($attribute->attr_option)
-            {{ dd('asdasd') }}
+        @if($attribute->toArray()['attr_option'] !== null)
         @endif
         @if($attribute->type == 10)
             <div class="form-group col-sm-6">

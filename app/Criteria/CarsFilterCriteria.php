@@ -27,6 +27,7 @@ class CarsFilterCriteria implements CriteriaInterface
             return $query->where('category_id', $category_id);
         });
 
+        $model = $model->orderBy('created_at', 'desc');
         return $model;
     }
 }

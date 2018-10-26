@@ -11,12 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
- * @property MyCar cars
- * @property User user
- *
  * @SWG\Definition(
- *      definition="MakeBid",
- *      required={"model_id", "engine_type_id", "regional_specification_id", "owner_id", "year", "chassis", "transmission_type", "name", "email", "country_code", "phone", "owner_type"},
+ *      definition="BidsHistory",
+ *      required={"type_id", "category_id", "model_id", "average_mkp", "amount"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -26,6 +23,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      @SWG\Property(
  *          property="type_id",
  *          description="type_id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="category_id",
+ *          description="category_id",
  *          type="integer",
  *          format="int32"
  *      ),
@@ -70,6 +73,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          type="boolean"
  *      ),
  *      @SWG\Property(
+ *          property="kilometre",
+ *          description="kilometre",
+ *          type="number",
+ *          format="float"
+ *      ),
+ *      @SWG\Property(
+ *          property="average_mkp",
+ *          description="average_mkp",
+ *          type="number",
+ *          format="float"
+ *      ),
+ *      @SWG\Property(
+ *          property="amount",
+ *          description="amount",
+ *          type="number",
+ *          format="float"
+ *      ),
+ *      @SWG\Property(
  *          property="name",
  *          description="name",
  *          type="string"
@@ -102,28 +123,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      )
  * )
  */
-class MakeBid extends Model
+class BidsHistory extends Model
 {
     use SoftDeletes;
 
-    public $table = 'bids';
+    public $table = 'cars';
+    
 
     protected $dates = ['deleted_at'];
 
-    /**
-     * Sunday
-     * Monday
-     * Tuesday
-     * Wednesday
-     * Thursday
-     * Friday
-     * Saturday
-     */
-    const WEEK_END = ['Friday', 'Saturday'];
 
     public $fillable = [
-        'car_id',
-        'user_id',
+        'type_id',
+        'category_id',
+        'model_id',
+        'average_mkp',
         'amount'
     ];
 
@@ -133,6 +147,17 @@ class MakeBid extends Model
      * @var array
      */
     protected $casts = [
+        'year' => 'date',
+        'chassis' => 'string',
+        'transmission_type' => 'boolean',
+        'kilometre' => 'float',
+        'average_mkp' => 'float',
+        'amount' => 'float',
+        'name' => 'string',
+        'email' => 'string',
+        'country_code' => 'string',
+        'owner_type' => 'boolean',
+        'notes' => 'string'
     ];
 
     /**
@@ -140,9 +165,7 @@ class MakeBid extends Model
      *
      * @var array
      */
-    protected $with = [
-        'user'
-    ];
+     protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
@@ -156,48 +179,46 @@ class MakeBid extends Model
      *
      * @var array
      */
-    protected $visible = [
-        'id',
-        'car_id',
-        'amount',
-        'created_at',
-        'user'
-    ];
+    protected $visible = [];
 
     /**
      * Validation create rules
      *
      * @var array
      */
-    public static $rules = [];
+    public static $rules = [
+        'type_id' => 'required',
+        'category_id' => 'required',
+        'model_id' => 'required',
+        'average_mkp' => 'required',
+        'amount' => 'required'
+    ];
 
     /**
      * Validation update rules
      *
      * @var array
      */
-    public static $update_rules = [];
+    public static $update_rules = [
+        'type_id' => 'required',
+        'category_id' => 'required',
+        'model_id' => 'required',
+        'average_mkp' => 'required',
+        'amount' => 'required'
+    ];
 
     /**
      * Validation api rules
      *
      * @var array
      */
-    public static $api_rules = [];
+    public static $api_rules = [
+        'type_id' => 'required',
+        'category_id' => 'required',
+        'model_id' => 'required',
+        'average_mkp' => 'required',
+        'amount' => 'required'
+    ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function cars()
-    {
-        return $this->belongsTo(MyCar::class, 'car_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    
 }

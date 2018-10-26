@@ -85,3 +85,5 @@ Route::resource('makeBids', 'MakeBidController');
 Route::resource('carInteractions', 'CarInteractionController');
 
 Route::resource('reportRequests', 'ReportRequestController');
+
+Route::resource('bidsHistories', 'BidsHistoryController');

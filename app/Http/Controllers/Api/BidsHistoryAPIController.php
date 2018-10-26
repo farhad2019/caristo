@@ -2,45 +2,29 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Criteria\CarsFilterCriteria;
-use App\Http\Requests\Api\CreateMyCarAPIRequest;
-use App\Http\Requests\Api\UpdateMyCarAPIRequest;
-use App\Models\MyCar;
-use App\Repositories\Admin\CarAttributeRepository;
-use App\Repositories\Admin\CarFeatureRepository;
-use App\Repositories\Admin\MyCarRepository;
+use App\Http\Requests\Api\CreateBidsHistoryAPIRequest;
+use App\Http\Requests\Api\UpdateBidsHistoryAPIRequest;
+use App\Models\BidsHistory;
+use App\Repositories\Admin\BidsHistoryRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Response;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Illuminate\Http\Response;
 
 /**
- * Class MyCarController
+ * Class BidsHistoryController
  * @package App\Http\Controllers\Api
  */
-class MyCarAPIController extends AppBaseController
+
+class BidsHistoryAPIController extends AppBaseController
 {
-    /** @var  MyCarRepository */
-    private $myCarRepository;
+    /** @var  BidsHistoryRepository */
+    private $bidsHistoryRepository;
 
-    /** @var  CarAttributeRepository */
-    private $attributeRepository;
-
-    /** @var  CarFeatureRepository */
-    private $featureRepository;
-
-    /**
-     * MyCarAPIController constructor.
-     * @param MyCarRepository $myCarRepo
-     * @param CarAttributeRepository $attributeRepo
-     * @param CarFeatureRepository $featureRepo
-     */
-    public function __construct(MyCarRepository $myCarRepo, CarAttributeRepository $attributeRepo, CarFeatureRepository $featureRepo)
+    public function __construct(BidsHistoryRepository $bidsHistoryRepo)
     {
-        $this->myCarRepository = $myCarRepo;
-        $this->attributeRepository = $attributeRepo;
-        $this->featureRepository = $featureRepo;
+        $this->bidsHistoryRepository = $bidsHistoryRepo;
     }
 
     /**
@@ -49,10 +33,10 @@ class MyCarAPIController extends AppBaseController
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
      * @SWG\Get(
-     *      path="/myCars",
-     *      summary="Get a listing of the MyCars.",
-     *      tags={"MyCar"},
-     *      description="Get all MyCars",
+     *      path="/bidsHistories",
+     *      summary="Get a listing of the BidsHistories.",
+     *      tags={"BidsHistory"},
+     *      description="Get all BidsHistories",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="Authorization",
@@ -88,7 +72,7 @@ class MyCarAPIController extends AppBaseController
      *              @SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/MyCar")
+     *                  @SWG\Items(ref="#/definitions/BidsHistory")
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -100,23 +84,22 @@ class MyCarAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->myCarRepository->pushCriteria(new RequestCriteria($request));
-        $this->myCarRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $this->myCarRepository->pushCriteria(new CarsFilterCriteria($request));
-        $myCars = $this->myCarRepository->all();
+        $this->bidsHistoryRepository->pushCriteria(new RequestCriteria($request));
+        $this->bidsHistoryRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $bidsHistories = $this->bidsHistoryRepository->all();
 
-        return $this->sendResponse($myCars->toArray(), 'My Cars retrieved successfully');
+        return $this->sendResponse($bidsHistories->toArray(), 'Bids Histories retrieved successfully');
     }
 
     /**
-     * @param CreateMyCarAPIRequest $request
+     * @param CreateBidsHistoryAPIRequest $request
      * @return Response
      *
      * @SWG\Post(
-     *      path="/myCars",
-     *      summary="Store a newly created MyCar in storage",
-     *      tags={"MyCar"},
-     *      description="Store MyCar",
+     *      path="/bidsHistories",
+     *      summary="Store a newly created BidsHistory in storage",
+     *      tags={"BidsHistory"},
+     *      description="Store BidsHistory",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="Authorization",
@@ -129,9 +112,9 @@ class MyCarAPIController extends AppBaseController
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
-     *          description="MyCar that should be stored",
+     *          description="BidsHistory that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/MyCar")
+     *          @SWG\Schema(ref="#/definitions/BidsHistory")
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -144,7 +127,7 @@ class MyCarAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/MyCar"
+     *                  ref="#/definitions/BidsHistory"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -154,58 +137,13 @@ class MyCarAPIController extends AppBaseController
      *      )
      * )
      */
-    public function store(Request $request)
+    public function store(CreateBidsHistoryAPIRequest $request)
     {
-        $myCars = $this->myCarRepository->saveRecord($request);
+        $input = $request->all();
 
-        if (is_string($request->car_attributes)) {
-            if (!empty(json_decode($request->car_attributes))) {
-                foreach (json_decode($request->car_attributes) as $key => $car_attribute) {
-                    $attribute = $this->attributeRepository->findWhere(['id' => array_keys(get_object_vars($car_attribute))[0]]);
+        $bidsHistories = $this->bidsHistoryRepository->create($input);
 
-                    if ($attribute->count() > 0) {
-                        $myCars->carAttributes()->attach(array_keys(get_object_vars($car_attribute))[0], ['value' => array_values(get_object_vars($car_attribute))[0]]);
-                    }
-                }
-            }
-        } elseif (is_array($request->car_attributes)) {
-            if (!empty($request->car_attributes)) {
-                foreach ($request->car_attributes as $key => $car_attribute) {
-                    $attribute = $this->attributeRepository->findWhere(['id' => array_keys($car_attribute)[0]]);
-                    if ($attribute->count() > 0) {
-                        $myCars->carAttributes()->attach(array_keys($car_attribute)[0], ['value' => array_values($car_attribute)[0]]);
-                    }
-                }
-            }
-        }
-
-        if (is_string($request->car_features)) {
-            if (!empty(json_decode($request->car_features))) {
-                $myCars->carFeatures()->attach(json_decode($request->car_features));
-            }
-        } elseif (is_array($request->car_features)) {
-            if (!empty($request->car_features)) {
-                $myCars->carFeatures()->attach($request->car_features);
-            }
-        }
-
-        /*if (!empty($request->car_features)) {
-//            foreach ($request->car_features as $key => $car_feature) {
-//                $feature = $this->featureRepository->findWhere(['id' => $car_feature]);
-//                if ($feature->count() > 0) {
-//
-//                }
-//            }
-            if (is_string($request->car_attributes)) {
-                $bool = empty(json_decode($request->car_features));
-                $features = json_decode($request->car_features);
-            } elseif (is_array($request->car_attributes)) {
-                $features = $request->car_features;
-            }
-            $myCars->carFeatures()->attach($features);
-        }*/
-        $myCars = $this->myCarRepository->findWithoutFail($myCars->id);
-        return $this->sendResponse($myCars->toArray(), 'My Car saved successfully');
+        return $this->sendResponse($bidsHistories->toArray(), 'Bids History saved successfully');
     }
 
     /**
@@ -213,10 +151,10 @@ class MyCarAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Get(
-     *      path="/myCars/{id}",
-     *      summary="Display the specified MyCar",
-     *      tags={"MyCar"},
-     *      description="Get MyCar",
+     *      path="/bidsHistories/{id}",
+     *      summary="Display the specified BidsHistory",
+     *      tags={"BidsHistory"},
+     *      description="Get BidsHistory",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="Authorization",
@@ -228,7 +166,7 @@ class MyCarAPIController extends AppBaseController
      *      ),
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of MyCar",
+     *          description="id of BidsHistory",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -244,7 +182,7 @@ class MyCarAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/MyCar"
+     *                  ref="#/definitions/BidsHistory"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -256,26 +194,26 @@ class MyCarAPIController extends AppBaseController
      */
     public function show($id)
     {
-        /** @var MyCar $myCar */
-        $myCar = $this->myCarRepository->findWithoutFail($id);
+        /** @var BidsHistory $bidsHistory */
+        $bidsHistory = $this->bidsHistoryRepository->findWithoutFail($id);
 
-        if (empty($myCar)) {
-            return $this->sendError('My Car not found');
+        if (empty($bidsHistory)) {
+            return $this->sendError('Bids History not found');
         }
 
-        return $this->sendResponse($myCar->toArray(), 'My Car retrieved successfully');
+        return $this->sendResponse($bidsHistory->toArray(), 'Bids History retrieved successfully');
     }
 
     /**
      * @param int $id
-     * @param UpdateMyCarAPIRequest $request
+     * @param UpdateBidsHistoryAPIRequest $request
      * @return Response
      *
      * @SWG\Put(
-     *      path="/myCars/{id}",
-     *      summary="Update the specified MyCar in storage",
-     *      tags={"MyCar"},
-     *      description="Update MyCar",
+     *      path="/bidsHistories/{id}",
+     *      summary="Update the specified BidsHistory in storage",
+     *      tags={"BidsHistory"},
+     *      description="Update BidsHistory",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="Authorization",
@@ -287,7 +225,7 @@ class MyCarAPIController extends AppBaseController
      *      ),
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of MyCar",
+     *          description="id of BidsHistory",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -295,9 +233,9 @@ class MyCarAPIController extends AppBaseController
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
-     *          description="MyCar that should be updated",
+     *          description="BidsHistory that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/MyCar")
+     *          @SWG\Schema(ref="#/definitions/BidsHistory")
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -310,7 +248,7 @@ class MyCarAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/MyCar"
+     *                  ref="#/definitions/BidsHistory"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -320,16 +258,20 @@ class MyCarAPIController extends AppBaseController
      *      )
      * )
      */
-    public function update($id, UpdateMyCarAPIRequest $request)
+    public function update($id, UpdateBidsHistoryAPIRequest $request)
     {
-        /** @var MyCar $myCar */
-        $myCar = $this->myCarRepository->findWithoutFail($id);
-        if (empty($myCar)) {
-            return $this->sendError('My Car not found');
+        $input = $request->all();
+
+        /** @var BidsHistory $bidsHistory */
+        $bidsHistory = $this->bidsHistoryRepository->findWithoutFail($id);
+
+        if (empty($bidsHistory)) {
+            return $this->sendError('Bids History not found');
         }
 
-        $myCar = $this->myCarRepository->updateRecord($request, $myCar);
-        return $this->sendResponse($myCar->toArray(), 'MyCar updated successfully');
+        $bidsHistory = $this->bidsHistoryRepository->update($input, $id);
+
+        return $this->sendResponse($bidsHistory->toArray(), 'BidsHistory updated successfully');
     }
 
     /**
@@ -338,10 +280,10 @@ class MyCarAPIController extends AppBaseController
      * @throws \Exception
      *
      * @SWG\Delete(
-     *      path="/myCars/{id}",
-     *      summary="Remove the specified MyCar from storage",
-     *      tags={"MyCar"},
-     *      description="Delete MyCar",
+     *      path="/bidsHistories/{id}",
+     *      summary="Remove the specified BidsHistory from storage",
+     *      tags={"BidsHistory"},
+     *      description="Delete BidsHistory",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="Authorization",
@@ -353,7 +295,7 @@ class MyCarAPIController extends AppBaseController
      *      ),
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of MyCar",
+     *          description="id of BidsHistory",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -381,15 +323,15 @@ class MyCarAPIController extends AppBaseController
      */
     public function destroy($id)
     {
-        /** @var MyCar $myCar */
-        $myCar = $this->myCarRepository->findWithoutFail($id);
+        /** @var BidsHistory $bidsHistory */
+        $bidsHistory = $this->bidsHistoryRepository->findWithoutFail($id);
 
-        if (empty($myCar)) {
-            return $this->sendError('My Car not found');
+        if (empty($bidsHistory)) {
+            return $this->sendError('Bids History not found');
         }
 
-        $myCar->delete();
+        $bidsHistory->delete();
 
-        return $this->sendResponse($id, 'My Car deleted successfully');
+        return $this->sendResponse($id, 'Bids History deleted successfully');
     }
 }

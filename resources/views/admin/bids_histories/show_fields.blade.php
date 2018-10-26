@@ -33,6 +33,10 @@
     <!-- /.box-body -->
     <div class="box-footer">
         <!-- Notes Field -->
+        <dt>{!! Form::label('notes', 'Amount(AED):') !!}</dt>
+        <dd>{!! number_format($car->bids()->where('user_id', \Auth::id())->first()->amount,2) !!}</dd>
+
+        <!-- Notes Field -->
         <dt>{!! Form::label('notes', 'Notes:') !!}</dt>
         <dd>{!! $car->notes !!}</dd>
     </div>
@@ -173,6 +177,3 @@
     <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>
     <dd>{!! $car->created_at !!}</dd>
 </div>--}}
-
-
-
