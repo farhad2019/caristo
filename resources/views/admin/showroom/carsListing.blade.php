@@ -14,7 +14,7 @@
             <div class="tab_serach">
                 <div class="row no-gutters">
                     <div class="col-md-6">
-                        <input type="text" name="" placeholder="Search">
+                        <input type="text" name="search" placeholder="Search">
                     </div>
                     <div class="col-md-6 sort_parent">
                         <label>Sort by:</label>
@@ -28,16 +28,19 @@
             </div>
             @if($cars->count() > 0)
                 <ul class="car_listing">
-
                     @foreach($cars as $car)
                         <li class="clearfix current active">
                             <a href="#car_detail1" class="car" data-id="{{ $car->id }}" title="">
-                                <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
+                                @if(isset($car->media[0]))
+                                    <figure style="background-image: url({{ $car->media[0]->file_url }});"></figure>
+                                @else
+                                    <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
+                                @endif
                                 <div class="content">
                                     <h3>{{ $car->name . ' ' . $car->carModel->brand->name . ' ' . $car->carModel->name }}</h3>
                                     <p>{{ $car->year }} • {{ number_format($car->kilometre) }} km •
                                         Chassis {{ $car->chassis }}
-                                        <span>Reference Number: 0123456789</span>
+                                        {{--<span>Reference Number: 0123456789</span>--}}
                                     </p>
                                 </div>
                             </a>
