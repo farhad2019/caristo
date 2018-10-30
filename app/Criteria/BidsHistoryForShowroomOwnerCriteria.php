@@ -27,6 +27,11 @@ class BidsHistoryForShowroomOwnerCriteria implements CriteriaInterface
         $car_ids = Auth::user()->bids()->pluck('car_id')->toArray();
         $model = $model->whereIn('id', $car_ids);
 
+        $keyword = $this->request->get('keyword', -1);
+        $model = $model->when(is_string($keyword), function ($q) use ($keyword) {
+            return $q->where('name', 'LIKE', '%' . $keyword . '%');
+        });
+
         return $model;
     }
 }
