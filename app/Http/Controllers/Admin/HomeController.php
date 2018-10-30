@@ -11,6 +11,7 @@ use App\Models\News;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -42,7 +43,10 @@ class HomeController extends Controller
         $categories = Category::all()->count();
         $news = News::all()->count();
         BreadcrumbsRegister::Register();
-       return view('admin.home')->with([
+        if (Auth::user()->hasRole('showroom-owner')) {
+            return redirect(route('admin.makeBids.index'));
+        }
+        return view('admin.home')->with([
             'users'      => $users,
             'roles'      => $roles,
             'categories' => $categories,

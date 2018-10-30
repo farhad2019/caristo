@@ -14,13 +14,15 @@
             <div class="tab_serach">
                 <div class="row no-gutters">
                     <div class="col-md-6">
-                        <input type="text" name="search" placeholder="Search">
+                        <form action="{{ url('admin/'.Request::segments()[1]) }}" method="GET">
+                            <input type="text" name="keyword" placeholder="Search">
+                        </form>
                     </div>
                     <div class="col-md-6 sort_parent">
                         <label>Sort by:</label>
                         <div class="select">
                             <select>
-                                <option value="">Recent</option>
+                                <option value="" selected disabled>Recent</option>
                             </select>
                         </div>
                     </div>

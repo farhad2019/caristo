@@ -81,6 +81,7 @@ Route::resource('regions', 'RegionController');
 Route::resource('regionalSpecifications', 'RegionalSpecificationController');
 
 Route::resource('makeBids', 'MakeBidController');
+Route::get('makeBids/{keyword}', 'MakeBidController@index');
 
 Route::resource('carInteractions', 'CarInteractionController');
 

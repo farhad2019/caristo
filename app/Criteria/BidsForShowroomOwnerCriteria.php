@@ -27,6 +27,11 @@ class BidsForShowroomOwnerCriteria implements CriteriaInterface
             ->whereNotIn('id', $car_ids)
             ->orderBy('created_at', 'desc');
 
+        $keyword = $this->request->get('keyword', -1);
+        $model = $model->when(is_string($keyword), function ($q) use ($keyword) {
+            return $q->where('name', 'LIKE', '%' . $keyword . '%');
+        });
+
         /*
 
                 $model = $model->where('owner_type', User::SHOWROOM_OWNER);
@@ -78,7 +83,7 @@ class BidsForShowroomOwnerCriteria implements CriteriaInterface
                 $model = $model->when(($max_price > 0 && $min_price > 0 && $max_price > $min_price), function ($query) use ($max_price, $min_price) {
                     return $query->whereBetween('amount', [$max_price, $min_price]);
                 });*/
-        //dd($model->getBindings(), $model->toSql());
+        //dd(is_string($keyword), $model->getBindings(), $model->toSql());
         return $model;
     }
 }
