@@ -7,6 +7,7 @@ use App\Models\MakeBid;
 use App\Models\MyCar;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use InfyOm\Generator\Common\BaseRepository;
 use Carbon\Carbon;
 
@@ -90,7 +91,11 @@ class MyCarRepository extends BaseRepository
             $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
             foreach ($mediaFiles as $mediaFile) {
-                $media[] = Utils::handlePicture($mediaFile);
+                $media[] = [
+                    'title'    => $mediaFile->getClientOriginalName(),
+                    'filename' => Storage::putFile('media_files', $mediaFile)
+                ]; //Utils::handlePicture($mediaFile);
+                //$media[] = Utils::handlePicture($mediaFile);
             }
 
             $myCar->media()->createMany($media);
