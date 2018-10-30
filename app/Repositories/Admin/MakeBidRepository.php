@@ -46,7 +46,6 @@ class MakeBidRepository extends BaseRepository
     public function saveRecord($request)
     {
         $input = $request->only('amount', 'car_id');
-        dd($input);
         $input['user_id'] = Auth::id();
         $bid = $this->create($input);
 

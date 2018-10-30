@@ -135,7 +135,7 @@
 
                 <h4>Place a Bid now</h4>
                 {!! Form::open(['route' => 'admin.makeBids.store']) !!}
-                <input type="text" name="" placeholder="AED"
+                <input type="text" name="amount" placeholder="AED"
                        {{ isset($bid)? 'readonly':'required' }} value="{{ isset($bid)? number_format($bid->amount):'' }}">
                 <button type="submit" class="submit" name="">submit</button>
                 {!! Form::hidden('car_id', $car->id) !!}
