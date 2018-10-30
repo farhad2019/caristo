@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Criteria\BidsForShowroomOwnerCriteria;
+use App\Criteria\CarsForBidsFilterCriteria;
 use App\Helper\BreadcrumbsRegister;
 use App\DataTables\Admin\MakeBidDataTable;
 use App\Http\Requests\Admin;
@@ -10,6 +12,7 @@ use App\Http\Requests\Admin\UpdateMakeBidRequest;
 use App\Repositories\Admin\MakeBidRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\MyCarRepository;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
@@ -39,13 +42,25 @@ class MakeBidController extends AppBaseController
     /**
      * Display a listing of the MakeBid.
      *
-     * @param MakeBidDataTable $makeBidDataTable
+     * @param Request $request
      * @return Response
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
-    public function index(MakeBidDataTable $makeBidDataTable)
+    /*public function index(MakeBidDataTable $makeBidDataTable)
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $makeBidDataTable->render('admin.make_bids.index');
+    }*/
+    public function index(Request $request)
+    {
+        $this->carRepository->pushCriteria(new BidsForShowroomOwnerCriteria($request));
+        $cars = $this->carRepository->all();
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        return view('admin.showroom.carsListing')->with([
+            'cars' => $cars,
+//            'bid' => $bid
+        ]);
+        //return $makeBidDataTable->render('admin.make_bids.index');
     }
 
     /**
@@ -91,10 +106,14 @@ class MakeBidController extends AppBaseController
         }
         $bid = $this->makeBidRepository->findWhere(['car_id' => $id, 'user_id' => Auth::id()])->first();
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $car);
-        return view('admin.make_bids.show')->with([
+        return view('admin.showroom.details')->with([
             'car' => $car,
             'bid' => $bid
         ]);
+        /*return view('admin.make_bids.show')->with([
+            'car' => $car,
+            'bid' => $bid
+        ]);*/
     }
 
     /**

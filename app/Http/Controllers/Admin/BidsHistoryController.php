@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Criteria\BidsHistoryForShowroomOwnerCriteria;
 use App\Helper\BreadcrumbsRegister;
 use App\DataTables\Admin\BidsHistoryDataTable;
 use App\Http\Requests\Admin;
@@ -10,10 +11,11 @@ use App\Http\Requests\Admin\UpdateBidsHistoryRequest;
 use App\Repositories\Admin\BidsHistoryRepository;
 use App\Repositories\Admin\MakeBidRepository;
 use App\Repositories\Admin\MyCarRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Response;
+use Laracasts\Flash\Flash;
 
 class BidsHistoryController extends AppBaseController
 {
@@ -44,13 +46,22 @@ class BidsHistoryController extends AppBaseController
     /**
      * Display a listing of the BidsHistory.
      *
-     * @param BidsHistoryDataTable $bidsHistoryDataTable
+     * @param Request $request
      * @return Response
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
-    public function index(BidsHistoryDataTable $bidsHistoryDataTable)
+    public function index(Request $request)
     {
+        $this->carRepository->pushCriteria(new BidsHistoryForShowroomOwnerCriteria($request));
+        $cars = $this->carRepository->all();
+        $bid = $this->makeBidRepository->findWhere(['car_id' => 70, 'user_id' => Auth::id()])->first();
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return $bidsHistoryDataTable->render('admin.bids_histories.index');
+        return view('admin.showroom.carsListing')->with([
+            'cars' => $cars,
+            'bid'  => $bid
+        ]);
+        //return $bidsHistoryDataTable->render('admin.bids_histories.index');
     }
 
     /**
@@ -78,7 +89,6 @@ class BidsHistoryController extends AppBaseController
         $bidsHistory = $this->bidsHistoryRepository->create($input);
 
         Flash::success('Bids History saved successfully.');
-
         return redirect(route('admin.bidsHistories.index'));
     }
 
@@ -91,7 +101,9 @@ class BidsHistoryController extends AppBaseController
      */
     public function show($id)
     {
+        //region Description
         $car = $this->carRepository->findWithoutFail($id);
+        //endregion
 
         if (empty($car)) {
             Flash::error('Make Bid not found');
@@ -100,10 +112,14 @@ class BidsHistoryController extends AppBaseController
         $bid = $this->makeBidRepository->findWhere(['car_id' => $id, 'user_id' => Auth::id()])->first();
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $car);
-        return view('admin.bids_histories.show')->with([
+        return view('admin.showroom.details')->with([
             'car' => $car,
             'bid' => $bid
         ]);
+//        return view('admin.bids_histories.show')->with([
+//            'car' => $car,
+//            'bid' => $bid
+//        ]);
     }
 
     /**
@@ -119,7 +135,6 @@ class BidsHistoryController extends AppBaseController
 
         if (empty($bidsHistory)) {
             Flash::error('Bids History not found');
-
             return redirect(route('admin.bidsHistories.index'));
         }
 
@@ -141,14 +156,11 @@ class BidsHistoryController extends AppBaseController
 
         if (empty($bidsHistory)) {
             Flash::error('Bids History not found');
-
             return redirect(route('admin.bidsHistories.index'));
         }
 
         $bidsHistory = $this->bidsHistoryRepository->update($request->all(), $id);
-
         Flash::success('Bids History updated successfully.');
-
         return redirect(route('admin.bidsHistories.index'));
     }
 
@@ -165,14 +177,12 @@ class BidsHistoryController extends AppBaseController
 
         if (empty($bidsHistory)) {
             Flash::error('Bids History not found');
-
             return redirect(route('admin.bidsHistories.index'));
         }
 
         $this->bidsHistoryRepository->delete($id);
 
         Flash::success('Bids History deleted successfully.');
-
         return redirect(route('admin.bidsHistories.index'));
     }
 }

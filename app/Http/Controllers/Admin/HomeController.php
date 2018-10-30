@@ -42,7 +42,7 @@ class HomeController extends Controller
         $categories = Category::all()->count();
         $news = News::all()->count();
         BreadcrumbsRegister::Register();
-        return view('admin.home')->with([
+       return view('admin.home')->with([
             'users'      => $users,
             'roles'      => $roles,
             'categories' => $categories,
