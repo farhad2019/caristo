@@ -10,9 +10,10 @@
     <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
     <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>--}}
 </div>
+
 <div class="car_detail clearfix">
     <div class="left">
-        <h2 class="car_model">Luxurious Bentley Continental GT</h2>
+        <h2 class="car_model">{{ $car->name }} {{ $car->carModel->brand->name }}</h2>
         <ul>
             <li>
                 <span class="icon-icon-5"></span>
@@ -49,32 +50,24 @@
                     {{ $car->regionalSpecs->name }}
                 </p>
             </li>
-            <li>
-                <span class="icon-icon-10"></span>
-                <p>
-                    <small>Exterior Color</small>
-                    Gold
-                </p>
-            </li>
-            <li>
-                <span class="icon-icon-11"></span>
-                <p>
-                    <small>Interior</small>
-                    Tan
-                </p>
-            </li>
-            <li>
+            @foreach($car->carAttributes as $attribute)
+                <li>
+                    <span class="{{ $attribute->icon }}"></span>
+                    <p>
+                        <small>{{ $attribute->name }}</small>
+                        @if($attribute->type == 30)
+                            {!! \App\Models\AttributeOption::find($attribute->pivot->value)->option !!}
+                        @elseif($attribute->type == 10 || $attribute->type == 20)
+                            {!! $attribute->pivot->value !!}
+                        @endif
+                    </p>
+                </li>
+            @endforeach
+            {{--<li>
                 <span class="icon-icon-12"></span>
                 <p>
                     <small>engine type</small>
                     {{ $car->engineType->name?? '-' }}
-                </p>
-            </li>
-            <li>
-                <span class="icon-icon-17"></span>
-                <p>
-                    <small>Trim</small>
-                    -
                 </p>
             </li>
             <li>
@@ -97,14 +90,16 @@
                     <small>RMNG. warranty</small>
                     18 Months
                 </p>
-            </li>
-            <li>
-                <span class="icon-icon-17"></span>
-                <p>
-                    <small>Accident?</small>
-                    No
-                </p>
-            </li>
+            </li>--}}
+            @foreach($car->carFeatures as $carFeature)
+                <li>
+                    <span class="{{ $carFeature->icon }}"></span>
+                    <p>
+                        <small>{{ $carFeature->name }}?</small>
+                        Yes
+                    </p>
+                </li>
+            @endforeach
         </ul>
     </div>
     @if(Request::segments()[1] == 'makeBids')
@@ -162,7 +157,9 @@
                         </svg>
                     </div>
                     <div class="controlls">
-                        <div class="display-remain-time" style="font-size: 23px;">{{ number_format($bid->amount) }} AED</div>
+                        <div class="display-remain-time" style="font-size: 23px;">{{ number_format($bid->amount) }}
+                            AED
+                        </div>
                         <button class="play" id="pause"></button>
                     </div>
                 </div>

@@ -110,8 +110,9 @@
     <!-- /.box-body -->
     <div class="box-footer">
 
-        <div class="col-sm-6"> @foreach($car->carAttributes as $attribute)
-            <!-- Chassis Field -->
+        <div class="col-sm-6">
+            @foreach($car->carAttributes as $attribute)
+                <!-- Chassis Field -->
                 <dt>{!! Form::label('chassis', $attribute->name.':')  !!}</dt>
                 @if($attribute->type == 30)
                     <dd>{!! \App\Models\AttributeOption::find($attribute->pivot->value)->option !!}</dd>
@@ -121,8 +122,8 @@
             @endforeach
         </div>
         <div class="col-sm-6">
-        @foreach($car->carFeatures as $carFeature)
-            <!-- Chassis Field -->
+            @foreach($car->carFeatures as $carFeature)
+                <!-- Chassis Field -->
                 <dt>{!! Form::label('chassis', $carFeature->name.':')  !!}</dt>
                 <dd><span class='badge badge-success'> <i class='fa fa-eye'></i> Yes</span></dd>
             @endforeach
