@@ -56,7 +56,7 @@
                     <p>
                         <small>{{ $attribute->name }}</small>
                         @if($attribute->type == 30)
-                            {!! \App\Models\AttributeOption::find($attribute->pivot->value)->option !!}
+                            {!! \App\Models\AttributeOption::find($attribute->pivot->value)['option'] !!}
                         @elseif($attribute->type == 10 || $attribute->type == 20)
                             {!! $attribute->pivot->value !!}
                         @endif
