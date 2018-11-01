@@ -20,7 +20,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <dt>{!! Form::label('name', __('Name').':') !!}</dt>
-                            <dd><img src="{{ $carFeature->icon }}" width="20"> {!! $translation->name !!}</dd>
+                            <dd><img src="{{ $carFeature->icon_css }}" width="20"> {!! $translation->name !!}</dd>
                         </div>
                         <div class="box-footer">
                             <dt>{!! Form::label('created_at', __('Created At').':') !!}</dt>
