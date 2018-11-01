@@ -13,7 +13,7 @@
 
 <div class="car_detail clearfix">
     <div class="left">
-        <h2 class="car_model">{{ $car->name }} {{ $car->carModel->brand->name }}</h2>
+        <h2 class="car_model">{{ $car->year }} {{ $car->carModel->brand->name }} {{ $car->carModel->name }}</h2>
         <ul>
             <li>
                 <span class="icon-icon-5"></span>

@@ -39,7 +39,7 @@
                                     <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
                                 @endif
                                 <div class="content">
-                                    <h3>{{ $car->name . ' ' . $car->carModel->brand->name . ' ' . $car->carModel->name }}</h3>
+                                    <h3>{{ $car->year }} {{ $car->carModel->brand->name }} {{ $car->carModel->name }}</h3>
                                     <p>{{ $car->year }} • {{ number_format($car->kilometre) }} km •
                                         Chassis {{ $car->chassis }}
                                         {{--<span>Reference Number: 0123456789</span>--}}
