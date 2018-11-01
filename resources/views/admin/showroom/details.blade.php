@@ -59,7 +59,7 @@
             </li>
             @foreach($car->carAttributes as $attribute)
                 <li>
-                    <span class="{{ $attribute->icon }}"></span>
+                    <span class="{{ $attribute->icon_css }}"></span>
                     <p>
                         <small>{{ $attribute->name }}</small>
                         @if($attribute->type == 30)
