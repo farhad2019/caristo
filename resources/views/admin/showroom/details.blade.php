@@ -63,14 +63,14 @@
                     </p>
                 </li>
             @endforeach
-            {{--<li>
+            <li>
                 <span class="icon-icon-12"></span>
                 <p>
                     <small>engine type</small>
                     {{ $car->engineType->name?? '-' }}
                 </p>
             </li>
-            <li>
+            {{--<li>
                 <span class="icon-icon-14"></span>
                 <p>
                     <small>Warranty remaining</small>
