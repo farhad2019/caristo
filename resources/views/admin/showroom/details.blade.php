@@ -50,6 +50,13 @@
                     {{ $car->regionalSpecs->name }}
                 </p>
             </li>
+            <li>
+                <span class="icon-icon-12"></span>
+                <p>
+                    <small>engine type</small>
+                    {{ $car->engineType->name?? '-' }}
+                </p>
+            </li>
             @foreach($car->carAttributes as $attribute)
                 <li>
                     <span class="{{ $attribute->icon }}"></span>
@@ -63,13 +70,6 @@
                     </p>
                 </li>
             @endforeach
-            <li>
-                <span class="icon-icon-12"></span>
-                <p>
-                    <small>engine type</small>
-                    {{ $car->engineType->name?? '-' }}
-                </p>
-            </li>
             {{--<li>
                 <span class="icon-icon-14"></span>
                 <p>
