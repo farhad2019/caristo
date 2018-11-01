@@ -1,4 +1,4 @@
-<p class="ref_num">Reference Number:<span>0123456789</span></p>
+{{--<p class="ref_num">Reference Number:<span>0123456789</span></p>--}}
 <div class="shadow"></div>
 <div class="car_slider_warap">
     @foreach($car->media as $media)
