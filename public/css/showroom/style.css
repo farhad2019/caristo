@@ -378,6 +378,15 @@ body {
     float: left;
 }
 
+.profile_left_side {
+    width: 15%;
+    float: left;
+}
+
+.profile_left_side .dash_tabs{
+    width: 100%;
+}
+
 .left_side.show {
     left: 0%;
 }
@@ -419,6 +428,11 @@ body {
 
 .dash_tabs {
     width: 30%;
+    float: left;
+}
+
+.profile_dash_tabs {
+    width: 100% !important;
     float: left;
 }
 
@@ -482,6 +496,11 @@ body {
     border-left: 1px solid #c6c6c6;
     border-right: 1px solid #c6c6c6;
     padding: 0 5px 0 15px;
+}
+
+.profile_dash_tab_content {
+    width: 100%;
+    padding: 0 15px;
 }
 
 .dash_tab {
@@ -648,6 +667,16 @@ body {
     float: right;
     padding: 15px;
     position: relative;
+    border-left: 1px solid #c6c6c6;
+}
+
+.profile_right_side {
+    width: 85%;
+    background: #fff;
+    float: right;
+    position: relative;
+    border-left: 1px solid #c6c6c6;
+    padding: 15px;
 }
 
 .right_side #car_detail1 {

@@ -51,16 +51,19 @@ class MakeBidController extends AppBaseController
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $makeBidDataTable->render('admin.make_bids.index');
     }*/
-    public function index(Request $request)
+    public function index(Request $request, MakeBidDataTable $makeBidDataTable)
     {
         $this->carRepository->pushCriteria(new BidsForShowroomOwnerCriteria($request));
         $cars = $this->carRepository->all();
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return view('admin.showroom.carsListing')->with([
-            'cars' => $cars,
+
+        if (Auth::user()->hasRole('showroom-owner')) {
+            return view('admin.showroom.carsListing')->with([
+                'cars' => $cars,
 //            'bid' => $bid
-        ]);
-        //return $makeBidDataTable->render('admin.make_bids.index');
+            ]);
+        }
+        return $makeBidDataTable->render('admin.make_bids.index');
     }
 
     /**
@@ -106,14 +109,16 @@ class MakeBidController extends AppBaseController
         }
         $bid = $this->makeBidRepository->findWhere(['car_id' => $id, 'user_id' => Auth::id()])->first();
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $car);
-        return view('admin.showroom.details')->with([
+        if (Auth::user()->hasRole('showroom-owner')) {
+            return view('admin.showroom.details')->with([
+                'car' => $car,
+                'bid' => $bid
+            ]);
+        }
+        return view('admin.make_bids.show')->with([
             'car' => $car,
             'bid' => $bid
         ]);
-        /*return view('admin.make_bids.show')->with([
-            'car' => $car,
-            'bid' => $bid
-        ]);*/
     }
 
     /**

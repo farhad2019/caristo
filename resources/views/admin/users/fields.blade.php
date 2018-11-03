@@ -154,9 +154,9 @@
 
                         <!-- Image Field -->
                         <div class="form-group col-sm-3">
-                            @if($user->showroomDetails->media->count() > 0)
-                                <img src="{{ $user->showroomDetails->media()->first()->file_url }}">
-                            @endif
+                            {{--@if($user->showroomDetails->media->count() > 0)--}}
+                                <img src="{{ $user->showroomDetails->logo_url }}">
+                            {{--@endif--}}
                         </div>
 
                         <!-- Address Field -->

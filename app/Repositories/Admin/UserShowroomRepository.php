@@ -4,6 +4,7 @@ namespace App\Repositories\Admin;
 
 use App\Helper\Utils;
 use App\Models\UserShowroom;
+use Illuminate\Support\Facades\Storage;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -29,23 +30,24 @@ class UserShowroomRepository extends BaseRepository
     {
         $input = $request->showroom;
         $input['user_id'] = $user_id;
-        $showroom = $this->model->updateOrCreate(['user_id' => $user_id], $input);
 
         // Media Data
         if ($request->hasFile('showroom_media')) {
-            $showroom->media()->delete();
-            $media = [];
-            $mediaFiles = $request->file('showroom_media');
-            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
-
-            foreach ($mediaFiles as $mediaFile) {
-//                $media[] = $this->handlePicture($mediaFile);
-                $media[] = Utils::handlePicture($mediaFile);
-            }
-
-            $showroom->media()->createMany($media);
-
+            $mediaFile = $request->file('showroom_media');
+            $input['logo'] = Storage::putFile('media_files', $mediaFile);
+            //$showroom->media()->delete();
+            //$media = [];
+//            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+//
+//            foreach ($mediaFiles as $mediaFile) {
+////                $media[] = $this->handlePicture($mediaFile);
+//                $media[] = Utils::handlePicture($mediaFile);
+//            }
+//
+//            $showroom->media()->createMany($media);
         }
+
+        $showroom = $this->model->updateOrCreate(['user_id' => $user_id], $input);
         return $showroom;
     }
 }

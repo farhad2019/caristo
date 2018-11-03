@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer id
  * @property integer user_id
  * @property string name
+ * @property string logo
  * @property string last_name
  * @property string country_code
  * @property string phone
@@ -36,7 +37,7 @@ class UserShowroom extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'name', 'address', 'phone', 'email', 'about'];
+    protected $fillable = ['user_id', 'name', 'address', 'phone', 'email', 'about', 'logo'];
 
     public static $rules = [];
 
@@ -46,7 +47,7 @@ class UserShowroom extends Model
      * @var array
      */
     protected $with = [
-        'media'
+//        'media'
     ];
 
     /**
@@ -69,7 +70,9 @@ class UserShowroom extends Model
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'logo_url'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
@@ -83,7 +86,8 @@ class UserShowroom extends Model
         'phone',
         'address',
         'email',
-        'media',
+//        'media',
+        'logo_url',
         'about'
     ];
 
@@ -95,19 +99,24 @@ class UserShowroom extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function media()
-    {
-        return $this->morphMany(Media::class, 'instance');
-    }
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+//     */
+//    public function media()
+//    {
+//        return $this->morphMany(Media::class, 'instance');
+//    }
+//
+//    /**
+//     * @return string
+//     */
+//    public function getMorphClass()
+//    {
+//        return 'showroom';
+//    }
 
-    /**
-     * @return string
-     */
-    public function getMorphClass()
+    public function getLogoUrlAttribute()
     {
-        return 'showroom';
+        return ($this->logo && file_exists(storage_path('app/' . $this->logo))) ? route('api.resize', ['img' => $this->logo]) : route('api.resize', ['img' => 'public/no_image.png', 'w=50', 'h=50']);
     }
 }

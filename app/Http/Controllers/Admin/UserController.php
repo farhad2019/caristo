@@ -12,6 +12,7 @@ use App\Repositories\Admin\UserRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\UserShowroomRepository;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -171,17 +172,17 @@ class UserController extends AppBaseController
         // Media Data
         if ($request->hasFile('image')) {
             $media = [];
-            $mediaFiles = $request->file('image');
-            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+            $mediaFile = $request->file('image');
+            $data['image'] = Storage::putFile('media_files', $mediaFile);
+            //$mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
-            foreach ($mediaFiles as $mediaFile) {
-//                $media[] = $this->handlePicture($mediaFile);
-                $media[] = Utils::handlePicture($mediaFile);
-            }
-            $data['image'] = $media[0]['filename'];
-            $user->details->update($data);
-
+//            foreach ($mediaFiles as $mediaFile) {
+////                $media[] = $this->handlePicture($mediaFile);
+//                $media[] = Utils::handlePicture($mediaFile);
+//            }
+            //$data['image'] = $media[0]['filename'];
         }
+        $user->details->update($data);
 
         $user = $this->userRepository->update($data, $id);
 
@@ -190,6 +191,9 @@ class UserController extends AppBaseController
         }
 
         Flash::success('User updated successfully.');
+        if ($user->hasRole('showroom-owner')) {
+            return redirect(route('admin.users.profile'));
+        }
         return redirect(route('admin.users.index'));
     }
 
@@ -227,6 +231,9 @@ class UserController extends AppBaseController
 
         $this->BreadCrumbName = 'Profile';
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        if ($user->hasRole('showroom-owner')) {
+            return view('admin.showroom.profile')->with('user', $user);
+        }
         return view('admin.users.edit')->with('user', $user);
     }
 }

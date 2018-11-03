@@ -9,13 +9,13 @@
     <div class="content">
         @include('adminlte-templates::common.errors')
         {{--<div class="box box-primary">--}}
-            {{--<div class="box-body">--}}
-                <div class="row">
-                    {!! Form::model($user, ['route' => ['admin.users.update', $user->id], 'files' => true, 'method' => 'patch']) !!}
-                        @include('admin.users.fields')
-                    {!! Form::close() !!}
-                </div>
-            {{--</div>--}}
+        {{--<div class="box-body">--}}
+        <div class="row">
+            {!! Form::model($user, ['route' => ['admin.users.update', $user->id], 'files' => true, 'method' => 'patch']) !!}
+            @include('admin.users.fields')
+            {!! Form::close() !!}
+        </div>
+        {{--</div>--}}
         {{--</div>--}}
         {{--<div class="row">
             <div class="col-md-12">

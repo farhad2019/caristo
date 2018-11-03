@@ -6,14 +6,14 @@
             </a>
         </li>
         <li class="{{ (Request::segments()[1] == 'bidsHistories')?'current':'' }}">
-            <a href="{{ route('admin.bidsHistories.index') }}" title=" Bid History">
+            <a href="{{ route('admin.bidsHistories.index') }}" title="Bid History">
                 <span class="icon-icon-2"></span> Bid History
             </a>
         </li>
-        {{--<li class="{{ (Request::segments()[1] == 'profile')?'current':'' }}">
-            <a href="#tab4" title="">
+        <li class="{{ (Request::segments()[1] == 'user')?'current':'' }}">
+            <a href="{{ route('admin.users.profile') }}" title="Profile">
                 <span class="icon-icon-4"></span> My Profile
             </a>
-        </li>--}}
+        </li>
     </ul>
 </div>
