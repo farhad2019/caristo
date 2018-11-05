@@ -26,9 +26,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
- * @property string transmission_type_text
- * @property string top_bids
- *
  * @property CarAttribute car_attributes
  * @property CarFeature car_features
  * @property User owner
@@ -38,6 +35,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Media media
  * @property MakeBid bids
  * @property RegionalSpecification regional_specs
+ * @property CarAttribute my_car_attributes
+ * @property CarFeature my_car_features
+ *
+ * @property string transmission_type_text
+ * @property string top_bids
+ * @property int views_count
+ * @property bool is_liked
+ * @property bool is_favorite
+ * @property bool is_viewed
+ * @property string $ref_num
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -205,6 +212,7 @@ class MyCar extends Model
         'is_liked',
         'is_viewed',
         'is_favorite',
+        'ref_num'
     ];
 
     /**
@@ -230,6 +238,7 @@ class MyCar extends Model
         'kilometre',
         'notes',
         'top_bids',
+        'ref_num',
 //        'bids',
         'transmission_type_text',
 //        'carAttributes',
@@ -348,6 +357,9 @@ class MyCar extends Model
         return $this->belongsToMany(CarAttribute::class, 'car_attributes', 'car_id', 'attribute_id', 'id', 'id')->withPivot('value');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function myCarAttributes()
     {
         return $this->hasMany(MyCarAttribute::class, 'car_id');
@@ -409,41 +421,6 @@ class MyCar extends Model
         return $this->hasMany(MakeBid::class, 'car_id');
     }
 
-    public function views()
-    {
-        return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_VIEW);
-    }
-
-    public function getViewsCountAttribute()
-    {
-        return $this->views()->count();
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_LIKE);
-    }
-
-    public function favorites()
-    {
-        return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_FAVORITE);
-    }
-
-    public function getIsLikedAttribute()
-    {
-        return ($this->likes()->where('user_id', \Auth::id())->first() != null);
-    }
-
-    public function getIsFavoriteAttribute()
-    {
-        return ($this->favorites()->where('user_id', \Auth::id())->first() != null);
-    }
-
-    public function getIsViewedAttribute()
-    {
-        return ($this->views()->where('user_id', \Auth::id())->first() != null);
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
      */
@@ -460,5 +437,70 @@ class MyCar extends Model
     public function getTransmissionTypeTextAttribute()
     {
         return ($this->transmission_type) ? self::$TRANSMISSION_TYPE_TEXT[$this->transmission_type] : null;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function views()
+    {
+        return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_VIEW);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function likes()
+    {
+        return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_LIKE);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function favorites()
+    {
+        return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_FAVORITE);
+    }
+
+    /**
+     * @return int
+     */
+    public function getViewsCountAttribute()
+    {
+        return $this->views()->count();
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsLikedAttribute()
+    {
+        return ($this->likes()->where('user_id', \Auth::id())->first() != null);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsFavoriteAttribute()
+    {
+        return ($this->favorites()->where('user_id', \Auth::id())->first() != null);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsViewedAttribute()
+    {
+        return ($this->views()->where('user_id', \Auth::id())->first() != null);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRefNumAttribute()
+    {
+        $refNum = date('Ym');
+        return $refNum . sprintf("%05d", $this->id);
     }
 }

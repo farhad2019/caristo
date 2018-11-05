@@ -144,7 +144,7 @@ class UserController extends AppBaseController
         }
 
         $data = $request->all();
-
+        unset($data['email']);
         if ($request->has('password') && $request->get('password', null) === null) {
             unset($data['password']);
         } else {
@@ -171,23 +171,22 @@ class UserController extends AppBaseController
 
         // Media Data
         if ($request->hasFile('image')) {
-            $media = [];
+//            $media = [];
             $mediaFile = $request->file('image');
             $data['image'] = Storage::putFile('media_files', $mediaFile);
-            //$mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
-
+//            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 //            foreach ($mediaFiles as $mediaFile) {
-////                $media[] = $this->handlePicture($mediaFile);
+//                $media[] = $this->handlePicture($mediaFile);
 //                $media[] = Utils::handlePicture($mediaFile);
 //            }
-            //$data['image'] = $media[0]['filename'];
+//            $data['image'] = $media[0]['filename'];
         }
         $user->details->update($data);
 
         $user = $this->userRepository->update($data, $id);
 
         if (isset($request->showroom)) {
-            $showRoom = $this->showroomRepository->updateRecord($request, $id);
+            $this->showroomRepository->updateRecord($request, $id);
         }
 
         Flash::success('User updated successfully.');

@@ -20,6 +20,7 @@ use App\Repositories\Admin\MyCarRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\RegionalSpecificationRepository;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
 
 class MyCarController extends AppBaseController
@@ -81,6 +82,9 @@ class MyCarController extends AppBaseController
     public function index(MyCarDataTable $myCarDataTable)
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        /*if (Auth::user()->hasRole('showroom-owner')) {
+            return view('admin.showroom.profile')->with('user', Auth::user());
+        }*/
         return $myCarDataTable->render('admin.my_cars.index');
     }
 

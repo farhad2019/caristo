@@ -1,4 +1,4 @@
-{{--<p class="ref_num">Reference Number:<span>0123456789</span></p>--}}
+<p class="ref_num">Reference Number:<span>{{ $car->ref_num }}</span></p>
 <div class="shadow"></div>
 <div class="car_slider_warap">
     @foreach($car->media as $media)
@@ -123,7 +123,7 @@
                     </div> {{--$car->bid_close_at->diffForHumans()--}}
 
                     <div class="controlls">
-                        <div class="display-remain-time">{{ $car->bid_close_at->format('H:i') }}</div>
+                        <div class="display-remain-time"></div>
                         <button class="play" id="pause"></button>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                         </svg>
                     </div>
                     <div class="controlls">
-                        <div class="display-remain-time" style="font-size: 23px;">{{ number_format($bid->amount) }}
+                        <div class="" style="font-size: 23px;">{{ number_format($bid->amount) }}
                             AED
                         </div>
                         <button class="play" id="pause"></button>
@@ -167,95 +167,92 @@
         </div>
     @endif
 </div>
+<script>
+    //circle start
+    var progressBar = document.querySelector('.e-c-progress');
+    var indicator = document.getElementById('e-indicator');
+    var pointer = document.getElementById('e-pointer');
+    var length = Math.PI * 2 * 100;
 
-@push('scripts')
-    <script>
-        //circle start
-        var progressBar = document.querySelector('.e-c-progress');
-        var indicator = document.getElementById('e-indicator');
-        var pointer = document.getElementById('e-pointer');
-        var length = Math.PI * 2 * 100;
+    progressBar.style.strokeDasharray = length;
 
-        progressBar.style.strokeDasharray = length;
+    function update(value, timePercent) {
+        var offset = -length - length * value / (86400);
+        progressBar.style.strokeDashoffset = offset;
+        pointer.style.transform = `rotate(${360 * value / (timePercent)}deg)`;
+    }
 
-        function update(value, timePercent) {
-            var offset = -length - length * value / (timePercent);
-            progressBar.style.strokeDashoffset = offset;
-            pointer.style.transform = `rotate(${360 * value / (timePercent)}deg)`;
-        }
+    //circle ends
+    const displayOutput = document.querySelector('.display-remain-time');
+    const pauseBtn = document.getElementById('pause');
+    const setterBtns = document.querySelectorAll('button[data-setter]');
 
-        //circle ends
-        const displayOutput = document.querySelector('.display-remain-time')
-        const pauseBtn = document.getElementById('pause');
-        const setterBtns = document.querySelectorAll('button[data-setter]');
+    var intervalTimer;
+    var timeLeft;
+    var wholeTime = {{ $car->bid_close_at->diffInSeconds(now()) }}; //0.5 * 2400; // manage this to set the whole time
+    var isPaused = false;
+    var isStarted = false;
 
-        var intervalTimer;
-        var timeLeft;
-        var wholeTime = 0.5 * 2400; // manage this to set the whole time
-        var isPaused = false;
-        var isStarted = false;
-
-
-        update(wholeTime, wholeTime); //refreshes progress bar
-        displayTimeLeft(wholeTime);
+    update(wholeTime, wholeTime); //refreshes progress bar
+    displayTimeLeft(wholeTime);
 
 
-        function timer(seconds) { //counts time, takes seconds
-            var remainTime = Date.now() + (seconds * 1000);
-            displayTimeLeft(seconds);
+    function timer(seconds) { //counts time, takes seconds
+        var remainTime = Date.now() + (seconds * 1000);
+        displayTimeLeft(seconds);
 
-            intervalTimer = setInterval(function () {
-                timeLeft = Math.round((remainTime - Date.now()) / 1000);
-                if (timeLeft < 0) {
-                    clearInterval(intervalTimer);
-                    isStarted = false;
-                    setterBtns.forEach(function (btn) {
-                        btn.disabled = false;
-                        btn.style.opacity = 1;
-                    });
-                    displayTimeLeft(wholeTime);
-                    pauseBtn.classList.remove('pause');
-                    pauseBtn.classList.add('play');
-                    return;
-                }
-                displayTimeLeft(timeLeft);
-            }, 1000);
-        }
-
-        function pauseTimer(event) {
-            if (isStarted === false) {
-                timer(wholeTime);
-                isStarted = true;
-                this.classList.remove('play');
-                this.classList.add('pause');
-
-                setterBtns.forEach(function (btn) {
-                    btn.disabled = true;
-                    btn.style.opacity = 0.5;
-                });
-
-            } else if (isPaused) {
-                this.classList.remove('play');
-                this.classList.add('pause');
-                timer(timeLeft);
-                isPaused = isPaused ? false : true
-            } else {
-                this.classList.remove('pause');
-                this.classList.add('play');
+        intervalTimer = setInterval(function () {
+            timeLeft = Math.round((remainTime - Date.now()) / 1000);
+            if (timeLeft < 0) {
                 clearInterval(intervalTimer);
-                isPaused = isPaused ? false : true;
+                isStarted = false;
+                setterBtns.forEach(function (btn) {
+                    btn.disabled = false;
+                    btn.style.opacity = 1;
+                });
+                displayTimeLeft(wholeTime);
+                pauseBtn.classList.remove('pause');
+                pauseBtn.classList.add('play');
+                return;
             }
+            displayTimeLeft(timeLeft);
+        }, 1000);
+    }
+
+    function pauseTimer(event) {
+        if (isStarted === false) {
+            timer(wholeTime);
+            isStarted = true;
+            this.classList.remove('play');
+            this.classList.add('pause');
+
+            setterBtns.forEach(function (btn) {
+                btn.disabled = true;
+                btn.style.opacity = 0.5;
+            });
+
+        } else if (isPaused) {
+            this.classList.remove('play');
+            this.classList.add('pause');
+            timer(timeLeft);
+            isPaused = isPaused ? false : true
+        } else {
+            this.classList.remove('pause');
+            this.classList.add('play');
+            clearInterval(intervalTimer);
+            isPaused = isPaused ? false : true;
         }
+    }
 
-        function displayTimeLeft(timeLeft) { //displays time on the input
-            var minutes = Math.floor(timeLeft / 60);
-            var seconds = timeLeft % 60;
-            var displayString = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            displayOutput.textContent = displayString;
-            update(timeLeft, wholeTime);
-        }
+    function displayTimeLeft(timeLeft) { //displays time on the input
+        var hours = Math.floor(timeLeft / 3600);
+        var minutes = Math.floor((timeLeft) / 60) - (hours * 60);
+        var seconds = timeLeft % 60;
+        var displayString = `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        displayOutput.textContent = displayString;
+        update(timeLeft, wholeTime);
+    }
 
-        pauseBtn.addEventListener('click', pauseTimer);
+    pauseBtn.addEventListener('click', pauseTimer);
 
-    </script>
-@endpush
+</script>
