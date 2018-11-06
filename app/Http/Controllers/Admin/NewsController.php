@@ -145,17 +145,13 @@ class NewsController extends AppBaseController
     public function update($id, UpdateNewsRequest $request)
     {
         $news = $this->newsRepository->findWithoutFail($id);
-
         if (empty($news)) {
             Flash::error('News not found');
-
             return redirect(route('admin.news.index'));
         }
-
         $news = $this->newsRepository->updateRecord($request, $news);
 
         Flash::success('News updated successfully.');
-
         return redirect(route('admin.news.index'));
     }
 

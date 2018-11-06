@@ -2376,13 +2376,6 @@
                         "schema": {
                             "$ref": "#/definitions/MyCar"
                         }
-                    },
-                    {
-                        "name": "image",
-                        "in": "formData",
-                        "description": "Image File of the user",
-                        "required": false,
-                        "type": "file"
                     }
                 ],
                 "responses": {

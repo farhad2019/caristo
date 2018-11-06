@@ -9,9 +9,9 @@ use App\Http\Requests\Api\UpdateNewsAPIRequest;
 use App\Models\News;
 use App\Repositories\Admin\NewsRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Response;
 
 /**
  * Class NewsController
@@ -30,6 +30,7 @@ class NewsAPIController extends AppBaseController
     /**
      * @param Request $request
      * @return Response
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
      * @SWG\Get(
      *      path="/news",
@@ -279,6 +280,7 @@ class NewsAPIController extends AppBaseController
     /**
      * @param int $id
      * @return Response
+     * @throws \Exception
      *
      * @SWG\Delete(
      *      path="/news/{id}",

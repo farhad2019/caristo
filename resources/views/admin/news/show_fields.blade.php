@@ -42,13 +42,19 @@
 </dd>
 
 @if(isset($news) && count($news->media)>0)
-    <dt>{!! Form::label('image', 'Image:') !!}</dt>
-
-    <dd>
-        @foreach($news->media as $media)
-            <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
-        @endforeach
-    </dd>
+    @if($news->media[0]->media_type == \App\Models\News::TYPE_IMAGE)
+        <dt>{!! Form::label('image', 'Image:') !!}</dt>
+        <dd>
+            @foreach($news->media as $media)
+                <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+            @endforeach
+        </dd>
+    @elseif($news->media[0]->media_type == \App\Models\News::TYPE_VIDEO)
+        <dt>{!! Form::label('image', 'Video Link:') !!}</dt>
+        <dd>
+            <a href="{{ $news->media[0]->fileUrl }}" target="_blank">{{ $news->media[0]->fileUrl }}</a>
+        </dd>
+    @endif
 @endif
 
 <!-- Created At Field -->
@@ -58,8 +64,3 @@
 <!-- Updated At Field -->
 <dt>{!! Form::label('updated_at', 'Updated At:') !!}</dt>
 <dd>{!! $news->updated_at !!}</dd>
-
-{{--<!-- Deleted At Field -->--}}
-{{--<dt>{!! Form::label('deleted_at', 'Deleted At:') !!}</dt>--}}
-{{--<dd>{!! $news->deleted_at !!}</dd>--}}
-

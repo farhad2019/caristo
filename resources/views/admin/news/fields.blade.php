@@ -30,7 +30,7 @@
 <!-- Slug Field -->
 <div class="form-group col-sm-6 ">
     {!! Form::label('mediaType', 'Media Type:') !!}
-    {!! Form::select('media_type', \App\Models\News::$MEDIA_TYPE, null, ['class' => 'form-control select2', 'id'=>'mediaType']) !!}
+    {!! Form::select('media_type', \App\Models\News::$MEDIA_TYPE, isset($news)?$news->media[0]->media_type:null, ['class' => 'form-control select2', 'id'=>'mediaType']) !!}
 </div>
 
 <!-- Slug Field -->
@@ -38,15 +38,17 @@
     <div id="image">
         {!! Form::label('media[]', 'Image:') !!}
         {!! Form::file('media[]', null, ['class' => 'form-control']) !!}
-        @if(isset($news) && count($news->media)>0)
-            @foreach($news->media as $media)
-                <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
-            @endforeach
+        @if(isset($news) && count($news->media) > 0)
+            @if($news->media[0]->media_type == \App\Models\News::TYPE_IMAGE)
+                @foreach($news->media as $media)
+                    <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+                @endforeach
+            @endif
         @endif
     </div>
     <div id="video" style="display:none;">
         {!! Form::label('media[]', 'Video Url:') !!}
-        {!! Form::url('media', null, ['class' => 'form-control']) !!}
+        {!! Form::url('media', isset($news)?$news->media[0]->fileUrl:null, ['class' => 'form-control']) !!}
     </div>
 </div>
 
@@ -58,6 +60,16 @@
 @push('scripts')
     <script>
         $(document).ready(function () {
+            $('#image').hide();
+            $('#video').hide();
+            var type = $('#mediaType').val();
+            if (type == 10) {
+                $('#image').show();
+            }
+            if (type == 20) {
+                $('#video').show();
+            }
+
             $('body').on('change', '#mediaType', function () {
                 $('#image').hide();
                 $('#video').hide();

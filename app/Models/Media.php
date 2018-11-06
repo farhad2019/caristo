@@ -105,6 +105,7 @@ class Media extends Model
         'id',
         'title',
         'filename',
+        'media_type',
         'file_url',
         'created_at'
     ];

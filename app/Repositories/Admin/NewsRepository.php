@@ -85,18 +85,31 @@ class NewsRepository extends BaseRepository
     {
         $input = $request->all();
         $data = $this->update($input, $news->id);
-        // Media Data
-        if ($request->hasFile('media')) {
-            $media = [];
-            $mediaFiles = $request->file('media');
-            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
-            foreach ($mediaFiles as $mediaFile) {
-                $media[] = Utils::handlePicture($mediaFile);
+        if ($input['media_type'] == News::TYPE_IMAGE) {
+            // Media Data
+            if ($request->hasFile('media')) {
+                $media = [];
+                $mediaFiles = $request->file('media');
+                $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+                foreach ($mediaFiles as $mediaFile) {
+                    $media[] = Utils::handlePicture($mediaFile);
+                }
+                // TODO: We are deleting all other media for now.
+                $news->media()->delete();
+                $data->media()->createMany($media);
             }
-            // TODO: We are deleting all other media for now.
-            $news->media()->delete();
-            $data->media()->createMany($media);
+        } elseif ($input['media_type'] == News::TYPE_VIDEO) {
+            if (isset($request->media) && !$request->media == null) {
+                $media[] = [
+                    'media_type' => News::TYPE_VIDEO,
+                    'title'      => 'Video Url',
+                    'filename'   => $request->media
+                ];
+                $news->media()->delete();
+                $data->media()->createMany($media);
+            }
         }
         return $data;
     }
