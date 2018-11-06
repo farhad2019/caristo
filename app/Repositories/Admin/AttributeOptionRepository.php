@@ -53,6 +53,11 @@ class AttributeOptionRepository extends BaseRepository
         return $carAttribute;
     }
 
+    /**
+     * @param $request
+     * @param $carAttribute
+     * @return mixed
+     */
     public function updateRecord($request, $carAttribute)
     {
         $input = $request->only('opt');
@@ -63,11 +68,9 @@ class AttributeOptionRepository extends BaseRepository
             foreach ($input['options'] as $key => $item) {
                 $data['option'] = $item;
                 $data['attribute_id'] = $carAttribute->id;
-                $asdasd[] = $data;
                 $this->model->updateOrCreate(['id' => $optionIds[$key], 'attribute_id' => $carAttribute->id], $data);
             }
         }
-        dd($asdasd);
         return $carAttribute;
     }
 }

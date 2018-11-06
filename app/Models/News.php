@@ -68,6 +68,14 @@ class News extends Model
     public $translatedAttributes = ['headline', 'description', 'source'];
     protected $dates = ['deleted_at'];
 
+    const TYPE_IMAGE = 10;
+    const TYPE_VIDEO = 20;
+
+    public static $MEDIA_TYPE = [
+        self::TYPE_IMAGE => 'Image',
+        self::TYPE_VIDEO => 'Video'
+    ];
+
     public $fillable = [
         'id',
         'category_id',
@@ -160,6 +168,8 @@ class News extends Model
     public static $rules = [
 //        'id'          => 'required',
         'category_id' => 'required',
+//        'headline'    => 'required',
+//        'source'      => 'required',
         'is_featured' => 'required'
     ];
 

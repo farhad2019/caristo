@@ -91,10 +91,12 @@
                         {!! Form::file('image', ['class' => 'form-control']) !!}
                     </div>
 
-                    <!-- Image Field -->
-                    <div class="form-group col-sm-3">
-                        <img src="{{ $user->details->image_url }}">
-                    </div>
+                    @if($user->details)
+                        <!-- Image Field -->
+                        <div class="form-group col-sm-3">
+                            <img src="{{ $user->details->image_url }}">
+                        </div>
+                    @endif
 
                     <!-- email_updates Field -->
                     <div class="form-group col-sm-3">
@@ -155,7 +157,7 @@
                         <!-- Image Field -->
                         <div class="form-group col-sm-3">
                             {{--@if($user->showroomDetails->media->count() > 0)--}}
-                                <img src="{{ $user->showroomDetails->logo_url }}">
+                            <img src="{{ $user->showroomDetails->logo_url }}">
                             {{--@endif--}}
                         </div>
 

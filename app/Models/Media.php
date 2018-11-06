@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer id
  * @property integer instance_id
  * @property string instance_type
+ * @property integer media_type
  * @property string title
  * @property string filename
  * @property string file_url
@@ -61,6 +62,7 @@ class Media extends Model
         'instance_id',
         'instance_type',
         'title',
+        'media_type',
         'filename',
         'file_url'
     ];
@@ -147,7 +149,12 @@ class Media extends Model
      */
     public function getFileUrlAttribute()
     {
-        return ($this->filename && file_exists(storage_path('app/' . $this->filename))) ? route('api.resize', ['img' => $this->filename]) : route('api.resize', ['img' => 'public/no_image.png', 'w=50', 'h=50']);
+        if ($this->media_type == News::TYPE_IMAGE) {
+            return ($this->filename && file_exists(storage_path('app/' . $this->filename))) ? route('api.resize', ['img' => $this->filename]) : route('api.resize', ['img' => 'public/no_image.png', 'w=50', 'h=50']);
+        } elseif ($this->media_type == News::TYPE_VIDEO) {
+            return $this->filename;
+        }
+
         /*return ($this->filename) ? route('api.resize', ['img' => $this->filename]) : route('api.resize', ['img' => 'users/user.png']);*/
     }
 

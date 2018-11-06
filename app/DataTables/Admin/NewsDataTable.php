@@ -29,12 +29,17 @@ class NewsDataTable extends DataTable
             return $model->category->name;
         });
         $dataTable->editColumn('image', function (News $model) {
-            if (count($model->media) > 0)
-                return "<img src='" . $model->media[0]->fileUrl . "' width='80'/>";
-            else {
+            if (count($model->media) > 0) {
+                if ($model->media[0]->media_type == News::TYPE_IMAGE) {
+                    return "<img src='" . $model->media[0]->fileUrl . "' width='80'/>";
+                } else {
+                    return "<span class='label label-default'><a href='" . $model->media[0]->fileUrl . "' target='_blank'>Link</a></span>";
+                }
+            } else {
                 return "<span class='label label-default'>None</span>";
             }
         });
+
         $dataTable->editColumn('views_count', function (News $model) {
             return "<span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->views_count . "</span>";
         });

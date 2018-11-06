@@ -49,17 +49,29 @@ class NewsRepository extends BaseRepository
         $input = $request->all();
         $input['user_id'] = \Auth::id();
         $data = $this->create($input);
-        // Media Data
-        if ($request->hasFile('media')) {
-            $media = [];
-            $mediaFiles = $request->file('media');
-            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+        if ($input['media_type'] == News::TYPE_IMAGE) {
+            // Media Data
+            if ($request->hasFile('media')) {
+                $media = [];
+                $mediaFiles = $request->file('media');
+                $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
-            foreach ($mediaFiles as $mediaFile) {
-                $media[] = Utils::handlePicture($mediaFile);
+                foreach ($mediaFiles as $mediaFile) {
+                    $media[] = Utils::handlePicture($mediaFile);
+                }
+
+                $data->media()->createMany($media);
             }
+        } elseif ($input['media_type'] == News::TYPE_VIDEO) {
+            if (isset($request->media) && !$request->media == null) {
+                $media[] = [
+                    'media_type' => News::TYPE_VIDEO,
+                    'title'      => 'Video Url',
+                    'filename'   => $request->media
+                ];
 
-            $data->media()->createMany($media);
+                $data->media()->createMany($media);
+            }
         }
         return $data;
     }
