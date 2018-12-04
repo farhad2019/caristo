@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mohsinahmad
- * Date: 06-Apr-18
- * Time: 10:46 AM
- */
 
 namespace App\Observers;
 

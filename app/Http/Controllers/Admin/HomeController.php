@@ -43,9 +43,11 @@ class HomeController extends Controller
         $categories = Category::all()->count();
         $news = News::all()->count();
         BreadcrumbsRegister::Register();
+
         if (Auth::user()->hasRole('showroom-owner')) {
             return redirect(route('admin.makeBids.index'));
         }
+
         return view('admin.home')->with([
             'users'      => $users,
             'roles'      => $roles,

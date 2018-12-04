@@ -137,6 +137,13 @@ class MakeBidAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="car_ids",
+     *          description="Filter by Car, CSV 1,2,3",
+     *          required=false,
+     *          type="string",
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",

@@ -71,6 +71,11 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             return $query->whereBetween('amount', [$max_price, $min_price]);
         });
 
+        $car_ids = $this->request->get('car_ids', -1);
+        $model = $model->when(($car_ids > 0), function ($query) use ($car_ids) {
+            return $query->whereIn('id', explode(',', $car_ids));
+        });
+
         return $model;
     }
 }

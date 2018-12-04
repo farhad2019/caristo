@@ -23,7 +23,7 @@ $(function() {
         $('#module').val(pluralize.singular(module_name));
         $('#module-hep').show();
     });
-    //console.log(slug('mohsinSA-*/+ahmad'));
+
 });
 
 /*function slug(title, separator) {

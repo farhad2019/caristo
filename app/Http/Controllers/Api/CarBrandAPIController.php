@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Criteria\CarBrandFilterCriteria;
 use App\Http\Requests\Api\CreateCarBrandAPIRequest;
 use App\Http\Requests\Api\UpdateCarBrandAPIRequest;
 use App\Models\CarBrand;
@@ -68,6 +69,13 @@ class CarBrandAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="name",
+     *          description="Search Car brand by name.",
+     *          type="string",
+     *          required=false,
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
@@ -95,13 +103,15 @@ class CarBrandAPIController extends AppBaseController
         App::setLocale($request->get('locale', 'en'));
         $this->carBrandRepository->pushCriteria(new RequestCriteria($request));
         $this->carBrandRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $this->carBrandRepository->pushCriteria(new CarBrandFilterCriteria($request));
 
-        $carBrands = CarBrand::select('brands.*', 't.name')
-            ->join('brand_translations as t', function ($q) {
-                return $q->on('t.brand_id', '=', 'brands.id')->where('t.locale', App::getLocale('en'));
-            })->orderBy('t.name', 'asc')->get();
-        //$carBrands = $this->carBrandRepository->with('translations')->orderBy('translations.name', 'ASC')->get();
+        $carBrands = $this->carBrandRepository->all();
 
+//        $carBrands = CarBrand::select('brands.*', 't.name')
+//            ->join('brand_translations as t', function ($q) {
+//                return $q->on('t.brand_id', '=', 'brands.id')->where('t.locale', App::getLocale('en'));
+//            })->orderBy('t.name', 'asc')->get();
+//        $carBrands = $this->carBrandRepository->with('translations')->orderBy('translations.name', 'ASC')->get();
         return $this->sendResponse($carBrands->toArray(), 'Car Brands retrieved successfully');
     }
 

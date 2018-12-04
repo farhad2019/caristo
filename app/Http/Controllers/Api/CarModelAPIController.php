@@ -48,7 +48,7 @@ class CarModelAPIController extends AppBaseController
      *      ),
      *      @SWG\Parameter(
      *          name="locale",
-     *          description="Change the locale.",
+         *          description="Change the locale.",
      *          default="en",
      *          type="string",
      *          required=false,
@@ -72,6 +72,13 @@ class CarModelAPIController extends AppBaseController
      *          name="brand_id",
      *          description="Get brand's models.",
      *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="name",
+     *          description="Search Car model by name.",
+     *          type="string",
      *          required=false,
      *          in="query"
      *      ),

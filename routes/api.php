@@ -55,10 +55,9 @@ Route::get('v1/forget-password', 'AuthAPIController@getForgetPasswordCode')->nam
 Route::post('v1/verify-reset-code', 'AuthAPIController@verifyCode')->name('verify-code');
 Route::post('v1/reset-password', 'AuthAPIController@updatePassword')->name('reset-password');
 
+## Token Required to below APIs
+
 Route::middleware('auth:api')->group(function () {
-
-
-    ## Token Required to below APIs
     Route::post('v1/logout', 'AuthAPIController@logout');
     Route::post('v1/refresh', 'AuthAPIController@refresh');
     Route::post('v1/me', 'AuthAPIController@me');
@@ -98,9 +97,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('v1/walkThroughs', 'WalkThroughAPIController');
 
-    Route::resource('v1/carBrands', 'CarBrandAPIController');
-
-
     Route::resource('v1/carAttributes', 'CarAttributeAPIController');
 
     Route::resource('v1/carFeatures', 'CarFeatureAPIController');
@@ -121,6 +117,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('v1/reportRequests', 'ReportRequestAPIController');
 });
+
+Route::resource('v1/carBrands', 'CarBrandAPIController');
 
 Route::resource('v1/carModels', 'CarModelAPIController');
 

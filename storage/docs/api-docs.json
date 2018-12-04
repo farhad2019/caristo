@@ -998,6 +998,13 @@
                         "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
                         "required": false,
                         "type": "integer"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Search Car brand by name.",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -1368,6 +1375,13 @@
                         "description": "Get brand's models.",
                         "required": false,
                         "type": "integer"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Search Car model by name.",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -2217,6 +2231,13 @@
                         "name": "car_type",
                         "in": "query",
                         "description": "car type, CSV 1,2,3",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "car_ids",
+                        "in": "query",
+                        "description": "Filter by Car, CSV 1,2,3",
                         "required": false,
                         "type": "string"
                     }
