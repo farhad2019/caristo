@@ -20,6 +20,10 @@ class MyCarDataTable extends DataTable
         $query = $query->with(['carModel']);
         $dataTable = new EloquentDataTable($query);
 
+
+        $dataTable->editColumn('category.name', function ($model) {
+            return $model->category->name;
+        });
         $dataTable->editColumn('carModel.name', function ($model) {
             return $model->name;
         });
@@ -75,6 +79,9 @@ class MyCarDataTable extends DataTable
     {
         return [
             'id',
+            'category.name' => [
+                'title' => 'Category',
+            ],
             'car_model.name' => [
                 'title' => 'Model'
             ],

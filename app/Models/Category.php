@@ -174,6 +174,14 @@ class Category extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cars()
+    {
+        return $this->hasMany(MyCar::class, 'category_id');
+    }
+
+    /**
      * @return string
      */
     public function getMorphClass()

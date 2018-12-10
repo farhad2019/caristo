@@ -95,7 +95,7 @@ class MakeBidDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id' => [
+            'id'            => [
                 'visible' => false
             ],
             'image',

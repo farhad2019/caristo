@@ -49,6 +49,15 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             });
         });
 
+        $modelName = $this->request->get('model_name', -1);
+        $model = $model->when((strlen($modelName) > 0), function ($query) use ($modelName) {
+            return $query->whereHas('carModel', function ($carModel) use ($modelName) {
+                return $carModel->whereHas('translations', function ($translations) use ($modelName) {
+                    return $translations->where('name', 'like', '%' . $modelName . '%');
+                });
+            });
+        });
+
         $transmission_type = $this->request->get('transmission_type', -1);
         $model = $model->when(($transmission_type == 10 || $transmission_type == 20), function ($query) use ($transmission_type) {
             return $query->where('transmission_type', $transmission_type);
