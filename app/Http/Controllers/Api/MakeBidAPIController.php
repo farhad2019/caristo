@@ -96,15 +96,15 @@ class MakeBidAPIController extends AppBaseController
      *          in="query"
      *      ),
      *      @SWG\Parameter(
-     *          name="transmission_type",
-     *          description="car transmission type: 10=Manual, 20=Automatic",
-     *          type="integer",
+     *          name="model_ids",
+     *          description="Filter by Model, CSV 1,2,3",
      *          required=false,
+     *          type="string",
      *          in="query"
      *      ),
      *      @SWG\Parameter(
-     *          name="min_price",
-     *          description="car price min",
+     *          name="transmission_type",
+     *          description="car transmission type: 10=Manual, 20=Automatic",
      *          type="integer",
      *          required=false,
      *          in="query"
@@ -117,8 +117,8 @@ class MakeBidAPIController extends AppBaseController
      *          in="query"
      *      ),
      *      @SWG\Parameter(
-     *          name="min_year",
-     *          description="car year min",
+     *          name="min_price",
+     *          description="car price min",
      *          type="integer",
      *          required=false,
      *          in="query"
@@ -126,6 +126,27 @@ class MakeBidAPIController extends AppBaseController
      *      @SWG\Parameter(
      *          name="max_year",
      *          description="car year max",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="min_year",
+     *          description="car year min",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="max_mileage",
+     *          description="car mileage max",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="min_mileage",
+     *          description="car mileage min",
      *          type="integer",
      *          required=false,
      *          in="query"
@@ -147,6 +168,13 @@ class MakeBidAPIController extends AppBaseController
      *      @SWG\Parameter(
      *          name="model_name",
      *          description="Filter by Car model name",
+     *          required=false,
+     *          type="string",
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="regions",
+     *          description="Filter by regions, CSV 1,2,3",
      *          required=false,
      *          type="string",
      *          in="query"

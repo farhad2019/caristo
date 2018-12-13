@@ -2193,6 +2193,13 @@
                         "type": "string"
                     },
                     {
+                        "name": "model_ids",
+                        "in": "query",
+                        "description": "Filter by Model, CSV 1,2,3",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "transmission_type",
                         "in": "query",
                         "description": "car transmission type: 10=Manual, 20=Automatic",

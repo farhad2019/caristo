@@ -49,7 +49,14 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             });
         });
 
-        $modelName = $this->request->get('model_name', -1);
+        $model_ids = $this->request->get('model_ids', -1);
+        $model = $model->when(($model_ids > 0), function ($query) use ($model_ids) {
+            return $query->whereHas('carModel', function ($carModel) use ($model_ids) {
+                return $carModel->whereIn('id', explode(',', $model_ids));
+            });
+        });
+
+        $modelName = $this->request->get('model_name', '');
         $model = $model->when((strlen($modelName) > 0), function ($query) use ($modelName) {
             return $query->whereHas('carModel', function ($carModel) use ($modelName) {
                 return $carModel->whereHas('translations', function ($translations) use ($modelName) {
@@ -80,10 +87,21 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             return $query->whereBetween('amount', [$max_price, $min_price]);
         });
 
+        $max_mileage = $this->request->get('max_mileage', -1);
+        $min_mileage = $this->request->get('min_mileage', -1);
+        $model = $model->when(($max_mileage > 0 && $min_mileage > 0 && $max_mileage > $min_mileage), function ($query) use ($max_mileage, $min_mileage) {
+            return $query->whereBetween('kilometre', [$max_mileage, $min_mileage]);
+        });
+
         $car_ids = $this->request->get('car_ids', -1);
         $model = $model->when(($car_ids > 0), function ($query) use ($car_ids) {
             return $query->whereIn('id', explode(',', $car_ids));
         });
+
+//        $regions = $this->request->get('regions', '');
+//        $model = $model->when((strlen($regions) > 0), function ($query) use ($regions) {
+//            return $query->whereIn('region_id', explode(',', $regions));
+//        });
 
         return $model;
     }
