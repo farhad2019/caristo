@@ -40,6 +40,18 @@
     {!! Form::select('engine_type_id', $engineType, null, ['class' => 'form-control select2', 'placeholder' => 'Pick a engine type...']) !!}
 </div>
 
+<!-- Engine Type Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('region', 'Region:') !!}
+    {!! Form::select('region', $regions, null, ['class' => 'form-control select2', 'placeholder' => 'Pick a region...']) !!}
+</div>
+
+<!-- Amount Field -->
+<div class="form-group col-sm-6" id="mileage" style="display:none;">
+    {!! Form::label('kilometers', 'Mileage(km):') !!}
+    {!! Form::number('kilometer', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Mileage']) !!}
+</div>
+
 <!-- Amount Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('amount', 'Amount(AED):') !!}
@@ -79,8 +91,8 @@
 
 <!-- Regional Specification Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('regional_specification_id', 'Regional Specification:') !!}
-    {!! Form::select('regional_specification_id', $regional_specs, null, ['class' => 'form-control select2', 'placeholder' => 'Pick a regional specification...']) !!}
+    {!! Form::label('regional_specific1ation_id', 'Regional Specification:') !!}
+    {!! Form::select('regional_specifi1cation_id', $regional_specs, null, ['class' => 'form-control select2', 'placeholder' => 'Pick a regional specification...']) !!}
 </div>
 
 @if(!isset($myCar))
@@ -210,3 +222,16 @@
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('admin.myCars.index') !!}" class="btn btn-default">Cancel</a>
 </div>
+@push('scripts')
+    <script>
+        $('#category_id').on('change', function () {
+            var cat_id = $(this).val();
+            if (cat_id == 26) {
+                $('#mileage').show();
+            } else {
+                $('#mileage').hide();
+            }
+
+        });
+    </script>
+@endpush

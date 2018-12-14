@@ -19,6 +19,7 @@ use App\Repositories\Admin\EngineTypeRepository;
 use App\Repositories\Admin\MyCarRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\RegionalSpecificationRepository;
+use App\Repositories\Admin\RegionRepository;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
@@ -58,7 +59,10 @@ class MyCarController extends AppBaseController
     /** @var  CarFeatureRepository */
     private $featureRepository;
 
-    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo)
+    /** @var  RegionRepository */
+    private $regionRepository;
+
+    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo, RegionRepository $regionRepo)
     {
         $this->myCarRepository = $myCarRepo;
         $this->categoryRepository = $categoryRepo;
@@ -69,6 +73,7 @@ class MyCarController extends AppBaseController
         $this->carTypeRepository = $carTypeRepo;
         $this->modelRepository = $modelRepo;
         $this->featureRepository = $featureRepo;
+        $this->regionRepository = $regionRepo;
         $this->ModelName = 'myCars';
         $this->BreadCrumbName = 'MyCar';
     }
@@ -103,7 +108,8 @@ class MyCarController extends AppBaseController
         $features = $this->featureRepository->all();
         $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
-
+        $regions = $this->regionRepository->all()->pluck('name', 'flag');
+        
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.my_cars.create')->with([
             'categories'        => $categories,
@@ -114,6 +120,7 @@ class MyCarController extends AppBaseController
             'transmission_type' => MyCar::$TRANSMISSION_TYPE_TEXT,
             'carTypes'          => $carTypes,
             'carModels'         => $carModels,
+            'regions'           => $regions,
             'brands'            => $brands
         ]);
     }
