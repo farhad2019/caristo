@@ -7,6 +7,7 @@ use App\DataTables\Admin\MyCarDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateMyCarRequest;
 use App\Http\Requests\Admin\UpdateMyCarRequest;
+use App\Models\CarRegion;
 use App\Models\MyCar;
 use App\Models\RegionalSpecification;
 use App\Repositories\Admin\CarAttributeRepository;
@@ -108,8 +109,8 @@ class MyCarController extends AppBaseController
         $features = $this->featureRepository->all();
         $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
-        $regions = $this->regionRepository->all()->pluck('name', 'flag');
-        
+        $regions = $this->regionRepository->all()->pluck('name', 'id');
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.my_cars.create')->with([
             'categories'        => $categories,
@@ -182,6 +183,8 @@ class MyCarController extends AppBaseController
             return redirect(route('admin.myCars.index'));
         }
 
+//        dd($myCar->carRegions[0]->region->name);
+
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
@@ -190,7 +193,8 @@ class MyCarController extends AppBaseController
         $features = $this->featureRepository->all();
         $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
-
+        $regions = $this->regionRepository->all()->pluck('name', 'id');
+      
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
         return view('admin.my_cars.edit')->with([
             'myCar'             => $myCar,
@@ -202,7 +206,8 @@ class MyCarController extends AppBaseController
             'transmission_type' => MyCar::$TRANSMISSION_TYPE_TEXT,
             'carTypes'          => $carTypes,
             'carModels'         => $carModels,
-            'brands'            => $brands
+            'brands'            => $brands,
+            'regions'           => $regions,
         ]);
     }
 

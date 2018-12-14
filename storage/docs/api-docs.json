@@ -4,7 +4,7 @@
         "title": "Laravel Generator APIs",
         "version": "1.0.0"
     },
-    "basePath": "/CaristoCratApp/api/v1",
+    "basePath": "/api/v1",
     "paths": {
         "/register": {
             "post": {
@@ -2207,6 +2207,13 @@
                         "type": "integer"
                     },
                     {
+                        "name": "max_price",
+                        "in": "query",
+                        "description": "car price max",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
                         "name": "min_price",
                         "in": "query",
                         "description": "car price min",
@@ -2214,9 +2221,9 @@
                         "type": "integer"
                     },
                     {
-                        "name": "max_price",
+                        "name": "max_year",
                         "in": "query",
-                        "description": "car price max",
+                        "description": "car year max",
                         "required": false,
                         "type": "integer"
                     },
@@ -2228,9 +2235,16 @@
                         "type": "integer"
                     },
                     {
-                        "name": "max_year",
+                        "name": "max_mileage",
                         "in": "query",
-                        "description": "car year max",
+                        "description": "car mileage max",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "min_mileage",
+                        "in": "query",
+                        "description": "car mileage min",
                         "required": false,
                         "type": "integer"
                     },
@@ -2252,6 +2266,13 @@
                         "name": "model_name",
                         "in": "query",
                         "description": "Filter by Car model name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "regions",
+                        "in": "query",
+                        "description": "Filter by regions, CSV 1,2,3",
                         "required": false,
                         "type": "string"
                     }
