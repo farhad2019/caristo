@@ -172,7 +172,9 @@ class MyCar extends Model
         'amount',
         'kilometre',
         'bid_close_at',
-        'category_id'
+        'region',
+        'category_id',
+        'description'
     ];
 
     /**
@@ -468,6 +470,7 @@ class MyCar extends Model
     {
         return $this->hasMany(CarRegion::class, 'car_id');
     }
+    
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

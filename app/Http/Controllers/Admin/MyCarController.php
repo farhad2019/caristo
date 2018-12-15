@@ -194,7 +194,7 @@ class MyCarController extends AppBaseController
         $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->all()->pluck('name', 'id');
-      
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
         return view('admin.my_cars.edit')->with([
             'myCar'             => $myCar,
@@ -222,6 +222,10 @@ class MyCarController extends AppBaseController
     public function update($id, UpdateMyCarRequest $request)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
+
+        if ($request->category_id != $myCar->category_id) {
+            CarRegion::where('car_id', $id)->delete();
+        }
         if (empty($myCar)) {
             Flash::error('Car not found');
             return redirect(route('admin.myCars.index'));

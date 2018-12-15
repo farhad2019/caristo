@@ -6,24 +6,7 @@ use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-///**
-// * @property integer id
-// * @property string created_at
-// * @property string updated_at
-// * @property string deleted_at
-// *
-// * @property MyCar cars
-// * @SWG\Definition(
-// *      definition="CarRegion",
-// *      required={"id"},
-// *      @SWG\Property(
-// *          property="id",
-// *          description="id",
-// *          type="integer",
-// *          format="int32"
-// *      )
-// * )
-// */
+
 class CarRegion extends Model
 {
     use SoftDeletes;

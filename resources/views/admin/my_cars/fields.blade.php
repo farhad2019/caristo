@@ -218,7 +218,7 @@
                         <div class="regions">
                             <div class="form-group col-sm-3">
                                 {!! Form::label('price','Price in '. $region->region->name) !!}
-                                {!! Form::hidden('region[]',$region->id, null, ['class' => 'form-control']) !!}
+                                {!! Form::hidden('regions[]',$region->id, null, ['class' => 'form-control']) !!}
                                 {!! Form::text('price[]', $region->price, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
                             </div>
                         </div>
@@ -226,10 +226,10 @@
             @else
 
                 @foreach($regions as $key => $region)
-                    <div class="regions">
+                    <div class="regions" style="display: none">
                         <div class="form-group col-sm-6">
-                            {!! Form::label('region',$region, null, ['class' => 'form-control']) !!}
-                            {!! Form::hidden('region[]',$key, null, ['class' => 'form-control']) !!}
+                            {!! Form::label('regions',$region, null, ['class' => 'form-control']) !!}
+                            {!! Form::hidden('regions[]',$key, null, ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-sm-6">
                             {!! Form::label('price', $region.' Price:') !!}
