@@ -7,10 +7,13 @@ use App\Helper\BreadcrumbsRegister;
 use App\Helper\Utils;
 use App\Http\Requests\Admin\CreateUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
+use App\Models\CarInteraction;
+use App\Repositories\Admin\CarInteractionRepository;
 use App\Repositories\Admin\RoleRepository;
 use App\Repositories\Admin\UserRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\UserShowroomRepository;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Laracasts\Flash\Flash;
@@ -34,11 +37,15 @@ class UserController extends AppBaseController
     /** @var  UserShowroomRepository */
     private $showroomRepository;
 
-    public function __construct(UserRepository $userRepo, RoleRepository $roleRepo, UserShowroomRepository $showroomRepo)
+    /** @var  CarInteractionRepository */
+    private $carInteractionRepository;
+
+    public function __construct(UserRepository $userRepo, RoleRepository $roleRepo, UserShowroomRepository $showroomRepo, CarInteractionRepository $carInteractionRepo)
     {
         $this->userRepository = $userRepo;
         $this->roleRepository = $roleRepo;
         $this->showroomRepository = $showroomRepo;
+        $this->carInteractionRepository = $carInteractionRepo;
         $this->ModelName = 'users';
         $this->BreadCrumbName = 'Users';
     }
@@ -46,14 +53,21 @@ class UserController extends AppBaseController
     /**
      * Display a listing of the User.
      *
+     * @param Request $request
      * @param UserDataTable $userDataTable
      * @return Response
      */
-    public function index(UserDataTable $userDataTable)
+    public function index(Request $request, UserDataTable $userDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return $userDataTable->render('admin.users.index');
+        $data = $request->all();
 
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        if ($data) {
+            return $userDataTable->interactionList($data)->render('admin.users.index');
+        } else {
+            return $userDataTable->render('admin.users.index');
+        }
+//        return $userDataTable->render('admin.users.index');
     }
 
     /**
@@ -101,8 +115,15 @@ class UserController extends AppBaseController
             Flash::error('User not found');
             return redirect(route('admin.users.index'));
         }
+        $data = [];
+        /*$data['view'] = $this->carInteractionRepository->findWhere(['user_id' => $user->id, 'type' => CarInteraction::TYPE_VIEW])->count();
+
+        $data['like'] = $this->carInteractionRepository->findWhere(['user_id' => $user->id, 'type' => CarInteraction::TYPE_LIKE])->count();
+
+        $data['favorite'] = $this->carInteractionRepository->findWhere(['user_id' => $user->id, 'type' => CarInteraction::TYPE_FAVORITE])->count();*/
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $user);
-        return view('admin.users.show')->with('user', $user);
+        return view('admin.users.show')->with(['user' => $user, 'data' => $data]);
     }
 
     /**

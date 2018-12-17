@@ -127,3 +127,5 @@ Route::resource('v1/languages', 'LanguageAPIController');
 Route::resource('v1/regionalSpecifications', 'RegionalSpecificationAPIController');
 
 Route::resource('v1/bidsHistories', 'BidsHistoryAPIController');
+
+Route::resource('v1/cars', 'CarAPIController');

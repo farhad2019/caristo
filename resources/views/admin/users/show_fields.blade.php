@@ -1,7 +1,3 @@
-<!-- Id Field -->
-<dt>{!! Form::label('id', 'Id:') !!}</dt>
-<dd>{!! $user->id !!}</dd>
-
 <!-- Name Field -->
 <dt>{!! Form::label('name', 'Name:') !!}</dt>
 <dd>{!! $user->name !!}</dd>
@@ -14,13 +10,9 @@
 <dt>{!! Form::label('roles', 'Roles:') !!}</dt>
 <dd>{!! $user->rolesCsv !!}</dd>
 
-{{--<!-- Password Field -->--}}
-{{--<dt>{!! Form::label('password', 'Password:') !!}</dt>--}}
-{{--<dd>{!! $user->password !!}</dd>--}}
-
-{{--<!-- Remember Token Field -->--}}
-{{--<dt>{!! Form::label('remember_token', 'Remember Token:') !!}</dt>--}}
-{{--<dd>{!! $user->remember_token !!}</dd>--}}
+<!-- Like Field -->
+{{--<dt>{!! Form::label('roles', 'Liked / Favorite/ Viewed Cars:') !!}</dt>
+<dd><i class="fa fa-heart"></i><a href="#" target="_blank"> {{ $data['like'] }} </a>  <i class="fa fa-star"></i> <a href="#" target="_blank"> {{ $data['favorite'] }} </a>  <i class="fa fa-eye"></i> <a href="#" target="_blank"> {{ $data['view'] }} </a></dd>--}}
 
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>

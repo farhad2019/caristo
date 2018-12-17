@@ -88,3 +88,5 @@ Route::resource('carInteractions', 'CarInteractionController');
 Route::resource('reportRequests', 'ReportRequestController');
 
 Route::resource('bidsHistories', 'BidsHistoryController');
+
+Route::resource('cars', 'CarController');

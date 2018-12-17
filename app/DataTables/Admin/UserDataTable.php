@@ -2,6 +2,7 @@
 
 namespace App\DataTables\Admin;
 
+use App\Models\CarInteraction;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Services\DataTable;
@@ -9,6 +10,9 @@ use Yajra\DataTables\EloquentDataTable;
 
 class UserDataTable extends DataTable
 {
+    protected $car_id;
+    protected $interaction_type;
+
     /**
      * Build DataTable class.
      *
@@ -43,8 +47,23 @@ class UserDataTable extends DataTable
      */
     public function query(User $model)
     {
-//        return $model->newQuery();>whereIn('id', [1, 2, 3])
+        if ($this->car_id && $this->interaction_type) {
+            $car_id = $this->car_id;
+            $interactionType = $this->interaction_type;
+            $model = $model->whereHas('catInteractions', function ($catInteractions) use ($car_id, $interactionType) {
+                return $catInteractions->where(['car_id' => $car_id, 'type' => $interactionType]);
+            });
+        }
         return $model->newQuery()->whereNotIn('id', [1, Auth::user()->id]);
+    }
+
+    public function interactionList($data)
+    {
+        if (isset($data['car_id']) && isset($data['type'])) {
+            $this->car_id = $data['car_id'];
+            $this->interaction_type = $data['type'];
+        }
+        return $this;
     }
 
     /**

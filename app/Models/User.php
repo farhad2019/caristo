@@ -28,6 +28,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property MakeBid bids
  * @property UserShowroom showroom_details
  * @property NotificationUser notifications
+ * @property mixed cat_interactions
  *
  * @SWG\Definition(
  *     definition="UserRegions",
@@ -208,6 +209,15 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function catInteractions()
+    {
+        return $this->hasMany(CarInteraction::class, 'user_id');
+        //return $this->hasManyThrough(MyCar::class, CarInteraction::class, 'user_id', 'id', 'id', 'car_id')->where(['car_interactions.type' => CarInteraction::TYPE_FAVORITE]);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function cars()
     {
         return $this->hasMany(MyCar::class, 'owner_id');
@@ -247,6 +257,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function getPushNotificationAttribute()
     {
-        return $this->devices->first()->push_notification??0;
+        return $this->devices->first()->push_notification ?? 0;
     }
 }

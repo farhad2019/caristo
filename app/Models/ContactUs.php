@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @SWG\Definition(
  *      definition="ContactUs",
- *      required={"car_id", "name", "email", "subject", "message"},
+ *      required={"car_id", "name", "email", "country_code", "phone", "type"},
  *      @SWG\Property(
  *          property="car_id",
  *          description="car id",
@@ -32,7 +32,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      @SWG\Property(
  *          property="email",
  *          description="email",
- *          type="email"
+ *          default="email@email.com",
+ *          type="string"
  *      ),
  *      @SWG\Property(
  *          property="country_code",
@@ -46,6 +47,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          default="1234567",
  *          type="integer",
  *          format="int32"
+ *      ),
+ *      @SWG\Property(
+ *          property="type",
+ *          description="type: 10=consultancy, 20=my Shopper",
+ *          type="integer",
+ *          format="int32"
  *      )
  * )
  */
@@ -57,6 +64,7 @@ class ContactUs extends Model
     protected $dates = ['deleted_at'];
 
     public $fillable = [
+        'type',
         'car_id',
         'user_id',
         'name',
@@ -129,11 +137,12 @@ class ContactUs extends Model
      * @var array
      */
     public static $api_rules = [
-        'car_id'       => 'required|exists:cars,id',
+        'car_id'       => 'sometimes|exists:cars,id',
         'name'         => 'required',
         'email'        => 'required|email',
         'country_code' => 'required',
-        'phone'        => 'required'
+        'phone'        => 'required',
+        'type'         => 'required|in:10,20'
     ];
 
 
