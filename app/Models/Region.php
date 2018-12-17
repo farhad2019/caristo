@@ -151,4 +151,9 @@ class Region extends Model
     {
         return $this->media()->first() ? $this->media()->first()->file_url : null;
     }
+
+    public function car_region()
+    {
+        return $this->hasMany(CarRegion::class, 'region_id');
+    }
 }

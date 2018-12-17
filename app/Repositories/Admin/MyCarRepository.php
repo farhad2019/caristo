@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin;
 
 use App\Helper\Utils;
+use App\Models\CarRegion;
 use App\Models\MakeBid;
 use App\Models\MyCar;
 use App\Models\User;
@@ -46,12 +47,11 @@ class MyCarRepository extends BaseRepository
      */
     public function saveRecord($request)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometre']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometre',  'region','price','description','regions']);
 
         $user = Auth::user();
         $input['owner_id'] = $user->id;
         $input['owner_type'] = User::RANDOM_USER;
-
         if ($user->hasRole('showroom-owner')) {
             $input['owner_type'] = User::SHOWROOM_OWNER;
         }
@@ -82,8 +82,27 @@ class MyCarRepository extends BaseRepository
         }
         $input['bid_close_at'] = $expire_at;
 
+        $region = intval($input['region']);
+        $input['region'] = isset($region) ? $region : '' ;
         $myCar = $this->create($input);
 
+        //mulitple region insert
+        if (isset($input['category_id'])) {
+            $regions = [];
+            if($region > 0){
+                $regions['region_id'] = $region;
+                $regions['car_id'] = $myCar->id;
+                CarRegion::create($regions);
+            }
+            else {
+                foreach ($input['regions'] as $key => $val) {
+                    $regions['region_id'] = intval($input['regions'][$key]);
+                    $regions['price'] = $input['price'][$key];
+                    $regions['car_id'] = $myCar->id;
+                    CarRegion::create($regions);
+                }
+            }
+        }
         // Media Data
         if ($request->hasFile('media')) {
             $media = [];
@@ -111,10 +130,9 @@ class MyCarRepository extends BaseRepository
      */
     public function updateRecord($request, $myCar)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount','regions','price','description','region']);
 
         $myCar = $this->update($input, $myCar->id);
-
         // Media Data
         if ($request->hasFile('media')) {
             $media = [];
@@ -126,6 +144,19 @@ class MyCarRepository extends BaseRepository
             }
 
             $myCar->media()->createMany($media);
+        }
+
+        if ($input['category_id'] == MyCar::LIMITEDADDITION) {
+            $regions = [];
+
+            foreach ($input['regions'] as $key => $val) {
+                $id = intval($input['regions'][$key]);
+                $regions['price'] = $input['price'][$key];
+                $regions['car_id'] = $myCar->id;
+                CarRegion::where('id',$id)->update($regions);
+            }
+
+
         }
         return $myCar;
     }

@@ -10,7 +10,7 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($myCar, ['route' => ['admin.myCars.update', $myCar->id], 'method' => 'patch']) !!}
+                   {!! Form::model($myCar, ['route' => ['admin.myCars.update', $myCar->id], 'method' => 'patch', 'files' => true]) !!}
 
                         @include('admin.my_cars.fields')
 

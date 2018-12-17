@@ -147,6 +147,7 @@ class MyCar extends Model
 
     const MANUAL = 10;
     const AUTOMATIC = 20;
+    const LIMITEDADDITION = 29;
 
     public static $TRANSMISSION_TYPE_TEXT = [
         self::MANUAL    => 'Manual',
@@ -172,7 +173,9 @@ class MyCar extends Model
         'amount',
         'kilometre',
         'bid_close_at',
-        'category_id'
+        'region',
+        'category_id',
+        'description'
     ];
 
     /**
@@ -463,6 +466,12 @@ class MyCar extends Model
     {
         return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_FAVORITE);
     }
+
+    public function carRegions()
+    {
+        return $this->hasMany(CarRegion::class, 'car_id');
+    }
+    
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
