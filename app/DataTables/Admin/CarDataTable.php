@@ -75,6 +75,15 @@ class CarDataTable extends DataTable
         return $model->newQuery();
     }
 
+    public function interactionList($data)
+    {
+        if (isset($data['owner_id']) && isset($data['type'])) {
+            $this->owner_id = $data['owner_id'];
+            $this->interaction_type = $data['type'];
+        }
+        return $this;
+    }
+
     /**
      * Optional method if you want to use html builder.
      *

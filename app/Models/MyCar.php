@@ -147,11 +147,18 @@ class MyCar extends Model
 
     const MANUAL = 10;
     const AUTOMATIC = 20;
+    const SHOWROOM = 10;
+    const USER = 20;
     const LIMITEDADDITION = 29;
 
     public static $TRANSMISSION_TYPE_TEXT = [
         self::MANUAL    => 'Manual',
         self::AUTOMATIC => 'Automatic'
+    ];
+
+    public static $OWNER_TYPE_TEXT = [
+        self::SHOWROOM => 'Vendor',
+        self::USER     => 'Client'
     ];
 
     public $fillable = [
@@ -211,6 +218,7 @@ class MyCar extends Model
      */
     protected $appends = [
         'transmission_type_text',
+        'owner_type_text',
         'views_count',
         'top_bids',
         'is_liked',
@@ -245,6 +253,7 @@ class MyCar extends Model
         'ref_num',
 //        'bids',
         'transmission_type_text',
+        'owner_type_text',
 //        'carAttributes',
         'regionalSpecs',
         'myCarAttributes',
@@ -443,6 +452,11 @@ class MyCar extends Model
         return ($this->transmission_type) ? self::$TRANSMISSION_TYPE_TEXT[$this->transmission_type] : null;
     }
 
+    public function getOwnerTypeTextAttribute()
+    {
+        return ($this->owner_type) ? self::$OWNER_TYPE_TEXT[$this->owner_type] : null;
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -471,7 +485,7 @@ class MyCar extends Model
     {
         return $this->hasMany(CarRegion::class, 'car_id');
     }
-    
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

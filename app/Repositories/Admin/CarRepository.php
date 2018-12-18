@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin;
 
 use App\Models\Car;
+use App\Models\MyCar;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -32,6 +33,6 @@ class CarRepository extends BaseRepository
      **/
     public function model()
     {
-        return Car::class;
+        return MyCar::class;
     }
 }

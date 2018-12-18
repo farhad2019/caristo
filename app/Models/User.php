@@ -114,7 +114,11 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $appends = [
-        'push_notification'
+        'push_notification',
+        'cars_count',
+        'favorite_count',
+        'like_count',
+        'view_count'
     ];
 
     /**
@@ -128,6 +132,10 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'details',
         'showroomDetails',
+        'cars_count',
+        'favorite_count',
+        'like_count',
+        'view_count',
         'created_at',
         'push_notification'
     ];
@@ -161,6 +169,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(UserDetail::class);
     }
+
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -204,6 +213,16 @@ class User extends Authenticatable implements JWTSubject
     public function favoriteCars()
     {
         return $this->hasManyThrough(MyCar::class, CarInteraction::class, 'user_id', 'id', 'id', 'car_id')->where(['car_interactions.type' => CarInteraction::TYPE_FAVORITE]);
+    }
+
+    public function likeCars()
+    {
+        return $this->hasManyThrough(MyCar::class, CarInteraction::class, 'user_id', 'id', 'id', 'car_id')->where(['car_interactions.type' => CarInteraction::TYPE_LIKE]);
+    }
+
+    public function viewCars()
+    {
+        return $this->hasManyThrough(MyCar::class, CarInteraction::class, 'user_id', 'id', 'id', 'car_id')->where(['car_interactions.type' => CarInteraction::TYPE_VIEW]);
     }
 
     /**
@@ -258,5 +277,25 @@ class User extends Authenticatable implements JWTSubject
     public function getPushNotificationAttribute()
     {
         return $this->devices->first()->push_notification ?? 0;
+    }
+
+    public function getCarsCountAttribute()
+    {
+        return $this->cars()->count();
+    }
+
+    public function getFavoriteCountAttribute()
+    {
+        return $this->favoriteCars()->count();
+    }
+
+    public function getLikeCountAttribute()
+    {
+        return $this->likeCars()->count();
+    }
+
+    public function getViewCountAttribute()
+    {
+        return $this->viewCars()->count();
     }
 }
