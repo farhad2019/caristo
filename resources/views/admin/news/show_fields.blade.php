@@ -57,10 +57,35 @@
     @endif
 @endif
 
-<!-- Created At Field -->
-<dt>{!! Form::label('created_at', 'Created At:') !!}</dt>
-<dd>{!! $news->created_at !!}</dd>
 
-<!-- Updated At Field -->
-<dt>{!! Form::label('updated_at', 'Updated At:') !!}</dt>
-<dd>{!! $news->updated_at !!}</dd>
+@if($news->comments()->count() !== 0)
+    <h3>Comments</h3>
+    <hr>
+    <div class="box-footer box-comments" style="">
+        @foreach($news->comments as $row)
+        <div class="box-comment">
+            <!-- User image -->
+
+            <img class="img-circle img-sm" src="{{$news->comments[0]->user->details->image_url}}" alt="User Image">
+
+            <div class="comment-text">
+                      <span class="username">
+                        {{$news->comments[0]->user->details->first_name.' '.$news->comments[0]->user->details->last_name}}
+                        <span class="text-muted pull-right">{{$row->created_at}}</span>
+                      </span><!-- /.username -->
+                {{$row->comment_text}}
+            </div>
+            <!-- /.comment-text -->
+        </div>
+        <!-- /.box-comment -->
+        @endforeach
+    </div>
+@endif
+
+{{--<!-- Created At Field -->--}}
+{{--<dt>{!! Form::label('created_at', 'Created At:') !!}</dt>--}}
+{{--<dd>{!! $news->created_at !!}</dd>--}}
+
+{{--<!-- Updated At Field -->--}}
+{{--<dt>{!! Form::label('updated_at', 'Updated At:') !!}</dt>--}}
+{{--<dd>{!! $news->updated_at !!}</dd>--}}
