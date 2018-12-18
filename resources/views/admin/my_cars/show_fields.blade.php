@@ -31,15 +31,15 @@
             <dd>{!! $myCar->owner->name !!}</dd>
         </div>
 
-        <div class="col-md-8">
-            <!-- Year Field -->
-            <dt>{!! Form::label('year', 'Year:') !!}</dt>
-            <dd>{!! $myCar->year !!}</dd>
+            <div class="col-md-8">
+                <!-- Year Field -->
+                <dt>{!! Form::label('year', 'Year:') !!}</dt>
+                <dd>{!! $myCar->year !!}</dd>
 
-            <!-- Transmission Type Field -->
-            <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
-            <dd>{!! $myCar->transmission_type_text !!}</dd>
-        </div>
+                <!-- Transmission Type Field -->
+                <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
+                <dd>{!! $myCar->transmission_type_text !!}</dd>
+            </div>
     </div>
     <!-- /.box-body -->
     <div class="box-footer">

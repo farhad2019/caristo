@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\CarInteraction;
+use App\Models\MyCar;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Services\DataTable;
@@ -36,6 +37,19 @@ class UserDataTable extends DataTable
         $dataTable->addColumn('roles', function ($user) {
             return $user->rolesCsv;
         });
+        $dataTable->editColumn('cars_count', function (User $model) {
+            return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->cars_count . "</span></a>";
+        });
+        $dataTable->editColumn('favorite_count', function (User $model) {
+            return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_FAVORITE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->favorite_count . "</span></a>";
+        });
+        $dataTable->editColumn('like_count', function (User $model) {
+            return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_LIKE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->like_count . "</span></a>";
+        });
+        $dataTable->editColumn('view_count', function (User $model) {
+            return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_VIEW]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->view_count . "</span></a>";
+        });
+        $dataTable->rawColumns(['action', 'cars_count','favorite_count','like_count','view_count']);
         return $dataTable->addColumn('action', 'admin.users.datatables_actions');
     }
 
@@ -105,6 +119,18 @@ class UserDataTable extends DataTable
             'name',
             'email',
             'roles',
+            'cars_count'    => [
+                'title' => 'Cars'
+            ],
+            'favorite_count'    => [
+                'title' => 'Favorite'
+            ],
+            'like_count'    => [
+                'title' => 'Like'
+            ],
+            'view_count'    => [
+                'title' => 'View'
+            ],
 //            'Roles.roles' => [
 //                'searchable' => true,
 //                'title'      => 'Roles'

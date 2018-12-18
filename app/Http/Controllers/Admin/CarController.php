@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\UpdateCarRequest;
 use App\Repositories\Admin\CarRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Http\Request;
 use Response;
 
 class CarController extends AppBaseController
@@ -36,10 +37,16 @@ class CarController extends AppBaseController
      * @param CarDataTable $carDataTable
      * @return Response
      */
-    public function index(CarDataTable $carDataTable)
+    public function index(Request $request, CarDataTable $carDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
-        return $carDataTable->render('admin.cars.index');
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        $data = $request->all();
+        if ($data) {
+            return $carDataTable->interactionList($data)->render('admin.cars.index');
+        } else {
+            return $carDataTable->render('admin.cars.index');
+        }
+        //return $carDataTable->render('admin.cars.index');
     }
 
     /**
@@ -49,7 +56,7 @@ class CarController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.cars.create');
     }
 
@@ -88,7 +95,7 @@ class CarController extends AppBaseController
             return redirect(route('admin.cars.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $car);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $car);
         return view('admin.cars.show')->with('car', $car);
     }
 
@@ -109,14 +116,14 @@ class CarController extends AppBaseController
             return redirect(route('admin.cars.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $car);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $car);
         return view('admin.cars.edit')->with('car', $car);
     }
 
     /**
      * Update the specified Car in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateCarRequest $request
      *
      * @return Response
