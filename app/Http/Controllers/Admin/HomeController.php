@@ -4,25 +4,56 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helper\BreadcrumbsRegister;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Menu;
-use App\Models\Module;
-use App\Models\News;
-use App\Models\Role;
-use App\Models\User;
-use Illuminate\Support\Facades\App;
+use App\Repositories\Admin\CategoryRepository;
+use App\Repositories\Admin\MyCarRepository;
+use App\Repositories\Admin\NewsRepository;
+use App\Repositories\Admin\RoleRepository;
+use App\Repositories\Admin\UserRepository;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * @var UserRepository
      */
-    public function __construct()
+    protected $userRepository;
+
+    /**
+     * @var RoleRepository
+     */
+    protected $roleRepository;
+
+    /**
+     * @var CategoryRepository
+     */
+    protected $categoryRepository;
+
+    /**
+     * @var NewsRepository
+     */
+    protected $newsRepository;
+
+    /**
+     * @var MyCarRepository
+     */
+    protected $carRepository;
+
+    /**
+     * Create a new controller instance.
+     * @param UserRepository $userRepo
+     * @param RoleRepository $roleRepo
+     * @param CategoryRepository $categoryRepo
+     * @param NewsRepository $newsRepo
+     * @param MyCarRepository $carRepo
+     */
+    public function __construct(UserRepository $userRepo, RoleRepository $roleRepo, CategoryRepository $categoryRepo, NewsRepository $newsRepo, MyCarRepository $carRepo)
     {
         $this->middleware('auth');
+        $this->userRepository = $userRepo;
+        $this->roleRepository = $roleRepo;
+        $this->categoryRepository = $categoryRepo;
+        $this->newsRepository = $newsRepo;
+        $this->carRepository = $carRepo;
     }
 
     /**
@@ -32,18 +63,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (App::environment() == 'staging') {
-            $menu = Menu::find(5);
-            $menu->status = 0;
-            $menu->save();
-        }
-        $users = User::all()->count();
-        $roles = Role::all()->count();
-        $modules = Module::all()->count();
-        $categories = Category::all()->count();
-        $news = News::all()->count();
-        BreadcrumbsRegister::Register();
+        $users = $this->userRepository->all()->count() - 2;
+        $roles = $this->roleRepository->all()->count();
+        $categories = $this->categoryRepository->all()->count();
+        $news = $this->newsRepository->all()->count();
+        $cars = $this->carRepository->all()->count();
 
+        BreadcrumbsRegister::Register();
         if (Auth::user()->hasRole('showroom-owner')) {
             return redirect(route('admin.makeBids.index'));
         }
@@ -53,6 +79,7 @@ class HomeController extends Controller
             'roles'      => $roles,
             'categories' => $categories,
             'news'       => $news,
-            'modules'    => $modules]);
+            'cars'       => $cars
+        ]);
     }
 }

@@ -21,6 +21,7 @@
             </div>
             <!-- ./col -->
             @endability
+
             @ability('super-admin' ,'roles.index')
             <div class="col-lg-3 col-xs-4">
                 <!-- small box -->
@@ -38,8 +39,8 @@
             </div>
             <!-- ./col -->
             @endability
-            @ability('super-admin' ,'categories.index')
 
+            @ability('super-admin' ,'categories.index')
             <div class="col-lg-3 col-xs-4">
                 <!-- small box -->
                 <div class="small-box bg-green">
@@ -55,8 +56,8 @@
                 </div>
             </div>
             <!-- ./col -->
-
             @endability
+
             @ability('super-admin' ,'news.index')
             <div class="col-lg-3 col-xs-4">
                 <!-- small box -->
@@ -68,7 +69,25 @@
                     <div class="icon">
                         <i class="fa fa-th-list"></i>
                     </div>
-                    <a href="{{ route('admin.categories.index') }}" class="small-box-footer">More info
+                    <a href="{{ route('admin.news.index') }}" class="small-box-footer">More info
+                        <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            @endability
+
+            @ability('super-admin' ,'cars.index')
+            <div class="col-lg-3 col-xs-4">
+                <!-- small box -->
+                <div class="small-box bg-blue">
+                    <div class="inner">
+                        <h3>{{ $cars }}</h3>
+                        <p>Cars</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-car"></i>
+                    </div>
+                    <a href="{{ route('admin.cars.index') }}" class="small-box-footer">More info
                         <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
