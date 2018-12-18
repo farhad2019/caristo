@@ -116,6 +116,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/carInteractions', 'CarInteractionAPIController');
 
     Route::resource('v1/reportRequests', 'ReportRequestAPIController');
+
+    Route::resource('v1/tradeInCars', 'TradeInCarAPIController');
 });
 
 Route::resource('v1/carBrands', 'CarBrandAPIController');

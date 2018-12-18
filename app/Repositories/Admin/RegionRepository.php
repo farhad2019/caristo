@@ -57,6 +57,11 @@ class RegionRepository extends BaseRepository
         return $region;
     }
 
+    /**
+     * @param $request
+     * @param $region
+     * @return mixed
+     */
     public function updateRecord($request, $region)
     {
         $input = $request->all();

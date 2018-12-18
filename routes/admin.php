@@ -90,3 +90,5 @@ Route::resource('reportRequests', 'ReportRequestController');
 Route::resource('bidsHistories', 'BidsHistoryController');
 
 Route::resource('cars', 'CarController');
+
+Route::resource('tradeInCars', 'TradeInCarController');
