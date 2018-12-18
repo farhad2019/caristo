@@ -46,6 +46,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property bool is_viewed
  * @property string $ref_num
  * @property int liked_count
+ * @property int favorite_count
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -493,6 +494,14 @@ class MyCar extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * @return int
+     */
+    public function getFavoriteCountAttribute()
+    {
+        return $this->favorites()->count();
     }
 
     /**

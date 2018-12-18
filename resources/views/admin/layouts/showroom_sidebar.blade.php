@@ -25,5 +25,10 @@
                 <span class="icon-icon-4"></span> My Profile
             </a>
         </li>
+        <li class="{{ (Request::segments()[1] == 'user')?'current':'' }}">
+            <a href="{{ route('admin.myCars.create') }}" title="Profile">
+                <span class="icon-icon-4"></span> Add Cars
+            </a>
+        </li>
     </ul>
 </div>
