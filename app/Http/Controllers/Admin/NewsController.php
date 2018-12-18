@@ -97,7 +97,6 @@ class NewsController extends AppBaseController
 
             return redirect(route('admin.news.index'));
         }
-
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $news);
         return view('admin.news.show')->with('news', $news);
     }

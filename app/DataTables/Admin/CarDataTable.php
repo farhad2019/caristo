@@ -76,11 +76,19 @@ class CarDataTable extends DataTable
      */
     public function query(MyCar $model)
     {
+        if ($this->owner_id && $this->interaction_type) {
+            $owner_id = $this->owner_id;
+            $interactionType = $this->interaction_type;
+            $model = $model->whereHas('userInteractions', function ($userInteractions) use ($owner_id, $interactionType) {
+                return $userInteractions->where(['user_id' => $owner_id, 'type' => $interactionType]);
+            });
+        }
         return $model->newQuery();
     }
 
     public function interactionList($data)
     {
+
         if (isset($data['owner_id']) && isset($data['type'])) {
             $this->owner_id = $data['owner_id'];
             $this->interaction_type = $data['type'];

@@ -482,6 +482,11 @@ class MyCar extends Model
         return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_FAVORITE);
     }
 
+    public function userInteractions()
+    {
+        return $this->hasMany(CarInteraction::class, 'car_id');
+    }
+
     public function carRegions()
     {
         return $this->hasMany(CarRegion::class, 'car_id');

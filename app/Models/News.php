@@ -239,4 +239,14 @@ class News extends Model
     {
         return ($this->views()->where('user_id', \Auth::id())->first() != null);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'news_id');
+    }
 }
