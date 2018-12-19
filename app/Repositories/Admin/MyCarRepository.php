@@ -59,55 +59,56 @@ class MyCarRepository extends BaseRepository
                         'trunk'       => $request->trunk,
                         'weight'      => $request->weight,
                     ),
-                'Seating_Capacity'      => array(
+                'Seating_Capacity'    => array(
                     'seats' => $request->seats,
                 ),
-                'Drivetrain'            => array(
+                'Drivetrain'          => array(
                     'drivetrain' => $request->drivetrain,
                 ),
-                'Engine'                => array(
+                'Engine'              => array(
                     'displacement' => $request->displacement,
                     'clynders'     => $request->clynders,
                 ),
-                'Performance'           => array(
+                'Performance'         => array(
                     'max_speed'    => $request->max_speed,
                     'acceleration' => $request->acceleration,
                     'hp_rpm'       => $request->hp_rpm,
                     'torque'       => $request->torque,
                 ),
-                'Transmission'          => array(
+                'Transmission'        => array(
                     'gearbox' => $request->gearbox,
                 ),
-                'Brakes'                => array(
+                'Brakes'              => array(
                     'brakes' => $request->brakes,
                 ),
-                'Suspension'            => array(
+                'Suspension'          => array(
                     'suspension' => $request->suspension,
                 ),
                 'Wheels_Tyres'        => array(
                     'front_tyre' => $request->front_tyre,
                     'back_tyre'  => $request->back_tyre,
                 ),
-                'Fuel'                  => array(
+                'Fuel'                => array(
                     'consumbsion' => $request->consumbsion,
                 ),
-                'Emission'              => array(
+                'Emission'            => array(
                     'emission' => $request->emission,
                 ),
                 'Warranty_Maintenace' => array(
                     'warranty'    => $request->warranty,
                     'maintenance' => $request->maintenance,
                 ),
-                'Lifecycle'             => array(
+                'Lifecycle'           => array(
                     'lifecycle' => $request->lifecycle,
                 ),
-                'Depreciation_Trend'    => array(
+                'Depreciation_Trend'  => array(
                     'depreciation_trend' => $request->depreciation_trend,
                 )
             );
             $input['category_id'] = $request->category_id;
             $input['owner_id'] = $user->id;
-            $input['owner_type'] = User::RANDOM_USER;
+            $input['owner_type'] = User::SHOWROOM_OWNER;
+
             $input['model_id'] = $request->model_id;
             $input['year'] = $request->year;
             $input['price'] = $request->price;
@@ -136,10 +137,7 @@ class MyCarRepository extends BaseRepository
         } else {
             $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometre', 'region', 'price', 'description', 'regions']);
             $input['owner_id'] = $user->id;
-            $input['owner_type'] = User::RANDOM_USER;
-            if ($user->hasRole('showroom-owner')) {
-                $input['owner_type'] = User::SHOWROOM_OWNER;
-            }
+            $input['owner_type'] = User::SHOWROOM_OWNER;
 
             // current date + 1
             $date = Carbon::now()->addDay();
