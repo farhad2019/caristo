@@ -278,7 +278,7 @@ class MyCar extends Model
         'is_favorite',
         'bid_close_at',
         'myCarFeatures',
-//        'limited_edition_specs_array',
+        'limited_edition_specs_array',
 //        'carFeatures',
         'created_at'
     ];
