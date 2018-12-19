@@ -151,7 +151,7 @@ class MyCar extends Model
     const AUTOMATIC = 20;
     const SHOWROOM = 10;
     const USER = 20;
-    const LIMITEDADDITION = 29;
+    const LIMITEDADDITION = 28;
     const FOURWD = '4WD';
     const AWD = 'AWD';
     const FWD = 'FWD';
