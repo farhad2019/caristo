@@ -583,6 +583,9 @@ class MyCar extends Model
      */
     public function getLimitedEditionSpecsArrayAttribute()
     {
-        return \GuzzleHttp\json_decode($this->limited_edition_specs);
+        if (!empty($this->limited_edition_specs))
+            return \GuzzleHttp\json_decode($this->limited_edition_specs);
+        else
+            return null;
     }
 }
