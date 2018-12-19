@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer owner_type
  * @property double kilometre
  * @property string bid_close_at
+ * @property string limited_edition_specs
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -151,10 +152,21 @@ class MyCar extends Model
     const SHOWROOM = 10;
     const USER = 20;
     const LIMITEDADDITION = 29;
+    const FOURWD = '4WD';
+    const AWD = 'AWD';
+    const FWD = 'FWD';
+    const RWD = 'RWD';
 
     public static $TRANSMISSION_TYPE_TEXT = [
         self::MANUAL    => 'Manual',
         self::AUTOMATIC => 'Automatic'
+    ];
+
+    public static $DRIVETRAIN = [
+        self::FOURWD => '4WD',
+        self::AWD    => 'AWD',
+        self::FWD    => 'FWD',
+        self::RWD    => 'RWD',
     ];
 
     public static $OWNER_TYPE_TEXT = [
@@ -183,7 +195,8 @@ class MyCar extends Model
         'bid_close_at',
         'region',
         'category_id',
-        'description'
+        'description',
+        'limited_edition_specs',
     ];
 
     /**
@@ -225,6 +238,7 @@ class MyCar extends Model
         'is_liked',
         'is_viewed',
         'is_favorite',
+        'limited_edition_specs_array',
         'ref_num'
     ];
 
@@ -264,6 +278,7 @@ class MyCar extends Model
         'is_favorite',
         'bid_close_at',
         'myCarFeatures',
+//        'limited_edition_specs_array',
 //        'carFeatures',
         'created_at'
     ];
@@ -482,16 +497,21 @@ class MyCar extends Model
         return $this->hasMany(CarInteraction::class, 'car_id')->where('type', CarInteraction::TYPE_FAVORITE);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function userInteractions()
     {
         return $this->hasMany(CarInteraction::class, 'car_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function carRegions()
     {
         return $this->hasMany(CarRegion::class, 'car_id');
     }
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -556,5 +576,13 @@ class MyCar extends Model
     {
         $refNum = date('Ym');
         return $refNum . sprintf("%05d", $this->id);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLimitedEditionSpecsArrayAttribute()
+    {
+        return \GuzzleHttp\json_decode($this->limited_edition_specs);
     }
 }
