@@ -42,6 +42,10 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             return $query->where('category_id', $category_id);
         });
 
+        var_dump($model->getBindings());
+        var_dump($model->toSql());
+        exit();
+
         $brand_ids = $this->request->get('brand_ids', -1);
         $model = $model->when(($brand_ids > 0), function ($query) use ($brand_ids) {
             return $query->whereHas('carModel', function ($carModel) use ($brand_ids) {
