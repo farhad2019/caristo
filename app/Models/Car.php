@@ -130,7 +130,7 @@ class Car extends Model
     public $table = 'cars';
 
     protected $dates = ['deleted_at'];
-    
+
     public $fillable = [
         'type_id',
         'category_id',
