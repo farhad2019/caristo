@@ -72,7 +72,7 @@
 </div>
 
 @php($user = \Illuminate\Support\Facades\Auth::user())
-        <!-- Email Field -->
+<!-- Email Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('email', 'Email:') !!}
     {!! Form::email('email', $user->email, ['class' => 'form-control']) !!}
@@ -117,11 +117,11 @@
                 {!! Form::label('phone', $attribute->name.':') !!}
                 {!! Form::number('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'step' =>0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
             </div>
-            @elseif($attribute->type == 30 || $attribute->type == 40)
+        @elseif($attribute->type == 30 || $attribute->type == 40)
             @foreach($attribute->option_array as $item)
-            @php($options[$item['id']] = $item['name'])
+                @php($options[$item['id']] = $item['name'])
             @endforeach
-                    <!-- Regional Specification Field -->
+            <!-- Regional Specification Field -->
             <div class="form-group col-sm-6">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::select('attribute['.$attribute->id.']', $options, null, ['class' => 'form-control select2', ($attribute->type == 40)?
@@ -157,15 +157,14 @@
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::number('attribute['.$attribute->id.']', (int)$value, ['class' => 'form-control', 'step' =>0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
             </div>
-            @elseif($attribute->type == 30 || $attribute->type == 40)
+        @elseif($attribute->type == 30 || $attribute->type == 40)
             @foreach($attribute->option_array as $item)
-            @php($options[$item['id']] = $item['name'])
+                @php($options[$item['id']] = $item['name'])
             @endforeach
-                    <!-- Regional Specification Field -->
+            <!-- Regional Specification Field -->
             <div class="form-group col-sm-6">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
-                {!! Form::select('attribute['.$attribute->id.']', $options, $value, ['class' => 'form-control select2', ($attribute->type == 40)?
-                'multiple':'', 'placeholder' => 'Pick attribute '.$attribute->name]) !!}
+                {!! Form::select('attribute['.$attribute->id.']', $options, $value, ['class' => 'form-control select2', ($attribute->type == 40)? 'multiple':'', 'placeholder' => 'Pick attribute '.$attribute->name]) !!}
             </div>
             @php($options = [])
         @else
@@ -174,107 +173,98 @@
                 {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
                 'multiple':'']) !!}
             </div>
-            @endif
+        @endif
+    @endforeach
+    {{--@foreach($myCar->myCarAttributes as $attribute)
+        @if($attribute->toArray()['attr_option'] !== null)
+        @endif
+        @if($attribute->type == 10)
+            <div class="form-group col-sm-6">
+                {!! Form::label('phone', $attribute->name.':') !!}
+                {!! Form::text('attribute['.$attribute->id.']', $attribute->value, ['class' => 'form-control']) !!}
+            </div>
+        @elseif($attribute->type == 20)
+            <div class="form-group col-sm-6">
+                {!! Form::label('phone', $attribute->name.':') !!}
+                {!! Form::number('attribute['.$attribute->id.']', $attribute->value, ['class' => 'form-control', 'step' =>0.1]) !!}
+            </div>
+        @elseif($attribute->type == 30 || $attribute->type == 40)
+            @foreach($attribute->option_array as $item)
+                @php($options[$item['id']] = $item['name'])
             @endforeach
+            <!-- Regional Specification Field -->
+            <div class="form-group col-sm-6">
+                {!! Form::label($attribute->name, $attribute->name.':') !!}
+                {!! Form::select('attribute['.$attribute->id.']', $options, $attribute->value, ['class' => 'form-control select2', ($attribute->type == 40)?
+                'multiple':'']) !!}
+            </div>
+            @php($options = [])
+        @else
+            <div class="form-group col-sm-6">
+                {!! Form::label('phone', $attribute->name.':') !!}
+                {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
+                'multiple':'']) !!}
+            </div>
+        @endif
+    @endforeach--}}
+@endif
 
+<!-- Multiple Regions Selection Field -->
+@if(isset($myCar))
+    @foreach($myCar->carRegions as $region)
+        <div class="regions">
+            <div class="form-group col-sm-3">
+                {!! Form::label('price','Price in '. $region->region->name) !!}
+                {!! Form::hidden('regions[]',$region->id, null, ['class' => 'form-control']) !!}
+                {!! Form::text('price[]', $region->price, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
+            </div>
+        </div>
+    @endforeach
+@else
+    @foreach($regions as $key => $region)
+        <div class="regions" style="display: none">
+            <div class="form-group col-sm-6">
+                {!! Form::label('regions',$region, null, ['class' => 'form-control']) !!}
+                {!! Form::hidden('regions[]',$key, null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="form-group col-sm-6">
+                {!! Form::label('price', $region.' Price:') !!}
+                {!! Form::text('price[]', null, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
+            </div>
+        </div>
+    @endforeach
+@endif
+<!-- Media Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('media', 'Images:') !!}
+    {!! Form::file('media[]', ['class' => 'form-control', 'multiple']) !!}
+</div>
 
-            {{--@foreach($myCar->myCarAttributes as $attribute)
-                @if($attribute->toArray()['attr_option'] !== null)
-                @endif
-                @if($attribute->type == 10)
-                    <div class="form-group col-sm-6">
-                        {!! Form::label('phone', $attribute->name.':') !!}
-                        {!! Form::text('attribute['.$attribute->id.']', $attribute->value, ['class' => 'form-control']) !!}
-                    </div>
-                @elseif($attribute->type == 20)
-                    <div class="form-group col-sm-6">
-                        {!! Form::label('phone', $attribute->name.':') !!}
-                        {!! Form::number('attribute['.$attribute->id.']', $attribute->value, ['class' => 'form-control', 'step' =>0.1]) !!}
-                    </div>
-                @elseif($attribute->type == 30 || $attribute->type == 40)
-                    @foreach($attribute->option_array as $item)
-                        @php($options[$item['id']] = $item['name'])
-                    @endforeach
-                    <!-- Regional Specification Field -->
-                    <div class="form-group col-sm-6">
-                        {!! Form::label($attribute->name, $attribute->name.':') !!}
-                        {!! Form::select('attribute['.$attribute->id.']', $options, $attribute->value, ['class' => 'form-control select2', ($attribute->type == 40)?
-                        'multiple':'']) !!}
-                    </div>
-                    @php($options = [])
-                @else
-                    <div class="form-group col-sm-6">
-                        {!! Form::label('phone', $attribute->name.':') !!}
-                        {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
-                        'multiple':'']) !!}
-                    </div>
-                @endif
-            @endforeach--}}
+<!-- Year Field -->
+<div class="form-group col-sm-12 clearfix">
+    {!! Form::label('description', 'Description:') !!}
+    {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Enter Description']) !!}
+</div>
 
-            @endif
-                    <!-- Mulitple Regions Selection Field -->
-            @if(isset($myCar))
-                    @foreach($myCar->carRegions as $region)
-                        <div class="regions">
-                            <div class="form-group col-sm-3">
-                                {!! Form::label('price','Price in '. $region->region->name) !!}
-                                {!! Form::hidden('regions[]',$region->id, null, ['class' => 'form-control']) !!}
-                                {!! Form::text('price[]', $region->price, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
-                            </div>
-                        </div>
-                @endforeach
-            @else
-
-                @foreach($regions as $key => $region)
-                    <div class="regions" style="display: none">
-                        <div class="form-group col-sm-6">
-                            {!! Form::label('regions',$region, null, ['class' => 'form-control']) !!}
-                            {!! Form::hidden('regions[]',$key, null, ['class' => 'form-control']) !!}
-                        </div>
-                        <div class="form-group col-sm-6">
-                            {!! Form::label('price', $region.' Price:') !!}
-                            {!! Form::text('price[]', null, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
-                        </div>
-                    </div>
-                    @endforeach
-
-
-                    @endif
-                            <!-- Media Field -->
-                    <div class="form-group col-sm-6">
-                        {!! Form::label('media', 'Images:') !!}
-                        {!! Form::file('media[]', ['class' => 'form-control', 'multiple']) !!}
-                    </div>
-
-
-                    <!-- Year Field -->
-                    <div class="form-group col-sm-6">
-                        {!! Form::label('description', 'Description:') !!}
-                        {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Enter Description']) !!}
-                    </div>
-
-
-                    <!-- Submit Field -->
-                    <div class="form-group col-sm-12">
-                        {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                        <a href="{!! route('admin.myCars.index') !!}" class="btn btn-default">Cancel</a>
-                    </div>
-                    @push('scripts')
-                    <script>
-                        $('#category_id').on('change', function () {
-                            var cat_id = $(this).val();
+<!-- Submit Field -->
+<div class="form-group col-sm-12">
+    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+    <a href="{!! route('admin.myCars.index') !!}" class="btn btn-default">Cancel</a>
+</div>
+@push('scripts')
+    <script>
+        $('#category_id').on('change', function () {
+            var cat_id = $(this).val();
 //            if (cat_id == 26) {
 //                $('#mileage').show();
 //            }
-                            if (cat_id == 29) {
-                                $('.regions').show();
-                                $('.region').hide();
-                            } else {
-                                $('.regions').hide();
+            if (cat_id == 29) {
+                $('.regions').show();
+                $('.region').hide();
+            } else {
+                $('.regions').hide();
 //                $('#mileage').hide();
-                            }
-
-                        });
-                    </script>
-
-                    @endpush
+            }
+        });
+    </script>
+@endpush
