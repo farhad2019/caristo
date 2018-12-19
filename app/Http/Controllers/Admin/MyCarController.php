@@ -21,6 +21,7 @@ use App\Repositories\Admin\MyCarRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\RegionalSpecificationRepository;
 use App\Repositories\Admin\RegionRepository;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
@@ -133,15 +134,16 @@ class MyCarController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateMyCarRequest $request)
+    public function store(Request $request)
     {
         $myCar = $this->myCarRepository->saveRecord($request);
-
+    if($request->category_id  != MyCar::LIMITEDADDITION) {
         if (!empty($request->attribute)) {
             foreach ($request->attribute as $key => $item) {
                 $myCar->carAttributes()->attach($key, ['value' => $item]);
             }
         }
+    }
 
         Flash::success('Car saved successfully.');
         return redirect(route('admin.myCars.index'));

@@ -72,7 +72,7 @@ class CarAPIController extends AppBaseController
      *              //@SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  //@SWG\Items(ref="#/definitions/Car")
+     *                  //@SWG\Items(ref="#/definitions/MyCar")
      *              ),
      *              //@SWG\Property(
      *                  property="message",
@@ -114,7 +114,7 @@ class CarAPIController extends AppBaseController
      *          in="body",
      *          description="Car that should be stored",
      *          required=false,
-     *          //@SWG\Schema(ref="#/definitions/Car")
+     *          //@SWG\Schema(ref="#/definitions/MyCar")
      *      ),
      *      //@SWG\Response(
      *          response=200,
@@ -127,7 +127,7 @@ class CarAPIController extends AppBaseController
      *              ),
      *              //@SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/Car"
+     *                  ref="#/definitions/MyCar"
      *              ),
      *              //@SWG\Property(
      *                  property="message",
