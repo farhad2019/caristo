@@ -432,7 +432,6 @@
     @endforeach
 @endif
 
-
 <!-- Media Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('media', 'Images:') !!}
@@ -442,7 +441,7 @@
 <!-- Year Field -->
 <div class="form-group col-sm-12 clearfix">
     {!! Form::label('description', 'Description:') !!}
-    {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' => 'Enter Description']) !!}
+    {!! Form::textarea('notes', null, ['class' => 'form-control', 'placeholder' => 'Enter Description']) !!}
 </div>
 
 <!-- Submit Field -->
@@ -473,8 +472,6 @@
                     $('.region').show();
                 }
             });
-
         });
-
     </script>
 @endpush

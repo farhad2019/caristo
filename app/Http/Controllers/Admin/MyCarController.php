@@ -128,22 +128,19 @@ class MyCarController extends AppBaseController
     }
 
     /**
-     * Store a newly created MyCar in storage.
-     *
-     * @param CreateMyCarRequest $request
-     *
-     * @return Response
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
         $myCar = $this->myCarRepository->saveRecord($request);
-    if($request->category_id  != MyCar::LIMITEDADDITION) {
-        if (!empty($request->attribute)) {
-            foreach ($request->attribute as $key => $item) {
-                $myCar->carAttributes()->attach($key, ['value' => $item]);
+        if ($request->category_id != MyCar::LIMITEDADDITION) {
+            if (!empty($request->attribute)) {
+                foreach ($request->attribute as $key => $item) {
+                    $myCar->carAttributes()->attach($key, ['value' => $item]);
+                }
             }
         }
-    }
 
         Flash::success('Car saved successfully.');
         return redirect(route('admin.myCars.index'));
@@ -184,8 +181,6 @@ class MyCarController extends AppBaseController
             Flash::error('Car not found');
             return redirect(route('admin.myCars.index'));
         }
-
-//        dd($myCar->carRegions[0]->region->name);
 
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');

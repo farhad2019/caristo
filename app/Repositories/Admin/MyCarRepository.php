@@ -47,7 +47,6 @@ class MyCarRepository extends BaseRepository
      */
     public function saveRecord($request)
     {
-
         $user = Auth::user();
         if ($request->category_id == MyCar::LIMITEDADDITION) {
             $limited = array(
@@ -117,7 +116,7 @@ class MyCarRepository extends BaseRepository
             $input['engine_type_id'] = $request->engine_type_id;
             $input['name'] = $request->name;
             $input['amount'] = $request->amount;
-            $input['description'] = $request->description;
+            $input['notes'] = $request->notes;
             $input['limited_edition_specs'] = json_encode($limited);
 
             $myCar = $this->create($input);
