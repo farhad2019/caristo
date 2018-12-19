@@ -11,112 +11,112 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
- * @SWG\Definition(
+ * //@SWG\Definition(
  *      definition="Car",
  *      required={"type_id", "category_id", "model_id", "engine_type_id", "regional_specification_id", "owner_id", "year", "chassis", "transmission_type", "kilometre", "average_mkp", "amount", "name", "email", "country_code", "phone", "owner_type", "notes"},
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="id",
  *          description="id",
  *          type="integer",
  *          format="int32"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="type_id",
  *          description="type_id",
  *          type="integer",
  *          format="int32"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="category_id",
  *          description="category_id",
  *          type="integer",
  *          format="int32"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="model_id",
  *          description="model_id",
  *          type="integer",
  *          format="int32"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="engine_type_id",
  *          description="engine_type_id",
  *          type="integer",
  *          format="int32"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="regional_specification_id",
  *          description="regional_specification_id",
  *          type="integer",
  *          format="int32"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="owner_id",
  *          description="owner_id",
  *          type="integer",
  *          format="int32"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="year",
  *          description="year",
  *          type="string",
  *          format="date"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="chassis",
  *          description="chassis",
  *          type="string"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="transmission_type",
  *          description="transmission_type",
  *          type="boolean"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="kilometre",
  *          description="kilometre",
  *          type="number",
  *          format="float"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="average_mkp",
  *          description="average_mkp",
  *          type="number",
  *          format="float"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="amount",
  *          description="amount",
  *          type="number",
  *          format="float"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="name",
  *          description="name",
  *          type="string"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="email",
  *          description="email",
  *          type="string"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="country_code",
  *          description="country_code",
  *          type="string"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="phone",
  *          description="phone",
  *          type="integer",
  *          format="int32"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="owner_type",
  *          description="owner_type",
  *          type="boolean"
  *      ),
- *      @SWG\Property(
+ *      //@SWG\Property(
  *          property="notes",
  *          description="notes",
  *          type="string"
