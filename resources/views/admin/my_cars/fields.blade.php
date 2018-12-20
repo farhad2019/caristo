@@ -218,52 +218,43 @@
 
                     <!-- Start Edit of Limited Editions Field -->
             @if($limited !== null)
-                @foreach($limited as $key=>$row)
-                        @if($key == 'Dimensions_Weight')
+                @foreach($limited as $key => $row)
+                        @if($key)
                             <div class="form-group col-sm-12">
                                 <h3>Dimensions & Weight</h3>
                                 <hr>
                             </div>
                             <div class="form-group col-sm-6 ">
                                 {!! Form::label('length', 'Length:') !!}
-                                {!! Form::text('length',$row['length'],['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
+                                {!! Form::text('length',$row['LENGTH'],['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
                             </div>
 
                             <div class="form-group col-sm-6 regions">
                                 {!! Form::label('width', 'Width:') !!}
-                                {!! Form::text('width',$row['width'],['class' => 'form-control', 'placeholder' => 'Width in MM']) !!}
+                                {!! Form::text('width',$row['WIDTH'],['class' => 'form-control', 'placeholder' => 'Width in MM']) !!}
                             </div>
 
                             <div class="form-group col-sm-6 regions">
                                 {!! Form::label('height', 'Height:') !!}
-                                {!! Form::text('height', $row['height'], ['class' => 'form-control', 'placeholder' => 'Height in MM']) !!}
+                                {!! Form::text('height', $row['HEIGHT'], ['class' => 'form-control', 'placeholder' => 'Height in MM']) !!}
                             </div>
 
                             <div class="form-group col-sm-6 regions">
                                 {!! Form::label('weight_dist', 'WEIGHT DISTRIBUTION:') !!}
-                                {!! Form::text('weight_dist', $row['weight_dist'], ['class' => 'form-control', 'placeholder' => 'WEIGHT DISTRIBUTION']) !!}
+                                {!! Form::text('weight_dist', $row['WEIGHT DISTRIBUTION'], ['class' => 'form-control', 'placeholder' => 'WEIGHT DISTRIBUTION']) !!}
                             </div>
 
                             <div class="form-group col-sm-6 regions">
                                 {!! Form::label('trunk', 'Trunk:') !!}
-                                {!! Form::text('trunk', $row['trunk'], ['class' => 'form-control', 'placeholder' => 'Trunk in Length']) !!}
+                                {!! Form::text('trunk', $row['TRUNK'], ['class' => 'form-control', 'placeholder' => 'Trunk in Length']) !!}
                             </div>
 
                             <div class="form-group col-sm-6 regions">
                                 {!! Form::label('WEIGHT', 'WEIGHT:') !!}
-                                {!! Form::text('weight', $row['weight'], ['class' => 'form-control', 'placeholder' => 'Weight in KG']) !!}
+                                {!! Form::text('weight', $row['WEIGHT'], ['class' => 'form-control', 'placeholder' => 'Weight in KG']) !!}
                             </div>
 
-                           @elseif($key ='Seating_Capacity')
-                            <div class="form-group col-sm-12 regions">
-                                <hr>
-                                <h3>Seating Capacity</h3>
-                                <hr>
-                                <div class="form-group col-sm-6 regions">
-                                    {!! Form::label('seats', 'MAX.NO OF SEATS:') !!}
-                                    {!! Form::text('seats', $row['seats'], ['class' => 'form-control', 'placeholder' => 'MAX.NO OF SEATS']) !!}
-                                </div>
-                            </div>
+
                             @endif
                             @endforeach
                             @else

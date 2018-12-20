@@ -184,8 +184,8 @@ class MyCarController extends AppBaseController
             return redirect(route('admin.myCars.index'));
         }
         $limited = json_decode($myCar->limited_edition_specs,true);
-      
-        
+       
+
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
