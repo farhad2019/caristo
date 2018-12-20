@@ -221,7 +221,7 @@
 </div>
 <div class="form-group col-sm-6 regions">
     {!! Form::label('length', 'Length:') !!}
-    {!! Form::text('length', null, ['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
+    {!! Form::text('length', isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']:null, ['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
 </div>
 
 <div class="form-group col-sm-6 regions">
@@ -254,7 +254,7 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('seats', 'MAX.NO OF SEATS:') !!}
-        {!! Form::text('seats', null, ['class' => 'form-control', 'placeholder' => 'MAX.NO OF SEATS']) !!}
+        {!! Form::text('seats', isset($limited_edition_specs)? $limited_edition_specs['Seating_Capacity']['MAX.NO OF SEATS']:null, ['class' => 'form-control', 'placeholder' => 'MAX.NO OF SEATS']) !!}
     </div>
 </div>
 

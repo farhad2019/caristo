@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use function foo\func;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -21,8 +21,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer owner_id
  * @property integer owner_type
  * @property double kilometre
+ * @property double amount
  * @property string bid_close_at
  * @property string limited_edition_specs
+ * @property string depreciation_trend
+ * @property string life_cycle
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -53,6 +56,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int favorite_count
  * @property mixed|null limited_edition_specs_array
  * @property mixed|null owner_type_text
+ * @property array|null depreciation_trend_value
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -245,6 +249,7 @@ class MyCar extends Model
         'is_viewed',
         'is_favorite',
         'limited_edition_specs_array',
+        'depreciation_trend_value',
         'ref_num'
     ];
 
@@ -286,6 +291,7 @@ class MyCar extends Model
         'bid_close_at',
         'myCarFeatures',
         'limited_edition_specs_array',
+        'depreciation_trend_value',
 //        'carFeatures',
         'created_at'
     ];
@@ -607,5 +613,29 @@ class MyCar extends Model
             return $specs;
         } else
             return null;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getDepreciationTrendValueAttribute()
+    {
+        if (!empty($this->depreciation_trend)) {
+            $depreciation = [];
+            $depreciation_trend_amount = ($this->amount * $this->depreciation_trend) / 100;
+            $year = Carbon::now();
+            $current_year = $year->format('Y');
+            $yearLists = [(int)$current_year, ((int)$current_year + 1), ((int)$current_year + 2), ((int)$current_year + 3)];
+
+            foreach ($yearLists as $key => $yearList) {
+                $depreciation[$key] = [
+                    'year'   => $yearList,
+                    'amount' => $this->amount - ($key * $depreciation_trend_amount)
+                ];
+            }
+            return $depreciation;
+        } else {
+            return null;
+        }
     }
 }

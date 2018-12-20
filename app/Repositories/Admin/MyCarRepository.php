@@ -50,15 +50,14 @@ class MyCarRepository extends BaseRepository
         $user = Auth::user();
         if ($request->category_id == MyCar::LIMITEDADDITION) {
             $limited = array(
-                'Dimensions_Weight'    =>
-                    array(
-                        'LENGTH'              => $request->length,
-                        'WIDTH'               => $request->width,
-                        'HEIGHT'              => $request->height,
-                        'WEIGHT DISTRIBUTION' => $request->weight_dist,
-                        'TRUNK'               => $request->trunk,
-                        'WEIGHT'              => $request->weight,
-                    ),
+                'Dimensions_Weight'    => array(
+                    'LENGTH'              => $request->length,
+                    'WIDTH'               => $request->width,
+                    'HEIGHT'              => $request->height,
+                    'WEIGHT DISTRIBUTION' => $request->weight_dist,
+                    'TRUNK'               => $request->trunk,
+                    'WEIGHT'              => $request->weight,
+                ),
                 'Seating_Capacity'     => array(
                     'MAX.NO OF SEATS' => $request->seats,
                 ),
