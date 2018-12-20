@@ -320,15 +320,51 @@ class MyCarAPIController extends AppBaseController
      *      )
      * )
      */
-    public function update($id, UpdateMyCarAPIRequest $request)
+    public function update($id, Request $request)
     {
+        
         /** @var MyCar $myCar */
         $myCar = $this->myCarRepository->findWithoutFail($id);
         if (empty($myCar)) {
             return $this->sendError('My Car not found');
         }
 
-        $myCar = $this->myCarRepository->updateRecord($request, $myCar);
+        $myCar = $this->myCarRepository->updateApiRecord($request, $myCar);
+
+        if (is_string($request->car_attributes)) {
+            $myCar->my_car_attributes->delete();
+            if (!empty(json_decode($request->car_attributes))) {
+                foreach (json_decode($request->car_attributes) as $key => $car_attribute) {
+                    $attribute = $this->attributeRepository->findWhere(['id' => array_keys(get_object_vars($car_attribute))[0]]);
+
+                    if ($attribute->count() > 0) {
+                        $myCar->carAttributes()->attach(array_keys(get_object_vars($car_attribute))[0], ['value' => array_values(get_object_vars($car_attribute))[0]]);
+                    }
+                }
+            }
+        } elseif (is_array($request->car_attributes)) {
+            $myCar->my_car_attributes->delete();
+            if (!empty($request->car_attributes)) {
+                foreach ($request->car_attributes as $key => $car_attribute) {
+                    $attribute = $this->attributeRepository->findWhere(['id' => array_keys($car_attribute)[0]]);
+                    if ($attribute->count() > 0) {
+                        $myCar->carAttributes()->attach(array_keys($car_attribute)[0], ['value' => array_values($car_attribute)[0]]);
+                    }
+                }
+            }
+        }
+
+        if (is_string($request->car_features)) {
+            $myCar->my_car_features->delete();
+            if (!empty(json_decode($request->car_features))) {
+                $myCar->carFeatures()->attach(json_decode($request->car_features));
+            }
+        } elseif (is_array($request->car_features)) {
+            $myCar->my_car_features->delete();
+            if (!empty($request->car_features)) {
+                $myCar->carFeatures()->attach($request->car_features);
+            }
+        }
         return $this->sendResponse($myCar->toArray(), 'MyCar updated successfully');
     }
 
