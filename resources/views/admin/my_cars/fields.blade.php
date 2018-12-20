@@ -226,27 +226,27 @@
 
 <div class="form-group col-sm-6 regions">
     {!! Form::label('width', 'Width:') !!}
-    {!! Form::text('width', null, ['class' => 'form-control', 'placeholder' => 'Width in MM']) !!}
+    {!! Form::text('width',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WIDTH']:null, ['class' => 'form-control', 'placeholder' => 'Width in MM']) !!}
 </div>
 
 <div class="form-group col-sm-6 regions">
     {!! Form::label('height', 'Height:') !!}
-    {!! Form::text('height', null, ['class' => 'form-control', 'placeholder' => 'Height in MM']) !!}
+    {!! Form::text('height',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['HEIGHT']:null, ['class' => 'form-control', 'placeholder' => 'Height in MM']) !!}
 </div>
 
 <div class="form-group col-sm-6 regions">
     {!! Form::label('weight_dist', 'WEIGHT DISTRIBUTION:') !!}
-    {!! Form::text('weight_dist', null, ['class' => 'form-control', 'placeholder' => 'WEIGHT DISTRIBUTION']) !!}
+    {!! Form::text('weight_dist',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT DISTRIBUTION']:null, ['class' => 'form-control', 'placeholder' => 'WEIGHT DISTRIBUTION']) !!}
 </div>
 
 <div class="form-group col-sm-6 regions">
     {!! Form::label('trunk', 'Trunk:') !!}
-    {!! Form::text('trunk', null, ['class' => 'form-control', 'placeholder' => 'Trunk in Length']) !!}
+    {!! Form::text('trunk',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['TRUNK']:null, ['class' => 'form-control', 'placeholder' => 'Trunk in Length']) !!}
 </div>
 
 <div class="form-group col-sm-6 regions">
     {!! Form::label('WEIGHT', 'WEIGHT:') !!}
-    {!! Form::text('weight', null, ['class' => 'form-control', 'placeholder' => 'Weight in KG']) !!}
+    {!! Form::text('weight',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT']:null, ['class' => 'form-control', 'placeholder' => 'Weight in KG']) !!}
 </div>
 <div class="form-group col-sm-12 regions">
     <hr>
@@ -264,7 +264,7 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('DRIVETRAIN', 'DRIVETRAIN:') !!}
-        {!! Form::select('drivetrain', \App\Models\MyCar::$DRIVETRAIN, null, ['class' => 'form-control select2']) !!}
+        {!! Form::select('drivetrain', \App\Models\MyCar::$DRIVETRAIN,  isset($limited_edition_specs)? $limited_edition_specs['Drivetrain']['DRIVETRAIN']:null, ['class' => 'form-control select2']) !!}
     </div>
 </div>
 
@@ -274,11 +274,11 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('DISPLACEMENT', 'DISPLACEMENT:') !!}
-        {!! Form::text('displacement', null, ['class' => 'form-control', 'placeholder' => 'Displacement is CC']) !!}
+        {!! Form::text('displacement',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['DISPLACEMENT']:null, ['class' => 'form-control', 'placeholder' => 'Displacement is CC']) !!}
     </div>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('CLYNDERS', 'NO. OF  CLYNDERS:') !!}
-        {!! Form::text('clynders', null, ['class' => 'form-control', 'placeholder' => 'NO. OF  CLYNDERS']) !!}
+        {!! Form::text('clynders',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['NO. OF CYLINDER']:null, ['class' => 'form-control', 'placeholder' => 'NO. OF  CLYNDERS']) !!}
     </div>
 </div>
 
@@ -288,19 +288,19 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('SPEED', 'MAX SPEED:') !!}
-        {!! Form::text('max_speed', null, ['class' => 'form-control', 'placeholder' => 'Max speed in KM/H']) !!}
+        {!! Form::text('max_speed',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['MAX SPEED']:null, ['class' => 'form-control', 'placeholder' => 'Max speed in KM/H']) !!}
     </div>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('ACCELERATION', 'ACCELERATION') !!}
-        {!! Form::text('acceleration', null, ['class' => 'form-control', 'placeholder' => 'ACCELERATION 0-100 Sec']) !!}
+        {!! Form::text('acceleration',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['ACCELERATION 0-100']:null, ['class' => 'form-control', 'placeholder' => 'ACCELERATION 0-100 Sec']) !!}
     </div>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('RPM', 'HP / RPM') !!}
-        {!! Form::text('hp_rpm', null, ['class' => 'form-control', 'placeholder' => 'HP / RPM']) !!}
+        {!! Form::text('hp_rpm',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['HP / RPM']:null, ['class' => 'form-control', 'placeholder' => 'HP / RPM']) !!}
     </div>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('TORQUE', 'TORQUE') !!}
-        {!! Form::text('torque', null, ['class' => 'form-control', 'placeholder' => 'TORQUE']) !!}
+        {!! Form::text('torque',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['TORQUE']:null, ['class' => 'form-control', 'placeholder' => 'TORQUE']) !!}
     </div>
 </div>
 
@@ -310,7 +310,7 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('GEARBOX', 'GEARBOX:') !!}
-        {!! Form::text('gearbox', null, ['class' => 'form-control', 'placeholder' => 'GEARBOX']) !!}
+        {!! Form::text('gearbox',  isset($limited_edition_specs)? $limited_edition_specs['Transmission ']['GEARBOX']:null, ['class' => 'form-control', 'placeholder' => 'GEARBOX']) !!}
     </div>
 </div>
 
@@ -320,7 +320,7 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Brakes_System', 'Brakes System:') !!}
-        {!! Form::text('brakes', null, ['class' => 'form-control', 'placeholder' => 'Brakes  System']) !!}
+        {!! Form::text('brakes',  isset($limited_edition_specs)? $limited_edition_specs['Brakes']['BRAKES SYSTEM']:null, ['class' => 'form-control', 'placeholder' => 'Brakes  System']) !!}
     </div>
 </div>
 
@@ -330,7 +330,7 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Suspension', 'Suspension:') !!}
-        {!! Form::text('suspension', null, ['class' => 'form-control', 'placeholder' => 'Suspension']) !!}
+        {!! Form::text('suspension',  isset($limited_edition_specs)? $limited_edition_specs['Suspension']['SUSPENSION']:null, ['class' => 'form-control', 'placeholder' => 'Suspension']) !!}
     </div>
 </div>
 
@@ -340,12 +340,12 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('FRONT_TYRE', 'Front tyre:') !!}
-        {!! Form::text('front_tyre', null, ['class' => 'form-control', 'placeholder' => 'FRONT TYRE']) !!}
+        {!! Form::text('front_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['FRONT TYRE']:null, ['class' => 'form-control', 'placeholder' => 'FRONT TYRE']) !!}
     </div>
 
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Back_TYRE', 'Back tyre:') !!}
-        {!! Form::text('back_tyre', null, ['class' => 'form-control', 'placeholder' => 'Back TYRE']) !!}
+        {!! Form::text('back_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['BACK TYRE']:null, ['class' => 'form-control', 'placeholder' => 'Back TYRE']) !!}
     </div>
 </div>
 
@@ -355,7 +355,7 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('FUEL_CONSUMBSION', 'FUEL CONSUMBSION:') !!}
-        {!! Form::text('consumbsion', null, ['class' => 'form-control', 'placeholder' => 'FUEL CONSUMBSION L/100KM']) !!}
+        {!! Form::text('consumbsion',  isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']:null, ['class' => 'form-control', 'placeholder' => 'FUEL CONSUMBSION L/100KM']) !!}
     </div>
 </div>
 
@@ -365,7 +365,7 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Emission', 'Emission:') !!}
-        {!! Form::text('emission', null, ['class' => 'form-control', 'placeholder' => 'Emission in gmCO2/KM
+        {!! Form::text('emission',  isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']:null, ['class' => 'form-control', 'placeholder' => 'Emission in gmCO2/KM
 ']) !!}
     </div>
 </div>
@@ -376,34 +376,37 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('WARRANTY', 'WARRANTY:') !!}
-        {!! Form::text('warranty', null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM
-']) !!}
+        {!! Form::text('warranty',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['WARRANTY']:null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
     </div>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('MAINTENANCE_PROGRAM ', 'MAINTENANCE PROGRAM :') !!}
-        {!! Form::text('maintenance', null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
+        {!! Form::text('maintenance',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['MAINTENANCE PROGRAM ']:null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
     </div>
 </div>
 
 
 <div class="form-group col-sm-12 regions">
     <hr>
-    <h3>Lifecycle</h3>
+    <h3>Life Cycle</h3>
     <hr>
     <div class="form-group col-sm-6 regions">
-        {!! Form::label('Lifecycle', 'Lifecycle:') !!}
-        {!! Form::text('lifecycle', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}
+        {!! Form::label('Lifecycle', 'From:') !!}
+        {!! Form::date('from',null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}
     </div>
+    <div class="form-group col-sm-6 regions">
+        {!! Form::label('Lifecycle', 'To:') !!}
+        {!! Form::date('to',null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}
+    </div>
+    <hr>
 </div>
-<div class="form-group col-sm-12 regions">
-    <hr>
-    <h3>Depreciation Trend</h3>
-    <hr>
+ <div class="form-group col-sm-12 regions">
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Depreciation_Trend', 'Depreciation Trend:') !!}
-        {!! Form::text('depreciation_trend', null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend']) !!}
+        {!! Form::text('depreciation_trend',  null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend']) !!}
     </div>
 </div>
+
+
 
 
 <!-- End of Limited Editions Field -->
@@ -440,7 +443,7 @@
 
 <!-- Year Field -->
 <div class="form-group col-sm-12 clearfix">
-    {!! Form::label('description', 'Description:') !!}
+    {!! Form::label('notes', 'Description:') !!}
     {!! Form::textarea('notes', null, ['class' => 'form-control', 'placeholder' => 'Enter Description']) !!}
 </div>
 

@@ -123,6 +123,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          type="integer",
  *          format="int32"
  *      ),
+ *     @SWG\Property(
+ *          property="type_id",
+ *          description="Type ID",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *     @SWG\Property(
+ *          property="engine_type_id",
+ *          description="Engine Type Id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
+ *     @SWG\Property(
+ *          property="transmission_type",
+ *          description="10=Manual:20=Automatic",
+ *          type="integer",
+ *          format="int32"
+ *      ),
  *      @SWG\Property(
  *          property="car_attributes",
  *          description="attributes id - CSV [1,2,3]",
@@ -362,9 +380,9 @@ class MyCar extends Model
         'phone'             => 'required',
         'type_id'           => 'required|exists:car_types,id',
         'model_id'          => 'required|exists:car_models,id',
-        'engine_type_id'    => 'required|exists:engine_types,id',
+//        'engine_type_id'    => 'required|exists:engine_types,id',
         'year'              => 'required',
-        'transmission_type' => 'required|in:10,20'
+//        'transmission_type' => 'required|in:10,20'
     ];
 
     /**

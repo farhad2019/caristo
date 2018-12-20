@@ -188,6 +188,7 @@ class MyCarController extends AppBaseController
             $limited_edition_specs = json_decode($myCar->limited_edition_specs, true);
         }
 
+       
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
@@ -223,10 +224,10 @@ class MyCarController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateMyCarRequest $request)
+    public function update($id, Request $request)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
-
+        
         if ($request->category_id != $myCar->category_id) {
             CarRegion::where('car_id', $id)->delete();
         }

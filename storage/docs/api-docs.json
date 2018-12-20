@@ -4863,6 +4863,21 @@
                     "type": "integer",
                     "format": "int32"
                 },
+                "type_id": {
+                    "description": "Type ID",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "engine_type_id": {
+                    "description": "Engine Type Id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "transmission_type": {
+                    "description": "10=Manual:20=Automatic",
+                    "type": "integer",
+                    "format": "int32"
+                },
                 "car_attributes": {
                     "description": "attributes id - CSV [1,2,3]",
                     "type": "array",
