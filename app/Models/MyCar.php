@@ -151,7 +151,7 @@ class MyCar extends Model
     const AUTOMATIC = 20;
     const SHOWROOM = 10;
     const USER = 20;
-    const LIMITEDADDITION = 28;
+    const LIMITEDADDITION = 29;
     const FOURWD = '4WD';
     const AWD = 'AWD';
     const FWD = 'FWD';
@@ -583,9 +583,6 @@ class MyCar extends Model
      */
     public function getLimitedEditionSpecsArrayAttribute()
     {
-        if (!empty($this->limited_edition_specs))
-            return \GuzzleHttp\json_decode($this->limited_edition_specs);
-        else
-            return null;
+       
     }
 }

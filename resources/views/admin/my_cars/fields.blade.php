@@ -453,7 +453,7 @@
     <script>
         $(document).ready(function () {
             var id = $('#category_id').val();
-            if (id == 28) {
+            if (id == 29) {
                 $('.regions').show();
                 $('.region').hide();
             } else {
@@ -464,7 +464,7 @@
             $('#category_id').on('change', function () {
                 var cat_id = $(this).val();
 
-                if (cat_id == 28) {
+                if (cat_id == 29) {
                     $('.regions').show();
                     $('.region').hide();
                 } else {

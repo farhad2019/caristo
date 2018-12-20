@@ -119,7 +119,6 @@ class MyCarRepository extends BaseRepository
             $input['amount'] = $request->amount;
             $input['notes'] = $request->notes;
             $input['limited_edition_specs'] = json_encode($limited);
-
             $myCar = $this->create($input);
 //            $input['region'] = $request->regions;
             $region = intval($request->regions);
