@@ -120,7 +120,7 @@ class MyCarRepository extends BaseRepository
             $input['limited_edition_specs'] = json_encode($limited);
             $from = date('Y', strtotime($request->from));
             $to = date('Y', strtotime($request->to));
-            $input['life_cycle'] = $from.'-'.$to;
+            $input['life_cycle'] = $from . '-' . $to;
             dd($input['life_cycle']);
             $input['depreciation_trend'] = $request->depreciation_trend;
             $myCar = $this->create($input);
@@ -169,12 +169,12 @@ class MyCarRepository extends BaseRepository
             $input['bid_close_at'] = $expire_at;
             $myCar = $this->create($input);
             $region = intval($request->region);
-                if ($region){
-                    $regions = [];
-                    $regions['region_id'] = $region;
-                    $regions['car_id'] = $myCar->id;
-                    CarRegion::create($regions);
-                }
+            if ($region) {
+                $regions = [];
+                $regions['region_id'] = $region;
+                $regions['car_id'] = $myCar->id;
+                CarRegion::create($regions);
+            }
 
         }
         // Media Data
@@ -205,11 +205,10 @@ class MyCarRepository extends BaseRepository
 
     public function updateApiRecord($request, $myCar)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id','kilometre']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'kilometre']);
 
-        var_dump($request->all());
-        exit();
         $myCar = $this->update($input, $myCar->id);
+
         // Media Data
         if ($request->hasFile('media')) {
             $media = [];
@@ -225,6 +224,7 @@ class MyCarRepository extends BaseRepository
 
 
     }
+
     public function updateRecord($request, $myCar)
     {
         $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'regions', 'price', 'description']);
@@ -300,7 +300,7 @@ class MyCarRepository extends BaseRepository
             $input['limited_edition_specs'] = json_encode($limited);
             $from = date('Y', strtotime($request->from));
             $to = date('Y', strtotime($request->to));
-            $input['life_cycle'] = $from.'-'.$to;
+            $input['life_cycle'] = $from . '-' . $to;
             $input['depreciation_trend'] = $request->depreciation_trend;
             $myCar = $this->update($input, $myCar->id);
 //            $input['region'] = $request->regions;
@@ -313,13 +313,11 @@ class MyCarRepository extends BaseRepository
                         $regions['region_id'] = intval($request->regions[$key]);
                         $regions['price'] = $input['price'][$key];
                         $regions['car_id'] = $myCar->id;
-                        CarRegion::where('car_id',$myCar->id)->update($regions);
+                        CarRegion::where('car_id', $myCar->id)->update($regions);
                     }
                 }
             }
-        }
-
-        else {
+        } else {
             $myCar = $this->update($input, $myCar->id);
             // Media Data
             if ($request->hasFile('media')) {

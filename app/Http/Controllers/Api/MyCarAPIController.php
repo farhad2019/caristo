@@ -322,11 +322,14 @@ class MyCarAPIController extends AppBaseController
      */
     public function update($id, Request $request)
     {
-        
         /** @var MyCar $myCar */
         $myCar = $this->myCarRepository->findWithoutFail($id);
         if (empty($myCar)) {
             return $this->sendError('My Car not found');
+        }
+
+        if (isset($request->deleted_images)) {
+            $myCar->media()->whereIn('id', explode(',', $request->deleted_images))->delete();
         }
 
         $myCar = $this->myCarRepository->updateApiRecord($request, $myCar);

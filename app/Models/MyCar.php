@@ -163,6 +163,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          property="notes",
  *          description="add if any extra notes",
  *          type="string"
+ *      ),
+ *      @SWG\Property(
+ *          property="deleted_images",
+ *          description="images id, CSV",
+ *          type="string"
  *      )
  * )
  */
@@ -375,14 +380,14 @@ class MyCar extends Model
      * @var array
      */
     public static $api_updating_rules = [
-        'name'              => 'required',
-        'email'             => 'required|email',
-        'country_code'      => 'required',
-        'phone'             => 'required',
-        'type_id'           => 'required|exists:car_types,id',
-        'model_id'          => 'required|exists:car_models,id',
+        'name'         => 'required',
+        'email'        => 'required|email',
+        'country_code' => 'required',
+        'phone'        => 'required',
+        'type_id'      => 'required|exists:car_types,id',
+        'model_id'     => 'required|exists:car_models,id',
 //        'engine_type_id'    => 'required|exists:engine_types,id',
-        'year'              => 'required',
+        'year'         => 'required',
 //        'transmission_type' => 'required|in:10,20'
     ];
 

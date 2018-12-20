@@ -4902,6 +4902,10 @@
                 "notes": {
                     "description": "add if any extra notes",
                     "type": "string"
+                },
+                "deleted_images": {
+                    "description": "images id, CSV",
+                    "type": "string"
                 }
             }
         },
