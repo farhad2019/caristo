@@ -48,6 +48,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $ref_num
  * @property int liked_count
  * @property int favorite_count
+ * @property mixed|null limited_edition_specs_array
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -151,7 +152,7 @@ class MyCar extends Model
     const AUTOMATIC = 20;
     const SHOWROOM = 10;
     const USER = 20;
-    const LIMITEDADDITION = 29;
+    const LIMITEDADDITION = 28;
     const FOURWD = '4WD';
     const AWD = 'AWD';
     const FWD = 'FWD';
@@ -583,6 +584,19 @@ class MyCar extends Model
      */
     public function getLimitedEditionSpecsArrayAttribute()
     {
-       
+        if (!empty($this->limited_edition_specs)) {
+            $array = json_decode($this->limited_edition_specs, true);
+
+            foreach ($array as $key => $items) {
+                $count = 0;
+                foreach ($items as $name => $item) {
+                    $specs[$key][$count]['name'] = $name;
+                    $specs[$key][$count]['value'] = $item;
+                    $count++;
+                }
+            }
+            return $specs;
+        } else
+            return null;
     }
 }
