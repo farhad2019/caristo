@@ -18,11 +18,15 @@
 
             <!-- Type Id Field -->
             <dt>{!! Form::label('type_id', 'Type Id:') !!}</dt>
+            @if($car->carType)
             <dd>{!! $car->carType->name !!}</dd>
+        @endif
 
             <!-- Category Id Field -->
             <dt>{!! Form::label('category_id', 'Category Id:') !!}</dt>
+            @if($car->category)
             <dd>{!! $car->category->name !!}</dd>
+        @endif
 
             <!-- Model Id Field -->
             <dt>{!! Form::label('model_id', 'Model Id:') !!}</dt>
@@ -31,9 +35,12 @@
 
         </div>
         <div class="col-md-8">
+
             <!-- Engine Type Id Field -->
             <dt>{!! Form::label('engine_type_id', 'Engine Type Id:') !!}</dt>
+            @if($car->engineType)
             <dd>{!! $car->engineType->name !!}</dd>
+            @endif
 
             <!-- Regional Specification Id Field -->
             <dt>{!! Form::label('regional_specification_id', 'Regional Specification Id:') !!}</dt>
