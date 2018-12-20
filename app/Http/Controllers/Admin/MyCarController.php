@@ -21,6 +21,7 @@ use App\Repositories\Admin\MyCarRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\RegionalSpecificationRepository;
 use App\Repositories\Admin\RegionRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -111,7 +112,6 @@ class MyCarController extends AppBaseController
         $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->all()->pluck('name', 'id');
-        $limited = null;
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.my_cars.create')->with([
@@ -124,8 +124,7 @@ class MyCarController extends AppBaseController
             'carTypes'          => $carTypes,
             'carModels'         => $carModels,
             'regions'           => $regions,
-            'brands'            => $brands,
-            'limited'            => $limited
+            'brands'            => $brands
         ]);
     }
 
@@ -183,8 +182,11 @@ class MyCarController extends AppBaseController
             Flash::error('Car not found');
             return redirect(route('admin.myCars.index'));
         }
-        $limited = json_decode($myCar->limited_edition_specs,true);
-       
+
+        $limited_edition_specs = null;
+        if (!empty($myCar->limited_edition_specs)) {
+            $limited_edition_specs = json_decode($myCar->limited_edition_specs, true);
+        }
 
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
@@ -195,20 +197,21 @@ class MyCarController extends AppBaseController
         $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->all()->pluck('name', 'id');
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
         return view('admin.my_cars.edit')->with([
-            'myCar'             => $myCar,
-            'categories'        => $categories,
-            'regional_specs'    => $regional_specs,
-            'engineType'        => $engineType,
-            'attributes'        => $attributes,
-            'features'          => $features,
-            'transmission_type' => MyCar::$TRANSMISSION_TYPE_TEXT,
-            'carTypes'          => $carTypes,
-            'carModels'         => $carModels,
-            'brands'            => $brands,
-            'regions'           => $regions,
-            'limited'           => $limited,
+            'myCar'                 => $myCar,
+            'categories'            => $categories,
+            'regional_specs'        => $regional_specs,
+            'engineType'            => $engineType,
+            'attributes'            => $attributes,
+            'features'              => $features,
+            'transmission_type'     => MyCar::$TRANSMISSION_TYPE_TEXT,
+            'carTypes'              => $carTypes,
+            'carModels'             => $carModels,
+            'brands'                => $brands,
+            'regions'               => $regions,
+            'limited_edition_specs' => $limited_edition_specs,
         ]);
     }
 
