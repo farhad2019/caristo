@@ -292,6 +292,7 @@ class MyCar extends Model
         'myCarFeatures',
         'limited_edition_specs_array',
         'depreciation_trend_value',
+        'life_cycle',
 //        'carFeatures',
         'created_at'
     ];
