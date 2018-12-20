@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
  *
  * @property User user
  * @property Media media
+ * @property CarRegion car_region
  *
  * @SWG\Definition(
  *      definition="Region",
@@ -152,6 +153,9 @@ class Region extends Model
         return $this->media()->first() ? $this->media()->first()->file_url : null;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function car_region()
     {
         return $this->hasMany(CarRegion::class, 'region_id');
