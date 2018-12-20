@@ -8,8 +8,11 @@ use App\Helper\Utils;
 use App\Http\Requests\Admin\CreateUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\CarInteraction;
+use App\Models\User;
+use App\Models\UserDetail;
 use App\Repositories\Admin\CarInteractionRepository;
 use App\Repositories\Admin\RoleRepository;
+use App\Repositories\Admin\UserdetailRepository;
 use App\Repositories\Admin\UserRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\UserShowroomRepository;
@@ -40,12 +43,16 @@ class UserController extends AppBaseController
     /** @var  CarInteractionRepository */
     private $carInteractionRepository;
 
-    public function __construct(UserRepository $userRepo, RoleRepository $roleRepo, UserShowroomRepository $showroomRepo, CarInteractionRepository $carInteractionRepo)
+    /** @var  UserdetailRepository */
+    private $userDetailRepository;
+
+    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, RoleRepository $roleRepo, UserShowroomRepository $showroomRepo, CarInteractionRepository $carInteractionRepo)
     {
         $this->userRepository = $userRepo;
         $this->roleRepository = $roleRepo;
         $this->showroomRepository = $showroomRepo;
         $this->carInteractionRepository = $carInteractionRepo;
+        $this->userDetailRepository = $userDetailRepo;
         $this->ModelName = 'users';
         $this->BreadCrumbName = 'Users';
     }
@@ -79,7 +86,10 @@ class UserController extends AppBaseController
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         $roles = $this->roleRepository->all()->where('id', '!=', '1')->pluck('display_name', 'id')->all();
-        return view('admin.users.create')->with('roles', $roles);
+        return view('admin.users.create')->with([
+            'roles'       => $roles,
+            'DEALER_TYPE' => User::$DEALER_TYPE
+        ]);
     }
 
     /**
@@ -95,6 +105,11 @@ class UserController extends AppBaseController
         $input['password'] = Hash::make($input['password']);
 
         $user = $this->userRepository->create($input);
+
+        $data['user_id'] = $user->id;
+        $data['first_name'] = $user->name;
+        $data['dealer_type'] = $input['dealer_type'] ?? null;
+        $userDetail = $this->userDetailRepository->create($data);
 
         Flash::success('User saved successfully.');
         return redirect(route('admin.users.index'));

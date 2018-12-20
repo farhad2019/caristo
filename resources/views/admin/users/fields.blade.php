@@ -12,13 +12,17 @@
     </div>
 
     @if (strpos(Request::url(), 'users') !== false)
-
         <!-- Roles Field -->
         <div class="form-group col-sm-6">
             {!! Form::label('roles', 'Roles:') !!}
             {!! Form::select('roles[]', $roles, null, ['class' => 'form-control select2', 'multiple'=>'multiple']) !!}
         </div>
 
+        <!-- Roles Field -->
+        <div class="form-group col-sm-6">
+            {!! Form::label('roles', 'Dealer Type:') !!}
+            {!! Form::select('dealer_type', $DEALER_TYPE, null, ['class' => 'form-control select2']) !!}
+        </div>
     @endif
 
     <!-- Password Field -->
@@ -91,14 +95,14 @@
                         {!! Form::file('image', ['class' => 'form-control']) !!}
                     </div>
 
-                    @if($user->details)
-                        <!-- Image Field -->
+                @if($user->details)
+                    <!-- Image Field -->
                         <div class="form-group col-sm-3">
                             <img src="{{ $user->details->image_url }}">
                         </div>
-                    @endif
+                @endif
 
-                    <!-- email_updates Field -->
+                <!-- email_updates Field -->
                     <div class="form-group col-sm-3">
                         {!! Form::label('email_updates', 'Receive Updates On Emails:') !!}
                         <div class="clearfix"></div>

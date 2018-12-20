@@ -68,6 +68,15 @@ class User extends Authenticatable implements JWTSubject
     const SHOWROOM_OWNER = 10;
     const RANDOM_USER = 20;
 
+    const OFFICIAL_DEALER = 10;
+    const MARKET_DEALER = 20;
+
+    public static $DEALER_TYPE = [
+        null                  => 'Select Dealer Type',
+        self::OFFICIAL_DEALER => 'Official Dealer',
+        self::MARKET_DEALER   => 'Market Dealer'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -299,10 +308,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->viewCars()->count();
     }
 
-   public function comments(){
-       return $this->hasMany(Comment::class,'user_id');
-   }
-    public function news(){
-        return $this->hasMany(News::class,'user_id');
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id');
+    }
+
+    public function news()
+    {
+        return $this->hasMany(News::class, 'user_id');
     }
 }

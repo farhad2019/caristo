@@ -16,8 +16,6 @@ use InfyOm\Generator\Common\BaseRepository;
  */
 class UserdetailRepository extends BaseRepository
 {
-
-
     /**
      * Configure the Model
      **/
