@@ -50,59 +50,59 @@ class MyCarRepository extends BaseRepository
         $user = Auth::user();
         if ($request->category_id == MyCar::LIMITEDADDITION) {
             $limited = array(
-                'Dimensions_Weight'   =>
+                'Dimensions & Weight'    =>
                     array(
-                        'length'      => $request->length,
-                        'width'       => $request->width,
-                        'height'      => $request->height,
-                        'weight_dist' => $request->weight_dist,
-                        'trunk'       => $request->trunk,
-                        'weight'      => $request->weight,
+                        'LENGTH'              => $request->length,
+                        'WIDTH'               => $request->width,
+                        'HEIGHT'              => $request->height,
+                        'WEIGHT DISTRIBUTION' => $request->weight_dist,
+                        'TRUNK'               => $request->trunk,
+                        'WEIGHT'              => $request->weight,
                     ),
-                'Seating_Capacity'    => array(
-                    'seats' => $request->seats,
+                'Seating Capacity'       => array(
+                    'MAX.NO OF SEATS' => $request->seats,
                 ),
-                'Drivetrain'          => array(
-                    'drivetrain' => $request->drivetrain,
+                'Drivetrain'             => array(
+                    'DRIVETRAIN' => $request->drivetrain,
                 ),
-                'Engine'              => array(
-                    'displacement' => $request->displacement,
-                    'clynders'     => $request->clynders,
+                'Engine'                 => array(
+                    'DISPLACEMENT'    => $request->displacement,
+                    'NO. OF CYLINDER' => $request->clynders,
                 ),
-                'Performance'         => array(
-                    'max_speed'    => $request->max_speed,
-                    'acceleration' => $request->acceleration,
-                    'hp_rpm'       => $request->hp_rpm,
-                    'torque'       => $request->torque,
+                'Performance'            => array(
+                    'MAX SPEED'          => $request->max_speed,
+                    'ACCELERATION 0-100' => $request->acceleration,
+                    'HP / RPM'           => $request->hp_rpm,
+                    'TORQUE'             => $request->torque,
                 ),
-                'Transmission'        => array(
-                    'gearbox' => $request->gearbox,
+                'Transmission '          => array(
+                    'GEARBOX' => $request->gearbox,
                 ),
-                'Brakes'              => array(
-                    'brakes' => $request->brakes,
+                'Brakes'                 => array(
+                    'BRAKES SYSTEM' => $request->brakes,
                 ),
-                'Suspension'          => array(
-                    'suspension' => $request->suspension,
+                'Suspension'             => array(
+                    'SUSPENSION' => $request->suspension,
                 ),
-                'Wheels_Tyres'        => array(
-                    'front_tyre' => $request->front_tyre,
-                    'back_tyre'  => $request->back_tyre,
+                'Wheels_Tyres'           => array(
+                    'FRONT TYRE' => $request->front_tyre,
+                    'BACK TYRE'  => $request->back_tyre,
                 ),
-                'Fuel'                => array(
-                    'consumbsion' => $request->consumbsion,
+                'Fuel'                   => array(
+                    'FUEL CONSUMPTION' => $request->consumbsion,
                 ),
-                'Emission'            => array(
-                    'emission' => $request->emission,
+                'Emission'               => array(
+                    'EMISSION' => $request->emission,
                 ),
-                'Warranty_Maintenace' => array(
-                    'warranty'    => $request->warranty,
-                    'maintenance' => $request->maintenance,
+                'Warranty & Maintenance' => array(
+                    'WARRANTY'             => $request->warranty,
+                    'MAINTENANCE PROGRAM ' => $request->maintenance,
                 ),
-                'Lifecycle'           => array(
-                    'lifecycle' => $request->lifecycle,
+                'Lifecycle'              => array(
+                    'LIFECYCLE' => $request->lifecycle,
                 ),
-                'Depreciation_Trend'  => array(
-                    'depreciation_trend' => $request->depreciation_trend,
+                'Depreciation Trend'     => array(
+                    'DEPRECIATION TREND' => $request->depreciation_trend,
                 )
             );
             $input['category_id'] = $request->category_id;

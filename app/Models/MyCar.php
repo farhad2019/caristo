@@ -38,6 +38,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property RegionalSpecification regional_specs
  * @property CarAttribute my_car_attributes
  * @property CarFeature my_car_features
+ * @property CarRegion car_regions
+ * @property CarInteraction user_interactions
+ * @property Category category
  *
  * @property string transmission_type_text
  * @property string top_bids
@@ -49,6 +52,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int liked_count
  * @property int favorite_count
  * @property mixed|null limited_edition_specs_array
+ * @property mixed|null owner_type_text
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -222,6 +226,7 @@ class MyCar extends Model
         'myCarAttributes',
         'regionalSpecs',
         'myCarFeatures',
+        'carRegions',
 //        'bids',
         'engineType'
     ];
@@ -258,6 +263,7 @@ class MyCar extends Model
         'engineType',
         'carType',
         'carModel',
+        'carRegions',
         'amount',
         'average_mkp',
         'owner',
@@ -469,6 +475,9 @@ class MyCar extends Model
         return ($this->transmission_type) ? self::$TRANSMISSION_TYPE_TEXT[$this->transmission_type] : null;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function getOwnerTypeTextAttribute()
     {
         return ($this->owner_type) ? self::$OWNER_TYPE_TEXT[$this->owner_type] : null;

@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
+/**
+ * @property mixed $region
+ * @property mixed $car
+ */
 class CarRegion extends Model
 {
     use SoftDeletes;
@@ -40,7 +44,9 @@ class CarRegion extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'region'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -55,7 +61,8 @@ class CarRegion extends Model
      * @var array
      */
     protected $visible = [
-
+        'region',
+        'price'
     ];
 
     /**
@@ -92,13 +99,18 @@ class CarRegion extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-   public function regionCar(){
-       return $this->belongsTo(MyCar::class);
-   }
+    public function car()
+    {
+        return $this->belongsTo(MyCar::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function region()
     {
-       return $this->belongsTo(Region::class);
+        return $this->belongsTo(Region::class);
     }
 }
