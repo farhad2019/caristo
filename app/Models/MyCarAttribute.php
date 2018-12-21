@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property CarAttribute car_attribute
  * @property MyCar myCar
+ * @property string attr_icon
  *
  */
 class MyCarAttribute extends Model
@@ -59,6 +60,7 @@ class MyCarAttribute extends Model
     protected $appends = [
         'attr_id',
         'attr_name',
+        'attr_icon',
         'attr_option'
 //        'option_array'
     ];
@@ -71,6 +73,7 @@ class MyCarAttribute extends Model
     protected $visible = [
         'attr_id',
         'attr_name',
+        'attr_icon',
         'attr_option',
         'value'
     ];
@@ -135,5 +138,13 @@ class MyCarAttribute extends Model
     {
         $id = $this->value;
         return ($this->carAttribute->type >= 30 && $this->carAttribute->type < 60) ? $this->carAttribute->options()->where('id', $id)->first()['option'] : null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAttrIconAttribute()
+    {
+        return $this->carAttribute->image;
     }
 }
