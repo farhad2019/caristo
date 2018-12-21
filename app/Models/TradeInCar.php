@@ -143,6 +143,6 @@ class TradeInCar extends Model
 
     public function tradeAgainst()
     {
-        return $this->belongsTo(MyCar::class, 'owner_car_id');
+        return $this->belongsTo(MyCar::class, 'customer_car_id');
     }
 }
