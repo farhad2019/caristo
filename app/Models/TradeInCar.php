@@ -97,6 +97,8 @@ class TradeInCar extends Model
      */
     protected $visible = [
         'myCar',
+        'amount',
+        'notes',
         'tradeAgainst'
     ];
 
