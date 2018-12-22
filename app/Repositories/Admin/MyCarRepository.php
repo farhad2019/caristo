@@ -121,7 +121,7 @@ class MyCarRepository extends BaseRepository
             $from = date('Y', strtotime($request->from));
             $to = date('Y', strtotime($request->to));
             $input['life_cycle'] = $from . '-' . $to;
-            dd($input['life_cycle']);
+
             $input['depreciation_trend'] = $request->depreciation_trend;
             $myCar = $this->create($input);
 //            $input['region'] = $request->regions;

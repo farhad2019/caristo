@@ -366,6 +366,7 @@ class UserAPIController extends AppBaseController
 
         $users->regions()->sync($input['region_id']);
         $this->userDetailRepository->update(['region_reminder' => $request->region_reminder], $users->details->id);
+        $users->load('details');
         return $this->sendResponse($users->toArray(), "User's region saved successfully");
     }
 
