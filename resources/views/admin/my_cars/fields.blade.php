@@ -23,7 +23,7 @@
 <!-- Year Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('year', 'Year:') !!}
-    {!! Form::text('year', null, ['class' => 'form-control', 'placeholder' => 'Enter Model Year']) !!}
+    {!! Form::select('year', $years, date('Y'), ['class' => 'form-control select2', 'placeholder' => 'Enter Model Year']) !!}
 </div>
 
 <!-- Engine Type Field -->
@@ -52,7 +52,7 @@
 
 
 <!-- Amount Field -->
-<div class="form-group col-sm-6 region" {{--id="mileage" style="display:none;"--}}>
+<div class="form-group col-sm-6 region category2528" {{--id="mileage" style="display:none;"--}}>
     {!! Form::label('kilometers', 'Mileage(km):') !!}
     {!! Form::number('kilometer', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Mileage']) !!}
 </div>
@@ -64,7 +64,7 @@
 </div>
 
 <!-- Average MKP Field -->
-<div class="form-group col-sm-6 region">
+<div class="form-group col-sm-6 region category2528">
     {!! Form::label('avg_mkp', 'Average MKP(AED):') !!}
     {!! Form::number('average_mkp', null, ['class' => 'form-control', 'placeholder' => 'Enter Average Market Price']) !!}
 </div>
@@ -372,7 +372,7 @@
 
 <div class="form-group col-sm-12 regions">
     <hr>
-    <h3>Warranty & Maintenace</h3>
+    <h3>Warranty & Maintenance</h3>
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('WARRANTY', 'WARRANTY:') !!}
@@ -391,22 +391,20 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Lifecycle', 'From:') !!}
-        {!! Form::date('from',null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}
+        {!! Form::date('from', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}
     </div>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Lifecycle', 'To:') !!}
-        {!! Form::date('to',null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}
+        {!! Form::date('to', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}
     </div>
     <hr>
 </div>
- <div class="form-group col-sm-12 regions">
+<div class="form-group col-sm-12 regions">
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Depreciation_Trend', 'Depreciation Trend:') !!}
         {!! Form::text('depreciation_trend',  null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend']) !!}
     </div>
 </div>
-
-
 
 
 <!-- End of Limited Editions Field -->
@@ -464,6 +462,12 @@
                 $('.region').show();
             }
 
+            if (parseInt(id) === 25 || parseInt(id) === 28) {
+                $('.category2528').hide();
+            } else if (parseInt(id) === 26 || parseInt(id) === 27) {
+                $('.category2528').show();
+            }
+
             $('#category_id').on('change', function () {
                 var cat_id = $(this).val();
 
@@ -474,7 +478,22 @@
                     $('.regions').hide();
                     $('.region').show();
                 }
+
+                if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
+                    $('.category2528').hide();
+                } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
+                    $('.category2528').show();
+                }
+            });
+
+            $("#datepicker").datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years"
             });
         });
     </script>
 @endpush
+
+25/28 hide: millage/aMKP price
+26/27 show: millage/aMKP price

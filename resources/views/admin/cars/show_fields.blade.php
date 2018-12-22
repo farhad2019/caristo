@@ -12,48 +12,40 @@
     <!-- /.box-header -->
     <div class="box-body">
         <div class="col-md-4">
-            <!-- Id Field -->
-            <dt>{!! Form::label('id', 'Id:') !!}</dt>
-            <dd>{!! $car->id !!}</dd>
-
             <!-- Type Id Field -->
-            <dt>{!! Form::label('type_id', 'Type Id:') !!}</dt>
+            <dt>{!! Form::label('type_id', 'Type') !!}</dt>
             @if($car->carType)
             <dd>{!! $car->carType->name !!}</dd>
         @endif
 
             <!-- Category Id Field -->
-            <dt>{!! Form::label('category_id', 'Category Id:') !!}</dt>
+            <dt>{!! Form::label('category_id', 'Category') !!}</dt>
             @if($car->category)
             <dd>{!! $car->category->name !!}</dd>
         @endif
 
             <!-- Model Id Field -->
-            <dt>{!! Form::label('model_id', 'Model Id:') !!}</dt>
+            <dt>{!! Form::label('model_id', 'Model') !!}</dt>
             <dd>{!! $car->carModel->name !!}</dd>
-
-
         </div>
         <div class="col-md-8">
-
             <!-- Engine Type Id Field -->
-            <dt>{!! Form::label('engine_type_id', 'Engine Type Id:') !!}</dt>
+            <dt>{!! Form::label('engine_type_id', 'Engine Type') !!}</dt>
             @if($car->engineType)
             <dd>{!! $car->engineType->name !!}</dd>
             @endif
 
             <!-- Regional Specification Id Field -->
-            <dt>{!! Form::label('regional_specification_id', 'Regional Specification Id:') !!}</dt>
+            <dt>{!! Form::label('regional_specification_id', 'Regional Specification') !!}</dt>
             <dd>{!! $car->regional_specification_id !!}</dd>
 
             <!-- Owner Id Field -->
-            <dt>{!! Form::label('owner_id', 'Owner Id:') !!}</dt>
+            <dt>{!! Form::label('owner_id', 'Owner') !!}</dt>
             <dd>{!! $car->owner->name !!}</dd>
 
             <!-- Year Field -->
             <dt>{!! Form::label('year', 'Year:') !!}</dt>
             <dd>{!! $car->year !!}</dd>
-
         </div>
 
         <div class="col-md-8">
@@ -85,7 +77,6 @@
     <!-- box-footer -->
 </div>
 
-
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title"></h3>
@@ -115,10 +106,6 @@
             <!-- Phone Field -->
             <dt>{!! Form::label('phone', 'Phone:') !!}</dt>
             <dd>{!! $car->phone !!}</dd>
-
-
-
-
         </div>
         <div class="col-md-8">
             <!-- Owner Type Field -->
@@ -132,7 +119,6 @@
             <!-- Bid Close At Field -->
             <dt>{!! Form::label('bid_close_at', 'Bid Close At:') !!}</dt>
             <dd>{!! $car->bid_close_at !!}</dd>
-
         </div>
     </div>
     <!-- /.box-body -->
@@ -170,6 +156,3 @@
     </div>
     <!-- box-footer -->
 </div>
-
-
-

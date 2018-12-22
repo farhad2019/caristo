@@ -38,6 +38,12 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  *          description="Region id",
  *          type="array",
  *          @SWG\Items(type="integer")
+ *     ),
+ *     @SWG\Property(
+ *          property="region_reminder",
+ *          description="region reminder",
+ *          type="integer",
+ *          format="int32"
  *     )
  * )
  *

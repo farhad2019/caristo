@@ -7,6 +7,7 @@ use App\Http\Requests\API\UpdateUserApiRequest;
 use App\Http\Requests\Api\UpdateUserDeviceRequest;
 use App\Models\User;
 use App\Repositories\Admin\UdeviceRepository;
+use App\Repositories\Admin\UserdetailRepository;
 use App\Repositories\Admin\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -24,12 +25,16 @@ class UserAPIController extends AppBaseController
     /** @var  UserRepository */
     private $userRepository;
 
+    /** @var  UserdetailRepository */
+    private $userDetailRepository;
+
     /** @var  UdeviceRepository */
     private $userDeviceRepository;
 
-    public function __construct(UserRepository $userRepo, UdeviceRepository $userDeviceRepo)
+    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, UdeviceRepository $userDeviceRepo)
     {
         $this->userRepository = $userRepo;
+        $this->userDetailRepository = $userDetailRepo;
         $this->userDeviceRepository = $userDeviceRepo;
     }
 
@@ -360,6 +365,7 @@ class UserAPIController extends AppBaseController
         $input = $request->all();
 
         $users->regions()->sync($input['region_id']);
+        $this->userDetailRepository->update(['region_reminder' => $request->region_reminder], $users->details->id);
         return $this->sendResponse($users->toArray(), "User's region saved successfully");
     }
 

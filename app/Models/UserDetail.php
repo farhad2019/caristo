@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer area_id
  * @property integer email_updates
  * @property integer social_login
+ * @property integer region_reminder
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -36,7 +37,7 @@ class UserDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'first_name', 'last_name', 'dealer_type', 'country_code', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login', 'about'
+        'user_id', 'first_name', 'last_name', 'dealer_type', 'country_code', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login', 'about', 'region_reminder'
     ];
 
     public static $rules = [];
@@ -94,6 +95,7 @@ class UserDetail extends Model
         'area_id',
         'email_updates',
         'social_login',
+        'region_reminder',
         'about'
     ];
 

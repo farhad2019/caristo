@@ -254,6 +254,7 @@ class MyCar extends Model
         'regionalSpecs',
         'myCarFeatures',
         'carRegions',
+        'category',
 //        'bids',
         'engineType'
     ];
@@ -316,6 +317,7 @@ class MyCar extends Model
         'limited_edition_specs_array',
         'depreciation_trend_value',
         'life_cycle',
+        'category',
 //        'carFeatures',
         'created_at'
     ];
