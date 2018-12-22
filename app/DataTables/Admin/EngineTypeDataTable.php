@@ -48,12 +48,16 @@ class EngineTypeDataTable extends DataTable
         if (\Entrust::can('engineTypes.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
+
         $buttons = array_merge($buttons, [
-            'export',
+//            'export',
+            'excel',
+            'csv',
             'print',
             'reset',
             'reload',
         ]);
+
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()

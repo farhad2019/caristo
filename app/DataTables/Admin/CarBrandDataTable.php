@@ -16,15 +16,22 @@ class CarBrandDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $query = $query->with(['translations', 'media']);
+
         $dataTable = new EloquentDataTable($query);
-        $dataTable->editColumn('logo', function (CarBrand $model) {
+        $dataTable->editColumn('translations.name', function (CarBrand $model) {
+            return $model->name;
+        });
+
+        $dataTable->editColumn('media.logo', function (CarBrand $model) {
             if (count($model->media) > 0)
                 return "<img src='" . $model->media()->orderby('created_at', 'desc')->first()->fileUrl . "' width='80'/>";
             else {
                 return "<span class='label label-default'>None</span>";
             }
         });
-        $dataTable->rawColumns(['logo', 'action']);
+
+        $dataTable->rawColumns(['media.logo', 'action']);
         return $dataTable->addColumn('action', 'admin.car_brands.datatables_actions');
     }
 
@@ -36,7 +43,7 @@ class CarBrandDataTable extends DataTable
      */
     public function query(CarBrand $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->select('brands.*')->join('brand_translations', 'brands.id', '=', 'brand_translations.brand_id')->where('locale', 'en');
     }
 
     /**
@@ -51,7 +58,9 @@ class CarBrandDataTable extends DataTable
             $buttons = ['create'];
         }
         $buttons = array_merge($buttons, [
-            'export',
+//            'export',
+            'excel',
+            'csv',
             'print',
             'reset',
             'reload',
@@ -76,8 +85,13 @@ class CarBrandDataTable extends DataTable
     {
         return [
             'id',
-            'name',
-            'logo'
+            'translations.name' => [
+                'title' => 'Name'
+            ],
+            'media.logo'        => [
+                'title'      => 'Logo',
+                'searchable' => false
+            ]
         ];
     }
 

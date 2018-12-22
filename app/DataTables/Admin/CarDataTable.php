@@ -107,14 +107,14 @@ class CarDataTable extends DataTable
         if (\Entrust::can('cars.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
-
         $buttons = array_merge($buttons, [
-            'export',
+//            'export',
+            'excel',
+            'csv',
             'print',
             'reset',
             'reload',
         ]);
-
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
