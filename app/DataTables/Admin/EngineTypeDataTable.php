@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\EngineType;
+use Illuminate\Support\Facades\App;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -34,7 +35,7 @@ class EngineTypeDataTable extends DataTable
      */
     public function query(EngineType $model)
     {
-        return $model->newQuery();
+        return $model->select('engine_types.*', 'engine_type_translations.name')->join('engine_type_translations', 'engine_type_translations.engine_type_id', '=', 'engine_types.id')->where('engine_type_translations.locale', App::getLocale('en'))->newQuery();
     }
 
     /**
@@ -77,7 +78,9 @@ class EngineTypeDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id',
+            'id'                => [
+                'orderable' => false,
+            ],
             'translations.name' => [
                 'title' => 'Name'
             ]

@@ -19,18 +19,18 @@ class CarDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        $query = $query->with(['carModel', 'category']);
+        $query = $query->with(['carModel.translations', 'category.translations', 'carModel.brand.translations']);
         $dataTable = new EloquentDataTable($query);
 
-        $dataTable->editColumn('category.name', function ($model) {
+        $dataTable->editColumn('category.translations.name', function ($model) {
             return $model->category->name ?? '-';
         });
 
-        $dataTable->editColumn('brand', function ($model) {
+        $dataTable->editColumn('carModel.brand.translations.name', function ($model) {
             return $model->carModel->brand->name;
         });
 
-        $dataTable->editColumn('car_model.name', function ($model) {
+        $dataTable->editColumn('carModel.translations.name', function ($model) {
             return $model->carModel->name;
         });
 
@@ -83,12 +83,11 @@ class CarDataTable extends DataTable
                 return $userInteractions->where(['user_id' => $owner_id, 'type' => $interactionType]);
             });
         }
-        return $model->newQuery();
+        return $model->select('cars.*')->newQuery();
     }
 
     public function interactionList($data)
     {
-
         if (isset($data['owner_id']) && isset($data['type'])) {
             $this->owner_id = $data['owner_id'];
             $this->interaction_type = $data['type'];
@@ -135,25 +134,38 @@ class CarDataTable extends DataTable
     {
         return [
             'id',
-            'category.name'  => [
+            'category.translations.name'       => [
                 'title' => 'Category',
             ],
-            'brand',
-            'car_model.name' => [
+            'carModel.brand.translations.name' => [
+                'title' => 'Brand'
+            ],
+            'carModel.translations.name'       => [
                 'title' => 'Model'
             ],
             'amount',
-            'image',
-            'views_count'    => [
-                'title' => 'Views'
+            'image'                            => [
+                'orderable'  => false,
+                'searchable' => false,
             ],
-            'favorite_count' => [
-                'title' => 'Favorites'
+            'views_count'                      => [
+                'orderable'  => false,
+                'searchable' => false,
+                'title'      => 'Views'
             ],
-            'like_count'     => [
-                'title' => 'Likes'
+            'favorite_count'                   => [
+                'orderable'  => false,
+                'searchable' => false,
+                'title'      => 'Favorites'
             ],
-            'owner_type'
+            'like_count'                       => [
+                'orderable'  => false,
+                'searchable' => false,
+                'title'      => 'Likes'
+            ],
+            'owner_type'                       => [
+                'orderable' => false
+            ]
         ];
     }
 

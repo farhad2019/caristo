@@ -26,29 +26,29 @@ class UserDataTable extends DataTable
          * for master detail search uncomment next lines
          */
 
-//        $query = $query->with(['Roles']);
+        $query = $query->with(['Roles']);
         $dataTable = new EloquentDataTable($query);
 
-//        $dataTable->editColumn('Roles.roles', function (User $model) {
-//            return implode(",", $model->Roles->pluck('display_name')->toArray());
-//        });
-
-
-        $dataTable->addColumn('roles', function ($user) {
-            return $user->rolesCsv;
+        $dataTable->editColumn('Roles.display_name', function (User $model) {
+            return implode(",", $model->Roles->pluck('display_name')->toArray());
         });
+
         $dataTable->editColumn('cars_count', function (User $model) {
             return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->cars_count . "</span></a>";
         });
+
         $dataTable->editColumn('favorite_count', function (User $model) {
             return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_FAVORITE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->favorite_count . "</span></a>";
         });
+
         $dataTable->editColumn('like_count', function (User $model) {
             return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_LIKE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->like_count . "</span></a>";
         });
+
         $dataTable->editColumn('view_count', function (User $model) {
             return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_VIEW]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->view_count . "</span></a>";
         });
+
         $dataTable->rawColumns(['action', 'cars_count', 'favorite_count', 'like_count', 'view_count']);
         return $dataTable->addColumn('action', 'admin.users.datatables_actions');
     }
@@ -68,7 +68,7 @@ class UserDataTable extends DataTable
                 return $catInteractions->where(['car_id' => $car_id, 'type' => $interactionType]);
             });
         }
-        return $model->newQuery()->whereNotIn('id', [1, Auth::user()->id]);
+        return $model->newQuery()->select('users.*')->whereNotIn('users.id', [1, Auth::user()->id]);
     }
 
     public function interactionList($data)
@@ -91,12 +91,14 @@ class UserDataTable extends DataTable
         if (\Entrust::can('users.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
+
         $buttons = array_merge($buttons, [
             'export',
             'print',
             'reset',
             'reload',
         ]);
+
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
@@ -116,25 +118,33 @@ class UserDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            'id',
             'name',
             'email',
-            'roles',
-            'cars_count'     => [
-                'title' => 'Cars'
+            'Roles.display_name' => [
+                'searchable' => true,
+                'title'      => 'Roles'
             ],
-            'favorite_count' => [
-                'title' => 'Favorite'
+            'cars_count'         => [
+                'title'      => 'Cars',
+                'orderable'  => false,
+                'searchable' => false
             ],
-            'like_count'     => [
-                'title' => 'Like'
+            'favorite_count'     => [
+                'title'      => 'Favorite',
+                'orderable'  => false,
+                'searchable' => false
             ],
-            'view_count'     => [
-                'title' => 'View'
+            'like_count'         => [
+                'title'      => 'Like',
+                'orderable'  => false,
+                'searchable' => false
             ],
-//            'Roles.roles' => [
-//                'searchable' => true,
-//                'title'      => 'Roles'
-//            ]
+            'view_count'         => [
+                'title'      => 'View',
+                'orderable'  => false,
+                'searchable' => false
+            ]
         ];
     }
 

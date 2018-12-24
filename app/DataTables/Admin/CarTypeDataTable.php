@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\CarType;
+use Illuminate\Support\Facades\App;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -39,7 +40,7 @@ class CarTypeDataTable extends DataTable
      */
     public function query(CarType $model)
     {
-        return $model->newQuery();
+        return $model->select('car_types.*', 'car_type_translations.name')->join('car_type_translations', 'car_type_translations.car_type_id', '=', 'car_types.id')->where('car_type_translations.locale', App::getLocale('en'))->newQuery();
     }
 
     /**
@@ -53,6 +54,7 @@ class CarTypeDataTable extends DataTable
         if (\Entrust::can('carTypes.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
+
         $buttons = array_merge($buttons, [
 //            'export',
             'excel',
@@ -61,6 +63,7 @@ class CarTypeDataTable extends DataTable
             'reset',
             'reload',
         ]);
+
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
@@ -80,11 +83,16 @@ class CarTypeDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id',
+            'id'                => [
+                'orderable' => false,
+            ],
             'translations.name' => [
                 'title' => 'Name'
             ],
-            'image'
+            'image'             => [
+                'orderable'  => false,
+                'searchable' => false,
+            ]
         ];
     }
 

@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\CarBrand;
+use Illuminate\Support\Facades\App;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -20,7 +21,7 @@ class CarBrandDataTable extends DataTable
 
         $dataTable = new EloquentDataTable($query);
         $dataTable->editColumn('translations.name', function (CarBrand $model) {
-            return $model->name;
+            return '<span style="word-break: break-all">' . $model->name . '</span>';
         });
 
         $dataTable->editColumn('media.logo', function (CarBrand $model) {
@@ -31,7 +32,7 @@ class CarBrandDataTable extends DataTable
             }
         });
 
-        $dataTable->rawColumns(['media.logo', 'action']);
+        $dataTable->rawColumns(['translations.name', 'media.logo', 'action']);
         return $dataTable->addColumn('action', 'admin.car_brands.datatables_actions');
     }
 
@@ -43,7 +44,7 @@ class CarBrandDataTable extends DataTable
      */
     public function query(CarBrand $model)
     {
-        return $model->newQuery()->select('brands.*')->join('brand_translations', 'brands.id', '=', 'brand_translations.brand_id')->where('locale', 'en');
+        return $model->newQuery()->select('brands.*')->join('brand_translations', 'brands.id', '=', 'brand_translations.brand_id')->where('locale', App::getLocale('en'));
     }
 
     /**
@@ -90,7 +91,8 @@ class CarBrandDataTable extends DataTable
             ],
             'media.logo'        => [
                 'title'      => 'Logo',
-                'searchable' => false
+                'orderable'  => false,
+                'searchable' => false,
             ]
         ];
     }

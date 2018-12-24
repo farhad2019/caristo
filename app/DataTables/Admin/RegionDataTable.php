@@ -51,12 +51,16 @@ class RegionDataTable extends DataTable
         if (\Entrust::can('regions.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
+
         $buttons = array_merge($buttons, [
-            'export',
+//            'export',
+            'excel',
+            'csv',
             'print',
             'reset',
             'reload',
         ]);
+
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
@@ -76,9 +80,15 @@ class RegionDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id',
+            'id'   => [
+                'searchable' => false
+            ],
             'name',
-            'flag'
+            'flag' => [
+                'searchable' => false,
+                'orderable'  => false
+
+            ]
         ];
     }
 

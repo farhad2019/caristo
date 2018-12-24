@@ -17,14 +17,14 @@ class MyCarDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        $query = $query->with(['carModel']);
+        $query = $query->with(['carModel.translations', 'category.translations']);
         $dataTable = new EloquentDataTable($query);
 
-        $dataTable->editColumn('category.name', function ($model) {
+        $dataTable->editColumn('category.translations.name', function ($model) {
             return $model->category->name;
         });
-        $dataTable->editColumn('carModel.name', function ($model) {
-            return $model->name;
+        $dataTable->editColumn('carModel.translations.name', function ($model) {
+            return $model->carModel->name;
         });
         return $dataTable->addColumn('action', 'admin.my_cars.datatables_actions');
     }
@@ -38,7 +38,7 @@ class MyCarDataTable extends DataTable
     public function query(MyCar $model)
     {
         $id = Auth::id();
-        return $model->where('owner_id', $id)->newQuery();
+        return $model->select('cars.*', 'car_model_translations.name as model_name')->join('car_models', 'car_models.id', '=', 'cars.model_id')->leftJoin('car_model_translations', 'car_models.id', '=', 'car_model_translations.car_model_id')->where(['owner_id' => $id, 'car_model_translations.locale' => 'en'])->newQuery();
     }
 
     /**
@@ -52,12 +52,16 @@ class MyCarDataTable extends DataTable
         if (\Entrust::can('myCars.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
+
         $buttons = array_merge($buttons, [
-            'export',
+//            'export',
+            'excel',
+            'csv',
             'print',
             'reset',
             'reload',
         ]);
+
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
@@ -78,10 +82,10 @@ class MyCarDataTable extends DataTable
     {
         return [
             'id',
-            'category.name' => [
+            'category.translations.name' => [
                 'title' => 'Category',
             ],
-            'car_model.name' => [
+            'carModel.translations.name' => [
                 'title' => 'Model'
             ],
             'year',

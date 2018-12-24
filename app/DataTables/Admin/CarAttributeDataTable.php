@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\CarAttribute;
+use Illuminate\Support\Facades\App;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -20,12 +21,14 @@ class CarAttributeDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         $dataTable->editColumn('translations.name', function ($model) {
-            return $model->name;
+            return '<span style="word-break: break-all">' . $model->name . '</span>';
         });
 
         $dataTable->editColumn('type', function ($model) {
             return $model->type_text;
         });
+
+        $dataTable->rawColumns(['translations.name', 'action']);
         return $dataTable->addColumn('action', 'admin.car_attributes.datatables_actions');
     }
 
@@ -37,7 +40,8 @@ class CarAttributeDataTable extends DataTable
      */
     public function query(CarAttribute $model)
     {
-        return $model->newQuery();
+        return $model->select('attributes.*', 'attribute_translations.name')->join('attribute_translations', 'attribute_translations.attribute_id', '=', 'attributes.id')->where('attribute_translations.locale', App::getLocale('en'))->newQuery();
+        //return $model->newQuery();
     }
 
     /**
@@ -82,7 +86,9 @@ class CarAttributeDataTable extends DataTable
             'translations.name' => [
                 'title' => 'Name'
             ],
-            'type'
+            'type'              => [
+                'searchable' => false,
+            ]
         ];
     }
 

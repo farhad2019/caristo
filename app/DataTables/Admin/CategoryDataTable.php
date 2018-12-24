@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\Category;
+use Illuminate\Support\Facades\App;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
@@ -22,7 +23,7 @@ class CategoryDataTable extends DataTable
         $dataTable->editColumn('translations.name', function (Category $model) {
             return $model->name;
         });
-        $dataTable->editColumn('parentCategory.translations.name', function (Category $model) {
+        $dataTable->editColumn('category_translations.name', function (Category $model) {
             return ($model->parentCategory) ? "<span class='label label-success'>" . $model->parentCategory->name . "</span>" : "<span class='label label-default'>None</span>";
         });
         $dataTable->editColumn('image', function (Category $model) {
@@ -32,7 +33,7 @@ class CategoryDataTable extends DataTable
                 return "<span class='label label-default'>None</span>";
             }
         });
-        $dataTable->rawColumns(['image', 'parentCategory.translations.name', 'action']);
+        $dataTable->rawColumns(['image', 'category_translations.name', 'action']);
         return $dataTable->addColumn('action', 'admin.categories.datatables_actions');
     }
 
@@ -44,7 +45,11 @@ class CategoryDataTable extends DataTable
      */
     public function query(Category $model)
     {
-        return $model->newQuery();
+        return $model->select('category.*', 'category_translations.name')
+            ->leftJoin('category as b', 'category.parent_id', '=', 'b.id')
+            ->leftJoin('category_translations', 'category_translations.category_id', '=', 'category.id')
+            ->where('category_translations.locale', App::getLocale('en'))
+            ->newQuery();
     }
 
     /**
@@ -87,14 +92,14 @@ class CategoryDataTable extends DataTable
         return [
             'id',
 //            'slug',
-            'translations.name'                => [
+            'translations.name'          => [
                 'title' => 'Name'
             ],
-            'image'                            => [
+            'image'                      => [
                 'orderable'  => false,
                 'searchable' => false,
             ],
-            'parentCategory.translations.name' => [
+            'category_translations.name' => [
                 'title' => 'Parent Category'
             ]
 //            'created_at'

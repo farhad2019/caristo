@@ -56,7 +56,9 @@ class WalkThroughDataTable extends DataTable
             $buttons = ['create'];
         }
         $buttons = array_merge($buttons, [
-            'export',
+//            'export',
+            'excel',
+            'csv',
             'print',
             'reset',
             'reload',

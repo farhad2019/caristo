@@ -23,9 +23,10 @@ class CarModelDataTable extends DataTable
             return $carModel->name;
         });
 
-        $dataTable->addColumn('brand.translations.name', function ($carModel) {
+            $dataTable->addColumn('brand.translations.name', function ($carModel) {
             return $carModel->brand->name;
         });
+
         return $dataTable->addColumn('action', 'admin.car_models.datatables_actions');
     }
 
@@ -78,7 +79,9 @@ class CarModelDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id',
+            'id'                      => [
+                'searchable' => false
+            ],
             'translations.name'       => [
                 'title' => 'Name'
             ],

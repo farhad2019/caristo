@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\RegionalSpecification;
+use Illuminate\Support\Facades\App;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -34,7 +35,7 @@ class RegionalSpecificationDataTable extends DataTable
      */
     public function query(RegionalSpecification $model)
     {
-        return $model->newQuery();
+        return $model->select('regional_specifications.*', 'regional_specification_translations.name')->join('regional_specification_translations', 'regional_specification_translations.regional_specification_id', '=', 'regional_specifications.id')->where('regional_specification_translations.locale', App::getLocale('en'))->newQuery();
     }
 
     /**
@@ -48,12 +49,16 @@ class RegionalSpecificationDataTable extends DataTable
         if (\Entrust::can('regionalSpecifications.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
+
         $buttons = array_merge($buttons, [
-            'export',
+//            'export',
+            'excel',
+            'csv',
             'print',
             'reset',
             'reload',
         ]);
+
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()

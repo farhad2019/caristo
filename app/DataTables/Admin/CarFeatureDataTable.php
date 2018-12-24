@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\CarFeature;
+use Illuminate\Support\Facades\App;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -39,7 +40,7 @@ class CarFeatureDataTable extends DataTable
      */
     public function query(CarFeature $model)
     {
-        return $model->newQuery();
+        return $model->select('features.*', 'feature_translations.name')->join('feature_translations', 'feature_translations.feature_id', '=', 'features.id')->where('feature_translations.locale', App::getLocale('en'))->newQuery();
     }
 
     /**
@@ -50,9 +51,11 @@ class CarFeatureDataTable extends DataTable
     public function html()
     {
         $buttons = [];
+
         if (\Entrust::can('carFeatures.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
+
         $buttons = array_merge($buttons, [
 //            'export',
             'excel',
@@ -61,6 +64,7 @@ class CarFeatureDataTable extends DataTable
             'reset',
             'reload',
         ]);
+
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
@@ -80,11 +84,16 @@ class CarFeatureDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id',
+            'id'                => [
+                'searchable' => false
+            ],
             'translations.name' => [
                 'title' => 'Name'
             ],
-            'icon'
+            'icon'              => [
+                'orderable'  => false,
+                'searchable' => false,
+            ]
         ];
     }
 
