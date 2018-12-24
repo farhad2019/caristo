@@ -7,7 +7,16 @@ use App\DataTables\Admin\CarDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateCarRequest;
 use App\Http\Requests\Admin\UpdateCarRequest;
+use App\Repositories\Admin\CarAttributeRepository;
+use App\Repositories\Admin\CarBrandRepository;
+use App\Repositories\Admin\CarFeatureRepository;
+use App\Repositories\Admin\CarModelRepository;
 use App\Repositories\Admin\CarRepository;
+use App\Repositories\Admin\CarTypeRepository;
+use App\Repositories\Admin\CategoryRepository;
+use App\Repositories\Admin\EngineTypeRepository;
+use App\Repositories\Admin\RegionalSpecificationRepository;
+use App\Repositories\Admin\RegionRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -24,11 +33,48 @@ class CarController extends AppBaseController
     /** @var  CarRepository */
     private $carRepository;
 
-    public function __construct(CarRepository $carRepo)
+    /** @var  CategoryRepository */
+    private $categoryRepository;
+
+    /** @var  CarBrandRepository */
+    private $brandRepository;
+
+    /** @var  RegionalSpecificationRepository */
+    private $regionalSpecRepository;
+
+    /** @var  EngineTypeRepository */
+    private $engineTypeRepository;
+
+    /** @var  CarAttributeRepository */
+    private $attributeRepository;
+
+    /** @var  CarTypeRepository */
+    private $carTypeRepository;
+
+    /** @var  CarModelRepository */
+    private $modelRepository;
+
+    /** @var  CarFeatureRepository */
+    private $featureRepository;
+
+    /** @var  RegionRepository */
+    private $regionRepository;
+
+    public function __construct(CarRepository $carRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo, RegionRepository $regionRepo)
     {
         $this->carRepository = $carRepo;
+        $this->categoryRepository = $categoryRepo;
+        $this->brandRepository = $brandRepo;
+        $this->regionalSpecRepository = $regionalSpecRepo;
+        $this->engineTypeRepository = $engineTypeRepo;
+        $this->attributeRepository = $attributeRepo;
+        $this->carTypeRepository = $carTypeRepo;
+        $this->modelRepository = $modelRepo;
+        $this->featureRepository = $featureRepo;
+        $this->regionRepository = $regionRepo;
         $this->ModelName = 'cars';
         $this->BreadCrumbName = 'Car';
+
     }
 
     /**
@@ -94,9 +140,14 @@ class CarController extends AppBaseController
 
             return redirect(route('admin.cars.index'));
         }
-
+        $attributes = $this->attributeRepository->all();
+        $features = $this->featureRepository->all();
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $car);
-        return view('admin.cars.show')->with('car', $car);
+        return view('admin.cars.show')->with([
+            'myCar'      => $car,
+            'attributes' => $attributes,
+            'features'   => $features
+        ]);
     }
 
     /**

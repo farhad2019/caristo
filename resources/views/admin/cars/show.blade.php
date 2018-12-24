@@ -12,7 +12,7 @@
                     <dl class="dl-horizontal">
                         @include('admin.cars.show_fields')
                     </dl>
-                    {!! Form::open(['route' => ['admin.cars.destroy', $car->id], 'method' => 'delete']) !!}
+                    {!! Form::open(['route' => ['admin.cars.destroy', $myCar->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
                         @ability('super-admin' ,'cars.show')
                         <a href="{!! route('admin.cars.index') !!}" class="btn btn-default">
@@ -20,7 +20,7 @@
                         </a>
                         @endability
                         @ability('super-admin' ,'cars.edit')
-                        <a href="{{ route('admin.cars.edit', $car->id) }}" class='btn btn-default'>
+                        <a href="{{ route('admin.cars.edit', $myCar->id) }}" class='btn btn-default'>
                             <i class="glyphicon glyphicon-edit"></i> Edit
                         </a>
                         @endability

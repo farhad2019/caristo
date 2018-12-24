@@ -101,12 +101,13 @@ class UserDataTable extends DataTable
         }
 
         $buttons = array_merge($buttons, [
-            'export',
+//            'export',
+            'excel',
+            'csv',
             'print',
             'reset',
             'reload',
         ]);
-
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
