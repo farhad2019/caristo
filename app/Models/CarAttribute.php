@@ -115,7 +115,10 @@ class CarAttribute extends Model
      * @var array
      */
     public static $rules = [
-        'type' => 'required'
+        'type' => 'required',
+        'name' => 'required',
+        'icon' => 'required',
+        'opt' => 'sometimes',
     ];
 
     /**

@@ -40,8 +40,8 @@ class CarModelTranslationRepository extends BaseRepository
      */
     public function updateRecord($request, $carModel)
     {
-        $input = $request->only(['name']);
 
+        $input = $request->only(['name']);
         foreach ($input['name'] as $key => $name) {
             if ($name != '') {
                 $update_data = [];

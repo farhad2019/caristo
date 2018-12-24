@@ -103,7 +103,6 @@ class Region extends Model
      */
     public static $update_rules = [
         'name' => 'required',
-        'flag' => 'required'
     ];
 
     /**

@@ -26,11 +26,10 @@
 
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created on:') !!}</dt>
-<dd>{!! $category->created_at !!}</dd>
-
+<dd>{!! $category->created_at->format('d M Y') !!}</dd>
 <!-- Updated At Field -->
 <dt>{!! Form::label('updated_at', 'Last Updated on:') !!}</dt>
-<dd>{!! $category->updated_at !!}</dd>
+<dd>{!! $category->updated_at->format('d M Y') !!}</dd>
 
 {{--<!-- Deleted At Field -->--}}
 {{--<dt>{!! Form::label('deleted_at', 'Deleted At:') !!}</dt>--}}

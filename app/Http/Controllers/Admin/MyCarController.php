@@ -215,6 +215,29 @@ class MyCarController extends AppBaseController
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'category_id'               => 'required',
+            'model_id'                  => 'required',
+            'year'                      => 'required',
+            'transmission_type'         => 'required',
+            'engine_type_id'            => 'required',
+            'amount'                    => 'required',
+            'regional_specification_id' => 'required',
+            'email' => 'required|email',
+            'phone' => 'phone',
+
+        ],
+            [
+                'category_id.required' => 'The category field is required.',
+                'model_id.required'             => 'The model field is required.',
+                'year.required'                 => 'The year field is required.',
+                'transmission_type.required'    => 'The transmission  field is required.',
+                'engine_type_id.required'       => 'The engine field is required.',
+                'amount.required'               => 'The amount field is required.',
+                'email.required'               => 'The amount field is required.',
+
+            ]
+        );
         $myCar = $this->myCarRepository->saveRecord($request);
         if ($request->category_id != MyCar::LIMITEDADDITION) {
             if (!empty($request->attribute)) {

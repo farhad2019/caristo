@@ -91,7 +91,7 @@
 <!-- Phone Field -->
 <div class="form-group col-sm-6 region">
     {!! Form::label('phone', 'Phone:') !!}
-    {!! Form::text('phone', $user->details->phone, ['class' => 'form-control']) !!}
+    {!! Form::number('phone', $user->details->phone, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Regional Specification Field -->

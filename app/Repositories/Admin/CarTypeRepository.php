@@ -38,6 +38,7 @@ class CarTypeRepository extends BaseRepository
      */
     public function saveRecord($request)
     {
+       
         $input = $request->only('name');
         $carType = $this->create($input);
 
