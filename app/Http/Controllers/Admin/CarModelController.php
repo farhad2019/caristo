@@ -7,6 +7,7 @@ use App\DataTables\Admin\CarModelDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateCarModelRequest;
 use App\Http\Requests\Admin\UpdateCarModelRequest;
+use App\Models\CarModel;
 use App\Repositories\Admin\CarBrandRepository;
 use App\Repositories\Admin\CarModelRepository;
 use App\Http\Controllers\AppBaseController;
@@ -156,8 +157,9 @@ class CarModelController extends AppBaseController
             Flash::error('Car Model not found');
             return redirect(route('admin.carModels.index'));
         }
-
-        $carModel = $this->carModelTranslationRepository->updateRecord($request, $carModel);
+        $input['brand_id'] = intval($request->brand_id);
+        CarModel::where('id',$carModel->id)->update($input);
+        $carModelTranslation = $this->carModelTranslationRepository->updateRecord($request, $carModel);
 
         Flash::success('Car Model updated successfully.');
         if (isset($request->continue)) {

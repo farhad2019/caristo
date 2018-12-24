@@ -50,6 +50,7 @@ class CarTypeTranslationRepository extends BaseRepository
                 $update_data['car_type_id'] = $carType->id;
                 $update_data['locale'] = $key;
                 $update_data['name'] = $name;
+                
                 $this->model->updateOrCreate(['car_type_id' => $carType->id, 'locale' => $key], $update_data);
             }
         }

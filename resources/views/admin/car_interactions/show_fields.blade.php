@@ -16,13 +16,6 @@
 
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>
-<dd>{!! $carInteraction->created_at !!}</dd>
+<dd>{!! $carInteraction->created_at->format('d M Y') !!}</dd>
 
-<!-- Updated At Field -->
-<dt>{!! Form::label('updated_at', 'Updated At:') !!}</dt>
-<dd>{!! $carInteraction->updated_at !!}</dd>
-
-<!-- Deleted At Field -->
-<dt>{!! Form::label('deleted_at', 'Deleted At:') !!}</dt>
-<dd>{!! $carInteraction->deleted_at !!}</dd>
 

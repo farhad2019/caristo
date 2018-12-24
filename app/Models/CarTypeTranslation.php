@@ -24,7 +24,10 @@ class CarTypeTranslation extends Model
     protected $dates = ['deleted_at'];
 
     public $fillable = [
-        'id'
+        'id',
+        'name',
+        'locale',
+        'car_type_id',
     ];
 
     /**

@@ -141,13 +141,13 @@ class CarTypeController extends AppBaseController
      */
     public function update($id, UpdateCarTypeRequest $request)
     {
+
         $carType = $this->carTypeRepository->findWithoutFail($id);
         if (empty($carType)) {
             Flash::error('Car Type not found');
             return redirect(route('admin.carTypes.index'));
         }
-
-        $carType = $this->carTypeRepository->updateRecord($request, $carType);
+        $carTypes= $this->carTypeRepository->updateRecord($request, $carType);
         $this->carTypeTranslationRepository->updateRecord($request, $carType);
 
         Flash::success('Car Type updated successfully.');

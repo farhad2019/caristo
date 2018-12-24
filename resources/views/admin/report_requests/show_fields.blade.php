@@ -20,13 +20,5 @@
 
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>
-<dd>{!! $reportRequest->created_at !!}</dd>
-
-<!-- Updated At Field -->
-<dt>{!! Form::label('updated_at', 'Updated At:') !!}</dt>
-<dd>{!! $reportRequest->updated_at !!}</dd>
-
-<!-- Deleted At Field -->
-<dt>{!! Form::label('deleted_at', 'Deleted At:') !!}</dt>
-<dd>{!! $reportRequest->deleted_at !!}</dd>
+<dd>{!! $reportRequest->created_at->format('d M Y') !!}</dd>
 

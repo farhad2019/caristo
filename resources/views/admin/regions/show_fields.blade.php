@@ -8,5 +8,5 @@
 
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>
-<dd>{!! $region->created_at !!}</dd>
+<dd>{!! $region->created_at->format('d M Y') !!}</dd>
 

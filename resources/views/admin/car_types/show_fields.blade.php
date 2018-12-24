@@ -24,7 +24,7 @@
                         </div>
                         <div class="box-footer">
                             <dt>{!! Form::label('created_at', __('Created At').':') !!}</dt>
-                            <dd>{!! $carType->created_at !!}</dd>
+                            <dd>{!! $carType->created_at->format('d M Y') !!}</dd>
                         </div>
                         <!-- box-footer -->
                     </div>

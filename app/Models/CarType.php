@@ -39,7 +39,7 @@ class CarType extends Model
     protected $translationForeignKey = 'car_type_id';
 
     public $fillable = [
-        'id'
+        'id',
     ];
 
     /**

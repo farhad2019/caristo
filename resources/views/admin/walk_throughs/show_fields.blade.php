@@ -48,9 +48,9 @@
 @endif
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>
-<dd>{!! $walkThrough->created_at->format('d-m-Y') !!}</dd>
+<dd>{!! $walkThrough->created_at->format('d M Y') !!}</dd>
 
 <!-- Updated At Field -->
 <dt>{!! Form::label('updated_at', 'Updated At:') !!}</dt>
-<dd>{!! $walkThrough->updated_at->format('d-m-Y') !!}</dd>
+<dd>{!! $walkThrough->updated_at->format('d M Y')!!}</dd>
 
