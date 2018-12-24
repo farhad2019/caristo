@@ -170,7 +170,7 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateUserRequest $request)
+    public function update($id, Request $request)
     {
         $user = $this->userRepository->findWithoutFail($id);
 
@@ -180,6 +180,7 @@ class UserController extends AppBaseController
         }
 
         $data = $request->all();
+
         unset($data['email']);
         if ($request->has('password') && $request->get('password', null) === null) {
             unset($data['password']);
@@ -217,8 +218,9 @@ class UserController extends AppBaseController
 //            }
 //            $data['image'] = $media[0]['filename'];
         }
+        $data['first_name'] = $data['name'];
         $user->details->update($data);
-
+        unset($data['first_name']);
         $user = $this->userRepository->update($data, $id);
 
         if (isset($request->showroom)) {

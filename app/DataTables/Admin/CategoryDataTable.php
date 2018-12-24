@@ -21,10 +21,10 @@ class CategoryDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         $dataTable->editColumn('translations.name', function (Category $model) {
-            return $model->name;
+            return '<span style="word-break: break-all">' . $model->name . '</span>';
         });
         $dataTable->editColumn('category_translations.name', function (Category $model) {
-            return ($model->parentCategory) ? "<span class='label label-success'>" . $model->parentCategory->name . "</span>" : "<span class='label label-default'>None</span>";
+            return ($model->parentCategory) ? "<span class='label label-success' style='word-break: break-all'>" . $model->parentCategory->name . "</span>" : "<span class='label label-default' style='word-break: break-all'>None</span>";
         });
         $dataTable->editColumn('image', function (Category $model) {
             if (count($model->media) > 0)
@@ -33,7 +33,7 @@ class CategoryDataTable extends DataTable
                 return "<span class='label label-default'>None</span>";
             }
         });
-        $dataTable->rawColumns(['image', 'category_translations.name', 'action']);
+        $dataTable->rawColumns(['translations.name', 'image', 'category_translations.name', 'action']);
         return $dataTable->addColumn('action', 'admin.categories.datatables_actions');
     }
 

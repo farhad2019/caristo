@@ -109,6 +109,14 @@ class User extends Authenticatable implements JWTSubject
         'password_confirmation' => 'min:6'
     ];
 
+    public static $updateRules = [
+        'name'                  => 'required',
+        'email'                 => 'required|email',
+        'roles'                 => 'sometimes|required',
+        'password'              => 'sometimes|nullable|min:6|required_with:password_confirmation|same:password_confirmation',
+        'password_confirmation' => 'sometimes|nullable|min:6'
+    ];
+
     /**
      * The objects that should be append to toArray.
      *

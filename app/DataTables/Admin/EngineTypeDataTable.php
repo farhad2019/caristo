@@ -21,9 +21,10 @@ class EngineTypeDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         $dataTable->editColumn('translations.name', function ($model) {
-            return $model->name;
+            return '<span style="word-break: break-all">' . $model->name . '</span>';
         });
 
+        $dataTable->rawColumns(['translations.name', 'action']);
         return $dataTable->addColumn('action', 'admin.engine_types.datatables_actions');
     }
 

@@ -25,6 +25,6 @@ class UpdateUserRequest extends BaseFormRequest
      */
     public function rules()
     {
-        return User::$rules;
+        return User::$updateRules;
     }
 }

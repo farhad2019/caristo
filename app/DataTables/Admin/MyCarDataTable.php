@@ -23,9 +23,11 @@ class MyCarDataTable extends DataTable
         $dataTable->editColumn('category.translations.name', function ($model) {
             return $model->category->name;
         });
+
         $dataTable->editColumn('carModel.translations.name', function ($model) {
             return $model->carModel->name;
         });
+
         return $dataTable->addColumn('action', 'admin.my_cars.datatables_actions');
     }
 

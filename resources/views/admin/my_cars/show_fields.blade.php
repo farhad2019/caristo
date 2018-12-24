@@ -13,33 +13,33 @@
     <div class="box-body">
         <div class="col-md-4">
             <!-- Type Id Field -->
-            <dt>{!! Form::label('type_id', 'Type Id:') !!}</dt>
+            <dt>{!! Form::label('type_id', 'Type :') !!}</dt>
             <dd>{!! $myCar->carType->name !!}</dd>
 
             <!-- Model Id Field -->
-            <dt>{!! Form::label('model_id', 'Model Id:') !!}</dt>
+            <dt>{!! Form::label('model_id', 'Model :') !!}</dt>
             <dd>{!! $myCar->carModel->name !!}</dd>
 
         </div>
         <div class="col-md-8">
             <!-- Engine Type Id Field -->
-            <dt>{!! Form::label('engine_type_id', 'Engine Type Id:') !!}</dt>
+            <dt>{!! Form::label('engine_type_id', 'Engine Type :') !!}</dt>
             <dd>{!! $myCar->engineType->name !!}</dd>
 
             <!-- Owner Id Field -->
-            <dt>{!! Form::label('owner_id', 'Owner Id:') !!}</dt>
+            <dt>{!! Form::label('owner_id', 'Owner :') !!}</dt>
             <dd>{!! $myCar->owner->name !!}</dd>
         </div>
 
-            <div class="col-md-8">
-                <!-- Year Field -->
-                <dt>{!! Form::label('year', 'Year:') !!}</dt>
-                <dd>{!! $myCar->year !!}</dd>
+        <div class="col-md-8">
+            <!-- Year Field -->
+            <dt>{!! Form::label('year', 'Year:') !!}</dt>
+            <dd>{!! $myCar->year !!}</dd>
 
-                <!-- Transmission Type Field -->
-                <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
-                <dd>{!! $myCar->transmission_type_text !!}</dd>
-            </div>
+            <!-- Transmission Type Field -->
+            <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
+            <dd>{!! $myCar->transmission_type_text !!}</dd>
+        </div>
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
@@ -87,7 +87,7 @@
         <div class="col-md-8">
             <!-- Owner Type Field -->
             <dt>{!! Form::label('owner_type', 'Owner Type:') !!}</dt>
-            <dd>{!! $myCar->owner_type !!}</dd>
+            <dd>{!! $myCar->owner_type_text !!}</dd>
 
             <!-- Owner Type Field -->
             <dt>{!! Form::label('description', 'Description:') !!}</dt>
@@ -113,26 +113,67 @@
         <!-- /.box-tools -->
     </div>
     <!-- /.box-header -->
-    <div class="box-body">
+    <dt>{!! Form::label('owner_type', 'Features:') !!}</dt>
+    <dd>
+        @foreach($myCar->myCarFeatures as $feature)
+            <ul>
+                <li>{!!  $feature->carFeature->name !!}</li>
+            </ul>
+        @endforeach
+    </dd>
+</div>
 
-        <div class="col-md-8">
-            <table class="table table-striped table-hover">
-                <tr>
-                    <th  colspan="2">{!! Form::label('region', 'Region:') !!}</th>
-                </tr>
-                @foreach($myCar->carRegions as $region)
-                    <tr>
-                        <td>{!! $region->region->name !!}</td>
-                        <td>{!! $region->price !!} AED</td>
-                    </tr>
-                @endforeach
-            </table>
+<div class="box">
+    <div class="box-header with-border col-sm-6">
+
+        <div class="box-tools pull-right">
+            <!-- Collapse Button -->
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
         </div>
-
-
+        <!-- /.box-tools -->
     </div>
+    <!-- /.box-header -->
+    <dt>{!! Form::label('owner_type', 'Attributes:') !!}</dt>
+    <dd>
+        @foreach($myCar->myCarAttributes as $attribute)
+            <ul>
+                <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
+            </ul>
+        @endforeach
+    </dd>
+
     <!-- /.box-body -->
     <div class="box-footer">
+
+    </div>
+    <!-- box-footer -->
+</div>
+
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+        <div class="box-tools pull-right">
+            <!-- Collapse Button -->
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+        <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <dt>{!! Form::label('owner_type', 'Region:') !!}</dt>
+    <dd>
+        @foreach($myCar->carRegions as $region)
+            <ul>
+                <li>{!! $region->region->name !!}
+                   {{ (empty($region->price)? '' : ': '.number_format($region->price,2)) }}</li>
+            </ul>
+        @endforeach
+    </dd>
+    <!-- /.box-body -->
+    <div class="box-footer clearfix">
 
     </div>
     <!-- box-footer -->
@@ -167,16 +208,3 @@
     </div>
     <!-- box-footer -->
 </div>
-
-{{--<!-- Created At Field -->--}}
-{{--<dt>{!! Form::label('created_at', 'Created At:') !!}</dt>--}}
-{{--<dd>{!! $myCar->created_at !!}</dd>--}}
-
-{{--<!-- Updated At Field -->--}}
-{{--<dt>{!! Form::label('updated_at', 'Updated At:') !!}</dt>--}}
-{{--<dd>{!! $myCar->updated_at !!}</dd>--}}
-
-{{--<!-- Deleted At Field--}}
-{{--<dt>{!! Form::label('deleted_at', 'Deleted At:') !!}</dt>--}}
-{{--<dd>{!! $myCar->deleted_at !!}</dd>-->--}}
-

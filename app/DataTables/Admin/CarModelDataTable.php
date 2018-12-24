@@ -19,14 +19,15 @@ class CarModelDataTable extends DataTable
         $query = $query->with(['translations', 'brand.translations']);
         $dataTable = new EloquentDataTable($query);
 
-        $dataTable->editColumn('translations.name', function ($carModel) {
-            return $carModel->name;
+        $dataTable->editColumn('translations.name', function ($model) {
+            return '<span style="word-break: break-all">' . $model->name . '</span>';
         });
 
-            $dataTable->addColumn('brand.translations.name', function ($carModel) {
-            return $carModel->brand->name;
+        $dataTable->addColumn('brand.translations.name', function ($model) {
+            return '<span style="word-break: break-all">' . $model->brand->name . '</span>';
         });
 
+        $dataTable->rawColumns(['translations.name', 'brand.translations.name', 'action']);
         return $dataTable->addColumn('action', 'admin.car_models.datatables_actions');
     }
 

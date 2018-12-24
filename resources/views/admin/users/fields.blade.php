@@ -57,7 +57,7 @@
                     <!-- Name Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('name', 'Name:') !!}
-                        {!! Form::text('first_name', $user->details->first_name?? null, ['class' => 'form-control']) !!}
+                        {!! Form::text('name', $user->details->first_name?? null, ['class' => 'form-control']) !!}
                     </div>
 
                     <!-- Email Field -->
@@ -69,7 +69,7 @@
                     <!-- Phone Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('phone', 'Phone:') !!}
-                        {!! Form::number('phone', $user->details->phone?? null, ['class' => 'form-control']) !!}
+                        {!! Form::number('phone', $user->details->phone?? null, ['class' => 'form-control', 'min'=> 1]) !!}
                     </div>
 
                 @if (strpos(Request::url(), 'users') !== false)
@@ -98,7 +98,7 @@
                 @if($user->details)
                     <!-- Image Field -->
                         <div class="form-group col-sm-3">
-                            <img src="{{ $user->details->image_url }}">
+                            <img src="{{ $user->details->image_url }}" width="50">
                         </div>
                 @endif
 

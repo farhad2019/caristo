@@ -6,6 +6,7 @@ use App\Helper\Utils;
 use App\Models\Car;
 use App\Models\CarInteraction;
 use App\Models\MyCar;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -71,7 +72,7 @@ class CarDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Car $model
+     * @param \App\Models\MyCar $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(MyCar $model)
@@ -83,7 +84,7 @@ class CarDataTable extends DataTable
                 return $userInteractions->where(['user_id' => $owner_id, 'type' => $interactionType]);
             });
         }
-        return $model->select('cars.*')->newQuery();
+        return $model->select('cars.*')->where('owner_id', '!=', Auth::id())->newQuery();
     }
 
     public function interactionList($data)

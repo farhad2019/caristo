@@ -215,34 +215,62 @@ class MyCarController extends AppBaseController
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'category_id'               => 'required',
-            'model_id'                  => 'required',
-            'year'                      => 'required',
-            'transmission_type'         => 'required',
-            'engine_type_id'            => 'required',
-            'amount'                    => 'required',
-            'regional_specification_id' => 'required',
-            'email' => 'required|email',
-            'phone' => 'phone',
+        if ($request->category_id == MyCar::LIMITEDADDITION) {
+            $validatedData = $request->validate([
+                'category_id'               => 'sometimes|nullable|required',
+                'model_id'                  => 'sometimes|nullable|required',
+                'year'                      => 'sometimes|nullable|required',
+                'amount'                    => 'sometimes|nullable|required',
+                'regional_specification_id' => 'sometimes|nullable|required',
+                'email'                     => 'sometimes|nullable|required|email',
+                'phone'                     => 'sometimes|nullable|phone'
+            ],
+                [
+                    'category_id.required' => 'The category field is required.',
+                    'model_id.required'    => 'The model field is required.',
+                    'year.required'        => 'The year field is required.',
+                    'amount.required'      => 'The amount field is required.',
+                    'email.required'       => 'The amount field is required.'
+                ]
+            );
+        } else {
+            $validatedData = $request->validate([
+                'category_id'               => 'sometimes|nullable|required',
+                'model_id'                  => 'sometimes|nullable|required',
+                'year'                      => 'sometimes|nullable|required',
+                'transmission_type'         => 'sometimes|nullable|required',
+                'engine_type_id'            => 'sometimes|nullable|required',
+                'amount'                    => 'sometimes|nullable|required',
+                'regional_specification_id' => 'sometimes|nullable|required',
+                'email'                     => 'sometimes|nullable|required|email',
+                'phone'                     => 'sometimes|nullable|phone',
 
-        ],
-            [
-                'category_id.required' => 'The category field is required.',
-                'model_id.required'             => 'The model field is required.',
-                'year.required'                 => 'The year field is required.',
-                'transmission_type.required'    => 'The transmission  field is required.',
-                'engine_type_id.required'       => 'The engine field is required.',
-                'amount.required'               => 'The amount field is required.',
-                'email.required'               => 'The amount field is required.',
+            ],
+                [
+                    'category_id.required'       => 'The category field is required.',
+                    'model_id.required'          => 'The model field is required.',
+                    'year.required'              => 'The year field is required.',
+                    'transmission_type.required' => 'The transmission field is required.',
+                    'engine_type_id.required'    => 'The engine field is required.',
+                    'amount.required'            => 'The amount field is required.',
+                    'email.required'             => 'The amount field is required.',
 
-            ]
-        );
+                ]
+            );
+        }
+
         $myCar = $this->myCarRepository->saveRecord($request);
+
         if ($request->category_id != MyCar::LIMITEDADDITION) {
             if (!empty($request->attribute)) {
                 foreach ($request->attribute as $key => $item) {
                     $myCar->carAttributes()->attach($key, ['value' => $item]);
+                }
+            }
+
+            if (!empty($request->feature)) {
+                foreach ($request->feature as $key => $item) {
+                    $myCar->carFeatures()->attach($key);
                 }
             }
         }
@@ -268,8 +296,14 @@ class MyCarController extends AppBaseController
             return redirect(route('admin.myCars.index'));
         }
 
+        $attributes = $this->attributeRepository->all();
+        $features = $this->featureRepository->all();
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
-        return view('admin.my_cars.show')->with('myCar', $myCar);
+        return view('admin.my_cars.show')->with([
+            'myCar'      => $myCar,
+            'attributes' => $attributes,
+            'features'   => $features
+        ]);
     }
 
     /**
@@ -302,6 +336,87 @@ class MyCarController extends AppBaseController
         $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->all()->pluck('name', 'id');
+        $years = ['1950' => "1950",
+                  '1951' => "1951",
+                  '1952' => "1952",
+                  '1953' => "1953",
+                  '1954' => "1954",
+                  '1955' => "1955",
+                  '1956' => "1956",
+                  '1957' => "1957",
+                  '1958' => "1958",
+                  '1959' => "1959",
+                  '1960' => "1960",
+                  '1961' => "1961",
+                  '1962' => "1962",
+                  '1963' => "1963",
+                  '1964' => "1964",
+                  '1965' => "1965",
+                  '1966' => "1966",
+                  '1967' => "1967",
+                  '1968' => "1968",
+                  '1969' => "1969",
+                  '1970' => "1970",
+                  '1971' => "1971",
+                  '1972' => "1972",
+                  '1973' => "1973",
+                  '1974' => "1974",
+                  '1975' => "1975",
+                  '1976' => "1976",
+                  '1977' => "1977",
+                  '1978' => "1978",
+                  '1979' => "1979",
+                  '1980' => "1980",
+                  '1981' => "1981",
+                  '1982' => "1982",
+                  '1983' => "1983",
+                  '1984' => "1984",
+                  '1985' => "1985",
+                  '1986' => "1986",
+                  '1987' => "1987",
+                  '1988' => "1988",
+                  '1989' => "1989",
+                  '1990' => "1990",
+                  '1991' => "1991",
+                  '1992' => "1992",
+                  '1993' => "1993",
+                  '1994' => "1994",
+                  '1995' => "1995",
+                  '1996' => "1996",
+                  '1997' => "1997",
+                  '1998' => "1998",
+                  '1999' => "1999",
+                  '2000' => "2000",
+                  '2001' => "2001",
+                  '2002' => "2002",
+                  '2003' => "2003",
+                  '2004' => "2004",
+                  '2005' => "2005",
+                  '2006' => "2006",
+                  '2007' => "2007",
+                  '2008' => "2008",
+                  '2009' => "2009",
+                  '2010' => "2010",
+                  '2011' => "2011",
+                  '2012' => "2012",
+                  '2013' => "2013",
+                  '2014' => "2014",
+                  '2015' => "2015",
+                  '2016' => "2016",
+                  '2017' => "2017",
+                  '2018' => "2018",
+                  '2019' => "2019",
+                  '2020' => "2020",
+                  '2021' => "2021",
+                  '2022' => "2022",
+                  '2023' => "2023",
+                  '2024' => "2024",
+                  '2025' => "2025",
+                  '2026' => "2026",
+                  '2027' => "2027",
+                  '2028' => "2028",
+                  '2029' => "2029",
+                  '2030' => "2030"];
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
         return view('admin.my_cars.edit')->with([
@@ -316,6 +431,7 @@ class MyCarController extends AppBaseController
             'carModels'             => $carModels,
             'brands'                => $brands,
             'regions'               => $regions,
+            'years'                 => $years,
             'limited_edition_specs' => $limited_edition_specs,
         ]);
     }
@@ -324,7 +440,7 @@ class MyCarController extends AppBaseController
      * Update the specified MyCar in storage.
      *
      * @param  int $id
-     * @param UpdateMyCarRequest $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -341,6 +457,27 @@ class MyCarController extends AppBaseController
         }
 
         $myCar = $this->myCarRepository->updateRecord($request, $myCar);
+
+        if ($request->category_id != MyCar::LIMITEDADDITION) {
+            if (!empty($request->attribute)) {
+                foreach ($request->attribute as $key => $item) {
+                    $carAttributes[$key] = ['value' => $item];
+                }
+
+                $myCar->carAttributes()->sync($carAttributes, false);
+            }
+
+            if (!empty($request->feature)) {
+                foreach ($request->feature as $key => $item) {
+                    if (!empty($item)) {
+                        $carFeatures[] = $key;
+                    }
+                }
+
+                $myCar->myCarFeatures()->delete();
+                $myCar->carFeatures()->sync($carFeatures, false);
+            }
+        }
 
         Flash::success('Car updated successfully.');
         return redirect(route('admin.myCars.index'));

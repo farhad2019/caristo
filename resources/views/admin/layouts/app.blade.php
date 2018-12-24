@@ -6,6 +6,8 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link rel="icon" href="{{ asset('storage/app/public/logo-mini.png') }}" type="image/x-icon">
+
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
@@ -31,6 +33,17 @@
     <!-- Bootstrap Toggle Switch -->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     {{--@yield('css')--}}
+
+    <style>
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
     @stack('css')
 </head>
 
@@ -43,7 +56,8 @@
             <!-- Logo -->
             <a href="{{ url('/admin/home') }}" class="logo">
                 <span class="logo-mini">
-                    <b style="font-size: 0.7em">{{ config('app.name') }}</b>
+                    <img src="{{ asset('storage/app/public/logo-mini.png') }}" width="40">
+                    {{--<b style="font-size: 0.5em">{{ config('app.name') }}</b>--}}
                 </span>
                 <!-- logo for regular state and mobile devices -->
                 <span class="logo-lg">

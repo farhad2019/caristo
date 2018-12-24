@@ -29,8 +29,16 @@ class UserDataTable extends DataTable
         $query = $query->with(['Roles']);
         $dataTable = new EloquentDataTable($query);
 
+        $dataTable->editColumn('name', function (User $model) {
+            return '<span style="word-break: break-all">' . $model->name . '</span>';
+        });
+
+        $dataTable->editColumn('email', function (User $model) {
+            return '<span style="word-break: break-all">' . $model->email . '</span>';
+        });
+
         $dataTable->editColumn('Roles.display_name', function (User $model) {
-            return implode(",", $model->Roles->pluck('display_name')->toArray());
+            return '<span style="word-break: break-all">' . implode(",", $model->Roles->pluck('display_name')->toArray()) . '</span>';
         });
 
         $dataTable->editColumn('cars_count', function (User $model) {
@@ -41,15 +49,15 @@ class UserDataTable extends DataTable
             return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_FAVORITE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->favorite_count . "</span></a>";
         });
 
-        $dataTable->editColumn('like_count', function (User $model) {
-            return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_LIKE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->like_count . "</span></a>";
-        });
+//        $dataTable->editColumn('like_count', function (User $model) {
+//            return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_LIKE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->like_count . "</span></a>";
+//        });
 
         $dataTable->editColumn('view_count', function (User $model) {
             return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_VIEW]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->view_count . "</span></a>";
         });
 
-        $dataTable->rawColumns(['action', 'cars_count', 'favorite_count', 'like_count', 'view_count']);
+        $dataTable->rawColumns(['name', 'email', 'action', 'Roles.display_name', 'cars_count', 'favorite_count', 'view_count']);
         return $dataTable->addColumn('action', 'admin.users.datatables_actions');
     }
 
@@ -135,11 +143,11 @@ class UserDataTable extends DataTable
                 'orderable'  => false,
                 'searchable' => false
             ],
-            'like_count'         => [
-                'title'      => 'Like',
-                'orderable'  => false,
-                'searchable' => false
-            ],
+//            'like_count'         => [
+//                'title'      => 'Like',
+//                'orderable'  => false,
+//                'searchable' => false
+//            ],
             'view_count'         => [
                 'title'      => 'View',
                 'orderable'  => false,
