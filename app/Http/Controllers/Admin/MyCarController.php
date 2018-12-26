@@ -464,8 +464,8 @@ class MyCarController extends AppBaseController
                 $carAttributes = [];
                 foreach ($request->attribute as $key => $item) {
                     if ($item) {
-                        //$carAttributes[$key] = ['value' => $item];
-                        $carAttributes[] = ['value' => $item];
+                        $carAttributes[$key] = ['value' => $item];
+                        //$carAttributes[] = ['value' => $item];
                     }
                 }
                 dd($carAttributes);
