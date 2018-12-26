@@ -12,7 +12,7 @@
     <!-- Created At Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('name', 'Name:') !!}
-        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+        {!! Form::text('name', null, ['class' => 'form-control','maxlength'=>"20", 'size'=>"20"]) !!}
     </div>
 
     <!-- Submit Field -->
@@ -42,7 +42,7 @@
                         <!-- Title Field -->
                             <div class="form-group">
                                 {!! Form::label('name', __('Name').':') !!}
-                                {!! Form::text('name['.$locale->code.']', $carBrand->translate($locale->code)['name'], ['class' => 'form-control', 'autofocus', 'style'=>'direction:'.$locale->direction]) !!}
+                                {!! Form::text('name['.$locale->code.']', $carBrand->translate($locale->code)['name'], ['class' => 'form-control','maxlength'=>"20", 'size'=>"20", 'autofocus', 'style'=>'direction:'.$locale->direction]) !!}
                             </div>
                         </div>
                     @endforeach
