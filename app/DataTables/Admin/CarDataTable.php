@@ -55,9 +55,9 @@ class CarDataTable extends DataTable
             return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_FAVORITE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->favorite_count . "</span></a>";
         });
 
-        $dataTable->editColumn('like_count', function (MyCar $model) {
+        /*$dataTable->editColumn('like_count', function (MyCar $model) {
             return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_LIKE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-thumbs-up'></i> " . $model->liked_count . "</span></a>";
-        });
+        });*/
 
         $dataTable->editColumn('owner_type', function (MyCar $model) {
             $owner_type = $model->owner_type == 10 ? 1 : 0;
@@ -159,11 +159,11 @@ class CarDataTable extends DataTable
                 'searchable' => false,
                 'title'      => 'Favorites'
             ],
-            'like_count'                       => [
+           /* 'like_count'                       => [
                 'orderable'  => false,
                 'searchable' => false,
                 'title'      => 'Likes'
-            ],
+            ],*/
             'owner_type'                       => [
                 'orderable' => false
             ]
