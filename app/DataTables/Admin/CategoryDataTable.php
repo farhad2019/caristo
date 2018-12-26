@@ -100,7 +100,8 @@ class CategoryDataTable extends DataTable
                 'searchable' => false,
             ],
             'category_translations.name' => [
-                'title' => 'Parent Category'
+                'title' => 'Parent Category',
+                'orderable'  => false,
             ]
 //            'created_at'
         ];
