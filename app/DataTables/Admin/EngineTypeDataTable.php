@@ -80,7 +80,7 @@ class EngineTypeDataTable extends DataTable
     {
         return [
             'id'                => [
-                'orderable' => false,
+               // 'orderable' => false,
             ],
             'translations.name' => [
                 'title' => 'Name'
