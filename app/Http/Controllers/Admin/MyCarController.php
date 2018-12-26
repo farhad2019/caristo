@@ -468,7 +468,6 @@ class MyCarController extends AppBaseController
                         //$carAttributes[] = ['value' => $item];
                     }
                 }
-                dd($carAttributes);
 
                 $myCar->carAttributes()->sync($carAttributes, false);
             }
