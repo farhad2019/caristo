@@ -116,7 +116,7 @@ class CarAttribute extends Model
      */
     public static $rules = [
         'type' => 'required',
-        'name' => 'required',
+        'name' => 'required|max:20',
         'icon' => 'required',
         'opt' => 'sometimes',
     ];
@@ -127,7 +127,8 @@ class CarAttribute extends Model
      * @var array
      */
     public static $update_rules = [
-        'type' => 'required'
+        'type' => 'required',
+        'name' => 'required|max:20',
     ];
 
     /**

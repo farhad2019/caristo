@@ -88,7 +88,7 @@ class CarModel extends Model
      */
     public static $rules = [
         'brand_id' => 'required|exists:brands,id',
-        'name'     => 'required'
+        'name'     => 'required|max:20'
     ];
 
     /**
@@ -98,7 +98,7 @@ class CarModel extends Model
      */
     public static $update_rules = [
         'brand_id' => 'required|exists:brands,id',
-        'name'     => 'required'
+        'name'     => 'required|max:20'
     ];
 
     /**

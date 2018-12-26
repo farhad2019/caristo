@@ -85,6 +85,7 @@ class CarFeature extends Model
      * @var array
      */
     public static $rules = [
+        'name' => 'required|max:20',
     ];
 
     /**
@@ -93,6 +94,7 @@ class CarFeature extends Model
      * @var array
      */
     public static $update_rules = [
+        'name' => 'required|max:20',
     ];
 
     /**

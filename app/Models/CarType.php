@@ -84,7 +84,7 @@ class CarType extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required'
+        'name' => 'required|max:20'
     ];
 
     /**
@@ -93,7 +93,7 @@ class CarType extends Model
      * @var array
      */
     public static $update_rules = [
-        'name' => 'required'
+        'name' => 'required|max:20'
     ];
 
     /**
