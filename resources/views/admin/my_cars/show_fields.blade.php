@@ -14,21 +14,21 @@
         <div class="col-md-4">
             <!-- Type Id Field -->
             <dt>{!! Form::label('type_id', 'Type :') !!}</dt>
-            <dd>{!! $myCar->carType->name !!}</dd>
+            <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : '' !!}</dd>
 
             <!-- Model Id Field -->
             <dt>{!! Form::label('model_id', 'Model :') !!}</dt>
-            <dd>{!! $myCar->carModel->name !!}</dd>
+            <dd>{!! isset($myCar->carModel->name) ? $myCar->carModel->name : '' !!}</dd>
 
         </div>
         <div class="col-md-8">
             <!-- Engine Type Id Field -->
             <dt>{!! Form::label('engine_type_id', 'Engine Type :') !!}</dt>
-            <dd>{!! $myCar->engineType->name !!}</dd>
+            <dd>{!! isset($myCar->engineType->name) ? $myCar->engineType->name : '' !!}</dd>
 
             <!-- Owner Id Field -->
             <dt>{!! Form::label('owner_id', 'Owner :') !!}</dt>
-            <dd>{!! $myCar->owner->name !!}</dd>
+            <dd>{!! isset($myCar->owner->name) ? $myCar->owner->name : '' !!}</dd>
         </div>
 
         <div class="col-md-8">
