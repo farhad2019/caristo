@@ -2,7 +2,7 @@
     <!-- Name Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('name', 'Name:') !!}
-        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+        {!! Form::text('name', null, ['class' => 'form-control','maxlength'=>"20", 'size'=>"20"]) !!}
     </div>
 
     <!-- Email Field -->
@@ -57,7 +57,7 @@
                     <!-- Name Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('name', 'Name:') !!}
-                        {!! Form::text('name', $user->details->first_name?? null, ['class' => 'form-control']) !!}
+                        {!! Form::text('name', $user->details->first_name?? null, ['class' => 'form-control','maxlength'=>"20", 'size'=>"20"]) !!}
                     </div>
 
                     <!-- Email Field -->
@@ -149,7 +149,7 @@
                         <!-- Phone Field -->
                         <div class="form-group col-sm-6">
                             {!! Form::label('phone', 'Phone:') !!}
-                            {!! Form::number('showroom[phone]', $user->showroomDetails->phone?? null, ['class' => 'form-control']) !!}
+                            {!! Form::number('showroom[phone]', $user->showroomDetails->phone?? null, ['class' => 'form-control','min'=>1]) !!}
                         </div>
 
                         <!-- Image Field -->

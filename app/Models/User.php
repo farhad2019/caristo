@@ -102,16 +102,18 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     public static $rules = [
-        'name'                  => 'required',
+        'name'                  => 'required|max:20',
         'email'                 => 'required|email',
+        'phone'                 => 'required|string|max:20',
         'roles'                 => 'required',
         'password'              => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'min:6'
     ];
 
     public static $updateRules = [
-        'name'                  => 'required',
+        'name'                  => 'required|max:20',
         'email'                 => 'required|email',
+        'phone'                 => 'required|string|max:20',
         'roles'                 => 'sometimes|required',
         'password'              => 'sometimes|nullable|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'sometimes|nullable|min:6'

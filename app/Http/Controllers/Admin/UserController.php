@@ -170,7 +170,7 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, Request $request)
+    public function update($id, UpdateUserRequest $request)
     {
         $user = $this->userRepository->findWithoutFail($id);
 
