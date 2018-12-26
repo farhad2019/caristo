@@ -459,15 +459,21 @@ class MyCarController extends AppBaseController
         $myCar = $this->myCarRepository->updateRecord($request, $myCar);
 
         if ($request->category_id != MyCar::LIMITEDADDITION) {
+
             if (!empty($request->attribute)) {
+                $carAttributes = [];
                 foreach ($request->attribute as $key => $item) {
-                    $carAttributes[$key] = ['value' => $item];
+                    if ($item) {
+                        //$carAttributes[$key] = ['value' => $item];
+                        $carAttributes[] = ['value' => $item];
+                    }
                 }
 
                 $myCar->carAttributes()->sync($carAttributes, false);
             }
 
             if (!empty($request->feature)) {
+                $carFeatures = [];
                 foreach ($request->feature as $key => $item) {
                     if (!empty($item)) {
                         $carFeatures[] = $key;
