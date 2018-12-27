@@ -20,7 +20,7 @@ class RegionDataTable extends DataTable
 
         $dataTable->editColumn('flag', function ($model) {
             if ($model->flag)
-                return "<img src='" . $model->flag . "' width='30'/>";
+                return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'><img src='" . $model->flag . "' width='30'/></a>";
             else {
                 return "<span class='label label-default'>None</span>";
             }

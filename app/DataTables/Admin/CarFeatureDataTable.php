@@ -25,7 +25,7 @@ class CarFeatureDataTable extends DataTable
         });
 
         $dataTable->editColumn('icon', function ($model) {
-            return $model->icon ? '<img src="' . $model->icon . '" width="35">' : null;
+            return $model->icon ? '<a class="showGallery" data-id="' . $model->id . '" data-toggle="modal" data-target="#imageGallery"><img src="' . $model->icon . '" width="35"></a>' : null;
         });
 
         $dataTable->rawColumns(['icon', 'action']);

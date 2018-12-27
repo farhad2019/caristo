@@ -74,12 +74,12 @@ class CarController extends AppBaseController
         $this->regionRepository = $regionRepo;
         $this->ModelName = 'cars';
         $this->BreadCrumbName = 'Car';
-
     }
 
     /**
      * Display a listing of the Car.
      *
+     * @param Request $request
      * @param CarDataTable $carDataTable
      * @return Response
      */

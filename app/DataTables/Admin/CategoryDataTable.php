@@ -28,7 +28,7 @@ class CategoryDataTable extends DataTable
         });
         $dataTable->editColumn('image', function (Category $model) {
             if (count($model->media) > 0)
-                return "<img src='" . $model->media[0]->fileUrl . "' width='80'/>";
+                return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'><img src='" . $model->media[0]->fileUrl . "' width='80'/></a>";
             else {
                 return "<span class='label label-default'>None</span>";
             }
@@ -100,8 +100,8 @@ class CategoryDataTable extends DataTable
                 'searchable' => false,
             ],
             'category_translations.name' => [
-                'title' => 'Parent Category',
-                'orderable'  => false,
+                'title'     => 'Parent Category',
+                'orderable' => false,
             ]
 //            'created_at'
         ];

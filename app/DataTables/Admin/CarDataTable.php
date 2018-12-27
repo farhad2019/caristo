@@ -78,15 +78,23 @@ class CarDataTable extends DataTable
     public function query(MyCar $model)
     {
         if ($this->owner_id && $this->interaction_type) {
-            $owner_id = $this->owner_id;
-            $interactionType = $this->interaction_type;
-            $model = $model->whereHas('userInteractions', function ($userInteractions) use ($owner_id, $interactionType) {
-                return $userInteractions->where(['user_id' => $owner_id, 'type' => $interactionType]);
-            });
+            if ($this->interaction_type == 'cars') {
+                $model = $model->where('owner_id', $this->owner_id);
+            } else {
+                $owner_id = $this->owner_id;
+                $interactionType = $this->interaction_type;
+                $model = $model->whereHas('userInteractions', function ($userInteractions) use ($owner_id, $interactionType) {
+                    return $userInteractions->where(['user_id' => $owner_id, 'type' => $interactionType]);
+                });
+            }
         }
         return $model->select('cars.*')->where('owner_id', '!=', Auth::id())->newQuery();
     }
 
+    /**
+     * @param $data
+     * @return $this
+     */
     public function interactionList($data)
     {
         if (isset($data['owner_id']) && isset($data['type'])) {
@@ -159,11 +167,11 @@ class CarDataTable extends DataTable
                 'searchable' => false,
                 'title'      => 'Favorites'
             ],
-           /* 'like_count'                       => [
-                'orderable'  => false,
-                'searchable' => false,
-                'title'      => 'Likes'
-            ],*/
+            /* 'like_count'                       => [
+                 'orderable'  => false,
+                 'searchable' => false,
+                 'title'      => 'Likes'
+             ],*/
             'owner_type'                       => [
                 'orderable' => false
             ]

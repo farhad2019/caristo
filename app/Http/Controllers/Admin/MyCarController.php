@@ -224,15 +224,13 @@ class MyCarController extends AppBaseController
                 'regional_specification_id' => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
                 'phone'                     => 'sometimes|nullable|phone'
-            ],
-                [
-                    'category_id.required' => 'The category field is required.',
-                    'model_id.required'    => 'The model field is required.',
-                    'year.required'        => 'The year field is required.',
-                    'amount.required'      => 'The amount field is required.',
-                    'email.required'       => 'The amount field is required.'
-                ]
-            );
+            ], [
+                'category_id.required' => 'The category field is required.',
+                'model_id.required'    => 'The model field is required.',
+                'year.required'        => 'The year field is required.',
+                'amount.required'      => 'The amount field is required.',
+                'email.required'       => 'The amount field is required.'
+            ]);
         } else {
             $validatedData = $request->validate([
                 'category_id'               => 'sometimes|nullable|required',
@@ -244,19 +242,17 @@ class MyCarController extends AppBaseController
                 'regional_specification_id' => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
                 'phone'                     => 'sometimes|nullable|phone',
+                'attribute.*'               => 'attr',
 
-            ],
-                [
-                    'category_id.required'       => 'The category field is required.',
-                    'model_id.required'          => 'The model field is required.',
-                    'year.required'              => 'The year field is required.',
-                    'transmission_type.required' => 'The transmission field is required.',
-                    'engine_type_id.required'    => 'The engine field is required.',
-                    'amount.required'            => 'The amount field is required.',
-                    'email.required'             => 'The amount field is required.',
-
-                ]
-            );
+            ], [
+                'category_id.required'       => 'The category field is required.',
+                'model_id.required'          => 'The model field is required.',
+                'year.required'              => 'The year field is required.',
+                'transmission_type.required' => 'The transmission field is required.',
+                'engine_type_id.required'    => 'The engine field is required.',
+                'amount.required'            => 'The amount field is required.',
+                'email.required'             => 'The amount field is required.'
+            ]);
         }
 
         $myCar = $this->myCarRepository->saveRecord($request);

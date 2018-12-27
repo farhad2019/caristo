@@ -42,7 +42,7 @@ class UserDataTable extends DataTable
         });
 
         $dataTable->editColumn('cars_count', function (User $model) {
-            return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->cars_count . "</span></a>";
+            return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => 'cars']) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->cars_count . "</span></a>";
         });
 
         $dataTable->editColumn('favorite_count', function (User $model) {
