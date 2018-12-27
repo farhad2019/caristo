@@ -8,7 +8,7 @@
 
 <!-- SubTitle Field -->
 <dt>{!! Form::label('subtitle', 'Sub Title:') !!}</dt>
-<dd>{!! $category->subtitle !!}</dd>
+<dd>{!! !empty($category->subtitle) ? $category->subtitle : '-' !!}</dd>
 
 <!-- SubTitle Field -->
 <dt>{!! Form::label('parent', 'Parent Category:') !!}</dt>
@@ -19,7 +19,8 @@
 
     <dd>
         @foreach($category->media as $media)
-            <a class='showGallery' data-id='{{ $media->id }}' data-toggle='modal' data-target='#imageGallery'><img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+            <a class='showGallery' data-id='{{ $media->id }}' data-toggle='modal' data-target='#imageGallery'><img
+                        src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
             </a>
         @endforeach
     </dd>

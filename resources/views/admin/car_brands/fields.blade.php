@@ -1,6 +1,6 @@
 <!-- Created At Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('name', 'Logo:') !!}
+    {!! Form::label('name', 'Logo*:') !!}
     {!! Form::file('media', null, ['class' => 'form-control']) !!}
     @if(isset($carBrand) && count($carBrand->media)>0)
         <a class='showGallery' data-id='{{ $carBrand->media[0]->id }}' data-toggle='modal' data-target='#imageGallery'>
@@ -13,7 +13,7 @@
 @if(!isset($carBrand))
     <!-- Created At Field -->
     <div class="form-group col-sm-6">
-        {!! Form::label('name', 'Name:') !!}
+        {!! Form::label('name', 'Name*:') !!}
         {!! Form::text('name', null, ['class' => 'form-control','maxlength'=>"20", 'size'=>"20"]) !!}
     </div>
 

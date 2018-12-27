@@ -288,13 +288,13 @@ class MyCarController extends AppBaseController
         $myCar = $this->myCarRepository->saveRecord($request);
 
         if ($request->category_id != MyCar::LIMITEDADDITION) {
-            if (!empty($request->attribute)) {
+            if (!empty(array_filter($request->attribute))) {
                 foreach ($request->attribute as $key => $item) {
                     $myCar->carAttributes()->attach($key, ['value' => $item]);
                 }
             }
 
-            if (!empty($request->feature)) {
+            if (!empty(array_filter($request->feature))) {
                 foreach ($request->feature as $key => $item) {
                     $myCar->carFeatures()->attach($key);
                 }
@@ -486,19 +486,17 @@ class MyCarController extends AppBaseController
 
         if ($request->category_id != MyCar::LIMITEDADDITION) {
 
-            if (!empty($request->attribute)) {
+            if (!empty(array_filter($request->attribute))) {
                 $carAttributes = [];
                 foreach ($request->attribute as $key => $item) {
                     if ($item) {
                         $carAttributes[$key] = ['value' => $item];
-                        //$carAttributes[] = ['value' => $item];
                     }
                 }
-
                 $myCar->carAttributes()->sync($carAttributes, false);
             }
 
-            if (!empty($request->feature)) {
+            if (!empty(array_filter($request->feature))) {
                 $carFeatures = [];
                 foreach ($request->feature as $key => $item) {
                     if (!empty($item)) {

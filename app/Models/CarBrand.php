@@ -82,7 +82,8 @@ class CarBrand extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|max:20'
+        'name'    => 'required|max:20',
+        'media'   => 'required|image|mimes:jpg,jpeg,png'
     ];
 
     /**

@@ -239,7 +239,12 @@ class UserController extends AppBaseController
         if ($user->hasRole('showroom-owner')) {
             return redirect(route('admin.users.profile'));
         }
-        return redirect(route('admin.users.index'));
+        if ($id == Auth::id()) {
+            $redirectTo = redirect(route('admin.dashboard'));
+        } else {
+            $redirectTo = redirect(route('admin.users.index'));
+        }
+        return $redirectTo;
     }
 
     /**

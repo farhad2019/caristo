@@ -15,12 +15,13 @@
                 <div class="tab-pane {{$key==0?'active':''}}" id="tab_{{$key+1}}">
                     <div class="box">
                         <div class="box-header with-border">
-
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <dt>{!! Form::label('name', __('Name').':') !!}</dt>
                             <dd>{!! $translation->name !!}</dd>
+                            <dt>{!! Form::label('logo', __('Logo').':') !!}</dt>
+                            <dd><a class='showGallery' data-id='{{ $carBrand->media[0]->id }}' data-toggle='modal' data-target='#imageGallery'><img src="{!! $carBrand->media[0]->file_url !!}" width="80"></a></dd>
                         </div>
                         <div class="box-footer">
                             <dt>{!! Form::label('created_at', __('Created At').':') !!}</dt>

@@ -69,7 +69,7 @@
                     <!-- Phone Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('phone', 'Phone:') !!}
-                        {!! Form::number('phone', $user->details->phone?? null, ['class' => 'form-control', 'min'=> 1,'max'=>20]) !!}
+                        {!! Form::number('phone', $user->details->phone?? null, ['class' => 'form-control', 'min'=> 1]) !!}
                     </div>
 
                 @if (strpos(Request::url(), 'users') !== false)
@@ -79,46 +79,24 @@
                             {!! Form::label('roles', 'Roles:') !!}
                             {!! Form::select('roles[]', $roles, null, ['class' => 'form-control select2', 'multiple'=>'multiple']) !!}
                         </div>
-
                 @endif
-
-                <!-- Address Field -->
-                    <div class="form-group col-sm-12">
-                        {!! Form::label('address', 'Address:') !!}
-                        {!! Form::text('address', $user->details->address?? null, ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="clearfix"></div>
-
-                    <!-- Image Field -->
+                <!-- Image Field -->
                     <div class="form-group col-sm-3">
                         {!! Form::label('image', 'Image:') !!}
+                        @if($user->details)
+                            <img src="{{ $user->details->image_url }}" width="80">
+                        @endif
                         {!! Form::file('image', ['class' => 'form-control']) !!}
                     </div>
-
-                @if($user->details)
-                    <!-- Image Field -->
-                        <div class="form-group col-sm-3">
-                            <img src="{{ $user->details->image_url }}" width="50">
-                        </div>
-                @endif
-
-                <!-- email_updates Field -->
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-3 clearfix"></div>
+                    <!-- email_updates Field -->
+                    {{--<div class="form-group col-sm-3 clearfix">
                         {!! Form::label('email_updates', 'Receive Updates On Emails:') !!}
                         <div class="clearfix"></div>
                         {!! Form::hidden('email_updates', false) !!}
                         {!! Form::checkbox('email_updates', 1,  true, ['data-toggle'=>'toggle']) !!}
-                    </div>
+                    </div>--}}
                     <div class="clearfix"></div>
-
-                    <!-- About Field -->
-                    <div class="form-group col-sm-12">
-                        {!! Form::label('about', 'About:') !!}
-                        {!! Form::textarea('about', $user->details->address?? null, ['class' => 'form-control']) !!}
-                    </div>
-
-                    <div class="clearfix"></div>
-
                     <!-- Password Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('password', 'Password:') !!}
@@ -129,6 +107,19 @@
                     <div class="form-group col-sm-6">
                         {!! Form::label('password_confirmation', 'Confirm Password:') !!}
                         {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
+                    </div>
+
+
+                    <!-- Address Field -->
+                    <div class="form-group col-sm-6">
+                        {!! Form::label('address', 'Address:') !!}
+                        {!! Form::textarea('address', $user->details->address?? null, ['class' => 'form-control']) !!}
+                    </div>
+
+                    <!-- About Field -->
+                    <div class="form-group col-sm-6">
+                        {!! Form::label('about', 'About:') !!}
+                        {!! Form::textarea('about', $user->details->address?? null, ['class' => 'form-control']) !!}
                     </div>
                 </div>
                 <!-- /.tab-pane -->
@@ -184,11 +175,14 @@
         </div>
         <!-- nav-tabs-custom -->
     </div>
-
     <!-- Submit Field -->
     <div class="form-group col-sm-12">
         {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-        <a href="{!! route('admin.users.index') !!}" class="btn btn-default">Cancel</a>
+        @if(\Request::route()->getName() == 'admin.users.profile')
+            <a href="{!! route('admin.dashboard') !!}" class="btn btn-default">Cancel</a>
+        @else
+            <a href="{!! route('admin.users.index') !!}" class="btn btn-default">Cancel</a>
+        @endif
     </div>
 
     <div class="clearfix"></div>

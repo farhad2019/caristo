@@ -14,12 +14,12 @@ class BreadcrumbsRegister
         if ($modelName == null) {
             // Home
             Breadcrumbs::register($prefixes . '.dashboard', function ($breadcrumbs) use ($prefixes) {
-                $breadcrumbs->push(__('Home'), route($prefixes . '.dashboard'));
+                $breadcrumbs->push(__('Dashboard'), route($prefixes . '.dashboard'));
             });
         } else {
             // Home
             Breadcrumbs::register($prefixes . '.dashboard', function ($breadcrumbs) use ($prefixes) {
-                $breadcrumbs->push(__('Home'), route($prefixes . '.dashboard'));
+                $breadcrumbs->push(__('Dashboard'), route($prefixes . '.dashboard'));
             });
 
             // Home > index
