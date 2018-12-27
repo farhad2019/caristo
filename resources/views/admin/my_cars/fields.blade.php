@@ -101,16 +101,28 @@
 </div>
 
 @if(!isset($myCar))
+
     <div class="clearfix"></div>
 
-    @foreach($features as $feature)
-        <div class="form-group col-sm-2 region clearfix">
-            {!! Form::label('status', $feature->name.':', ['style' => 'word-break: break-all; width: 50%;']) !!}
-            {!! Form::hidden('feature['.$feature->id.']', false) !!}
-            {!! Form::checkbox('feature['.$feature->id.']', 1, null) !!}
+    <div class="form-group col-sm-12">
+        {!! Form::label('features', 'Car Features:') !!}
+        <div class="col-sm-12">
+            @foreach($features as $feature)
+                <div class="form-group col-sm-3 region clearfix">
+                    <div class="col-sm-10">
+                        {!! Form::label('status', $feature->name.':', ['style' => 'word-break: break-all; width: 50%;']) !!}
+                    </div>
+                    <div class="col-sm-2">
+                        {!! Form::hidden('feature['.$feature->id.']', false) !!}
+                        {!! Form::checkbox('feature['.$feature->id.']', 1, null) !!}
+                    </div>
+                </div>
+            @endforeach
         </div>
-    @endforeach
+    </div>
+
     <div class="clearfix"></div>
+
     @foreach($attributes as $attribute)
         @if($attribute->type == 10)
             <div class="form-group col-sm-6 region">
@@ -142,14 +154,25 @@
         @endif
     @endforeach
 @else
-    @foreach($features as $feature)
-        <div class="form-group col-sm-2 region">
-            {!! Form::label('status', $feature->name.':', ['style' => 'word-break: break-all; width: 50%;']) !!}
-            {!! Form::hidden('feature['.$feature->id.']', false) !!}
-            {!! Form::checkbox('feature['.$feature->id.']', 1, (in_array($feature->id, $myCar->carFeatures->pluck('id')->toArray())?? false)) !!}
-        </div>
-    @endforeach
     <div class="clearfix"></div>
+    <div class="form-group col-sm-12 region">
+        {!! Form::label('features', 'Car Features:') !!}
+        <div class="col-sm-12">
+            @foreach($features as $feature)
+                <div class="form-group col-sm-3">
+                    <div class="col-sm-10">
+                        {!! Form::label('status', $feature->name.':') !!}
+                    </div>
+                    <div class="col-sm-2">
+                        {!! Form::hidden('feature['.$feature->id.']', false) !!}
+                        {!! Form::checkbox('feature['.$feature->id.']', 1, (in_array($feature->id, $myCar->carFeatures->pluck('id')->toArray())?? false)) !!}
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
     @foreach($attributes as $attribute)
         @php($value = (in_array($attribute->id, $myCar->myCarAttributes->pluck('attr_id')->toArray())?($myCar->myCarAttributes[array_search($attribute->id, $myCar->myCarAttributes->pluck('attr_id')->toArray())]->value): null))
         @if($attribute->type == 10)
@@ -434,6 +457,21 @@
 <div class="form-group col-sm-6">
     {!! Form::label('media', 'Images:') !!}
     {!! Form::file('media[]', ['class' => 'form-control', 'multiple']) !!}
+    <br>
+    @if(isset($myCar))
+        @if($myCar->media->count() > 0)
+            @foreach($myCar->media as $media)
+                <div style="position: relative; display: inline;">
+                    <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
+                        <img src="{{ $media->file_url }}" width="120" style="margin-right: 2%">
+                    </a>
+                    <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
+                          style="position: absolute; right: 2px; z-index: 100; cursor: hand">&times;
+                </span>
+                </div>
+            @endforeach
+        @endif
+    @endif
 </div>
 
 <!-- Year Field -->
@@ -448,10 +486,27 @@
     <a href="{!! route('admin.myCars.index') !!}" class="btn btn-default">Cancel</a>
 </div>
 @push('scripts')
-    <script>
-        $(document).ready(function () {
-            var id = $('#category_id').val();
-            if (id == 28) {
+<script>
+    $(document).ready(function () {
+        var id = $('#category_id').val();
+        if (id == 28) {
+            $('.regions').show();
+            $('.region').hide();
+        } else {
+            $('.regions').hide();
+            $('.region').show();
+        }
+
+        if (parseInt(id) === 25 || parseInt(id) === 28) {
+            $('.category2528').hide();
+        } else if (parseInt(id) === 26 || parseInt(id) === 27) {
+            $('.category2528').show();
+        }
+
+        $('#category_id').on('change', function () {
+            var cat_id = $(this).val();
+
+            if (cat_id == 28) {
                 $('.regions').show();
                 $('.region').hide();
             } else {
@@ -459,35 +514,18 @@
                 $('.region').show();
             }
 
-            if (parseInt(id) === 25 || parseInt(id) === 28) {
+            if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
                 $('.category2528').hide();
-            } else if (parseInt(id) === 26 || parseInt(id) === 27) {
+            } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
                 $('.category2528').show();
             }
-
-            $('#category_id').on('change', function () {
-                var cat_id = $(this).val();
-
-                if (cat_id == 28) {
-                    $('.regions').show();
-                    $('.region').hide();
-                } else {
-                    $('.regions').hide();
-                    $('.region').show();
-                }
-
-                if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
-                    $('.category2528').hide();
-                } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
-                    $('.category2528').show();
-                }
-            });
-
-            $("#datepicker").datepicker({
-                format: "yyyy",
-                viewMode: "years",
-                minViewMode: "years"
-            });
         });
-    </script>
+
+        $("#datepicker").datepicker({
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years"
+        });
+    });
+</script>
 @endpush

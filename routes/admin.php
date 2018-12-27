@@ -53,6 +53,8 @@ Route::resource('news', 'NewsController');
 Route::resource('comments', 'CommentController');
 
 Route::resource('media', 'MediaController');
+Route::get('delete-media/{id}', 'MediaController@deleteMedia');
+
 
 Route::resource('newsInteractions', 'NewsInteractionController');
 

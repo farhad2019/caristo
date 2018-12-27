@@ -1,6 +1,6 @@
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title"></h3>
+        <h3 class="box-title">Basic Information</h3>
         <div class="box-tools pull-right">
             <!-- Collapse Button -->
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -43,14 +43,13 @@
         <!-- Owner Id Field -->
         <dt>{!! Form::label('owner_id', 'Owner :') !!}</dt>
         <dd>{!! isset($myCar->owner->name) ? $myCar->owner->name : 'N/A' !!}</dd>
-
     </div>
     <!-- box-footer -->
 </div>
 
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title"></h3>
+        <h3 class="box-title">Owner information</h3>
         <div class="box-tools pull-right">
             <!-- Collapse Button -->
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -96,7 +95,7 @@
 @if($myCar->category_id != \App\Models\MyCar::LIMITEDADDITION)
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title"></h3>
+            <h3 class="box-title">Car Features</h3>
             <div class="box-tools pull-right">
                 <!-- Collapse Button -->
                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -106,25 +105,28 @@
             <!-- /.box-tools -->
         </div>
         <!-- /.box-header -->
-        <dt>{!! Form::label('features', 'Features:') !!}</dt>
-        <dd>
-            @if($myCar->myCarFeatures->count() > 0)
-                @foreach($myCar->myCarFeatures as $feature)
+        <div class="box-body">
+            <dt>{!! Form::label('features', 'Features:') !!}</dt>
+            <dd>
+                @if($myCar->myCarFeatures->count() > 0)
+                    @foreach($myCar->myCarFeatures as $feature)
+                        <ul>
+                            <li>{!!  $feature->carFeature->name !!}</li>
+                        </ul>
+                    @endforeach
+                @else
                     <ul>
-                        <li>{!!  $feature->carFeature->name !!}</li>
+                        <li>N/A</li>
                     </ul>
-                @endforeach
-            @else
-                <ul>
-                    <li>N/A</li>
-                </ul>
-            @endif
-        </dd>
+                @endif
+            </dd>
+        </div>
+        <div class="box-footer"></div>
     </div>
 
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title"></h3>
+            <h3 class="box-title">Car Attributes</h3>
             <div class="box-tools pull-right">
                 <!-- Collapse Button -->
                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -134,25 +136,28 @@
             <!-- /.box-tools -->
         </div>
         <!-- /.box-header -->
-        <dt>{!! Form::label('owner_type', 'Attributes:') !!}</dt>
-        <dd>
-            @if($myCar->myCarAttributes->count() > 0)
-                @foreach($myCar->myCarAttributes as $attribute)
+        <div class="box-body">
+            <dt>{!! Form::label('owner_type', 'Attributes:') !!}</dt>
+            <dd>
+                @if($myCar->myCarAttributes->count() > 0)
+                    @foreach($myCar->myCarAttributes as $attribute)
+                        <ul>
+                            <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
+                        </ul>
+                    @endforeach
+                @else
                     <ul>
-                        <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
+                        <li>N/A</li>
                     </ul>
-                @endforeach
-            @else
-                <ul>
-                    <li>N/A</li>
-                </ul>
-            @endif
-        </dd>
+                @endif
+            </dd>
+        </div>
+        <div class="box-footer"></div>
     </div>
 @else
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title"></h3>
+            <h3 class="box-title">Car Detailed Information</h3>
             <div class="box-tools pull-right">
                 <!-- Collapse Button -->
                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -162,57 +167,62 @@
             <!-- /.box-tools -->
         </div>
         <!-- /.box-header -->
+        <div class="box-body">
+            @if(!empty($myCar->limited_edition_specs))
+                @foreach(json_decode($myCar->limited_edition_specs, true) as $key => $values)
+                    <dt>{!! Form::label('owner_type', $key.':') !!}</dt>
+                    <dd>
+                        @foreach($values as $label => $value)
+                            <ul>
+                                <li>{!! $label !!} : {!! $value !!}</li>
+                            </ul>
+                        @endforeach
 
-        @if(!empty($myCar->limited_edition_specs))
-            @foreach(json_decode($myCar->limited_edition_specs, true) as $key => $values)
-                <dt>{!! Form::label('owner_type', $key.':') !!}</dt>
-                <dd>
-                    @foreach($values as $label => $value)
-                        <ul>
-                            <li>{!! $label !!} : {!! $value !!}</li>
-                        </ul>
-                    @endforeach
-
-                </dd>
-            @endforeach
-        @else
-            <ul>
-                <li>N/A</li>
-            </ul>
-        @endif
-    </div>
-
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title"></h3>
-            <div class="box-tools pull-right">
-                <!-- Collapse Button -->
-                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                    <i class="fa fa-minus"></i>
-                </button>
-            </div>
-            <!-- /.box-tools -->
-        </div>
-        <!-- /.box-header -->
-        <dt>{!! Form::label('owner_type', 'Attributes:') !!}</dt>
-        <dd>
-            @if($myCar->myCarAttributes->count() > 0)
-                @foreach($myCar->myCarAttributes as $attribute)
-                    <ul>
-                        <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
-                    </ul>
+                    </dd>
                 @endforeach
             @else
                 <ul>
                     <li>N/A</li>
                 </ul>
             @endif
-        </dd>
+        </div>
+        <div class="box-footer"></div>
+    </div>
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Car Attributes</h3>
+            <div class="box-tools pull-right">
+                <!-- Collapse Button -->
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <dt>{!! Form::label('owner_type', 'Attributes:') !!}</dt>
+            <dd>
+                @if($myCar->myCarAttributes->count() > 0)
+                    @foreach($myCar->myCarAttributes as $attribute)
+                        <ul>
+                            <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
+                        </ul>
+                    @endforeach
+                @else
+                    <ul>
+                        <li>N/A</li>
+                    </ul>
+                @endif
+            </dd>
+        </div>
+        <div class="box-footer"></div>
     </div>
 @endif
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title"></h3>
+        <h3 class="box-title">Regions</h3>
         <div class="box-tools pull-right">
             <!-- Collapse Button -->
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -222,31 +232,31 @@
         <!-- /.box-tools -->
     </div>
     <!-- /.box-header -->
-    <dt>{!! Form::label('owner_type', 'Region:') !!}</dt>
-    <dd>
-        @if($myCar->carRegions->count() > 0)
-            @foreach($myCar->carRegions as $region)
+    <div class="box-body">
+        <dt>{!! Form::label('owner_type', 'Region:') !!}</dt>
+        <dd>
+            @if($myCar->carRegions->count() > 0)
+                @foreach($myCar->carRegions as $region)
+                    <ul>
+                        <li>{!! $region->region->name !!}
+                            {{ (empty($region->price)? '' : ': '.number_format($region->price,2)) }}</li>
+                    </ul>
+                @endforeach
+            @else
                 <ul>
-                    <li>{!! $region->region->name !!}
-                        {{ (empty($region->price)? '' : ': '.number_format($region->price,2)) }}</li>
+                    <li>N/A</li>
                 </ul>
-            @endforeach
-        @else
-            <ul>
-                <li>N/A</li>
-            </ul>
-        @endif
-    </dd>
-    <!-- /.box-body -->
-    <div class="box-footer clearfix">
-
+            @endif
+        </dd>
     </div>
+    <!-- /.box-body -->
+    <div class="box-footer clearfix"></div>
     <!-- box-footer -->
 </div>
 
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title"></h3>
+        <h3 class="box-title">Car Images</h3>
         <div class="box-tools pull-right">
             <!-- Collapse Button -->
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -271,8 +281,7 @@
         </dd>
     </div>
     <!-- /.box-body -->
-    <div class="box-footer">
-
-    </div>
+    <div class="box-footer"></div>
     <!-- box-footer -->
 </div>
+
