@@ -231,6 +231,33 @@ class MyCarController extends AppBaseController
                 'amount.required'      => 'The amount field is required.',
                 'email.required'       => 'The amount field is required.'
             ]);
+        } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
+            $validatedData = $request->validate([
+                'category_id'               => 'sometimes|nullable|required',
+                'model_id'                  => 'sometimes|nullable|required',
+                'year'                      => 'sometimes|nullable|required',
+                'transmission_type'         => 'sometimes|nullable|required',
+                'engine_type_id'            => 'sometimes|nullable|required',
+                'amount'                    => 'sometimes|nullable|required',
+                'regional_specification_id' => 'sometimes|nullable|required',
+                'kilometer'                 => 'sometimes|nullable|required',
+                'average_mkp'               => 'sometimes|nullable|required',
+                'email'                     => 'sometimes|nullable|required|email',
+                'phone'                     => 'sometimes|nullable|phone',
+                'media.*'                   => 'required|image|mimes:jpg,png',
+                'attribute.*'               => 'attr'
+            ], [
+                'category_id.required'       => 'The category field is required.',
+                'model_id.required'          => 'The model field is required.',
+                'year.required'              => 'The year field is required.',
+                'transmission_type.required' => 'The transmission field is required.',
+                'engine_type_id.required'    => 'The engine field is required.',
+                'amount.required'            => 'The amount field is required.',
+                'media.required'             => 'The media is required.',
+                'kilometer.required'         => 'The Mileage field is required.',
+                'average_mkp.required'       => 'The Average MKP field is required.',
+                'email.required'             => 'The amount field is required.'
+            ]);
         } else {
             $validatedData = $request->validate([
                 'category_id'               => 'sometimes|nullable|required',
@@ -242,8 +269,9 @@ class MyCarController extends AppBaseController
                 'regional_specification_id' => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
                 'phone'                     => 'sometimes|nullable|phone',
-                'attribute.*'               => 'attr',
-
+                'media'                     => 'required',
+                'media.*'                   => 'image|mimes:jpg,jpeg,png',
+                'attribute.*'               => 'attr'
             ], [
                 'category_id.required'       => 'The category field is required.',
                 'model_id.required'          => 'The model field is required.',
@@ -251,6 +279,8 @@ class MyCarController extends AppBaseController
                 'transmission_type.required' => 'The transmission field is required.',
                 'engine_type_id.required'    => 'The engine field is required.',
                 'amount.required'            => 'The amount field is required.',
+                'media.required'             => 'The media is required.',
+                'media.*'                    => 'The media must be a file of type: jpg, jpeg, png.',
                 'email.required'             => 'The amount field is required.'
             ]);
         }

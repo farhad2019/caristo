@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\CarAttribute;
+use App\Models\CarFeature;
 use App\Models\Comment;
 use App\Models\Module;
 use App\Models\NewsInteraction;
@@ -36,6 +38,22 @@ class AppServiceProvider extends ServiceProvider
         \Validator::replacer('phone', function ($message, $attribute, $rule, $parameters) {
             $attribute = ucwords(str_replace('_', ' ', $attribute));
             return str_replace(':attribute', $attribute, 'Invalid :attribute');
+        });
+
+        \Validator::extend('attr', function ($attribute, $value, $parameters, $validator) {
+            return strlen($value) > 0;
+        });
+        \Validator::replacer('attr', function ($message, $attribute, $rule, $parameters, $value) {
+            $carAttribute = CarAttribute::where('id', explode(".", $attribute)[1])->first();
+            return str_replace(':attribute', $carAttribute->name, ':attribute is required');
+        });
+
+        \Validator::extend('media', function ($attribute, $value, $parameters, $validator) {
+            return strlen($value) > 0;
+        });
+        \Validator::replacer('media', function ($message, $attribute, $rule, $parameters, $value) {
+            $carAttribute = CarAttribute::where('id', explode(".", $attribute)[1])->first();
+            return str_replace(':attribute', $carAttribute->name, ':attribute is required');
         });
     }
 
