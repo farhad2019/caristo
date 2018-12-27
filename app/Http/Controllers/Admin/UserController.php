@@ -66,13 +66,21 @@ class UserController extends AppBaseController
      */
     public function index(Request $request, UserDataTable $userDataTable)
     {
-        $data = $request->all();
-
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        $data = $request->all();
+        $title = '';
         if ($data) {
-            return $userDataTable->interactionList($data)->render('admin.users.index');
+            if (isset($data['type'])) {
+                if ($data['type'] == 30) {
+                    $title = "User Favorites";
+                } elseif ($data['type'] == 10) {
+                    $title = 'User Views';
+                }
+            }
+
+            return $userDataTable->interactionList($data)->render('admin.users.index', ['title' => $title]);
         } else {
-            return $userDataTable->render('admin.users.index');
+            return $userDataTable->render('admin.users.index', ['title' => $this->BreadCrumbName]);
         }
 //        return $userDataTable->render('admin.users.index');
     }

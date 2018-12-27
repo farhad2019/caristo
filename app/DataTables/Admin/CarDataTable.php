@@ -160,12 +160,12 @@ class CarDataTable extends DataTable
             'views_count'                      => [
                 'orderable'  => false,
                 'searchable' => false,
-                'title'      => 'Views'
+                'title'      => 'User Views'
             ],
             'favorite_count'                   => [
                 'orderable'  => false,
                 'searchable' => false,
-                'title'      => 'Favorites'
+                'title'      => 'User Favorites'
             ],
             /* 'like_count'                       => [
                  'orderable'  => false,

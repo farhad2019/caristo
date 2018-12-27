@@ -135,12 +135,12 @@ class UserDataTable extends DataTable
                 'title'      => 'Roles'
             ],
             'cars_count'         => [
-                'title'      => 'Cars',
+                'title'      => 'My Cars',
                 'orderable'  => false,
                 'searchable' => false
             ],
             'favorite_count'     => [
-                'title'      => 'Favorite',
+                'title'      => 'Favorite Cars',
                 'orderable'  => false,
                 'searchable' => false
             ],
@@ -150,7 +150,7 @@ class UserDataTable extends DataTable
 //                'searchable' => false
 //            ],
             'view_count'         => [
-                'title'      => 'View',
+                'title'      => 'Viewed Cars',
                 'orderable'  => false,
                 'searchable' => false
             ]

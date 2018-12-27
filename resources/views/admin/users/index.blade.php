@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    Users
+    {{ $title ?? 'Users' }}
 @endsection
 
 @section('content')

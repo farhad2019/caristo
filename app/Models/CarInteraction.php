@@ -45,7 +45,7 @@ class CarInteraction extends Model
     const TYPE_FAVORITE = 30;
 
     public static $TYPES = [
-        self::TYPE_VIEW     => "View",
+        self::TYPE_VIEW     => "Viewed",
         self::TYPE_LIKE     => "Like",
         self::TYPE_FAVORITE => "Favorite",
     ];

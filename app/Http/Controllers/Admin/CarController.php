@@ -7,6 +7,7 @@ use App\DataTables\Admin\CarDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateCarRequest;
 use App\Http\Requests\Admin\UpdateCarRequest;
+use App\Models\CarInteraction;
 use App\Repositories\Admin\CarAttributeRepository;
 use App\Repositories\Admin\CarBrandRepository;
 use App\Repositories\Admin\CarFeatureRepository;
@@ -87,8 +88,16 @@ class CarController extends AppBaseController
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         $data = $request->all();
+        $title = "";
         if ($data) {
-            return $carDataTable->interactionList($data)->render('admin.cars.index');
+            if (isset($data['type'])) {
+                if ($data['type'] == 'cars') {
+                    $title = "User's Cars";
+                } else {
+                    $title = "User's " . CarInteraction::$TYPES[$data['type']] . " Cars";
+                }
+            }
+            return $carDataTable->interactionList($data)->render('admin.cars.index', ['title' => $title]);
         } else {
             return $carDataTable->render('admin.cars.index');
         }
