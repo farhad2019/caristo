@@ -36,7 +36,8 @@ class CarDataTable extends DataTable
         });
 
         $dataTable->editColumn('amount', function ($model) {
-            return $model->amount ? number_format($model->amount, 2) : '-';
+            return 0;
+           // return $model->amount ? number_format($model->amount, 2) : '-';
         });
 
         $dataTable->editColumn('image', function ($model) {
@@ -48,11 +49,11 @@ class CarDataTable extends DataTable
         });
 
         $dataTable->editColumn('views_count', function (MyCar $model) {
-            return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_VIEW]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->views_count . "</span></a>";
+            return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_VIEW]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . @$model->views_count . "</span></a>";
         });
 
         $dataTable->editColumn('favorite_count', function (MyCar $model) {
-            return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_FAVORITE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->favorite_count . "</span></a>";
+            return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_FAVORITE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . @$model->favorite_count . "</span></a>";
         });
 
         /*$dataTable->editColumn('like_count', function (MyCar $model) {

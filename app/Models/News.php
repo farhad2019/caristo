@@ -134,7 +134,7 @@ class News extends Model
         'is_liked',
         'is_viewed',
         'is_favorite',
-//        'is_favorite'
+        'source_image_url'
     ];
 
     /**
@@ -157,6 +157,7 @@ class News extends Model
         'is_viewed',
         'is_favorite',
         'media',
+        'source_image_url',
 //        'category'
 //        'deleted_at'
     ];
@@ -255,7 +256,7 @@ class News extends Model
 
     public function getSourceImageUrlAttribute()
     {
-            return ($this->source_image && file_exists(storage_path('app/' . $this->source_image))) ? route('api.resize', ['img' => $this->source_image]) : route('api.resize', ['img' => 'public/no_image.png', 'w=50', 'h=50']);
+        return ($this->source_image && file_exists(storage_path('app/' . $this->source_image))) ? route('api.resize', ['img' => $this->source_image]) : route('api.resize', ['img' => 'public/no_image.png', 'w=50', 'h=50']);
 
     }
 }
