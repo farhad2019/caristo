@@ -544,7 +544,7 @@ class MyCar extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function userInteractions()
+    public function CarInteractions()
     {
         return $this->hasMany(CarInteraction::class, 'car_id');
     }

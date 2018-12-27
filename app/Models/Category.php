@@ -139,7 +139,9 @@ class Category extends Model
      * @var array
      */
     public static $rules = [
-        'slug' => 'required'
+        'name'  => 'required',
+        'media' => 'required|image|mimes:jpg,jpeg,png',
+        'slug'  => 'required',
     ];
 
     /**
@@ -148,7 +150,9 @@ class Category extends Model
      * @var array
      */
     public static $update_rules = [
-        'slug' => 'required'
+        'name'  => 'required',
+        'media' => 'sometimes|image|mimes:jpg,jpeg,png',
+        'slug'  => 'required',
     ];
 
     /**

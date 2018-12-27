@@ -83,8 +83,8 @@ class CarDataTable extends DataTable
             } else {
                 $owner_id = $this->owner_id;
                 $interactionType = $this->interaction_type;
-                $model = $model->whereHas('userInteractions', function ($userInteractions) use ($owner_id, $interactionType) {
-                    return $userInteractions->where(['user_id' => $owner_id, 'type' => $interactionType]);
+                $model = $model->whereHas('CarInteractions', function ($carInteractions) use ($owner_id, $interactionType) {
+                    return $carInteractions->where(['user_id' => $owner_id, 'type' => $interactionType]);
                 });
             }
         }

@@ -104,8 +104,8 @@
     <div class="clearfix"></div>
 
     @foreach($features as $feature)
-        <div class="form-group col-sm-2 region">
-            {!! Form::label('status', $feature->name.':') !!}
+        <div class="form-group col-sm-2 region clearfix">
+            {!! Form::label('status', $feature->name.':', ['style' => 'word-break: break-all; width: 50%;']) !!}
             {!! Form::hidden('feature['.$feature->id.']', false) !!}
             {!! Form::checkbox('feature['.$feature->id.']', 1, null) !!}
         </div>

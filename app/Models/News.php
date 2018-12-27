@@ -166,10 +166,9 @@ class News extends Model
      * @var array
      */
     public static $rules = [
-//        'id'          => 'required',
         'category_id' => 'required',
-//        'headline'    => 'required',
-//        'source'      => 'required',
+        'headline'    => 'required',
+        'source'      => 'required',
         'is_featured' => 'required'
     ];
 

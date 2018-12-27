@@ -23,6 +23,9 @@ class NewsCriteria implements CriteriaInterface
         if ($category_id >= 0) {
             $model = $model->where('category_id', $category_id);
         }
+
+        $model = $model->orderBy('created_at', SORT_DESC);
+
         return $model;
     }
 

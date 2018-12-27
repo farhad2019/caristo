@@ -179,11 +179,11 @@ class MyCarAPIController extends AppBaseController
             }
         }
 
-        if (is_string($request->car_features)) {
+        if (is_string($request->car_features) && !empty(array_filter($request->car_features))) {
             if (!empty(json_decode($request->car_features))) {
                 $myCars->carFeatures()->attach(json_decode($request->car_features));
             }
-        } elseif (is_array($request->car_features)) {
+        } elseif (is_array($request->car_features) && !empty(array_filter($request->car_features))) {
             if (!empty($request->car_features)) {
                 $myCars->carFeatures()->attach($request->car_features);
             }
