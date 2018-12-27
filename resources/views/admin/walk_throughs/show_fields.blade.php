@@ -1,4 +1,4 @@
-<div class="col-md-12">
+{{--<div class="col-md-12">
     <!-- Custom Tabs -->
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
@@ -30,8 +30,17 @@
         <!-- /.tab-content -->
     </div>
     <!-- nav-tabs-custom -->
-</div>
+</div>--}}
 <!-- /.col -->
+
+
+<!-- Sort Field -->
+<dt>{!! Form::label('title', 'Title:') !!}</dt>
+<dd>{!! $walkThrough->title !!}</dd>
+
+<!-- Sort Field -->
+<dt>{!! Form::label('content', 'Content:') !!}</dt>
+<dd>{!! $walkThrough->content !!}</dd>
 
 <!-- Sort Field -->
 <dt>{!! Form::label('sort', 'Sort:') !!}</dt>
