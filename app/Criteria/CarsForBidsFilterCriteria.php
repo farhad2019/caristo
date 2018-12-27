@@ -103,6 +103,8 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
 //            return $query->whereIn('region_id', explode(',', $regions));
 //        });
 
+        $model = $model->orderBy('views_count', SORT_DESC);
+
         return $model;
     }
 }

@@ -158,13 +158,9 @@ class CarDataTable extends DataTable
                 'searchable' => false,
             ],
             'views_count'                      => [
-                'orderable'  => false,
-                'searchable' => false,
                 'title'      => 'User Views'
             ],
             'favorite_count'                   => [
-                'orderable'  => false,
-                'searchable' => false,
                 'title'      => 'User Favorites'
             ],
             /* 'like_count'                       => [

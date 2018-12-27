@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Models\CarAttribute;
 use App\Models\CarFeature;
+use App\Models\CarInteraction;
 use App\Models\Comment;
 use App\Models\Module;
 use App\Models\NewsInteraction;
 use App\Models\NotificationUser;
+use App\Observers\CarsInteractionObserver;
 use App\Observers\CommentObserver;
 use App\Observers\ModuleObserver;
 use App\Observers\NewsInteractionObserver;
@@ -29,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Module::observe(ModuleObserver::class);
         NewsInteraction::observe(NewsInteractionObserver::class);
+        CarInteraction::observe(CarsInteractionObserver::class);
         Comment::observe(CommentObserver::class);
         NotificationUser::observe(NotificationObserver::class);
 

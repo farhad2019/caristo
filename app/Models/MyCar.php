@@ -209,6 +209,9 @@ class MyCar extends Model
     ];
 
     public $fillable = [
+        'views_count',
+        'favorite_count',
+        'like_count',
         'type_id',
         'model_id',
         'engine_type_id',
@@ -269,7 +272,7 @@ class MyCar extends Model
     protected $appends = [
         'transmission_type_text',
         'owner_type_text',
-        'views_count',
+//        'views_count',
         'top_bids',
         'is_liked',
         'is_viewed',
@@ -313,6 +316,8 @@ class MyCar extends Model
         'is_liked',
         'is_viewed',
         'views_count',
+        'favorite_count',
+        'like_count',
         'is_favorite',
         'bid_close_at',
         'myCarFeatures',
@@ -321,7 +326,7 @@ class MyCar extends Model
         'life_cycle',
         'category',
 //        'carFeatures',
-        'created_at'
+        'created_at',
     ];
 
     /**
@@ -496,7 +501,8 @@ class MyCar extends Model
      */
     public function getTopBidsAttribute()
     {
-        return $this->bids()->orderBy('created_at', 'desc')
+        return $this->bids()
+            ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
     }
@@ -568,26 +574,26 @@ class MyCar extends Model
     /**
      * @return int
      */
-    public function getFavoriteCountAttribute()
-    {
-        return $this->favorites()->count();
-    }
-
-    /**
-     * @return int
-     */
-    public function getViewsCountAttribute()
-    {
-        return $this->views()->count();
-    }
-
-    /**
-     * @return int
-     */
-    public function getLikedCountAttribute()
-    {
-        return $this->likes()->count();
-    }
+//    public function getFavoriteCountAttribute()
+//    {
+//        return $this->favorites()->count();
+//    }
+//
+//    /**
+//     * @return int
+//     */
+//    public function getViewsCountAttribute()
+//    {
+//        return $this->views()->count();
+//    }
+//
+//    /**
+//     * @return int
+//     */
+//    public function getLikedCountAttribute()
+//    {
+//        return $this->likes()->count();
+//    }
 
     /**
      * @return bool
