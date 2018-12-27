@@ -1,19 +1,3 @@
-<!-- Icon Field -->
-<div class="form-group col-sm-3">
-    {!! Form::label('icon', 'Icon:') !!}
-    {!! Form::file('icon', null, ['class' => 'form-control']) !!}
-</div>
-<div class="form-group col-sm-3">
-    @if(isset($carAttribute))
-        @if($carAttribute->media->count() > 0)
-            <a class='showGallery' data-id='{{ $carAttribute->media[0]->id }}' data-toggle='modal'
-               data-target='#imageGallery'>
-                <img src="{{ $carAttribute->media[0]->file_url }}" width="50">
-            </a>
-        @endif
-    @endif
-</div>
-
 <!-- Name Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('name', 'Name:') !!}
@@ -26,6 +10,23 @@
     {!! Form::select('type', $types, null, ['class' => 'form-control select2 att_type']) !!}
 </div>
 
+<!-- Icon Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('icon', 'Icon:') !!}
+    {!! Form::file('icon', null, ['class' => 'form-control']) !!}
+    <br>
+    @if(isset($carAttribute))
+        @if($carAttribute->media->count() > 0)
+            <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
+                <a class='showGallery' data-id='{{ $carAttribute->media[0]->id }}' data-toggle='modal'
+                   data-target='#imageGallery'>
+                    <img src="{!! $carAttribute->media[0]->file_url !!}" style="width: 125px;" height="75px">
+                </a>
+            </div>
+        @endif
+    @endif
+</div>
+
 <div class="clearfix"></div>
 <div id="clone-div" {{ isset($carAttribute->options)?'':'style=display:none' }}>
     @if(isset($carAttribute->options))
@@ -34,7 +35,7 @@
                 <!-- Options Field -->
                 <div class="form-group col-sm-4">
                     {!! Form::label('options', 'Options:') !!}
-                    {!! Form::text('opt[' . $option->option_array['id'] . ']', $option->option_array['name'] , ['class'=>'form-control']) !!}
+                    {!! Form::text('opt[' . $option->option_array['id'] . ']', $option->option_array['name'] , ['class'=>'form-control','required'=>'required']) !!}
                 </div>
 
                 <div class="col-sm-2" style="margin-top: 23px;">
@@ -52,7 +53,7 @@
             <!-- Options Field -->
             <div class="form-group col-sm-4">
                 {!! Form::label('options', 'Options:') !!}
-                {!! Form::text('options[]', null, ['class'=>'form-control']) !!}
+                {!! Form::text('opt[]', null, ['class'=>'form-control','required'=>'required']) !!}
             </div>
 
             <div class="col-sm-2" style="margin-top: 23px;">
@@ -81,30 +82,32 @@
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('admin.carAttributes.index') !!}" class="btn btn-default">Cancel</a>
 </div>
+
 @push('scripts')
-    <script>
-        $(function () {
+<script>
+    $(function () {
 
-            $('body').on('click', 'a.add_row', function () {
-                var clone = $("#clone-row-sample").clone().appendTo("#clone-div");
-                clone.removeAttr('id');
-                clone.removeAttr('style');
-                clone.prev().find('a.add_row').remove();
-            });
-
-            $('body').on('click', 'a.delete_row', function () {
-                $(this).parent().parent().remove();
-            });
-
-            $('.att_type').change(function () {
-                var type = $(this).val();
-                if (type >= 30 && type < 60) {
-                    $('#clone-div').show();
-                } else {
-                    $('#clone-div').hide();
-                }
-
-            });
+        $('body').on('click', 'a.add_row', function () {
+            var clone = $("#clone-row-sample").clone().appendTo("#clone-div");
+            clone.removeAttr('id');
+            clone.removeAttr('style');
+            clone.prev().find('a.add_row').remove();
+            clone.find('input').attr('required',true);
         });
-    </script>
+
+        $('body').on('click', 'a.delete_row', function () {
+            $(this).parent().parent().remove();
+        });
+
+        $('.att_type').change(function () {
+            var type = $(this).val();
+            if (type >= 30 && type < 60) {
+                $('#clone-div').show();
+            } else {
+                $('#clone-div').hide();
+            }
+
+        });
+    });
+</script>
 @endpush

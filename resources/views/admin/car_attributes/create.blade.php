@@ -1,7 +1,8 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    Car Attribute
+    Create
+    <small>Car Attribute</small>
 @endsection
 
 @section('content')

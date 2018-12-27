@@ -1,3 +1,20 @@
+<!-- Icon Field -->
+<dt>{!! Form::label('icon', 'Icon:') !!}</dt>
+<dd>
+    @if(isset($carAttribute))
+        @if($carAttribute->media->count() > 0)
+            <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
+                <a class='showGallery' data-id='{{ $carAttribute->media[0]->id }}' data-toggle='modal'
+                   data-target='#imageGallery'>
+                    <img src="{!! $carAttribute->media[0]->file_url !!}" style="width: 125px;" height="75px">
+                </a>
+            </div>
+        @endif
+    @endif
+</dd>
+
+<br>
+
 <!-- Name Field -->
 <dt>{!! Form::label('name', 'Name:') !!}</dt>
 <dd>{!! $carAttribute->name !!}</dd>

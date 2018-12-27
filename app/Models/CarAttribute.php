@@ -50,16 +50,16 @@ class CarAttribute extends Model
     const NUMBER = 20;
     const SELECT_SINGLE = 30;
     const SELECT_MULTIPLE = 40;
-    const FILE_SINGLE = 50;
-    const FILE_MULTIPLE = 60;
+    /*const FILE_SINGLE = 50;
+    const FILE_MULTIPLE = 60;*/
 
     public static $ATTRIBUTE_TYPES = [
         self::TEXT            => 'text',
         self::NUMBER          => 'number',
         self::SELECT_SINGLE   => 'select - single',
         self::SELECT_MULTIPLE => 'select - multiple',
-        self::FILE_SINGLE     => 'file - single',
-        self::FILE_MULTIPLE   => 'file - multiple'
+        /*self::FILE_SINGLE     => 'file - single',
+        self::FILE_MULTIPLE   => 'file - multiple'*/
     ];
 
     public $fillable = [
@@ -129,6 +129,7 @@ class CarAttribute extends Model
     public static $update_rules = [
         'type' => 'required',
         'name' => 'required|max:20',
+        //'icon' => 'required',
     ];
 
     /**

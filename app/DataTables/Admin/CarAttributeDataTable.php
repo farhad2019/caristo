@@ -28,7 +28,7 @@ class CarAttributeDataTable extends DataTable
             return $model->type_text;
         });
 
-        $dataTable->rawColumns(['translations.name', 'action']);
+        $dataTable->rawColumns(['translations.name', 'action','type']);
         return $dataTable->addColumn('action', 'admin.car_attributes.datatables_actions');
     }
 
