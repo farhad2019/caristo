@@ -28,11 +28,11 @@ class CarDataTable extends DataTable
         });
 
         $dataTable->editColumn('carModel.brand.translations.name', function ($model) {
-            return $model->carModel->brand->name;
+            return $model->carModel->brand->name ?? '-';
         });
 
         $dataTable->editColumn('carModel.translations.name', function ($model) {
-            return $model->carModel->name;
+            return $model->carModel->name ?? '-';
         });
 
         $dataTable->editColumn('amount', function ($model) {
@@ -41,7 +41,7 @@ class CarDataTable extends DataTable
 
         $dataTable->editColumn('image', function ($model) {
             if (count($model->media) > 0) {
-                return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'><img src='" . @$model->media[0]->fileUrl . "' width='80'/></a>";
+                return "<a class='showGallerySingle' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallerySingle'><img src='" . @$model->media[0]->fileUrl . "' width='80'/></a>";
             } else {
                 return "<span class='label label-default'>None</span>";
             }
@@ -158,10 +158,10 @@ class CarDataTable extends DataTable
                 'searchable' => false,
             ],
             'views_count'                      => [
-                'title'      => 'User Views'
+                'title' => 'User Views'
             ],
             'favorite_count'                   => [
-                'title'      => 'User Favorites'
+                'title' => 'User Favorites'
             ],
             /* 'like_count'                       => [
                  'orderable'  => false,

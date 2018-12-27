@@ -385,6 +385,7 @@ class MyCarAPIController extends AppBaseController
                 $myCar->carFeatures()->attach($request->car_features);
             }
         }
+        $myCar = $myCar->refresh();
         return $this->sendResponse($myCar->toArray(), 'MyCar updated successfully');
     }
 
