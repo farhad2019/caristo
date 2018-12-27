@@ -1,31 +1,23 @@
-<!-- Created At Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('name', 'Logo*:') !!}
-    {!! Form::file('media', null, ['class' => 'form-control']) !!}
-    @if(isset($carBrand) && count($carBrand->media)>0)
-        <a class='showGallery' data-id='{{ $carBrand->media[0]->id }}' data-toggle='modal' data-target='#imageGallery'>
-            <img class="" src="{{$carBrand->media()->orderby('created_at', 'desc')->first()->fileUrl}}"
-                 alt="{{$carBrand->media()->orderby('created_at', 'desc')->first()->title}}" width="150">
-        </a>
-    @endif
-</div>
-<div class="clearfix"></div>
 @if(!isset($carBrand))
     <!-- Created At Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('name', 'Name*:') !!}
-        {!! Form::text('name', null, ['class' => 'form-control','maxlength'=>"20", 'size'=>"20"]) !!}
+        {!! Form::text('name', null, ['class' => 'form-control','maxlength'=>"50"]) !!}
     </div>
 
     <!-- Submit Field -->
-    <div class="form-group col-sm-12">
+    {{--<div class="form-group col-sm-12">
         {!! Form::submit(__('Save'), ['class' => 'btn btn-primary']) !!}
         {!! Form::submit(__('Save And Add Translations'), ['class' => 'btn btn-primary', 'name'=>'translation']) !!}
         {!! Form::submit(__('Save And Add More'), ['class' => 'btn btn-primary', 'name'=>'continue']) !!}
         <a href="{!! route('admin.carBrands.index') !!}" class="btn btn-default">{{ __('Cancel') }}</a>
-    </div>
+    </div>--}}
 @else
-    <div class="box">
+    {{--<div class="box">--}}
+
+    <div class="">
+        <h3 class="box-title" style="margin-left: 10px">Translations</h3>
+    </div>
         <div class="box-body">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
@@ -44,7 +36,7 @@
                         <!-- Title Field -->
                             <div class="form-group">
                                 {!! Form::label('name', __('Name').':') !!}
-                                {!! Form::text('name['.$locale->code.']', $carBrand->translate($locale->code)['name'], ['class' => 'form-control','maxlength'=>"20", 'size'=>"20", 'autofocus', 'style'=>'direction:'.$locale->direction]) !!}
+                                {!! Form::text('name['.$locale->code.']', $carBrand->translate($locale->code)['name'], ['class' => 'form-control','maxlength'=>"50", 'autofocus', 'style'=>'direction:'.$locale->direction]) !!}
                             </div>
                         </div>
                     @endforeach
@@ -53,14 +45,38 @@
             </div>
         </div>
         <!-- /.box-body -->
-        <div class="box-footer">
-            <!-- Submit Field -->
-            <div class="form-group col-sm-12">
-                {!! Form::submit(__('Save'), ['class' => 'btn btn-primary']) !!}
-                {!! Form::submit(__('Save And Add More'), ['class' => 'btn btn-primary', 'name'=>'continue']) !!}
-                <a href="{!! route('admin.carBrands.index') !!}" class="btn btn-default">{{ __('Cancel') }}</a>
-            </div>
-        </div>
+        {{--<div class="box-footer">
+
+
+        </div>--}}
         <!-- box-footer -->
-    </div>
+    {{--</div>--}}
 @endif
+
+<!-- Created At Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('name', 'Logo*:') !!}
+    {!! Form::file('media', ['class' => 'form-control']) !!}
+
+
+    @if(isset($carBrand) && count($carBrand->media)>0)
+
+        <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >
+            <a class='showGallery' data-id='{{ $carBrand->media[0]->id }}' data-toggle='modal'>
+                <img src="{{$carBrand->media()->orderby('created_at', 'desc')->first()->fileUrl}}" style="width: 125px;">
+            </a>
+        </div>
+
+        {{--<a class='showGallery' data-id='{{ $carBrand->media[0]->id }}' data-toggle='modal' data-target='#imageGallery'>
+            <img class="" src="{{$carBrand->media()->orderby('created_at', 'desc')->first()->fileUrl}}"
+                 alt="{{$carBrand->media()->orderby('created_at', 'desc')->first()->title}}" width="150">
+        </a>--}}
+    @endif
+</div>
+
+<!-- Submit Field -->
+<div class="form-group col-sm-12">
+    {!! Form::submit(__('Save'), ['class' => 'btn btn-primary']) !!}
+    {!! Form::submit(__('Save And Add More'), ['class' => 'btn btn-primary', 'name'=>'continue']) !!}
+    <a href="{!! route('admin.carBrands.index') !!}" class="btn btn-default">{{ __('Cancel') }}</a>
+</div>

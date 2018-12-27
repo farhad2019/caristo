@@ -185,6 +185,6 @@ class CarDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'carsdatatable_' . time();
+        return 'cars-' . date('d-m-Y H:i:s');
     }
 }

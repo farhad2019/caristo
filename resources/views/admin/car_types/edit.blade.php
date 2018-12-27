@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    {{ $carType->name }}
+    Edit
     <small>Car Type</small>
 @endsection
 

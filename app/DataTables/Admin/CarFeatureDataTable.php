@@ -25,7 +25,7 @@ class CarFeatureDataTable extends DataTable
         });
 
         $dataTable->editColumn('icon', function ($model) {
-            return $model->icon ? '<a class="showGallery" data-id="' . $model->id . '" data-toggle="modal" data-target="#imageGallery"><img src="' . $model->icon . '" width="35"></a>' : null;
+            return $model->icon ? '<a class="showGallery" data-id="' . $model->id . '" data-toggle="modal" data-target="#imageGallery"><img src="' . $model->icon . '" style="width:75px;"></a>' : null;
         });
 
         $dataTable->rawColumns(['icon', 'action']);
@@ -104,6 +104,6 @@ class CarFeatureDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'car_featuresdatatable_' . time();
+        return 'car-features-' . date('d-m-Y H:i:s');
     }
 }

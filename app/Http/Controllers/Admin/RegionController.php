@@ -98,7 +98,7 @@ class RegionController extends AppBaseController
     public function edit($id)
     {
         $region = $this->regionRepository->findWithoutFail($id);
-
+        
         if (empty($region)) {
             Flash::error('Region not found');
             return redirect(route('admin.regions.index'));

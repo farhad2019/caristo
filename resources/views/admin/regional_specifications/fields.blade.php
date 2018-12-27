@@ -2,19 +2,23 @@
     <!-- Name Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('name', 'Name*:') !!}
-        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+        {!! Form::text('name', null, ['class' => 'form-control','maxlength'=>50]) !!}
     </div>
 
     <!-- Submit Field -->
-    <div class="form-group col-sm-12">
+    {{--<div class="form-group col-sm-12">
         {!! Form::submit(__('Save'), ['class' => 'btn btn-primary']) !!}
         {!! Form::submit(__('Save And Add Translations'), ['class' => 'btn btn-primary', 'name'=>'translation']) !!}
         {!! Form::submit(__('Save And Add More'), ['class' => 'btn btn-primary', 'name'=>'continue']) !!}
         <a href="{!! route('admin.regionalSpecifications.index') !!}" class="btn btn-default">{{ __('Cancel') }}</a>
-    </div>
+    </div>--}}
 @else
     <div class="clearfix"></div>
-    <div class="box">
+
+        <div class="">
+            <h3 class="box-title" style="margin-left: 10px">Translations</h3>
+        </div>
+
         <div class="box-body">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
@@ -42,16 +46,17 @@
             </div>
         </div>
         <!-- /.box-body -->
-        <div class="box-footer">
-            <!-- Submit Field -->
-            <div class="form-group col-sm-12">
-                {!! Form::submit(__('Save'), ['class' => 'btn btn-primary']) !!}
-                {!! Form::submit(__('Save And Add More'), ['class' => 'btn btn-primary', 'name'=>'continue']) !!}
-                <a href="{!! route('admin.regionalSpecifications.index') !!}"
-                   class="btn btn-default">{{ __('Cancel') }}</a>
-            </div>
-        </div>
+        {{--<div class="box-footer">
+        </div>--}}
         <!-- box-footer -->
-    </div>
+
     <div class="clearfix"></div>
 @endif
+
+<!-- Submit Field -->
+<div class="form-group col-sm-12">
+    {!! Form::submit(__('Save'), ['class' => 'btn btn-primary']) !!}
+    {!! Form::submit(__('Save And Add More'), ['class' => 'btn btn-primary', 'name'=>'continue']) !!}
+    <a href="{!! route('admin.regionalSpecifications.index') !!}"
+       class="btn btn-default">{{ __('Cancel') }}</a>
+</div>

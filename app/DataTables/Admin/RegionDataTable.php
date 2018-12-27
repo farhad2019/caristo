@@ -20,7 +20,8 @@ class RegionDataTable extends DataTable
 
         $dataTable->editColumn('flag', function ($model) {
             if ($model->flag)
-                return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'><img src='" . $model->flag . "' width='30'/></a>";
+                return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'>
+                <img src='" . $model->flag . "' style='width:70px;'/></a>";
             else {
                 return "<span class='label label-default'>None</span>";
             }
@@ -99,6 +100,6 @@ class RegionDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'regionsdatatable_' . time();
+        return 'regions-' . date('d-m-Y H:i:s');
     }
 }

@@ -25,7 +25,7 @@ class CarTypeDataTable extends DataTable
         });
 
         $dataTable->editColumn('image', function ($model) {
-            return $model->image ? '<a class="showGallery" data-id="' . $model->id . '" data-toggle="modal" data-target="#imageGallery"><img src="' . $model->image . '" width="35"></a>' : null;
+            return $model->image ? '<a class="showGallery" data-id="' . $model->id . '" data-toggle="modal" data-target="#imageGallery"><img src="' . $model->image . '" style="width:75px;"></a>' : null;
         });
 
         $dataTable->rawColumns(['image', 'action']);
@@ -103,6 +103,6 @@ class CarTypeDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'car_typesdatatable_' . time();
+        return 'car_types-' . date('d-m-Y H:i:s');
     }
 }
