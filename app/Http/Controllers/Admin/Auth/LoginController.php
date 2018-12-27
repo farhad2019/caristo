@@ -48,6 +48,11 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
+    protected function authenticated(Request $request)
+    {
+        session(['timezone' => $request->timezone]); // saving to session
+    }
+
     /**
      * Log the user out of the application.
      *

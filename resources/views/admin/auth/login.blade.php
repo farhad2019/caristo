@@ -75,6 +75,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
+                    <input type="hidden" name="timezone" id="timezone">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                 </div>
                 <!-- /.col -->
@@ -96,6 +97,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data.js"></script>
 <script>
     $(function () {
         $('input').iCheck({
@@ -104,6 +108,9 @@
             increaseArea: '20%' // optional
         });
     });
+
+    var timezone = moment.tz.guess();
+    $('#timezone').val(timezone);
 </script>
 </body>
 </html>
