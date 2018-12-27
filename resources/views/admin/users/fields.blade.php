@@ -69,7 +69,7 @@
                     <!-- Phone Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('phone', 'Phone:') !!}
-                        {!! Form::number('phone', $user->details->phone?? null, ['class' => 'form-control', 'min'=> 1]) !!}
+                        {!! Form::number('phone', $user->details->phone?? null, ['class' => 'form-control', 'min'=> 1,'max'=>20]) !!}
                     </div>
 
                 @if (strpos(Request::url(), 'users') !== false)

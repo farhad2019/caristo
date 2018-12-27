@@ -24,7 +24,10 @@
 @else
     <div class="form-group col-sm-3">
         @if($carType->media->count() > 0)
-            <img src="{{ $carType->media[0]->file_url }}" width="50">
+            <a class='showGallery' data-id='{{ $carType->media[0]->id }}' data-toggle='modal'
+               data-target='#imageGallery'>
+                <img src="{{ $carType->media[0]->file_url }}" width="50"></a>
+
         @endif
     </div>
 

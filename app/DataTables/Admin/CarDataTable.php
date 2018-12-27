@@ -41,7 +41,7 @@ class CarDataTable extends DataTable
 
         $dataTable->editColumn('image', function ($model) {
             if (count($model->media) > 0) {
-                return "<img src='" . $model->media[0]->fileUrl . "' width='80'/>";
+                return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'><img src='" . $model->media[0]->fileUrl . "' width='80'/></a>";
             } else {
                 return "<span class='label label-default'>None</span>";
             }

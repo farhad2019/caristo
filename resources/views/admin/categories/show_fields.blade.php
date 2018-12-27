@@ -19,7 +19,8 @@
 
     <dd>
         @foreach($category->media as $media)
-            <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+            <a class='showGallery' data-id='{{ $media->id }}' data-toggle='modal' data-target='#imageGallery'><img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+            </a>
         @endforeach
     </dd>
 @endif
@@ -30,8 +31,3 @@
 <!-- Updated At Field -->
 <dt>{!! Form::label('updated_at', 'Last Updated on:') !!}</dt>
 <dd>{!! $category->updated_at->format('d M Y') !!}</dd>
-
-{{--<!-- Deleted At Field -->--}}
-{{--<dt>{!! Form::label('deleted_at', 'Deleted At:') !!}</dt>--}}
-{{--<dd>{!! $category->deleted_at !!}</dd>--}}
-

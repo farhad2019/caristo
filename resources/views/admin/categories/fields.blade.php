@@ -28,7 +28,9 @@
     {!! Form::file('media[]', null, ['class' => 'form-control']) !!}
     @if(isset($category) && count($category->media)>0)
         @foreach($category->media as $media)
-            <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+            <a class='showGallery' data-id='{{ $media->id }}' data-toggle='modal' data-target='#imageGallery'>
+                <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+            </a>
         @endforeach
     @endif
 </div>
