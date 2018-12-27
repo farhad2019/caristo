@@ -20,11 +20,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property Media media
  * @property News news
+ * @property CarInteraction car_interaction
  *
  * @property string parent_category
  * @property string child_category
  * @property string unread_count
  * @property string type_text
+ * @property mixed clicks_count
  *
  * @SWG\Definition(
  *      definition="Category",
@@ -103,6 +105,7 @@ class Category extends Model
      */
     protected $appends = [
         'unread_count',
+        'clicks_count',
 //        'type_text'
     ];
 
@@ -124,6 +127,7 @@ class Category extends Model
 //        'parentCategory',
         'media',
         'childCategory',
+        'clicks_count',
 //        'deleted_at'
 //        'unread_count'
     ];
@@ -215,6 +219,22 @@ class Category extends Model
     public function news()
     {
         return $this->hasMany(News::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function carInteraction()
+    {
+        return $this->hasMany(CarInteraction::class, 'car_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClicksCountAttribute()
+    {
+        return $this->carInteraction->count();
     }
 
     /**

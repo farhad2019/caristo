@@ -71,10 +71,12 @@ class UserController extends AppBaseController
         $title = '';
         if ($data) {
             if (isset($data['type'])) {
-                if ($data['type'] == 30) {
+                if ($data['type'] == CarInteraction::TYPE_FAVORITE) {
                     $title = "User Favorites";
-                } elseif ($data['type'] == 10) {
+                } elseif ($data['type'] == CarInteraction::TYPE_VIEW) {
                     $title = 'User Views';
+                } elseif ($data['type'] == CarInteraction::TYPE_CLICK_CATEGORY) {
+                    $title = 'User Click on Category';
                 }
             }
 

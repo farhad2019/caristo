@@ -6,6 +6,8 @@ use App\Criteria\CarsFilterCriteria;
 use App\Http\Requests\Api\CreateMyCarAPIRequest;
 use App\Http\Requests\Api\UpdateMyCarAPIRequest;
 use App\Models\MyCar;
+use App\Models\MyCarAttribute;
+use App\Models\MyCarFeature;
 use App\Repositories\Admin\CarAttributeRepository;
 use App\Repositories\Admin\CarFeatureRepository;
 use App\Repositories\Admin\MyCarRepository;
@@ -332,10 +334,14 @@ class MyCarAPIController extends AppBaseController
             $myCar->media()->whereIn('id', explode(',', $request->deleted_images))->delete();
         }
 
-        $myCar = $this->myCarRepository->updateApiRecord($request, $myCar);
+        $this->myCarRepository->updateApiRecord($request, $myCar);
+        $myCar = $myCar->refresh();
 
         if (is_string($request->car_attributes)) {
-            $myCar->my_car_attributes->delete();
+            if ($myCar->myCarAttributes->count() > 0) {
+                MyCarAttribute::where('car_id', $myCar->id)->delete();
+            }
+
             if (!empty(json_decode($request->car_attributes))) {
                 foreach (json_decode($request->car_attributes) as $key => $car_attribute) {
                     $attribute = $this->attributeRepository->findWhere(['id' => array_keys(get_object_vars($car_attribute))[0]]);
@@ -346,7 +352,9 @@ class MyCarAPIController extends AppBaseController
                 }
             }
         } elseif (is_array($request->car_attributes)) {
-            $myCar->my_car_attributes->delete();
+            if ($myCar->myCarAttributes->count() > 0) {
+                MyCarAttribute::where('car_id', $myCar->id)->delete();
+            }
             if (!empty($request->car_attributes)) {
                 foreach ($request->car_attributes as $key => $car_attribute) {
                     $attribute = $this->attributeRepository->findWhere(['id' => array_keys($car_attribute)[0]]);
@@ -358,12 +366,21 @@ class MyCarAPIController extends AppBaseController
         }
 
         if (is_string($request->car_features)) {
-            $myCar->my_car_features->delete();
+            if ($myCar->myCarFeatures->count() > 0) {
+                MyCarFeature::where('car_id', $myCar->id)->delete();
+            }
+//            $myCar->my_car_features->delete();
             if (!empty(json_decode($request->car_features, true))) {
                 $myCar->carFeatures()->attach(json_decode($request->car_features, true));
             }
         } elseif (is_array($request->car_features)) {
-            $myCar->my_car_features->delete();
+            if ($myCar->myCarFeatures->count() > 0) {
+                MyCarFeature::where('car_id', $myCar->id)->delete();
+            }
+//            $myCar->my_car_features->delete();
+            if ($myCar->myCarAttributes->count() > 0) {
+                MyCarAttribute::where('car_id', $myCar->id)->delete();
+            }
             if (!empty(array_filter($request->car_features))) {
                 $myCar->carFeatures()->attach($request->car_features);
             }

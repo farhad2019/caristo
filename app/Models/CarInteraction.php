@@ -43,11 +43,15 @@ class CarInteraction extends Model
     const TYPE_VIEW = 10;
     const TYPE_LIKE = 20;
     const TYPE_FAVORITE = 30;
+    const TYPE_CLICK_CATEGORY = 40;
+    const TYPE_CLICK_PHONE = 45;
+    const TYPE_CLICK_MYSHOPPER = 50;
 
     public static $TYPES = [
         self::TYPE_VIEW     => "Viewed",
         self::TYPE_LIKE     => "Like",
         self::TYPE_FAVORITE => "Favorite",
+        self::TYPE_CLICK_CATEGORY => "Clicks",
     ];
 
     public $fillable = [

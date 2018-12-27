@@ -2,6 +2,7 @@
 
 namespace App\DataTables\Admin;
 
+use App\Models\CarInteraction;
 use App\Models\Category;
 use Illuminate\Support\Facades\App;
 use Yajra\DataTables\EloquentDataTable;
@@ -26,6 +27,7 @@ class CategoryDataTable extends DataTable
         $dataTable->editColumn('category_translations.name', function (Category $model) {
             return ($model->parentCategory) ? "<span class='label label-success' style='word-break: break-all'>" . $model->parentCategory->name . "</span>" : "<span class='label label-default' style='word-break: break-all'>None</span>";
         });
+
         $dataTable->editColumn('image', function (Category $model) {
             if (count($model->media) > 0)
                 return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'><img src='" . $model->media[0]->fileUrl . "' width='80'/></a>";
@@ -33,7 +35,12 @@ class CategoryDataTable extends DataTable
                 return "<span class='label label-default'>None</span>";
             }
         });
-        $dataTable->rawColumns(['translations.name', 'image', 'category_translations.name', 'action']);
+
+        $dataTable->editColumn('clicks_count', function (Category $model) {
+            return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_CLICK_CATEGORY]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->clicks_count . " </span></a>";
+        });
+
+        $dataTable->rawColumns(['clicks_count', 'translations.name', 'image', 'category_translations.name', 'action']);
         return $dataTable->addColumn('action', 'admin.categories.datatables_actions');
     }
 
@@ -101,6 +108,10 @@ class CategoryDataTable extends DataTable
             ],
             'category_translations.name' => [
                 'title'     => 'Parent Category',
+                'orderable' => false,
+            ],
+            'clicks_count'               => [
+                'title'     => 'Clicks Count',
                 'orderable' => false,
             ]
 //            'created_at'
