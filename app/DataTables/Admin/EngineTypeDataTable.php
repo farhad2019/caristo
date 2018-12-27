@@ -95,6 +95,6 @@ class EngineTypeDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'engine_typesdatatable_' . time();
+        return 'engine-types-' . date('d-m-Y H:i:s');
     }
 }

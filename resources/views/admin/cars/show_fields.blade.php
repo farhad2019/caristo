@@ -113,19 +113,21 @@
         <!-- /.box-tools -->
     </div>
     <!-- /.box-header -->
-    <dt>{!! Form::label('owner_type', 'Features:') !!}</dt>
-    <dd>
-        @foreach($myCar->myCarFeatures as $feature)
-            <ul>
-                <li>{!!  $feature->carFeature->name !!}</li>
-            </ul>
-        @endforeach
-    </dd>
+    <div class="box-body">
+        <dt>{!! Form::label('owner_type', 'Features:') !!}</dt>
+        <dd>
+            @foreach($myCar->myCarFeatures as $feature)
+                <ul>
+                    <li>{!!  $feature->carFeature->name !!}</li>
+                </ul>
+            @endforeach
+        </dd>
+    </div>
 </div>
 
 <div class="box">
-    <div class="box-header with-border col-sm-6">
-
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
         <div class="box-tools pull-right">
             <!-- Collapse Button -->
             <button type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -135,14 +137,16 @@
         <!-- /.box-tools -->
     </div>
     <!-- /.box-header -->
-    <dt>{!! Form::label('owner_type', 'Attributes:') !!}</dt>
-    <dd>
-        @foreach($myCar->myCarAttributes as $attribute)
-            <ul>
-                <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
-            </ul>
-        @endforeach
-    </dd>
+    <div class="box-body">
+        <dt>{!! Form::label('owner_type', 'Attributes:') !!}</dt>
+        <dd>
+            @foreach($myCar->myCarAttributes as $attribute)
+                <ul>
+                    <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
+                </ul>
+            @endforeach
+        </dd>
+    </div>
 
     <!-- /.box-body -->
     <div class="box-footer">
@@ -163,15 +167,17 @@
         <!-- /.box-tools -->
     </div>
     <!-- /.box-header -->
-    <dt>{!! Form::label('owner_type', 'Region:') !!}</dt>
-    <dd>
-        @foreach($myCar->carRegions as $region)
-            <ul>
-                <li>{!! $region->region->name !!}
-                    {{ (empty($region->price)? '' : ': '.number_format($region->price,2)) }}</li>
-            </ul>
-        @endforeach
-    </dd>
+    <div class="box-body">
+        <dt>{!! Form::label('owner_type', 'Region:') !!}</dt>
+        <dd>
+            @foreach($myCar->carRegions as $region)
+                <ul>
+                    <li>{!! $region->region->name !!}
+                        {{ (empty($region->price)? '' : ': '.number_format($region->price,2)) }}</li>
+                </ul>
+            @endforeach
+        </dd>
+    </div>
     <!-- /.box-body -->
     <div class="box-footer clearfix">
 

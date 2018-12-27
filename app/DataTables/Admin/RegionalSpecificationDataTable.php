@@ -92,6 +92,6 @@ class RegionalSpecificationDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'regional_specificationsdatatable_' . time();
+        return 'regional-specifications-' . date('d-m-Y H:i:s');
     }
 }
