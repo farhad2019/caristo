@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    Car Attribute
+    Car Attribute Details
 @endsection
 
 @section('content')

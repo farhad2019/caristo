@@ -3,6 +3,8 @@
 namespace App\DataTables\Admin;
 
 use App\Models\CarModel;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -23,7 +25,7 @@ class CarModelDataTable extends DataTable
             return '<span style="word-break: break-all">' . $model->name . '</span>';
         });
 
-        $dataTable->addColumn('brand.translations.name', function ($model) {
+        $dataTable->editColumn('brand.translations.name', function ($model) {
             return '<span style="word-break: break-all">' . $model->brand->name . '</span>';
         });
 
@@ -39,7 +41,13 @@ class CarModelDataTable extends DataTable
      */
     public function query(CarModel $model)
     {
-        return $model->newQuery();
+        //return $model->newQuery();
+        return $model->select('car_models.*', 'car_model_translations.name AS model_name', 'brand_translations.name AS brand_name')
+            ->leftJoin('car_model_translations', 'car_model_translations.car_model_id', '=', 'car_models.id')
+            ->leftJoin('brand_translations', 'brand_translations.brand_id', '=', 'car_models.brand_id')
+            ->where('car_model_translations.locale', App::getLocale('en'))
+            ->where('brand_translations.locale', App::getLocale('en'))
+            ->newQuery();
     }
 
     /**
@@ -67,7 +75,7 @@ class CarModelDataTable extends DataTable
             ->addAction(['width' => '80px', 'printable' => false])
             ->parameters([
                 'dom'     => 'Bfrtip',
-                'order'   => [[0, 'desc']],
+                //'order'   => [[0, 'desc']],
                 'buttons' => $buttons,
             ]);
     }
@@ -81,13 +89,15 @@ class CarModelDataTable extends DataTable
     {
         return [
             'id'                      => [
-                'searchable' => false
+                //'searchable' => false
             ],
             'translations.name'       => [
-                'title' => 'Name'
+                'title' => 'Name',
+                //'searchable' => true
             ],
             'brand.translations.name' => [
-                'title' => 'Brand Name'
+                'title' => 'Brand Name',
+                //'searchable' => true
             ]
         ];
     }

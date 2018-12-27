@@ -81,7 +81,7 @@ class CarAttributeController extends AppBaseController
     {
         $carAttribute = $this->carAttributeRepository->saveRecord($request);
 
-        if (!empty(array_values(array_filter($request->options)))) {
+        if (!empty(array_values(array_filter($request->opt)))) {
             $this->optionRepository->saveRecord($request, $carAttribute);
         }
 
