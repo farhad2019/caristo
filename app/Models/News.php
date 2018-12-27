@@ -79,7 +79,8 @@ class News extends Model
     public $fillable = [
         'id',
         'category_id',
-        'is_featured'
+        'is_featured',
+        'source_image'
     ];
 
     /**
@@ -166,12 +167,13 @@ class News extends Model
      * @var array
      */
     public static $rules = [
-        'category_id' => 'required',
-        'headline'    => 'required',
-        'source'      => 'required|url',
-        'media'       => 'sometimes|required|image|mimes:jpg,jpeg,png',
-        'media_url'   => 'sometimes|required|url',
-        'is_featured' => 'required'
+        'category_id'  => 'required',
+        'headline'     => 'required',
+        'source'       => 'required|url',
+        'source_image' => 'required|image|mimes:jpg,jpeg,png,bmp|max:5000',
+        //'image'        => 'required_without:video_url|image|mimes:jpg,jpeg,png,bmp|max:5000',
+        //'video_url'    => 'required_without:image|nullable|url',
+        'is_featured'  => 'required'
     ];
 
     /**
@@ -249,5 +251,11 @@ class News extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class, 'news_id');
+    }
+
+    public function getSourceImageUrlAttribute()
+    {
+            return ($this->source_image && file_exists(storage_path('app/' . $this->source_image))) ? route('api.resize', ['img' => $this->source_image]) : route('api.resize', ['img' => 'public/no_image.png', 'w=50', 'h=50']);
+
     }
 }

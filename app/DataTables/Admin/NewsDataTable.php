@@ -4,6 +4,7 @@ namespace App\DataTables\Admin;
 
 use App\Helper\Utils;
 use App\Models\News;
+use App\Models\NewsInteraction;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
@@ -35,7 +36,12 @@ class NewsDataTable extends DataTable
                 if ($model->media[0]->media_type == News::TYPE_IMAGE) {
                     return "<a class='showGallerySingle' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallerySingle'><img src='" . $model->media[0]->fileUrl . "' width='80'/></a>";
                 } else {
-                    return "<span class='label label-default'><a href='" . $model->media[0]->fileUrl . "' target='_blank'>Link</a></span>";
+
+                    $aa = explode('?v=', $model->media[0]->fileUrl);
+                    $bb = @$aa[1];
+
+                    //return "<span class='label label-default'><a href='" . $model->media[0]->fileUrl . "' target='_blank'>Link</a></span>";
+                    return "<a href='".$model->media[0]->fileUrl."' target='_blank'><img src='https://img.youtube.com/vi/".$bb."/0.jpg' width='80'/></a>";
                 }
             } else {
                 return "<span class='label label-default'>None</span>";
@@ -43,13 +49,16 @@ class NewsDataTable extends DataTable
         });
 
         $dataTable->editColumn('views_count', function (News $model) {
-            return "<span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->views_count . "</span>";
+            //return "<span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->views_count . "</span>";
+            return "<a href='" . route('admin.users.index', ['news_id' => $model->id, 'type' => NewsInteraction::TYPE_VIEW]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->views_count . "</span></a>";
         });
         $dataTable->editColumn('like_count', function (News $model) {
-            return "<span class='badge badge-success'> <i class='fa fa-thumbs-up'></i> " . $model->like_count . "</span>";
+            //return "<span class='badge badge-success'> <i class='fa fa-thumbs-up'></i> " . $model->like_count . "</span>";
+            return "<a href='" . route('admin.users.index', ['news_id' => $model->id, 'type' => NewsInteraction::TYPE_LIKE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->like_count . "</span></a>";
         });
         $dataTable->editColumn('comments_count', function (News $model) {
-            return "<span class='badge badge-success'> <i class='fa fa-comments'></i> " . $model->comments_count . "</span>";
+            //return "<span class='badge badge-success'> <i class='fa fa-comments'></i> " . $model->comments_count . "</span>";
+            return "<a href='" . route('admin.news.show', $model->id) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->comments_count . "</span></a>";
         });
         $dataTable->editColumn('is_featured', function (News $model) {
             return "<span class='badge bg-" . Utils::getBoolCss($model->is_featured, true) . "'> <i class='fa fa-" . ($model->is_featured ? "check" : "times") . "'></i> " . Utils::getBoolText($model->is_featured) . "</span>";
@@ -119,7 +128,8 @@ class NewsDataTable extends DataTable
             ],
             'image'                      => [
                 'orderable'  => false,
-                'searchable' => false
+                'searchable' => false,
+                'title'     => 'Image/Video'
             ],
             'views_count'                => [
                 'title' => 'Views'

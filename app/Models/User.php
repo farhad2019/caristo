@@ -231,6 +231,14 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function newsInteractions()
+    {
+        return $this->hasMany(NewsInteraction::class, 'user_id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\hasManyThrough
      */
     public function favorites()

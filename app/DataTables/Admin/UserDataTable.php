@@ -69,12 +69,20 @@ class UserDataTable extends DataTable
      */
     public function query(User $model)
     {
-        if ($this->car_id && $this->interaction_type) {
-            $car_id = $this->car_id;
+        if ($this->interaction_id && $this->interaction_type) {
+            $interaction_id = $this->interaction_id;
             $interactionType = $this->interaction_type;
-            $model = $model->whereHas('catInteractions', function ($catInteractions) use ($car_id, $interactionType) {
-                return $catInteractions->where(['car_id' => $car_id, 'type' => $interactionType]);
-            });
+            $dataType = $this->data_type;
+
+            if ($dataType == 'news') {
+                $model = $model->whereHas('newsInteractions', function ($newsInteractions) use ($interaction_id, $interactionType) {
+                    return $newsInteractions->where(['news_id' => $interaction_id, 'type' => $interactionType]);
+                });
+            } else {
+                $model = $model->whereHas('catInteractions', function ($catInteractions) use ($interaction_id, $interactionType) {
+                    return $catInteractions->where(['car_id' => $interaction_id, 'type' => $interactionType]);
+                });
+            }
         }
         return $model->newQuery()->select('users.*')->whereNotIn('users.id', [1, Auth::user()->id]);
     }
@@ -82,8 +90,13 @@ class UserDataTable extends DataTable
     public function interactionList($data)
     {
         if (isset($data['car_id']) && isset($data['type'])) {
-            $this->car_id = $data['car_id'];
+            $this->interaction_id = $data['car_id'];
             $this->interaction_type = $data['type'];
+            $this->data_type = 'cars';
+        } elseif (isset($data['news_id']) && isset($data['type'])) {
+            $this->interaction_id = $data['news_id'];
+            $this->interaction_type = $data['type'];
+            $this->data_type = 'news';
         }
         return $this;
     }
