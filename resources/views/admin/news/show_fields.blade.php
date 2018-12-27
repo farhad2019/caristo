@@ -12,7 +12,7 @@
 
 <!-- Headline Field -->
 <dt>{!! Form::label('description', 'Description:') !!}</dt>
-<dd>{!! nl2br($news->description) !!}</dd>
+<dd style="padding: 0 65px 0 0;">{!! nl2br($news->description) !!}</dd>
 
 <!-- Headline Field -->
 <dt>{!! Form::label('source', 'Source:') !!}</dt>
@@ -61,7 +61,7 @@
 @if($news->comments()->count() !== 0)
     <h3>Comments</h3>
     <hr>
-    <div class="box-footer box-comments" style="">
+    <div class="box-footer box-comments" style="width: 98%;">
         @foreach($news->comments as $row)
         <div class="box-comment">
             <!-- User image -->
@@ -71,7 +71,7 @@
             <div class="comment-text">
                       <span class="username">
                         {{$news->comments[0]->user->details->first_name.' '.$news->comments[0]->user->details->last_name}}
-                        <span class="text-muted pull-right">{{$row->created_at}}</span>
+                        <span class="text-muted pull-right">{{$row->created_at->timezone(session('timezone'))}}</span>
                       </span><!-- /.username -->
                 {{$row->comment_text}}
             </div>

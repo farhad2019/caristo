@@ -114,6 +114,6 @@ class CategoryDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'categoriesdatatable_' . time();
+        return 'categories-' . date('d-m-Y H:i:s');
     }
 }
