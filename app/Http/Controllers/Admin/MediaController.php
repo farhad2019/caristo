@@ -161,4 +161,21 @@ class MediaController extends AppBaseController
 
         return redirect(route('admin.media.index'));
     }
+
+    public function deleteMedia($id)
+    {
+        $media = $this->mediaRepository->findWithoutFail($id);
+
+        if (empty($media)) {
+            $response['success'] = false;
+            $response['message'] = "Media not found !";
+        }
+
+        $this->mediaRepository->delete($id);
+        $response['success'] = true;
+        $response['message'] = "Media deleted successfully !";
+
+        return $response;
+    }
+
 }

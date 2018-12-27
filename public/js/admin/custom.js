@@ -60,6 +60,31 @@ $(function () {
         });
     });
 
+    $('.delete_media').on('click', function () {
+        var id = $(this).data('id');
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this record!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then(function (willDelete) {
+            if (willDelete) {
+                $.ajax({
+                    url: "../../delete-media/" + id,
+                    context: document.body,
+                    method: 'GET'
+                }).done(function (response) {
+                    if (response.success) {
+                        location.reload();
+                    }
+                    else
+                        alert('Something Went Wrong!');
+                });
+            }
+        });
+    });
+
     /*$('.select2').each(function () {
         $(this).css('width', '100%');
         var format = $(this).data('format') ? $(this).data('format') : "defaultFormat";
