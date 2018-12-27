@@ -109,6 +109,6 @@ class CarModelDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'car_modelsdatatable_' . time();
+        return 'car-models-' . date('d-m-Y H:i:s');
     }
 }

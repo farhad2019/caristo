@@ -84,7 +84,8 @@ class CarType extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|max:20'
+        'name' => 'required|max:50',
+        'image'   => 'required|image|mimes:jpg,jpeg,png'
     ];
 
     /**
@@ -93,7 +94,7 @@ class CarType extends Model
      * @var array
      */
     public static $update_rules = [
-        'name' => 'required|max:20'
+        'name' => 'required|max:50'
     ];
 
     /**

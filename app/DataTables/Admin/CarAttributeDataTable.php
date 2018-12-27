@@ -99,6 +99,6 @@ class CarAttributeDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'car_attributesdatatable_' . time();
+        return 'car-attributes-' . date('d-m-Y H:i:s');
     }
 }

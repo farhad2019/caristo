@@ -55,7 +55,7 @@
 
 <!-- Created At Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('name', 'Logo*:') !!}
+    {!! Form::label('name', 'Media*:') !!}
     {!! Form::file('media', ['class' => 'form-control']) !!}
 
 
