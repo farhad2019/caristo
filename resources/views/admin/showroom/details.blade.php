@@ -123,14 +123,14 @@
                     </div> {{--$car->bid_close_at->diffForHumans()--}}
 
                     <div class="controlls">
-                        <div class="display-remain-time"></div>
+                        <div class="display-remain-time" style="font-size: 18px;"></div>
                         <button class="play" id="pause"></button>
                     </div>
                 </div>
 
                 <h4>Place a Bid now</h4>
-                {!! Form::open(['route' => 'admin.makeBids.store']) !!}
-                <input type="text" name="amount" placeholder="AED"
+                {!! Form::open(['route' => 'admin.makeBids.store',"id"=>"submitBit"]) !!}
+                <input type="text" id="amount_bit" name="amount" placeholder="AED"
                        {{ isset($bid)? 'readonly':'required' }} value="{{ isset($bid)? number_format($bid->amount):'' }}">
                 <button type="submit" class="submit" name="">submit</button>
                 {!! Form::hidden('car_id', $car->id) !!}
@@ -157,7 +157,7 @@
                         </svg>
                     </div>
                     <div class="controlls">
-                        <div class="" style="font-size: 23px;">{{ number_format($bid->amount) }}
+                        <div class="" style="font-size: 18px;">{{ number_format($bid->amount) }}
                             AED
                         </div>
                         <button class="play" id="pause"></button>
@@ -255,4 +255,25 @@
 
     pauseBtn.addEventListener('click', pauseTimer);
 
+    $(function () {
+
+        $(document).on('submit', '#submitBit', function () {
+
+            if(!$.trim($('#amount_bit').val()))
+            {
+                $('#amount_bit').css('border','1px solid #ff081c')
+                return false;
+            }
+
+            return true
+
+        });
+
+    });
+
+    jQuery('#amount_bit').keyup(function () {
+        this.value = this.value.replace(/[^0-9]/g,'');
+    });
+
 </script>
+
