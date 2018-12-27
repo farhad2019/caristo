@@ -25,7 +25,7 @@ class CarTypeDataTable extends DataTable
         });
 
         $dataTable->editColumn('image', function ($model) {
-            return $model->image ? '<a class="showGallery" data-id="' . $model->id . '" data-toggle="modal" data-target="#imageGallery"><img src="' . $model->image . '" style="width:75px;"></a>' : null;
+            return $model->image ? '<a class="showGallerySingle" data-id="' . $model->id . '" data-toggle="modal" data-target="#imageGallerySingle"><img src="' . $model->image . '" style="width:75px;"></a>' : null;
         });
 
         $dataTable->rawColumns(['image', 'action']);

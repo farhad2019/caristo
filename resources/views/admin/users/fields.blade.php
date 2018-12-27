@@ -83,11 +83,18 @@
                 <!-- Image Field -->
                     <div class="form-group col-sm-3">
                         {!! Form::label('image', 'Image:') !!}
-                        @if($user->details)
-                            <img src="{{ $user->details->image_url }}" width="80">
-                        @endif
                         {!! Form::file('image', ['class' => 'form-control']) !!}
+
+                        @if($user->details)
+                            {{--<img src="{{ $user->details->image_url }}" width="80">--}}
+                            <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >
+                                <a class='showGallery' data-id='{{ $user->id }}' data-toggle='modal'>
+                                    <img src="{!! $user->details->image_url !!}" style="width: 125px;">
+                                </a>
+                            </div>
+                        @endif
                     </div>
+
                     <div class="form-group col-sm-3 clearfix"></div>
                     <!-- email_updates Field -->
                     {{--<div class="form-group col-sm-3 clearfix">
@@ -119,7 +126,7 @@
                     <!-- About Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('about', 'About:') !!}
-                        {!! Form::textarea('about', $user->details->address?? null, ['class' => 'form-control']) !!}
+                        {!! Form::textarea('about', $user->details->about?? null, ['class' => 'form-control']) !!}
                     </div>
                 </div>
                 <!-- /.tab-pane -->

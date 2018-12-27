@@ -26,7 +26,7 @@ class CarBrandDataTable extends DataTable
 
         $dataTable->editColumn('media.logo', function (CarBrand $model) {
             if (count($model->media) > 0)
-            return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'><img src='" . $model->media()->orderby('created_at', 'desc')->first()->fileUrl . "' width='80'/></a>";
+            return "<a class='showGallerySingle' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallerySingle'><img src='" . $model->media()->orderby('created_at', 'desc')->first()->fileUrl . "' width='80'/></a>";
         else {
                 return "<span class='label label-default'>None</span>";
             }

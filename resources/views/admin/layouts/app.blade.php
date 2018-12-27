@@ -43,6 +43,11 @@
         input[type="number"] {
             -moz-appearance: textfield;
         }
+
+        #displayImageSingle{
+            margin: 0 0 0 10px !important;
+            }
+
     </style>
     @stack('css')
 </head>
