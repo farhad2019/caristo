@@ -28,7 +28,8 @@ class CategoryDataTable extends DataTable
         });
         $dataTable->editColumn('image', function (Category $model) {
             if (count($model->media) > 0)
-                return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'><img src='" . $model->media[0]->fileUrl . "' width='80'/></a>";
+                return "<a class='showGallerySingle' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallerySingle'>
+                <img src='" . $model->media[0]->fileUrl . "' width='80'/></a>";
             else {
                 return "<span class='label label-default'>None</span>";
             }

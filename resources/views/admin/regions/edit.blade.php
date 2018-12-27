@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    {{ $region->name }} <small>Region</small>
+    Edit <small>Region</small>
 @endsection
 
 @section('content')
