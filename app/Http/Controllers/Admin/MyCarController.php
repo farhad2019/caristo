@@ -223,11 +223,15 @@ class MyCarController extends AppBaseController
                 'amount'                    => 'sometimes|nullable|required',
                 'regional_specification_id' => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
+                'media'                     => 'required',
+                'media.*'                   => 'image|mimes:jpg,jpeg,png',
             ], [
                 'category_id.required' => 'The category field is required.',
                 'model_id.required'    => 'The model field is required.',
                 'year.required'        => 'The year field is required.',
                 'amount.required'      => 'The amount field is required.',
+                'media.required'       => 'The media is required.',
+                'media.*'              => 'The media must be a file of type: jpg, jpeg, png.',
                 'email.required'       => 'The amount field is required.'
             ]);
         } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
@@ -243,7 +247,8 @@ class MyCarController extends AppBaseController
                 'average_mkp'               => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
                 'phone'                     => 'sometimes|nullable|phone',
-                'media.*'                   => 'required|image|mimes:jpg,png',
+                'media'                     => 'required',
+                'media.*'                   => 'image|mimes:jpg,jpeg,png',
                 'attribute.*'               => 'attr'
             ], [
                 'category_id.required'       => 'The category field is required.',
@@ -253,6 +258,7 @@ class MyCarController extends AppBaseController
                 'engine_type_id.required'    => 'The engine field is required.',
                 'amount.required'            => 'The amount field is required.',
                 'media.required'             => 'The media is required.',
+                'media.*'                    => 'The media must be a file of type: jpg, jpeg, png.',
                 'kilometer.required'         => 'The Mileage field is required.',
                 'average_mkp.required'       => 'The Average MKP field is required.',
                 'email.required'             => 'The amount field is required.'
@@ -479,12 +485,15 @@ class MyCarController extends AppBaseController
                 'amount'                    => 'sometimes|nullable|required',
                 'regional_specification_id' => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
-                'phone'                     => 'sometimes|nullable|phone'
+                'media'                     => 'required',
+                'media.*'                   => 'image|mimes:jpg,jpeg,png',
             ], [
                 'category_id.required' => 'The category field is required.',
                 'model_id.required'    => 'The model field is required.',
                 'year.required'        => 'The year field is required.',
                 'amount.required'      => 'The amount field is required.',
+                'media.required'       => 'The media is required.',
+                'media.*'              => 'The media must be a file of type: jpg, jpeg, png.',
                 'email.required'       => 'The amount field is required.'
             ]);
         } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
@@ -500,7 +509,8 @@ class MyCarController extends AppBaseController
                 'average_mkp'               => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
                 'phone'                     => 'sometimes|nullable|phone',
-                'media.*'                   => 'required|image|mimes:jpg,png',
+                'media'                     => 'required',
+                'media.*'                   => 'image|mimes:jpg,jpeg,png',
                 'attribute.*'               => 'attr'
             ], [
                 'category_id.required'       => 'The category field is required.',
@@ -510,6 +520,7 @@ class MyCarController extends AppBaseController
                 'engine_type_id.required'    => 'The engine field is required.',
                 'amount.required'            => 'The amount field is required.',
                 'media.required'             => 'The media is required.',
+                'media.*'                    => 'The media must be a file of type: jpg, jpeg, png.',
                 'kilometer.required'         => 'The Mileage field is required.',
                 'average_mkp.required'       => 'The Average MKP field is required.',
                 'email.required'             => 'The amount field is required.'

@@ -87,7 +87,7 @@ class CarAttributeDataTable extends DataTable
                 'title' => 'Name'
             ],
             'type'              => [
-                'searchable' => false,
+                'searchable' => false
             ]
         ];
     }

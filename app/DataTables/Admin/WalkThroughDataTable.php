@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\WalkThrough;
+use Illuminate\Support\Facades\App;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 
@@ -16,6 +17,7 @@ class WalkThroughDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $query = $query->with(['translations']);
         $dataTable = new EloquentDataTable($query);
 
         /*$dataTable->editColumn('sort_by', function (Menu $menu) {
@@ -41,7 +43,8 @@ class WalkThroughDataTable extends DataTable
      */
     public function query(WalkThrough $model)
     {
-        return $model->newQuery();
+        return $model->select('walkthrough.*', 'walkthrough_translations.title')->join('walkthrough_translations', 'walkthrough_translations.walk_through_id', '=', 'walkthrough.id')->where('walkthrough_translations.locale', App::getLocale('en'))->newQuery();
+        //return $model->newQuery();
     }
 
     /**
@@ -82,7 +85,9 @@ class WalkThroughDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'sort',
+            'sort'               => [
+                'searchable' => false
+            ],
             'translations.title' => [
                 'title' => 'Title'
             ]

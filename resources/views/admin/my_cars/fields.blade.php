@@ -144,7 +144,7 @@
 @else
     @foreach($features as $feature)
         <div class="form-group col-sm-2 region">
-            {!! Form::label('status', $feature->name.':') !!}
+            {!! Form::label('status', $feature->name.':', ['style' => 'word-break: break-all; width: 50%;']) !!}
             {!! Form::hidden('feature['.$feature->id.']', false) !!}
             {!! Form::checkbox('feature['.$feature->id.']', 1, (in_array($feature->id, $myCar->carFeatures->pluck('id')->toArray())?? false)) !!}
         </div>

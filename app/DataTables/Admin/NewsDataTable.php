@@ -22,16 +22,18 @@ class NewsDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         $dataTable->editColumn('translations.headline', function (News $model) {
-            return $model->headline;
+            return '<span style="word-break: break-all">' . $model->headline . "</span>";
         });
+
         $dataTable->editColumn('category.translations.name', function (News $model) {
 //            return ($model->category) ? "<span id='category-" . $model->category_id . "' class='label label-success'>" . $model->category->name . "</span>" : "<span class='label label-default'>None</span>";
             return $model->category->name;
         });
+
         $dataTable->editColumn('image', function (News $model) {
             if (count($model->media) > 0) {
                 if ($model->media[0]->media_type == News::TYPE_IMAGE) {
-                    return "<img src='" . $model->media[0]->fileUrl . "' width='80'/>";
+                    return "<a class='showGallerySingle' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallerySingle'><img src='" . $model->media[0]->fileUrl . "' width='80'/></a>";
                 } else {
                     return "<span class='label label-default'><a href='" . $model->media[0]->fileUrl . "' target='_blank'>Link</a></span>";
                 }
@@ -52,7 +54,7 @@ class NewsDataTable extends DataTable
         $dataTable->editColumn('is_featured', function (News $model) {
             return "<span class='badge bg-" . Utils::getBoolCss($model->is_featured, true) . "'> <i class='fa fa-" . ($model->is_featured ? "check" : "times") . "'></i> " . Utils::getBoolText($model->is_featured) . "</span>";
         });
-        $dataTable->rawColumns(['category.name', 'image', 'action', 'views_count', 'like_count', 'comments_count', 'is_featured']);
+        $dataTable->rawColumns(['translations.headline', 'category.name', 'image', 'action', 'views_count', 'like_count', 'comments_count', 'is_featured']);
         return $dataTable->addColumn('action', 'admin.news.datatables_actions');
     }
 

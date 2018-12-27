@@ -267,6 +267,7 @@ $(function () {
         }
         $.next();
     });
+
     $('#imageGallery .next').click(function () {
         imgNum++;
         if (imgNum > $('.mySlides', $('#imageGallery')).length) {
@@ -294,7 +295,6 @@ $(function () {
         $('#displayImage img', $('#imageGallery')).remove();
         $('.showGallery[data-id="' + thisid + '"]').each(function () {
             var src = $(this).find('img').attr('src');
-            console.log(src);
 
             $('#displayImage', $('#imageGallery')).append(
                 '<img class="mySlides" src="' + src + '" width="550"/>'
@@ -302,6 +302,24 @@ $(function () {
         });
 
         $('#imageGallery').show();
+        // showDivs(1);
+    })
+});
+
+$(function () {
+    $('body').on('click', 'a.showGallerySingle', function () {
+        // TODO: Add Content in Modal Body
+        var thisid = $(this).data('id');
+        $('#displayImageSingle img', $('#imageGallerySingle')).remove();
+        $('.showGallerySingle[data-id="' + thisid + '"]').each(function () {
+            var src = $(this).find('img').attr('src');
+
+            $('#displayImageSingle', $('#imageGallerySingle')).append(
+                '<img class="mySlides" src="' + src + '" width="550"/>'
+            )
+        });
+
+        $('#imageGallerySingle').show();
         // showDivs(1);
     })
 });

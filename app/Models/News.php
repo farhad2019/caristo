@@ -168,7 +168,9 @@ class News extends Model
     public static $rules = [
         'category_id' => 'required',
         'headline'    => 'required',
-        'source'      => 'required',
+        'source'      => 'required|url',
+        'media'       => 'sometimes|required|image|mimes:jpg,jpeg,png',
+        'media_url'   => 'sometimes|required|url',
         'is_featured' => 'required'
     ];
 

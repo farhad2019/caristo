@@ -179,12 +179,12 @@ class MyCarAPIController extends AppBaseController
             }
         }
 
-        if (is_string($request->car_features) && !empty(array_filter($request->car_features))) {
-            if (!empty(json_decode($request->car_features))) {
+        if (is_string($request->car_features)) {
+            if (!empty(json_decode($request->car_features, true))) {
                 $myCars->carFeatures()->attach(json_decode($request->car_features));
             }
-        } elseif (is_array($request->car_features) && !empty(array_filter($request->car_features))) {
-            if (!empty($request->car_features)) {
+        } elseif (is_array($request->car_features)) {
+            if (!empty(array_filter($request->car_features))) {
                 $myCars->carFeatures()->attach($request->car_features);
             }
         }
@@ -359,12 +359,12 @@ class MyCarAPIController extends AppBaseController
 
         if (is_string($request->car_features)) {
             $myCar->my_car_features->delete();
-            if (!empty(json_decode($request->car_features))) {
-                $myCar->carFeatures()->attach(json_decode($request->car_features));
+            if (!empty(json_decode($request->car_features, true))) {
+                $myCar->carFeatures()->attach(json_decode($request->car_features, true));
             }
         } elseif (is_array($request->car_features)) {
             $myCar->my_car_features->delete();
-            if (!empty($request->car_features)) {
+            if (!empty(array_filter($request->car_features))) {
                 $myCar->carFeatures()->attach($request->car_features);
             }
         }

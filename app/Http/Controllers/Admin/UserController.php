@@ -235,13 +235,16 @@ class UserController extends AppBaseController
             $this->showroomRepository->updateRecord($request, $id);
         }
 
-        Flash::success('User updated successfully.');
         if ($user->hasRole('showroom-owner')) {
+            Flash::success('Profile Updated successfully.');
             return redirect(route('admin.users.profile'));
         }
+
         if ($id == Auth::id()) {
+            Flash::success('Profile Updated successfully.');
             $redirectTo = redirect(route('admin.dashboard'));
         } else {
+            Flash::success('User updated successfully.');
             $redirectTo = redirect(route('admin.users.index'));
         }
         return $redirectTo;

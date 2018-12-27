@@ -63,7 +63,7 @@ class NewsController extends AppBaseController
                 $categories[$category->name] = [$category->id => $category->name];
             }
         }
-        return view('admin.news.create')->with('categories', $categories);
+        return view('admin.news.create')->with(['categories' => $categories]);
     }
 
     /**
@@ -94,7 +94,6 @@ class NewsController extends AppBaseController
 
         if (empty($news)) {
             Flash::error('News not found');
-
             return redirect(route('admin.news.index'));
         }
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $news);

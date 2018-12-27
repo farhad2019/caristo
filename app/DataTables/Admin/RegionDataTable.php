@@ -19,14 +19,17 @@ class RegionDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         $dataTable->editColumn('flag', function ($model) {
+            return '<span style="word-break: break-all">' . $model->name . '</span>';
+        });
+
+        $dataTable->editColumn('flag', function ($model) {
             if ($model->flag)
-                return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'>
-                <img src='" . $model->flag . "' style='width:70px;'/></a>";
+                return "<a class='showGallery' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallery'><img src = '" . $model->flag . "' style = 'width:70px;' /></a> ";
             else {
-                return "<span class='label label-default'>None</span>";
+                return "<span class='label label-default' > None</span > ";
             }
         });
-        $dataTable->rawColumns(['flag', 'action']);
+        $dataTable->rawColumns(['flag', 'flag', 'action']);
         return $dataTable->addColumn('action', 'admin.regions.datatables_actions');
     }
 

@@ -63,11 +63,11 @@ class NewsRepository extends BaseRepository
                 $data->media()->createMany($media);
             }
         } elseif ($input['media_type'] == News::TYPE_VIDEO) {
-            if (isset($request->media) && !$request->media == null) {
+            if (isset($request->media_url) && !$request->media_url == null) {
                 $media[] = [
                     'media_type' => News::TYPE_VIDEO,
                     'title'      => 'Video Url',
-                    'filename'   => $request->media
+                    'filename'   => $request->media_url
                 ];
 
                 $data->media()->createMany($media);

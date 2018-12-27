@@ -6,6 +6,8 @@
     <meta name="viewport"
           content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 
+    <link rel="icon" href="{{ asset('storage/app/public/logo-mini.png') }}" type="image/x-icon">
+
     <meta http-equiv="X-UA-Compatible" content="IE=11">
     <meta name="format-detection" content="telephone=no">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
@@ -34,7 +36,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-4 my-auto">
-                <a href="javascript:;" title="" class="logo">
+                <a href="{{ route('admin.dashboard') }}" title="" class="logo">
                     <img src="{{ url('storage/app/showroom/logo.svg') }}" alt="">
                 </a>
             </div>
