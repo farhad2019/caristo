@@ -33,11 +33,13 @@ class NewsInteraction extends Model
     const TYPE_VIEW = 10;
     const TYPE_LIKE = 20;
     const TYPE_FAVORITE = 30;
+    const TYPE_COMMENT = 40;
 
     public static $TYPES = [
         self::TYPE_VIEW     => "View",
         self::TYPE_LIKE     => "Like",
         self::TYPE_FAVORITE => "Favorite",
+        self::TYPE_COMMENT => "Comment",
     ];
 
     protected $dates = ['deleted_at'];

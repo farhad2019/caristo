@@ -18,6 +18,15 @@
 <dt>{!! Form::label('source', 'Source:') !!}</dt>
 <dd>{!! $news->source !!}</dd>
 
+<!-- Headline Field -->
+<dt>{!! Form::label('source_image', 'Source Image:') !!}</dt>
+<dd>
+    @if($news->source_image)
+        <img src="{{$news->sourceImageUrl}}" alt="Image not found" width="150" style="padding-top: 10px">
+    @endif
+</dd>
+<br>
+
 <!-- Views Count Field -->
 <dt>{!! Form::label('views_count', 'Views Count:') !!}</dt>
 <dd><span class='badge badge-success'> <i class='fa fa-eye'></i> {!! $news->views_count  !!}</span></dd>
@@ -52,7 +61,13 @@
     @elseif($news->media[0]->media_type == \App\Models\News::TYPE_VIDEO)
         <dt>{!! Form::label('image', 'Video Link:') !!}</dt>
         <dd>
-            <a href="{{ $news->media[0]->fileUrl }}" target="_blank">{{ $news->media[0]->fileUrl }}</a>
+            {{--<a href="{{ $news->media[0]->fileUrl }}" target="_blank">{{ $news->media[0]->fileUrl }}</a>--}}
+            @php
+                $aa = explode('?v=', $news->media[0]->fileUrl);
+                $bb = @$aa[1];
+            @endphp
+            <a href="{{$news->media[0]->fileUrl}}" target='_blank'><img src='https://img.youtube.com/vi/{{$bb}}/0.jpg'
+                                                                         width='150'/></a>;
         </dd>
     @endif
 @endif
@@ -63,21 +78,21 @@
     <hr>
     <div class="box-footer box-comments" style="width: 98%;">
         @foreach($news->comments as $row)
-        <div class="box-comment">
-            <!-- User image -->
+            <div class="box-comment">
+                <!-- User image -->
 
-            <img class="img-circle img-sm" src="{{$news->comments[0]->user->details->image_url}}" alt="User Image">
+                <img class="img-circle img-sm" src="{{$news->comments[0]->user->details->image_url}}" alt="User Image">
 
-            <div class="comment-text">
+                <div class="comment-text">
                       <span class="username">
                         {{$news->comments[0]->user->details->first_name.' '.$news->comments[0]->user->details->last_name}}
-                        <span class="text-muted pull-right">{{$row->created_at->timezone(session('timezone'))}}</span>
+                          <span class="text-muted pull-right">{{$row->created_at->timezone(session('timezone'))}}</span>
                       </span><!-- /.username -->
-                {{$row->comment_text}}
+                    {{$row->comment_text}}
+                </div>
+                <!-- /.comment-text -->
             </div>
-            <!-- /.comment-text -->
-        </div>
-        <!-- /.box-comment -->
+            <!-- /.box-comment -->
         @endforeach
     </div>
 @endif

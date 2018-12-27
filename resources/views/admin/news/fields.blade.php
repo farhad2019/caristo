@@ -19,16 +19,20 @@
 <!-- Source Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('source', 'Source:') !!}
-    {!! Form::text('source', null, ['class' => 'form-control liveUrl', 'placeholder' => 'Enter URL']) !!}
+    {!! Form::text('source', null, ['class' => 'form-control liveUrl', 'placeholder' => 'https://www.example.com']) !!}
 </div>
 
-<!-- Is Featured Field -->
+<!-- Source Image Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('is_featured', 'Is Featured:') !!}
-    {!! Form::hidden('is_featured', 0, ['class' => 'form-control']) !!}
-    {!! Form::checkbox('is_featured', 1, null, ['class' => 'form-control', 'data-toggle'=>'toggle']) !!}
+    {!! Form::label('source_image', 'Source Image:') !!}
+    {!! Form::file('source_image', ['class' => 'form-control']) !!}
+
+    @if(isset($news))
+        @if($news->source_image)
+            <img src="{{$news->sourceImageUrl}}" alt="Image not found" width="80" style="padding-top: 10px">
+        @endif
+    @endif
 </div>
-<div class="col-sm-12 clearfix"></div>
 
 <!-- Slug Field -->
 <div class="form-group col-sm-6 ">
@@ -39,8 +43,8 @@
 <!-- Slug Field -->
 <div class="form-group col-sm-6">
     <div id="image">
-        {!! Form::label('media[]', 'Image:') !!}
-        {!! Form::file('media[]', null, ['class' => 'form-control']) !!}
+        {!! Form::label('image', 'Image:') !!}
+        {!! Form::file('image',  ['class' => 'form-control']) !!}
         @if(isset($news) && count($news->media) > 0)
             @if($news->media[0]->media_type == \App\Models\News::TYPE_IMAGE)
                 @foreach($news->media as $media)
@@ -50,9 +54,17 @@
         @endif
     </div>
     <div id="video" style="display:none;">
-        {!! Form::label('media[]', 'Video Url:') !!}
-        {!! Form::url('media_url', isset($news)?$news->media[0]->fileUrl:null, ['class' => 'form-control', 'id' => 'videoField']) !!}
+        {!! Form::label('video_url', 'Video Url:') !!}
+        {!! Form::url('video_url', isset($news)?$news->media[0]->fileUrl:null, ['class' => 'form-control', 'id' => 'videoField']) !!}
     </div>
+</div>
+
+<div class="col-sm-12 clearfix"></div>
+<!-- Is Featured Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('is_featured', 'Is Featured:') !!}
+    {!! Form::hidden('is_featured', 0, ['class' => 'form-control']) !!}
+    {!! Form::checkbox('is_featured', 1, null, ['class' => 'form-control', 'data-toggle'=>'toggle']) !!}
 </div>
 
 <!-- Submit Field -->
@@ -62,31 +74,31 @@
 </div>
 
 @push('scripts')
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
+        $('#image').hide();
+        $('#video').hide();
+        var type = $('#mediaType').val();
+        if (type == 10) {
+            $('#image').show();
+        }
+        if (type == 20) {
+            $('#video').show();
+        }
+
+        $('body').on('change', '#mediaType', function () {
             $('#image').hide();
             $('#video').hide();
-            var type = $('#mediaType').val();
+            $('#videoField').val('');
+
+            var type = $(this).val();
             if (type == 10) {
                 $('#image').show();
             }
             if (type == 20) {
                 $('#video').show();
             }
-
-            $('body').on('change', '#mediaType', function () {
-                $('#image').hide();
-                $('#video').hide();
-                $('#videoField').val('');
-
-                var type = $(this).val();
-                if (type == 10) {
-                    $('#image').show();
-                }
-                if (type == 20) {
-                    $('#video').show();
-                }
-            })
-        });
-    </script>
+        })
+    });
+</script>
 @endpush

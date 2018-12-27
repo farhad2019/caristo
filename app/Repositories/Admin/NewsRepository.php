@@ -5,6 +5,7 @@ namespace App\Repositories\Admin;
 use App\Helper\Utils;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -48,12 +49,19 @@ class NewsRepository extends BaseRepository
     {
         $input = $request->all();
         $input['user_id'] = \Auth::id();
+
+        if ($request->hasFile('source_image')) {
+            $imageFile = $request->file('source_image');
+            $data['source_image'] = $input['source_image'] = Storage::putFile('source_images', $imageFile);
+        }
+
         $data = $this->create($input);
+
         if ($input['media_type'] == News::TYPE_IMAGE) {
             // Media Data
-            if ($request->hasFile('media')) {
+            if ($request->hasFile('image')) {
                 $media = [];
-                $mediaFiles = $request->file('media');
+                $mediaFiles = $request->file('image');
                 $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
                 foreach ($mediaFiles as $mediaFile) {
@@ -63,16 +71,17 @@ class NewsRepository extends BaseRepository
                 $data->media()->createMany($media);
             }
         } elseif ($input['media_type'] == News::TYPE_VIDEO) {
-            if (isset($request->media_url) && !$request->media_url == null) {
+            if (isset($request->video_url) && !$request->video_url == null) {
                 $media[] = [
                     'media_type' => News::TYPE_VIDEO,
                     'title'      => 'Video Url',
-                    'filename'   => $request->media_url
+                    'filename'   => $request->video_url
                 ];
 
                 $data->media()->createMany($media);
             }
         }
+
         return $data;
     }
 
@@ -84,13 +93,19 @@ class NewsRepository extends BaseRepository
     public function updateRecord(Request $request, $news)
     {
         $input = $request->all();
+
+        if ($request->hasFile('source_image')) {
+            $imageFile = $request->file('source_image');
+            $data['source_image'] = $input['source_image'] = Storage::putFile('source_images', $imageFile);
+        }
+
         $data = $this->update($input, $news->id);
 
         if ($input['media_type'] == News::TYPE_IMAGE) {
             // Media Data
-            if ($request->hasFile('media')) {
+            if ($request->hasFile('image')) {
                 $media = [];
-                $mediaFiles = $request->file('media');
+                $mediaFiles = $request->file('image');
                 $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
                 foreach ($mediaFiles as $mediaFile) {
@@ -101,11 +116,11 @@ class NewsRepository extends BaseRepository
                 $data->media()->createMany($media);
             }
         } elseif ($input['media_type'] == News::TYPE_VIDEO) {
-            if (isset($request->media) && !$request->media == null) {
+            if (isset($request->video_url) && !$request->video_url == null) {
                 $media[] = [
                     'media_type' => News::TYPE_VIDEO,
                     'title'      => 'Video Url',
-                    'filename'   => $request->media
+                    'filename'   => $request->video_url
                 ];
                 $news->media()->delete();
                 $data->media()->createMany($media);

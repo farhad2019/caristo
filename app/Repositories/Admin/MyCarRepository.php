@@ -140,7 +140,12 @@ class MyCarRepository extends BaseRepository
         } else {
             $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometre', 'price', 'description']);
             $input['owner_id'] = $user->id;
-            $input['owner_type'] = User::SHOWROOM_OWNER;
+            if (Auth::user()->hasRole(['showroom-owner', 'Administrators'])) {
+                $user_type = User::SHOWROOM_OWNER;
+            } else {
+                $user_type = User::RANDOM_USER;
+            }
+            $input['owner_type'] = $user_type;
 
             // current date + 1
             $date = Carbon::now()->addDay();

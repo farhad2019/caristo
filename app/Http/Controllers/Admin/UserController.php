@@ -8,6 +8,7 @@ use App\Helper\Utils;
 use App\Http\Requests\Admin\CreateUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\CarInteraction;
+use App\Models\NewsInteraction;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Repositories\Admin\CarInteractionRepository;
@@ -71,10 +72,16 @@ class UserController extends AppBaseController
         $title = '';
         if ($data) {
             if (isset($data['type'])) {
-                if ($data['type'] == 30) {
+                if ($data['type'] == CarInteraction::TYPE_FAVORITE) {
                     $title = "User Favorites";
-                } elseif ($data['type'] == 10) {
+                } elseif ($data['type'] == CarInteraction::TYPE_VIEW) {
                     $title = 'User Views';
+                } elseif ($data['type'] == NewsInteraction::TYPE_VIEW) {
+                    $title = 'User Views News';
+                } elseif ($data['type'] == NewsInteraction::TYPE_LIKE) {
+                    $title = 'User Like News';
+                } elseif ($data['type'] == NewsInteraction::TYPE_COMMENT) {
+                    $title = 'User Comment News';
                 }
             }
 
@@ -90,7 +97,8 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public function create()
+    public
+    function create()
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         $roles = $this->roleRepository->all()->where('id', '!=', '1')->pluck('display_name', 'id')->all();
@@ -107,7 +115,8 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public function store(CreateUserRequest $request)
+    public
+    function store(CreateUserRequest $request)
     {
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
@@ -130,7 +139,8 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public
+    function show($id)
     {
         $user = $this->userRepository->findWithoutFail($id);
 
@@ -156,7 +166,8 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public function edit($id)
+    public
+    function edit($id)
     {
         $user = $this->userRepository->findWithoutFail($id);
 
@@ -178,7 +189,8 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateUserRequest $request)
+    public
+    function update($id, UpdateUserRequest $request)
     {
         $user = $this->userRepository->findWithoutFail($id);
 
@@ -257,7 +269,8 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         $user = $this->userRepository->findWithoutFail($id);
         if (empty($user)) {
@@ -274,7 +287,8 @@ class UserController extends AppBaseController
     /**
      * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function profile()
+    public
+    function profile()
     {
         $user = Auth::user();
         if (empty($user)) {
