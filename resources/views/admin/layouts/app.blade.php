@@ -44,9 +44,13 @@
             -moz-appearance: textfield;
         }
 
-        #displayImageSingle{
+        dd {
+            word-break: break-all;
+        }
+
+        #displayImageSingle {
             margin: 0 0 0 10px !important;
-            }
+        }
 
     </style>
     @stack('css')
