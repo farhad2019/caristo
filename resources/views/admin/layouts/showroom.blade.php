@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url('public/css/showroom/lib.css') }}">
-    <link rel="stylesheet" href="{{ url('public/css/showroom/style.css') }}">
+    <link rel="stylesheet" href="{{ url('public/css/showroom/style_new.css') }}">
     <link rel="stylesheet" href="{{ url('public/fonts/showroom/style.css') }}">
     <link rel="stylesheet" href="{{ url('public/css/showroom/responsive.css') }}">
 
@@ -72,7 +72,7 @@
 </div>
 <script src="{{ url('public/js/showroom/xlib.js') }}"></script>
 <script src="{{ url('public/js/showroom/bootstrap-notify.min.js') }}"></script>
-<script src="{{ url('public/js/showroom/script.js') }}"></script>
+<script src="{{ url('public/js/showroom/script_new.js') }}"></script>
 
 @stack('scripts')
 </body>
