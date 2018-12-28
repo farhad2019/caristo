@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -48,9 +49,19 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
-    protected function authenticated(Request $request)
+    protected function authenticated(Request $request, $user)
     {
         session(['timezone' => $request->timezone]); // saving to session
+
+        if (\Entrust::can('adminpanel')) {
+            return redirect()->intended($this->redirectPath());
+        } else {
+            $this->logout($request);
+            throw ValidationException::withMessages([
+                $this->username() => [trans('auth.failed')],
+            ]);
+        }
+
     }
 
     /**

@@ -453,20 +453,21 @@
     @endforeach
 @endif
 
+<div class="clearfix"></div>
 <!-- Media Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('media', 'Images:') !!}
     {!! Form::file('media[]', ['class' => 'form-control', 'multiple']) !!}
     <br>
     @if(isset($myCar))
         @if($myCar->media->count() > 0)
             @foreach($myCar->media as $media)
-                <div style="position: relative; display: inline;">
+                <div style="position: relative; display: inline; padding-right: 10px">
                     <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
-                        <img src="{{ $media->file_url }}" width="120" style="margin-right: 2%">
+                        <img src="{{ $media->file_url }}" width="120" >
                     </a>
                     <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                          style="position: absolute; right: 2px; z-index: 100; cursor: hand">&times;
+                          style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
                 </span>
                 </div>
             @endforeach

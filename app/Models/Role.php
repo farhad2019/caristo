@@ -43,6 +43,11 @@ class Role extends EntrustRole
         restore as private restoreB;
     }
 
+    const SUPER_ADMIN_ROLE = 1;
+    const ADMIN_ROLE = 2;
+    const SHOWROOM_OWNER_ROLE = 4;
+    const RANDOM_USER_ROLE = 5;
+
     public $fillable = [
         'name',
         'display_name',

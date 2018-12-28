@@ -324,18 +324,6 @@ class MyCarRepository extends BaseRepository
             }
         } else {
             $myCar = $this->update($input, $myCar->id);
-            // Media Data
-            if ($request->hasFile('media')) {
-                $media = [];
-                $mediaFiles = $request->file('media');
-                $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
-
-                foreach ($mediaFiles as $mediaFile) {
-                    $media[] = Utils::handlePicture($mediaFile);
-                }
-
-                $myCar->media()->createMany($media);
-            }
 
             if ($input['category_id'] == MyCar::LIMITEDADDITION) {
                 $regions = [];
@@ -350,6 +338,24 @@ class MyCarRepository extends BaseRepository
 
             }
         }
+
+        // Media Data
+        if ($request->hasFile('media')) {
+            $media = [];
+            $mediaFiles = $request->file('media');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $mediaFile) {
+                //$media[] = Utils::handlePicture($mediaFile);
+                $media[] = [
+                    'title'    => $mediaFile->getClientOriginalName(),
+                    'filename' => Storage::putFile('media_files', $mediaFile)
+                ];
+            }
+
+            $myCar->media()->createMany($media);
+        }
+
         return $myCar;
     }
 }
