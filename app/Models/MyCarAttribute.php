@@ -137,7 +137,7 @@ class MyCarAttribute extends Model
     public function getAttrOptionAttribute()
     {
         $id = $this->value;
-        return ($this->carAttribute->type >= 30 && $this->carAttribute->type < 60) ? $this->carAttribute->options()->where('id', $id)->first()['option'] : null;
+        return ($this->carAttribute->type = CarAttribute::SELECT_SINGLE || $this->carAttribute->type == CarAttribute::SELECT_MULTIPLE) ? $this->carAttribute->options()->where('id', $id)->first()['option'] : null;
     }
 
     /**
