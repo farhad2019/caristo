@@ -53,7 +53,7 @@
             <!-- Options Field -->
             <div class="form-group col-sm-4">
                 {!! Form::label('options', 'Options:') !!}
-                {!! Form::text('opt[]', null, ['class'=>'form-control','required'=>'required']) !!}
+                {!! Form::text('opt[]', null, ['class'=>'form-control firstOption']) !!}
             </div>
 
             <div class="col-sm-2" style="margin-top: 23px;">
@@ -84,30 +84,29 @@
 </div>
 
 @push('scripts')
-<script>
-    $(function () {
+    <script>
+        $(function () {
+            $('body').on('click', 'a.add_row', function () {
+                var clone = $("#clone-row-sample").clone().appendTo("#clone-div");
+                clone.removeAttr('id');
+                clone.removeAttr('style');
+                clone.prev().find('a.add_row').remove();
+                clone.find('input').attr('required', true);
+            });
 
-        $('body').on('click', 'a.add_row', function () {
-            var clone = $("#clone-row-sample").clone().appendTo("#clone-div");
-            clone.removeAttr('id');
-            clone.removeAttr('style');
-            clone.prev().find('a.add_row').remove();
-            clone.find('input').attr('required',true);
+            $('body').on('click', 'a.delete_row', function () {
+                $(this).parent().parent().remove();
+            });
+
+            $('.att_type').change(function () {
+                var type = $(this).val();
+                if (type >= 30 && type < 60) {
+                    $('#clone-div').show().attr('required', true);
+                    $('.firstOption').attr('required', true);
+                } else {
+                    $('#clone-div').hide();
+                }
+            });
         });
-
-        $('body').on('click', 'a.delete_row', function () {
-            $(this).parent().parent().remove();
-        });
-
-        $('.att_type').change(function () {
-            var type = $(this).val();
-            if (type >= 30 && type < 60) {
-                $('#clone-div').show();
-            } else {
-                $('#clone-div').hide();
-            }
-
-        });
-    });
-</script>
+    </script>
 @endpush

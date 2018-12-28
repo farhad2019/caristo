@@ -33,7 +33,7 @@
                 <span class="icon-icon-7"></span>
                 <p>
                     <small>KM</small>
-                    {{ number_format($car->kilometre) }}
+                    {{ number_format($car->kilometer) }}
                 </p>
             </li>
             <li>

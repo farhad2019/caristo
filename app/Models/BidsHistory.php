@@ -73,8 +73,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          type="boolean"
  *      ),
  *      @SWG\Property(
- *          property="kilometre",
- *          description="kilometre",
+ *          property="kilometer",
+ *          description="kilometer",
  *          type="number",
  *          format="float"
  *      ),
@@ -150,7 +150,7 @@ class BidsHistory extends Model
         'year' => 'date',
         'chassis' => 'string',
         'transmission_type' => 'boolean',
-        'kilometre' => 'float',
+        'kilometer' => 'float',
         'average_mkp' => 'float',
         'amount' => 'float',
         'name' => 'string',

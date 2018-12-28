@@ -90,7 +90,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         $max_mileage = $this->request->get('max_mileage', -1);
         $min_mileage = $this->request->get('min_mileage', -1);
         $model = $model->when(($max_mileage > 0 && $min_mileage > 0 && $max_mileage > $min_mileage), function ($query) use ($max_mileage, $min_mileage) {
-            return $query->whereBetween('kilometre', [$max_mileage, $min_mileage]);
+            return $query->whereBetween('kilometer', [$max_mileage, $min_mileage]);
         });
 
         $car_ids = $this->request->get('car_ids', -1);

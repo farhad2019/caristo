@@ -12,6 +12,9 @@
     <!-- /.box-header -->
     <div class="box-body">
         <div class="col-md-4">
+            <!-- Name Field -->
+            <dt>{!! Form::label('name', 'Name:') !!}</dt>
+            <dd>{!! $myCar->name?? 'N/A' !!}</dd>
             <!-- Type Id Field -->
             <dt>{!! Form::label('type_id', 'Category :') !!}</dt>
             <dd>{!! isset($myCar->category_id) ? $myCar->category->name : 'N/A' !!}</dd>
@@ -23,6 +26,14 @@
             <!-- Transmission Type Field -->
             <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
             <dd>{!! $myCar->transmission_type_text?? 'N/A' !!}</dd>
+
+            <!-- Year Field -->
+            <dt>{!! Form::label('kilometer', 'Kilometer:') !!}</dt>
+            <dd>{!! $myCar->kilometre .' Km' ?? 'N/A' !!}</dd>
+
+            <!-- Year Field -->
+            <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
+            <dd>{!! $myCar->amount  ?? 'N/A' !!}</dd>
         </div>
         <div class="col-md-8">
             <!-- Engine Type Id Field -->
@@ -36,6 +47,10 @@
             <!-- Year Field -->
             <dt>{!! Form::label('year', 'Year:') !!}</dt>
             <dd>{!! $myCar->year?? 'N/A' !!}</dd>
+
+            <!-- Year Field -->
+            <dt>{!! Form::label('chassis', 'Chassis:') !!}</dt>
+            <dd>{!! $myCar->chassis?? 'N/A' !!}</dd>
         </div>
     </div>
     <!-- /.box-body -->
@@ -43,6 +58,10 @@
         <!-- Owner Id Field -->
         <dt>{!! Form::label('owner_id', 'Owner :') !!}</dt>
         <dd>{!! isset($myCar->owner->name) ? $myCar->owner->name : 'N/A' !!}</dd>
+
+        <!-- Description Field -->
+        <dt>{!! Form::label('description', 'Description :') !!}</dt>
+        <dd>{!! isset($myCar->notes) ? $myCar->notes : 'N/A' !!}</dd>
     </div>
     <!-- box-footer -->
 </div>
@@ -61,22 +80,22 @@
     <!-- /.box-header -->
     <div class="box-body">
         <div class="col-md-4">
-            <!-- Name Field -->
-            <dt>{!! Form::label('name', 'Name:') !!}</dt>
-            <dd>{!! $myCar->name?? 'N/A' !!}</dd>
-
             <!-- Email Field -->
             <dt>{!! Form::label('email', 'Email:') !!}</dt>
-            <dd>{!! $myCar->email?? 'N/A' !!}</dd>
+            <dd>{!! $myCar['owner']['email'] ?? 'N/A' !!}</dd>
             <!-- Country Code Field -->
+
+            <!-- Address Field -->
+            <dt>{!! Form::label('address', 'Address:') !!}</dt>
+            <dd>{!! $myCar['owner']['details']['address'] ?? 'N/A' !!}</dd>
         </div>
         <div class="col-md-8">
         {{--<dt>{!! Form::label('country_code', 'Country Code:') !!}</dt>--}}
         {{--<dd>{!! $myCar->country_code?? 'N/A' !!}</dd>--}}
 
-        <!-- Phone Field -->
+            <!-- Phone Field -->
             <dt>{!! Form::label('phone', 'Phone:') !!}</dt>
-            <dd>{!! $myCar->country_code?? 'N/A' !!} - {!! $myCar->phone?? 'N/A' !!}</dd>
+            <dd>{!! $myCar['owner']['details']['country_code'] ?? 'N/A' !!} - {!! $myCar['owner']['details']['phone'] ?? 'N/A' !!}</dd>
 
 
             <!-- Owner Type Field -->
@@ -88,7 +107,7 @@
     <div class="box-footer">
         <!-- Owner Type Field -->
         <dt>{!! Form::label('description', 'Description:') !!}</dt>
-        <dd>{!! $myCar->description?? 'N/A' !!}</dd>
+        <dd>{!! $myCar['owner']['details']['about'] ?? 'N/A' !!}</dd>
     </div>
     <!-- box-footer -->
 </div>

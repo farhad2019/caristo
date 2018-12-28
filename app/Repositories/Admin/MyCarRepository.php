@@ -138,7 +138,7 @@ class MyCarRepository extends BaseRepository
                 }
             }
         } else {
-            $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometre', 'price', 'description']);
+            $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometer', 'price', 'description']);
             $input['owner_id'] = $user->id;
             if (Auth::user()->hasRole(['showroom-owner', 'Administrators'])) {
                 $user_type = User::SHOWROOM_OWNER;
@@ -210,7 +210,7 @@ class MyCarRepository extends BaseRepository
 
     public function updateApiRecord($request, $myCar)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'kilometre']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'kilometer']);
 
         $myCar = $this->update($input, $myCar->id);
 

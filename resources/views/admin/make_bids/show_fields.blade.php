@@ -90,7 +90,7 @@
 
             <!-- Model Id Field -->
             <dt>{!! Form::label('model', 'Kilometers:') !!}</dt>
-            <dd>{!! number_format($car->kilometre) !!}</dd>
+            <dd>{!! number_format($car->kilometer) !!}</dd>
 
         </div>
         <div class="col-md-6">

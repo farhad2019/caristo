@@ -12,7 +12,7 @@
 
 <div class="col-sm-12">
     <dt>{!! Form::label('phone', 'Phone:') !!}</dt>
-    <dd>{!! $user->details->phone !!}</dd>
+    <dd>{!! $user->details->country_code .'-'.$user->details->phone !!}</dd>
 </div>
 
 <div class="col-sm-12">
@@ -34,11 +34,12 @@
 <div>
     <dt>{!! Form::label('Profile', 'Profile Picture:') !!}</dt>
     <dd>{{--<img src="{!! $user->details->image_url !!}"/> --}}
-    <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >
-        <a class='showGallerySingle' data-id='{{ $user->id }}' data-toggle='modal' data-target='#imageGallerySingle'>
-            <img src="{!! $user->details->image_url !!}" style="width: 125px;">
-        </a>
-    </div>
+        <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
+            <a class='showGallerySingle' data-id='{{ $user->id }}' data-toggle='modal'
+               data-target='#imageGallerySingle'>
+                <img src="{!! $user->details->image_url !!}" style="width: 125px;">
+            </a>
+        </div>
     </dd>
 </div>
 

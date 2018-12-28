@@ -31,8 +31,8 @@ class MakeBidDataTable extends DataTable
             return $model->carModel->brand->name . ' ' . $model->carModel->name . ' (' . $model->year . ')';
         });
 
-        $dataTable->editColumn('kilometre', function ($model) {
-            return $model->kilometre ?? '-';
+        $dataTable->editColumn('kilometer', function ($model) {
+            return $model->kilometer ?? '-';
         });
 
         $dataTable->editColumn('bid_close_at', function ($model) {
@@ -101,7 +101,7 @@ class MakeBidDataTable extends DataTable
             'image',
             'name',
             'Model',
-            'kilometre',
+            'kilometer',
             'bid_close_at',
         ];
     }

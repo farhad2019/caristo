@@ -104,7 +104,7 @@
 
     <div class="clearfix"></div>
 
-    <div class="form-group col-sm-12">
+    <div class="form-group col-sm-12 region">
         {!! Form::label('features', 'Car Features:') !!}
         <div class="col-sm-12">
             @foreach($features as $feature)
