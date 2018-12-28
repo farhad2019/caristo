@@ -22,7 +22,7 @@
     <!--[if lt IE 9]>
     <script src="{{ url('public/js/showroom/html5.js') }}"></script>
     <![endif]-->
-
+@stack('css')
 </head>
 
 <body class="home-page">

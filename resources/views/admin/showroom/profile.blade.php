@@ -3,34 +3,34 @@
 @section('content')
     @include('flash::message')
     @include('adminlte-templates::common.errors')
+    @push('css')
+        <style>
+            .right_side {
+                width: 85%;
+            }
 
+            .left_side {
+                width: 15%;
+            }
 
-    <style>
-        .right_side {
-            width: 85%;
-        }
+            .dash_tabss {
+                width: 100%;
+            }
 
-        .left_side {
-            width: 15%;
-        }
+            .tab_serach {
+                margin: 0;
+            }
 
-        .dash_tabss {
-            width: 100%;
-        }
+            .right_side {
+                background: #fff;
+            }
 
-        .tab_serach {
-            margin: 0;
-        }
+            .profile_right_side {
+                border-left: 1px solid #c6c6c6;
+            }
 
-        .right_side {
-            background: #fff;
-        }
-
-        .profile_right_side {
-            border-left: 1px solid #c6c6c6;
-        }
-
-    </style>
+        </style>
+    @endpush
 
     <div class="left_side profile_left_side">
 
