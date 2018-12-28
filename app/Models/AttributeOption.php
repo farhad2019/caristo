@@ -87,6 +87,9 @@ class AttributeOption extends Model
      */
     public static $api_rules = [];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function carAttribute()
     {
         return $this->belongsTo(CarAttribute::class, 'attribute_id');

@@ -142,7 +142,12 @@
                 @if($myCar->myCarAttributes->count() > 0)
                     @foreach($myCar->myCarAttributes as $attribute)
                         <ul>
-                            <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
+                            @if($attribute->carAttribute->type == \App\Models\CarAttribute::TEXT || $attribute->carAttribute->type == \App\Models\CarAttribute::TEXT )
+                                <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
+                            @else
+                                <li>{!! $attribute->carAttribute->name !!}
+                                    : {!! \App\Models\AttributeOption::where('id', $attribute->value)->first()['option_array']['name'] !!}</li>
+                            @endif
                         </ul>
                     @endforeach
                 @else

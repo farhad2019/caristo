@@ -114,6 +114,7 @@ class CategoryDataTable extends DataTable
             'clicks_count'               => [
                 'title'     => 'Clicks Count',
                 'orderable' => false,
+                'searchable' => false,
             ]
 //            'created_at'
         ];
