@@ -2,6 +2,7 @@
 
 @section('content')
     @include('flash::message')
+    @include('adminlte-templates::common.errors')
 
     <div class="left_side profile_left_side">
 
@@ -35,10 +36,10 @@
                 </li>
             </ul>
         </div>--}}
-        
+
     </div>
 
-    {!! Form::model($user, ['route' => ['admin.users.update', $user->id], 'files' => true, 'method' => 'patch', 'class' => '']) !!}
+    {!! Form::model($user, ['route' => ['admin.showroom.profile.update', $user->id], 'files' => true, 'method' => 'patch', 'class' => '']) !!}
 
     <div class="right_side profile_right_side" style="">
         {{--<div class="dash_tab_content " id="tab1">
@@ -73,56 +74,51 @@
                     <input type="text" name="email" placeholder="Email" value="{{ $user->email }}" required readonly
                            style="opacity: 0.6"> <br> <br>
                     <textarea name="address" placeholder="Address"
-                              style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; padding: 0 0 7px; width: 100%;"
+                              style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; width: 100%;"
                               required>{{ $user->details->address == null ? '' : $user->details->address }}</textarea>
                     <br>
                     <br>
-                    <input type="text" name="password" placeholder="Password"> <br> <br>
-                    <label>Logo:</label>
-                    <input type="file" name="showroom_media">
+                    <input type="password" name="password" placeholder="Password"> <br> <br>
+                    {{--<label>Logo:</label>
+                    <input type="file" name="showroom_media">--}}
                 </div>
                 <div class="right" style="width: 48%;">
                     <input type="text" name="phone" placeholder="Phone" value="{{ $user->details->phone }}" required>
                     <br><br>
                     <textarea name="about" placeholder="About"
-                              style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; padding: 0 0 7px; width: 100%;"
+                              style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; width: 100%;"
                               required>{{ $user->details->about == null ? '' : $user->details->about }}</textarea> <br>
                     <br>
 
-                    <input type="text" name="password_confirmation" placeholder="Confirm Password"> <br> <br>
-                    <img src="{{ $user->details->image_url }}" width="80">
+                    <input type="password" name="password_confirmation" placeholder="Confirm Password"> <br> <br>
+                    {{--<img src="{{ $user->details->image_url }}" width="80">--}}
                 </div>
             </div>
         </div>
 
         <div class="car_detail_wrap" id="car_detail1">
-            <div class="car_detail clearfix tab_serach"
-                 style="margin-top: 0px; margin-left: 0px; padding-top: 0px; padding-left: 15px;">
-                <h3>Showroom Details Details: </h3> <br>
-                <input type="text" name="showroom[name]" placeholder="Show Room Name"
-                       value="{{ $user->showroomDetails->name }}" required> <br> <br>
+            <div class="car_detail clearfix tab_serach">
+                <h3>Showroom Details: </h3> <br>
+                <input type="text" name="showroom_name" placeholder="Show Room Name" value="{{ $user->showroomDetails->name }}" required> <br> <br>
                 <div class="left" style="width: 48%;">
-                        <textarea name="showroom[address]" placeholder="Show Room Address"
-                                  style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; padding: 0 0 7px; width: 100%;"
+                        <textarea name="showroom_address" placeholder="Show Room Address" style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none;  width: 100%;"
                                   required>{{ $user->showroomDetails->address == null ? '' : $user->showroomDetails->address }}</textarea>
                     <br> <br>
-                    <input type="text" name="showroom[phone]" placeholder="Show Room Phone"
-                           value="{{ $user->showroomDetails->phone }}" required> <br> <br>
-                    <label>Logo:</label>
+                    <input type="text" name="showroom_phone" placeholder="Show Room Phone" value="{{ $user->showroomDetails->phone }}" required> <br> <br>
+                    <label>Profile Image:</label>
                     <input type="file" name="showroom_media"> <br> <br>
 
-                    <button type="submit" class="submit" name=""
-                            style="font-size: 14px; color: #fff; text-align: center; background: #1f1f1f; border-radius: 30px; padding: 12px 0; border: 1px solid transparent; text-transform: uppercase; margin: 15px 0 0; transition: all 0.2s; cursor: pointer; width: 25%; height: 40px;">
+                    <button type="submit" class="submit" name="" style="font-size: 14px; color: #fff; text-align: center; background: #1f1f1f; border-radius: 30px;  border: 1px solid transparent; text-transform: uppercase; margin: 15px 0 0; transition: all 0.2s; cursor: pointer; width: 25%; height: 40px;">
                         submit
                     </button>
                 </div>
 
                 <div class="right" style="width: 48%;">
-                        <textarea name="showroom[about]" placeholder="Show Room About"
-                                  style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; padding: 0 0 7px; width: 100%;"
+                        <textarea name="showroom_about" placeholder="Show Room About"
+                                  style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none;  width: 100%;"
                                   required>{{ $user->showroomDetails->about == null ? '' : $user->showroomDetails->about }}</textarea>
                     <br> <br>
-                    <input type="text" name="showroom[email]" placeholder="Show Room Email"
+                    <input type="text" name="showroom_email" placeholder="Show Room Email"
                            value="{{ $user->showroomDetails->email }}" required> <br> <br>
                     <img src="{{ Auth::user()->showroomDetails->logo_url }}" width="80">
                 </div>

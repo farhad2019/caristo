@@ -29,7 +29,8 @@ class CheckAdminPermission
             }
         } else if (\Auth::user() &&
             \Entrust::can('adminpanel') &&
-            (\Entrust::ability(['super-admin'], [$permissionName]))) {
+            (\Entrust::ability(['super-admin'], [$permissionName]))
+        ) {
             return $next($request);
         } else if (\Auth::user() && in_array($routeName, ['logout'])) {
             // Allow the user to logout.
@@ -37,6 +38,9 @@ class CheckAdminPermission
         } else if (\Auth::user() && in_array($routeName, ['login'])) {
             // Allow the user to logout.
             return redirect(route('admin.dashboard'));
+        } else if (\Auth::user() && in_array($routeName, ['showroom.profile.edit'])) {
+            // Allow the user to logout.
+            return $next($request);
         } elseif ($permissionName == 'users.profile') {
             if (\Entrust::can('adminpanel')) {
                 return $next($request);
