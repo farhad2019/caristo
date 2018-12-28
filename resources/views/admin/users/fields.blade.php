@@ -13,10 +13,10 @@
 
     @if (strpos(Request::url(), 'users') !== false)
         <!-- Roles Field -->
-        <div class="form-group col-sm-6">
+        {{--<div class="form-group col-sm-6">
             {!! Form::label('roles', 'Roles:') !!}
             {!! Form::select('roles[]', $roles, null, ['class' => 'form-control select2', 'multiple'=>'multiple']) !!}
-        </div>
+        </div>--}}
 
         <!-- Roles Field -->
         <div class="form-group col-sm-6">
@@ -25,6 +25,7 @@
         </div>
     @endif
 
+    <div class="clearfix"></div>
     <!-- Password Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('password', 'Password:') !!}
@@ -66,6 +67,12 @@
                         {!! Form::email('email', null, ['class' => 'form-control', isset($user)?'readonly':'']) !!}
                     </div>
 
+                    <!-- Country Code Field -->
+                    <div class="form-group col-sm-6">
+                        {!! Form::label('country_code', 'Country Code:') !!}
+                        {!! Form::number('country_code', $user->details->country_code?? null, ['class' => 'form-control', 'min'=> 1]) !!}
+                    </div>
+
                     <!-- Phone Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('phone', 'Phone:') !!}
@@ -75,11 +82,12 @@
                 @if (strpos(Request::url(), 'users') !== false)
 
                     <!-- Roles Field -->
-                        <div class="form-group col-sm-6">
+                        {{--<div class="form-group col-sm-6">
                             {!! Form::label('roles', 'Roles:') !!}
                             {!! Form::select('roles[]', $roles, null, ['class' => 'form-control select2', 'multiple'=>'multiple']) !!}
-                        </div>
+                        </div>--}}
                 @endif
+                    <div class="clearfix"></div>
                 <!-- Image Field -->
                     <div class="form-group col-sm-3">
                         {!! Form::label('image', 'Image:') !!}
@@ -115,6 +123,7 @@
                         {!! Form::label('password_confirmation', 'Confirm Password:') !!}
                         {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                     </div>
+                    <div class="clearfix"></div>
 
 
                     <!-- Address Field -->
@@ -150,11 +159,13 @@
                             {!! Form::number('showroom[phone]', $user->showroomDetails->phone?? null, ['class' => 'form-control','min'=>1]) !!}
                         </div>
 
+                        <div class="clearfix"></div>
                         <!-- Image Field -->
                         <div class="form-group col-sm-3">
                             {!! Form::label('image', 'Image:') !!}
                             {!! Form::file('showroom_media', ['class' => 'form-control']) !!}
                         </div>
+                        <div class="clearfix"></div>
 
                         <!-- Image Field -->
                         <div class="form-group col-sm-3">

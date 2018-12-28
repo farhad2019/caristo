@@ -97,13 +97,15 @@
             <div class="car_detail clearfix tab_serach"
                  style="margin-top: 0px; margin-left: 0px; padding-top: 0px; padding-left: 15px;">
                 <h3>Personal Details: </h3> <br>
-                <input type="text" name="name" placeholder="Name" value="{{ $user->name }}" required> <br> <br>
+                <input type="text" name="name" placeholder="Name" value="{{ old('name')? old('name'): $user->name }}"
+                       required> <br> <br>
                 <div class="left" style="width: 48%;">
-                    <input type="text" name="email" placeholder="Email" value="{{ $user->email }}" required readonly
+                    <input type="text" name="email" placeholder="Email"
+                           value="{{ old('email')? old('email'): $user->email }}" required readonly
                            style="opacity: 0.6"> <br> <br>
                     <textarea name="address" placeholder="Address"
                               style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; width: 100%;"
-                              required>{{ $user->details->address == null ? '' : $user->details->address }}</textarea>
+                              required>{{ old('address')?old('address'): $user->details->address }}</textarea>
                     <br>
                     <br>
                     <input type="password" name="password" placeholder="Password"> <br> <br>
@@ -115,7 +117,7 @@
                     <br><br>
                     <textarea name="about" placeholder="About"
                               style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; width: 100%;"
-                              required>{{ $user->details->about == null ? '' : $user->details->about }}</textarea> <br>
+                              required>{{ old('about')? old('about')  : $user->details->about }}</textarea> <br>
                     <br>
 
                     <input type="password" name="password_confirmation" placeholder="Confirm Password"> <br> <br>
@@ -128,14 +130,16 @@
             <div class="car_detail clearfix tab_serach">
                 <h3>Showroom Details: </h3> <br>
                 <input type="text" name="showroom_name" placeholder="Show Room Name"
-                       value="{{ $user->showroomDetails->name }}" required> <br> <br>
+                       value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" required>
+                <br> <br>
                 <div class="left" style="width: 48%;">
                         <textarea name="showroom_address" placeholder="Show Room Address"
                                   style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none;  width: 100%;"
-                                  required>{{ $user->showroomDetails->address == null ? '' : $user->showroomDetails->address }}</textarea>
+                                  required>{{ old('showroom_address')? old('showroom_address') : $user->showroomDetails->address }}</textarea>
                     <br> <br>
                     <input type="text" name="showroom_phone" placeholder="Show Room Phone"
-                           value="{{ $user->showroomDetails->phone }}" required> <br> <br>
+                           value="{{ old('showroom_phone')?old('showroom_phone'): $user->showroomDetails->phone }}"
+                           required> <br> <br>
                     <label>Profile Image:</label>
                     <input type="file" name="showroom_media"> <br> <br>
 
@@ -148,7 +152,7 @@
                 <div class="right" style="width: 48%;">
                         <textarea name="showroom_about" placeholder="Show Room About"
                                   style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none;  width: 100%;"
-                                  required>{{ $user->showroomDetails->about == null ? '' : $user->showroomDetails->about }}</textarea>
+                                  required>{{ old('showroom_about')? old('showroom_about'): $user->showroomDetails->about }}</textarea>
                     <br> <br>
                     <input type="text" name="showroom_email" placeholder="Show Room Email"
                            value="{{ $user->showroomDetails->email }}" required> <br> <br>

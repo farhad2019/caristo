@@ -45,15 +45,15 @@
         <form method="post" action="{{ url('/admin/login') }}">
             {!! csrf_field() !!}
 
-            <div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-                <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                @if ($errors->has('email'))
-                    <span class="help-block">
+            {{--<div class="form-group has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">--}}
+            <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email">
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            @if ($errors->has('email'))
+                <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('email') }}</strong>
                 </span>
-                @endif
-            </div>
+            @endif
+            {{--</div>--}}
 
             <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}">
                 <input type="password" class="form-control" placeholder="Password" name="password">

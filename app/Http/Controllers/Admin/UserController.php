@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\UpdateShowroomProfileRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\CarInteraction;
 use App\Models\NewsInteraction;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Repositories\Admin\CarInteractionRepository;
@@ -100,8 +101,7 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public
-    function create()
+    public function create()
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         $roles = $this->roleRepository->all()->where('id', '!=', '1')->pluck('display_name', 'id')->all();
@@ -118,8 +118,7 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public
-    function store(CreateUserRequest $request)
+    public function store(CreateUserRequest $request)
     {
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
@@ -129,6 +128,7 @@ class UserController extends AppBaseController
         $data['user_id'] = $user->id;
         $data['first_name'] = $user->name;
         $data['dealer_type'] = $input['dealer_type'] ?? null;
+        $this->userRepository->attachRole($user->id, Role::SHOWROOM_OWNER_ROLE);
         $userDetail = $this->userDetailRepository->create($data);
 
         Flash::success('User saved successfully.');
@@ -142,8 +142,7 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public
-    function show($id)
+    public function show($id)
     {
         $user = $this->userRepository->findWithoutFail($id);
 
@@ -169,8 +168,7 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public
-    function edit($id)
+    public function edit($id)
     {
         $user = $this->userRepository->findWithoutFail($id);
 
@@ -210,7 +208,7 @@ class UserController extends AppBaseController
             $data['password'] = Hash::make($data['password']);
         }
 
-        $selectedRoles = [];
+        /*$selectedRoles = [];
         if ($request->has('roles') || $request->get('roles', null) !== null) {
             $selectedRoles = $request->get('roles');
             unset($data['roles']);
@@ -226,7 +224,7 @@ class UserController extends AppBaseController
             foreach ($rolesToBeDeleted as $roleToBeDeleted) {
                 $this->userRepository->detachRole($user->id, $roleToBeDeleted);
             }
-        }
+        }*/
 
         // Media Data
         if ($request->hasFile('image')) {
@@ -240,6 +238,7 @@ class UserController extends AppBaseController
 //            }
 //            $data['image'] = $media[0]['filename'];
         }
+
         $data['first_name'] = $data['name'];
         $user->details->update($data);
         unset($data['first_name']);
