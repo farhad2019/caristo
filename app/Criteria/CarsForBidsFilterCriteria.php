@@ -78,19 +78,19 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         $max_year = $this->request->get('max_year', -1);
         $min_year = $this->request->get('min_year', -1);
         $model = $model->when(($max_year > 0 && $min_year > 0 && $max_year > $min_year), function ($query) use ($max_year, $min_year) {
-            return $query->whereBetween('year', [$max_year, $min_year]);
+            return $query->whereBetween('year', [$min_year, $max_year]);
         });
 
         $max_price = $this->request->get('max_price', -1);
         $min_price = $this->request->get('min_price', -1);
         $model = $model->when(($max_price > 0 && $min_price > 0 && $max_price > $min_price), function ($query) use ($max_price, $min_price) {
-            return $query->whereBetween('amount', [$max_price, $min_price]);
+            return $query->whereBetween('amount', [$min_price, $max_price]);
         });
 
         $max_mileage = $this->request->get('max_mileage', -1);
         $min_mileage = $this->request->get('min_mileage', -1);
         $model = $model->when(($max_mileage > 0 && $min_mileage > 0 && $max_mileage > $min_mileage), function ($query) use ($max_mileage, $min_mileage) {
-            return $query->whereBetween('kilometer', [$max_mileage, $min_mileage]);
+            return $query->whereBetween('kilometer', [$min_mileage, $max_mileage]);
         });
 
         $car_ids = $this->request->get('car_ids', -1);
