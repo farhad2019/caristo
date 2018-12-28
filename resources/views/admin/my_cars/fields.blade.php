@@ -11,43 +11,43 @@
 <!-- Brand Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('brand', 'Brand:') !!}
-    {!! Form::select('brand', $brands, (isset($myCar))? $myCar->carModel->brand->id: null, ['class' => 'form-control select2', 'placeholder' => 'Pick a car brand...']) !!}
+    {!! Form::select('brand', $brands, (isset($myCar))? $myCar->carModel->brand->id: null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Model Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('model_id', 'Model:') !!}
-    {!! Form::select('model_id', $carModels, null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand', 'placeholder' => 'Pick a car model...']) !!}
+    {!! Form::select('model_id', $carModels, null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand']) !!}
 </div>
 
 <!-- Year Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('year', 'Year:') !!}
-    {!! Form::select('year', $years, date('Y'), ['class' => 'form-control select2', 'placeholder' => 'Enter Model Year']) !!}
+    {!! Form::select('year', $years, date('Y'), ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6 region">
     {!! Form::label('transmission_type', 'Transmission Type:') !!}
-    {!! Form::select('transmission_type', $transmission_type, null, ['class' => 'form-control select2', 'placeholder' => 'Pick a transmission type...']) !!}
+    {!! Form::select('transmission_type', $transmission_type, null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('type_id', 'Car Type:') !!}
-    {!! Form::select('type_id', $carTypes, null, ['class' => 'form-control select2', 'placeholder' => 'Pick a car type...']) !!}
+    {!! Form::select('type_id', $carTypes, null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('engine_type_id', 'Engine Type:') !!}
-    {!! Form::select('engine_type_id', $engineType, null, ['class' => 'form-control select2', 'placeholder' => 'Pick a engine type...']) !!}
+    {!! Form::select('engine_type_id', $engineType, null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6 region">
     {!! Form::label('region', 'Region:') !!}
-    {!! Form::select('region', $regions, null, ['class' => 'form-control select2', 'placeholder' => 'Pick a region...']) !!}
+    {!! Form::select('region', $regions, null, ['class' => 'form-control select2']) !!}
 </div>
 
 
@@ -97,7 +97,7 @@
 <!-- Regional Specification Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('regional_specific1ation_id', 'Regional Specification:') !!}
-    {!! Form::select('regional_specification_id', $regional_specs, null, ['class' => 'form-control select2', 'placeholder' => 'Pick a regional specification...']) !!}
+    {!! Form::select('regional_specification_id', $regional_specs, null, ['class' => 'form-control select2']) !!}
 </div>
 
 @if(!isset($myCar))
@@ -109,12 +109,12 @@
         <div class="col-sm-12">
             @foreach($features as $feature)
                 <div class="form-group col-sm-3 region clearfix">
-                    <div class="col-sm-10">
-                        {!! Form::label('status', $feature->name.':', ['style' => 'word-break: break-all; width: 50%;']) !!}
-                    </div>
                     <div class="col-sm-2">
                         {!! Form::hidden('feature['.$feature->id.']', false) !!}
                         {!! Form::checkbox('feature['.$feature->id.']', 1, null) !!}
+                    </div>
+                    <div class="col-sm-10">
+                        {!! Form::label('status', $feature->name.':', ['style' => 'word-break: break-all; width: 50%;']) !!}
                     </div>
                 </div>
             @endforeach
@@ -142,7 +142,7 @@
             <div class="form-group col-sm-6 region">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::select('attribute['.$attribute->id.']', $options, null, ['class' => 'form-control select2', ($attribute->type == 40)?
-                'multiple':'', 'placeholder' => 'Pick attribute '.$attribute->name]) !!}
+                'multiple':'']) !!}
             </div>
             @php($options = [])
         @else
@@ -160,12 +160,12 @@
         <div class="col-sm-12">
             @foreach($features as $feature)
                 <div class="form-group col-sm-3">
-                    <div class="col-sm-10">
-                        {!! Form::label('status', $feature->name.':') !!}
-                    </div>
                     <div class="col-sm-2">
                         {!! Form::hidden('feature['.$feature->id.']', false) !!}
                         {!! Form::checkbox('feature['.$feature->id.']', 1, (in_array($feature->id, $myCar->carFeatures->pluck('id')->toArray())?? false)) !!}
+                    </div>
+                    <div class="col-sm-10">
+                        {!! Form::label('status', $feature->name.':') !!}
                     </div>
                 </div>
             @endforeach
@@ -192,7 +192,7 @@
             <!-- Regional Specification Field -->
             <div class="form-group col-sm-6 region">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
-                {!! Form::select('attribute['.$attribute->id.']', $options, $value, ['class' => 'form-control select2', ($attribute->type == 40)? 'multiple':'', 'placeholder' => 'Pick attribute '.$attribute->name]) !!}
+                {!! Form::select('attribute['.$attribute->id.']', $options, $value, ['class' => 'form-control select2', ($attribute->type == 40)? 'multiple':'']) !!}
             </div>
             @php($options = [])
         @else
@@ -526,6 +526,7 @@
             viewMode: "years",
             minViewMode: "years"
         });
+
     });
 </script>
 @endpush
