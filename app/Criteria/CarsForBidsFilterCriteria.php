@@ -34,8 +34,12 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
 
         $mostViewed = $this->request->get('most_viewed', -1);
         $model = $model->when(($mostViewed > 0), function ($query) {
-            return $query->select('cars.*', DB::raw('COUNT(car_interactions.id) as views_count'))->leftJoin('car_interactions', 'car_interactions.car_id', 'cars.id')->where('car_interactions.type', CarInteraction::TYPE_VIEW)->groupBy('cars.id')->orderBy('views_count', 'ASC');
+            return $query->select('cars.*', DB::raw('COUNT(car_interactions.id) as views_count'))->leftJoin('car_interactions', 'car_interactions.car_id', 'cars.id')->where('car_interactions.type', CarInteraction::TYPE_VIEW)->groupBy('cars.id')->orderBy('views_count', 'DESC');
         });
+
+        /*$model = $model->when(($mostViewed == 0), function ($query) {
+            return $query->select('cars.*', DB::raw('COUNT(car_interactions.id) as views_count'))->leftJoin('car_interactions', 'car_interactions.car_id', 'cars.id')->where('car_interactions.type', CarInteraction::TYPE_VIEW)->groupBy('cars.id')->orderBy('views_count', 'Asc');
+        });*/
 
         $category_id = $this->request->get('category_id', -1);
         $model = $model->when(($category_id > 0), function ($query) use ($category_id) {
@@ -46,6 +50,15 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         $model = $model->when(($brand_ids > 0), function ($query) use ($brand_ids) {
             return $query->whereHas('carModel', function ($carModel) use ($brand_ids) {
                 return $carModel->whereIn('brand_id', explode(',', $brand_ids));
+            });
+        });
+
+        $dealer = $this->request->get('dealer', -1);
+        $model = $model->when(($dealer > 0), function ($query) use ($dealer) {
+            return $query->whereHas('owner', function ($owner) use ($dealer) {
+                return $owner->whereHas('details', function ($details) use ($dealer){
+                    return $details->where('dealer_type', $dealer);
+                });
             });
         });
 
@@ -105,7 +118,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             });
         });
 
-        $model = $model->orderBy('views_count', SORT_DESC);
+       // $model = $model->orderBy('views_count', SORT_DESC);
 
         return $model;
     }

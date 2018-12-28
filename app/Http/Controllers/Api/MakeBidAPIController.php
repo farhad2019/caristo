@@ -81,6 +81,13 @@ class MakeBidAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
+     *     @SWG\Parameter(
+     *          name="dealer",
+     *          description="Dealer 10=official;20=market",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
      *      @SWG\Parameter(
      *          name="category_id",
      *          description="Category Id",
