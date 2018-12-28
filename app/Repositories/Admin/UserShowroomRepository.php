@@ -28,8 +28,14 @@ class UserShowroomRepository extends BaseRepository
 
     public function updateRecord($request, $user_id)
     {
-        $input = $request->showroom;
+        $input = $request->only(['showroom_name', 'showroom_address', 'showroom_phone', 'showroom_about', 'showroom_email']);
+
         $input['user_id'] = $user_id;
+        $input['name'] = $input['showroom_name'];
+        $input['email'] = $input['showroom_email'];
+        $input['phone'] = $input['showroom_phone'];
+        $input['address'] = $input['showroom_address'];
+        $input['about'] = $input['showroom_about'];
 
         // Media Data
         if ($request->hasFile('showroom_media')) {

@@ -6,6 +6,7 @@ use App\DataTables\Admin\UserDataTable;
 use App\Helper\BreadcrumbsRegister;
 use App\Helper\Utils;
 use App\Http\Requests\Admin\CreateUserRequest;
+use App\Http\Requests\Admin\UpdateShowroomProfileRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\CarInteraction;
 use App\Models\NewsInteraction;
@@ -191,8 +192,7 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public
-    function update($id, UpdateUserRequest $request)
+    public function update($id, UpdateUserRequest $request)
     {
         $user = $this->userRepository->findWithoutFail($id);
 
@@ -303,4 +303,43 @@ class UserController extends AppBaseController
         }
         return view('admin.users.edit')->with('user', $user);
     }
+
+    public function updateShowroomProfile($id, UpdateShowroomProfileRequest $request)
+    {
+        $user = $this->userRepository->findWithoutFail($id);
+
+        if (empty($user)) {
+            Flash::error('User not found');
+            return redirect(route('admin.users.index'));
+        }
+
+        $data = $request->all();
+
+        unset($data['email']);
+        if ($request->has('password') && $request->get('password', null) === null) {
+            unset($data['password']);
+        } else {
+            $data['password'] = Hash::make($data['password']);
+        }
+
+        // Media Data
+        if ($request->hasFile('image')) {
+            $mediaFile = $request->file('image');
+            $data['image'] = Storage::putFile('media_files', $mediaFile);
+        }
+
+        $data['first_name'] = $data['name'];
+        $user->details->update($data);
+        unset($data['first_name']);
+        $user = $this->userRepository->update($data, $id);
+
+        $this->showroomRepository->updateRecord($request, $id);
+
+        if ($user->hasRole('showroom-owner')) {
+            Flash::success('Profile Updated successfully.');
+            return redirect(route('admin.users.profile'));
+        }
+
+    }
+
 }

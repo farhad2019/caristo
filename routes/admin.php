@@ -27,6 +27,8 @@ Route::resource('permissions', 'PermissionController');
 
 //Route::resource('profile', 'UserController');
 
+Route::patch('showroom-profile-update/{id}', 'UserController@updateShowroomProfile')->name('showroom.profile.update');
+
 Route::get('user/profile', 'UserController@profile')->name('users.profile');
 //Route::patch('users/profile-update/{id}', 'UserController@profileUpdate')->name('users.profile-update');
 
