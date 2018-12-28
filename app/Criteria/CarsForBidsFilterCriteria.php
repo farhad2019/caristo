@@ -98,10 +98,12 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             return $query->whereIn('id', explode(',', $car_ids));
         });
 
-//        $regions = $this->request->get('regions', '');
-//        $model = $model->when((strlen($regions) > 0), function ($query) use ($regions) {
-//            return $query->whereIn('region_id', explode(',', $regions));
-//        });
+        $region = $this->request->get('regions', -1);
+        $model = $model->when(($region > 0), function ($query) use ($region) {
+            return $query->whereHas('carRegions', function ($carRegions) use ($region) {
+                return $carRegions->where('region_id', $region);
+            });
+        });
 
         $model = $model->orderBy('views_count', SORT_DESC);
 

@@ -1,4 +1,5 @@
-<div class="dash_tabs">
+<!--<div class="dash_tabs">-->
+<div class="dash_tabss">
     <ul>
         {{--<li class="{{ (Request::segments()[1] == 'myCars')?'current':'' }}">
             <a href="{{ route('admin.myCars.index') }}" title="New Requests">

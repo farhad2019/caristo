@@ -38,7 +38,7 @@ class TradeInCarController extends AppBaseController
      */
     public function index(TradeInCarDataTable $tradeInCarDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $tradeInCarDataTable->render('admin.trade_in_cars.index');
     }
 
@@ -49,7 +49,7 @@ class TradeInCarController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.trade_in_cars.create');
     }
 
@@ -80,16 +80,17 @@ class TradeInCarController extends AppBaseController
      */
     public function show($id)
     {
-        $tradeInCar = $this->tradeInCarRepository->findWithoutFail($id);
+        $tradeInCar = $this->tradeInCarRepository->findWhere(['owner_car_id' => $id]);
 
         if (empty($tradeInCar)) {
-            Flash::error('Trade In Car not found');
-
-            return redirect(route('admin.tradeInCars.index'));
+            return json_encode(['fail' => 'Trade In Car not found']);
+            /*Flash::error('Trade In Car not found');
+            return redirect(route('admin.tradeInCars.index'));*/
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $tradeInCar);
-        return view('admin.trade_in_cars.show')->with('tradeInCar', $tradeInCar);
+        return json_encode(['success' => $tradeInCar]);
+        /*BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $tradeInCar);
+        return view('admin.trade_in_cars.show')->with('tradeInCar', $tradeInCar);*/
     }
 
     /**
@@ -109,14 +110,14 @@ class TradeInCarController extends AppBaseController
             return redirect(route('admin.tradeInCars.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $tradeInCar);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $tradeInCar);
         return view('admin.trade_in_cars.edit')->with('tradeInCar', $tradeInCar);
     }
 
     /**
      * Update the specified TradeInCar in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateTradeInCarRequest $request
      *
      * @return Response

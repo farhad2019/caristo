@@ -138,13 +138,19 @@ class TradeInCar extends Model
         'customer_car_id' => 'required|exists:cars,id'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function myCar()
     {
-        return $this->belongsTo(MyCar::class, 'owner_car_id');
+        return $this->belongsTo(MyCar::class, 'owner_car_id'); //showroom owner's car
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function tradeAgainst()
     {
-        return $this->belongsTo(MyCar::class, 'customer_car_id');
+        return $this->belongsTo(MyCar::class, 'customer_car_id'); //app user's car
     }
 }

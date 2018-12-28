@@ -378,15 +378,6 @@ body {
     float: left;
 }
 
-.profile_left_side {
-    width: 15%;
-    float: left;
-}
-
-.profile_left_side .dash_tabs{
-    width: 100%;
-}
-
 .left_side.show {
     left: 0%;
 }
@@ -428,11 +419,6 @@ body {
 
 .dash_tabs {
     width: 30%;
-    float: left;
-}
-
-.profile_dash_tabs {
-    width: 100% !important;
     float: left;
 }
 
@@ -490,17 +476,77 @@ body {
     background: #f9f9f9;
 }
 
+.dash_tabss {
+    width: 30%;
+    float: left;
+}
+
+.dash_tabss a {
+    color: #8e8b8b;
+    font-size: 15px;
+    display: block;
+    padding: 30px 0px 30px 20px;
+    border-bottom: 1px solid #ececec;
+    font-weight: 400;
+    position: relative;
+    z-index: 9999;
+    background: #fff;
+}
+
+.dash_tabss ul li:last-child a {
+    border-bottom: none;
+}
+
+.dash_tabss ul li {
+    position: relative;
+}
+
+.dash_tabss ul li.current:after {
+    content: "";
+    background: url('../images/tab-arrow.svg') no-repeat center top;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -11px;
+    z-index: 999;
+    transition: all 0.3s;
+}
+
+.dash_tabss a span {
+    font-size: 23px;
+    padding-right: 10px;
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.dash_tabss a span.icon-icon-1 {
+    font-size: 18px;
+}
+
+.dash_tabss a:hover {
+    color: #1b1b1b;
+    background: #f9f9f9;
+}
+
+.dash_tabss li.current a {
+    color: #1b1b1b;
+    background: #f9f9f9;
+}
+
+.car_data {
+    display: none;
+}
+
 .dash_tab_content {
     width: 70%;
     float: right;
     border-left: 1px solid #c6c6c6;
     border-right: 1px solid #c6c6c6;
     padding: 0 5px 0 15px;
-}
-
-.profile_dash_tab_content {
-    width: 100%;
-    padding: 0 15px;
+    position: relative;
+    overflow: hidden;
 }
 
 .dash_tab {
@@ -509,6 +555,7 @@ body {
 
 .left_side #tab1 {
     display: block;
+    min-height: 1050px;
 }
 
 .dash_tab_content ul.car_listing {
@@ -532,6 +579,17 @@ body {
     transition: all 0.5s;
     cursor: pointer;
     margin: 10px 0;
+}
+
+.dash_tab_content ul.car_listing li span.bit_box {
+    color: #fff;
+    background: #333;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    padding: 2px 7px;
+    font-size: 11px;
+    z-index: 99;
 }
 
 .dash_tab_content ul.car_listing li a {
@@ -667,25 +725,10 @@ body {
     float: right;
     padding: 15px;
     position: relative;
-    border-left: 1px solid #c6c6c6;
-}
-
-.profile_right_side {
-    width: 85%;
-    background: #fff;
-    float: right;
-    position: relative;
-    border-left: 1px solid #c6c6c6;
-    padding: 15px;
-}
-
-.right_side #car_detail1 {
-    display: block;
 }
 
 .car_detail_wrap {
     position: relative;
-    display: none;
 }
 
 .shadow {
@@ -980,4 +1023,46 @@ body {
     font-size: 12px;
     color: #fa0000;
     font-weight: bold;
+}
+
+.bit_container {
+    background: #f9f9f9;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    padding: 50px 5px 0 10px;
+    transition: all 0.3s;
+    box-shadow: 0px 0px 20px #ccc;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.bit_container.show {
+    left: 0;
+    opacity: 1;
+    visibility: visible;
+}
+
+.bit_close {
+    font-style: normal;
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size: 20px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.bit_close:hover {
+    background: #000;
+    color: #fff;
 }

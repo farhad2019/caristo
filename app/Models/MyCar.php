@@ -44,6 +44,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property CarRegion car_regions
  * @property CarInteraction user_interactions
  * @property Category category
+ * @property TradeInCar my_trade_cars
  *
  * @property string transmission_type_text
  * @property string top_bids
@@ -571,6 +572,14 @@ class MyCar extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function myTradeCars()
+    {
+        return $this->hasMany(TradeInCar::class, 'owner_car_id');
     }
 
     /**

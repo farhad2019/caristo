@@ -12,6 +12,7 @@ use App\Http\Requests\Admin\UpdateMakeBidRequest;
 use App\Repositories\Admin\MakeBidRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\MyCarRepository;
+use App\Repositories\Admin\TradeInCarRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -31,10 +32,14 @@ class MakeBidController extends AppBaseController
     /** @var  MyCarRepository */
     private $carRepository;
 
-    public function __construct(MakeBidRepository $makeBidRepo, MyCarRepository $carRepo)
+    /** @var  TradeInCarRepository */
+    private $tradeInCarRepository;
+
+    public function __construct(MakeBidRepository $makeBidRepo, MyCarRepository $carRepo, TradeInCarRepository $tradeInCarRepo)
     {
         $this->makeBidRepository = $makeBidRepo;
         $this->carRepository = $carRepo;
+        $this->tradeInCarRepository = $tradeInCarRepo;
         $this->ModelName = 'makeBids';
         $this->BreadCrumbName = 'MakeBid';
     }
@@ -42,24 +47,24 @@ class MakeBidController extends AppBaseController
     /**
      * Display a listing of the MakeBid.
      *
-     * @param Request $request
+     * @param MakeBidDataTable $makeBidDataTable
      * @return Response
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
     /*public function index(MakeBidDataTable $makeBidDataTable)
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $makeBidDataTable->render('admin.make_bids.index');
     }*/
-    public function index(Request $request, MakeBidDataTable $makeBidDataTable)
+    public function index(MakeBidDataTable $makeBidDataTable)
     {
-        $this->carRepository->pushCriteria(new BidsForShowroomOwnerCriteria($request));
-        $cars = $this->carRepository->all();
-        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        //$tradeInCars = $this->tradeInCarRepository->findWhereIn('owner_car_id', Auth::user()->cars->pluck('id')->toArray());
+        //dd($tradeInCars);
+        $myCars = Auth::user()->cars()->whereHas('myTradeCars')->get();
 
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         if (Auth::user()->hasRole('showroom-owner')) {
             return view('admin.showroom.carsListing')->with([
-                'cars' => $cars,
+                'cars' => $myCars,
 //            'bid' => $bid
             ]);
         }

@@ -4,6 +4,34 @@
     @include('flash::message')
     @include('adminlte-templates::common.errors')
 
+
+    <style>
+        .right_side {
+            width: 85%;
+        }
+
+        .left_side {
+            width: 15%;
+        }
+
+        .dash_tabss {
+            width: 100%;
+        }
+
+        .tab_serach {
+            margin: 0;
+        }
+
+        .right_side {
+            background: #fff;
+        }
+
+        .profile_right_side {
+            border-left: 1px solid #c6c6c6;
+        }
+
+    </style>
+
     <div class="left_side profile_left_side">
 
         {{-- side menu --}}
@@ -99,16 +127,20 @@
         <div class="car_detail_wrap" id="car_detail1">
             <div class="car_detail clearfix tab_serach">
                 <h3>Showroom Details: </h3> <br>
-                <input type="text" name="showroom_name" placeholder="Show Room Name" value="{{ $user->showroomDetails->name }}" required> <br> <br>
+                <input type="text" name="showroom_name" placeholder="Show Room Name"
+                       value="{{ $user->showroomDetails->name }}" required> <br> <br>
                 <div class="left" style="width: 48%;">
-                        <textarea name="showroom_address" placeholder="Show Room Address" style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none;  width: 100%;"
+                        <textarea name="showroom_address" placeholder="Show Room Address"
+                                  style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none;  width: 100%;"
                                   required>{{ $user->showroomDetails->address == null ? '' : $user->showroomDetails->address }}</textarea>
                     <br> <br>
-                    <input type="text" name="showroom_phone" placeholder="Show Room Phone" value="{{ $user->showroomDetails->phone }}" required> <br> <br>
+                    <input type="text" name="showroom_phone" placeholder="Show Room Phone"
+                           value="{{ $user->showroomDetails->phone }}" required> <br> <br>
                     <label>Profile Image:</label>
                     <input type="file" name="showroom_media"> <br> <br>
 
-                    <button type="submit" class="submit" name="" style="font-size: 14px; color: #fff; text-align: center; background: #1f1f1f; border-radius: 30px;  border: 1px solid transparent; text-transform: uppercase; margin: 15px 0 0; transition: all 0.2s; cursor: pointer; width: 25%; height: 40px;">
+                    <button type="submit" class="submit" name=""
+                            style="font-size: 14px; color: #fff; text-align: center; background: #1f1f1f; border-radius: 30px;  border: 1px solid transparent; text-transform: uppercase; margin: 15px 0 0; transition: all 0.2s; cursor: pointer; width: 25%; height: 40px;">
                         submit
                     </button>
                 </div>

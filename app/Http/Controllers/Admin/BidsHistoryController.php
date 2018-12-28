@@ -57,7 +57,7 @@ class BidsHistoryController extends AppBaseController
         $bid = $this->makeBidRepository->findWhere(['car_id' => 70, 'user_id' => Auth::id()])->first();
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return view('admin.showroom.carsListing')->with([
+        return view('admin.showroom.bidsHistoryListing')->with([
             'cars' => $cars,
             'bid'  => $bid
         ]);
