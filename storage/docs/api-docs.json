@@ -2179,6 +2179,13 @@
                         "type": "integer"
                     },
                     {
+                        "name": "dealer",
+                        "in": "query",
+                        "description": "Dealer 10=official;20=market",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
                         "name": "category_id",
                         "in": "query",
                         "description": "Category Id",
@@ -4243,8 +4250,8 @@
                     "description": "transmission_type",
                     "type": "boolean"
                 },
-                "kilometre": {
-                    "description": "kilometre",
+                "kilometer": {
+                    "description": "kilometer",
                     "type": "number",
                     "format": "float"
                 },
@@ -4296,7 +4303,7 @@
                 "year",
                 "chassis",
                 "transmission_type",
-                "kilometre",
+                "kilometer",
                 "average_mkp",
                 "amount",
                 "name",
@@ -4355,8 +4362,8 @@
                     "description": "transmission_type",
                     "type": "boolean"
                 },
-                "kilometre": {
-                    "description": "kilometre",
+                "kilometer": {
+                    "description": "kilometer",
                     "type": "number",
                     "format": "float"
                 },
@@ -4842,8 +4849,8 @@
                     "type": "string",
                     "format": "int32"
                 },
-                "kilometre": {
-                    "description": "Car kilometre",
+                "kilometer": {
+                    "description": "Car kilometer",
                     "type": "number",
                     "format": "float"
                 },
