@@ -35,7 +35,7 @@
     <dt>{!! Form::label('Profile', 'Profile Picture:') !!}</dt>
     <dd>{{--<img src="{!! $user->details->image_url !!}"/> --}}
     <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >
-        <a class='showGallery' data-id='{{ $user->id }}' data-toggle='modal'>
+        <a class='showGallerySingle' data-id='{{ $user->id }}' data-toggle='modal' data-target='#imageGallerySingle'>
             <img src="{!! $user->details->image_url !!}" style="width: 125px;">
         </a>
     </div>

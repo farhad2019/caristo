@@ -35,10 +35,9 @@ class CarDataTable extends DataTable
             return $model->carModel->name ?? '-';
         });
 
-        $dataTable->editColumn('amount', function ($model) {
-            return 0;
-           // return $model->amount ? number_format($model->amount, 2) : '-';
-        });
+        /*$dataTable->editColumn('amount', function ($model) {
+           return $model->amount ? number_format($model->amount, 2) : '-';
+        });*/
 
         $dataTable->editColumn('image', function ($model) {
             if (count($model->media) > 0) {
@@ -144,6 +143,7 @@ class CarDataTable extends DataTable
     {
         return [
             'id',
+            'name',
             'category.translations.name'       => [
                 'title' => 'Category',
             ],
@@ -153,7 +153,7 @@ class CarDataTable extends DataTable
             'carModel.translations.name'       => [
                 'title' => 'Model'
             ],
-            'amount',
+            //'amount',
             'image'                            => [
                 'orderable'  => false,
                 'searchable' => false,

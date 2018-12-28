@@ -15,7 +15,7 @@
                 <div class="row no-gutters">
                     <div class="col-md-6">
                         <form action="{{ url('admin/'.Request::segments()[1]) }}" method="GET">
-                            <input type="text" name="keyword" placeholder="Search">
+                            <input type="text" name="keyword" placeholder="Search" value="{{@$_REQUEST['keyword']}}">
                         </form>
                     </div>
                     {{--<div class="col-md-6 sort_parent">

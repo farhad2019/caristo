@@ -55,7 +55,9 @@
         <dt>{!! Form::label('image', 'Image:') !!}</dt>
         <dd>
             @foreach($news->media as $media)
+                <a class='showGallerySingle' data-id='{{ $media->id }}' data-toggle='modal' data-target='#imageGallerySingle'>
                 <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+                </a>
             @endforeach
         </dd>
     @elseif($news->media[0]->media_type == \App\Models\News::TYPE_VIDEO)
