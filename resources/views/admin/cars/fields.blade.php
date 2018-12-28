@@ -52,10 +52,10 @@
     {!! Form::text('transmission_type', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Kilometre Field -->
+<!-- kilometer Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('kilometre', 'Kilometre:') !!}
-    {!! Form::text('kilometre', null, ['class' => 'form-control']) !!}
+    {!! Form::label('kilometer', 'kilometer:') !!}
+    {!! Form::text('kilometer', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Average Mkp Field -->

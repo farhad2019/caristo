@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @SWG\Definition(
  *      definition="Car",
- *      required={"type_id", "category_id", "model_id", "engine_type_id", "regional_specification_id", "owner_id", "year", "chassis", "transmission_type", "kilometre", "average_mkp", "amount", "name", "email", "country_code", "phone", "owner_type", "notes"},
+ *      required={"type_id", "category_id", "model_id", "engine_type_id", "regional_specification_id", "owner_id", "year", "chassis", "transmission_type", "kilometer", "average_mkp", "amount", "name", "email", "country_code", "phone", "owner_type", "notes"},
  *      @SWG\Property(
  *          property="id",
  *          description="id",
@@ -73,8 +73,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          type="boolean"
  *      ),
  *      @SWG\Property(
- *          property="kilometre",
- *          description="kilometre",
+ *          property="kilometer",
+ *          description="kilometer",
  *          type="number",
  *          format="float"
  *      ),
@@ -141,7 +141,7 @@ class Car extends Model
         'year',
         'chassis',
         'transmission_type',
-        'kilometre',
+        'kilometer',
         'average_mkp',
         'amount',
         'name',
@@ -161,7 +161,7 @@ class Car extends Model
         'year' => 'date',
         'chassis' => 'string',
         'transmission_type' => 'boolean',
-        'kilometre' => 'float',
+        'kilometer' => 'float',
         'average_mkp' => 'float',
         'amount' => 'float',
         'name' => 'string',
@@ -207,7 +207,7 @@ class Car extends Model
         'year' => 'required',
         'chassis' => 'required',
         'transmission_type' => 'required',
-        'kilometre' => 'required',
+        'kilometer' => 'required',
         'average_mkp' => 'required',
         'amount' => 'required',
         'name' => 'required',
@@ -233,7 +233,7 @@ class Car extends Model
         'year' => 'required',
         'chassis' => 'required',
         'transmission_type' => 'required',
-        'kilometre' => 'required',
+        'kilometer' => 'required',
         'average_mkp' => 'required',
         'amount' => 'required',
         'name' => 'required',
@@ -259,7 +259,7 @@ class Car extends Model
         'year' => 'required',
         'chassis' => 'required',
         'transmission_type' => 'required',
-        'kilometre' => 'required',
+        'kilometer' => 'required',
         'average_mkp' => 'required',
         'amount' => 'required',
         'name' => 'required',
