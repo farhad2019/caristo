@@ -74,7 +74,6 @@
     @endif
 @endif
 
-
 @if($news->comments()->count() !== 0)
     <h3>Comments</h3>
     <hr>
@@ -82,12 +81,10 @@
         @foreach($news->comments as $row)
             <div class="box-comment">
                 <!-- User image -->
-
-                <img class="img-circle img-sm" src="{{$news->comments[0]->user->details->image_url}}" alt="User Image">
-
+                <img class="img-circle img-sm" src="{{$row->userwithtrash->detailswithtrash->image_url}}" alt="User Image">
                 <div class="comment-text">
                       <span class="username">
-                        {{$news->comments[0]->user->details->first_name.' '.$news->comments[0]->user->details->last_name}}
+                        {{$row->userwithtrash->detailswithtrash->first_name.' '.$row->userwithtrash->detailswithtrash->last_name}}
                           <span class="text-muted pull-right">{{$row->created_at->timezone(session('timezone'))}}</span>
                       </span><!-- /.username -->
                     {{$row->comment_text}}

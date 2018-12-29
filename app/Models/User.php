@@ -218,7 +218,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(UserDetail::class);
     }
 
-
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -364,4 +363,15 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(News::class, 'user_id');
     }
+
+    public function commentswithtrash()
+    {
+        return $this->hasMany(Comment::class, 'user_id')->withTrashed();
+    }
+
+    public function detailswithtrash()
+    {
+        return $this->hasOne(UserDetail::class)->withTrashed();
+    }
+
 }
