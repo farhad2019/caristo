@@ -379,7 +379,7 @@
                         var data = JSON.parse(responce).success;
 
                         $.each(data, function (key, car) {
-                            console.log(car.id);
+
                             var li = "<li class=\"clearfix \">\n" +
                                 "                        <a href=\"#car_detail1\" class='car' data-id='" + car.trade_against.id + "' data-trade='" + car.id + "' title=\"\">\n" +
                                 "                            <figure style=\"background-image: url(' " + car.trade_against.media[0].file_url + " ');\"></figure>\n" +
