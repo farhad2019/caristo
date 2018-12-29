@@ -96,3 +96,5 @@ Route::resource('bidsHistories', 'BidsHistoryController');
 Route::resource('cars', 'CarController');
 
 Route::resource('tradeInCars', 'TradeInCarController');
+
+Route::resource('banksRates', 'BanksRateController');

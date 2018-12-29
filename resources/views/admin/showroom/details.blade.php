@@ -129,9 +129,10 @@
                 </div>
 
                 <h4>Place a Bid now</h4>
-                {!! Form::open(['route' => 'admin.makeBids.store',"id"=>"submitBit"]) !!}
-                <input type="text" id="amount_bit" name="amount" placeholder="AED"
-                       {{ isset($bid)? 'readonly':'required' }} value="{{ isset($bid)? number_format($bid->amount):'' }}">
+                {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeIn->id], "id"=>"submitBit", 'method' => 'patch']) !!}
+                <input type="number" id="amount_bit" name="amount" placeholder="AED"
+                       value="{{ isset($tradeIn)? number_format($tradeIn->amount):'' }}"
+                       min="1">
                 <button type="submit" class="submit" name="">submit</button>
                 {!! Form::hidden('car_id', $car->id) !!}
                 {!! Form::close() !!}
@@ -157,7 +158,7 @@
                         </svg>
                     </div>
                     <div class="controlls">
-                        <div class="" style="font-size: 18px;">{{ number_format($bid->amount) }}
+                        <div class="" style="font-size: 18px;">{{ number_format($tradeIn->amount) }}
                             AED
                         </div>
                         <button class="play" id="pause"></button>
@@ -259,9 +260,8 @@
 
         $(document).on('submit', '#submitBit', function () {
 
-            if(!$.trim($('#amount_bit').val()))
-            {
-                $('#amount_bit').css('border','1px solid #ff081c')
+            if (!$.trim($('#amount_bit').val())) {
+                $('#amount_bit').css('border', '1px solid #ff081c')
                 return false;
             }
 
@@ -272,7 +272,7 @@
     });
 
     jQuery('#amount_bit').keyup(function () {
-        this.value = this.value.replace(/[^0-9]/g,'');
+        this.value = this.value.replace(/[^0-9]/g, '');
     });
 
 </script>

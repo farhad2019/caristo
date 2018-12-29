@@ -22,6 +22,17 @@
     <!--[if lt IE 9]>
     <script src="{{ url('public/js/showroom/html5.js') }}"></script>
     <![endif]-->
+
+    <style>
+        input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
 @stack('css')
 </head>
 

@@ -104,7 +104,7 @@ class MakeBidController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $car = $this->carRepository->findWithoutFail($id);
 
@@ -113,11 +113,13 @@ class MakeBidController extends AppBaseController
             return redirect(route('admin.makeBids.index'));
         }
         $bid = $this->makeBidRepository->findWhere(['car_id' => $id, 'user_id' => Auth::id()])->first();
+        $tradeInRequest = $this->tradeInCarRepository->findWhere(['id' => $request->tradId])->first();
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $car);
         if (Auth::user()->hasRole('showroom-owner')) {
             return view('admin.showroom.details')->with([
                 'car' => $car,
-                'bid' => $bid
+                'tradeIn' => $tradeInRequest
             ]);
         }
         return view('admin.make_bids.show')->with([
