@@ -3,27 +3,33 @@
 namespace App\Repositories\Admin;
 
 use App\Helper\Utils;
-use App\Models\CarBrand;
-use App\Models\Media;
+use App\Models\BanksRate;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
- * Class CarBrandRepository
+ * Class BanksRateRepository
  * @package App\Repositories\Admin
- * @version October 5, 2018, 6:26 am UTC
+ * @version December 29, 2018, 8:15 am UTC
  *
- * @method CarBrand findWithoutFail($id, $columns = ['*'])
- * @method CarBrand find($id, $columns = ['*'])
- * @method CarBrand first($columns = ['*'])
- */
-class CarBrandRepository extends BaseRepository
+ * @method BanksRate findWithoutFail($id, $columns = ['*'])
+ * @method BanksRate find($id, $columns = ['*'])
+ * @method BanksRate first($columns = ['*'])
+*/
+class BanksRateRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
         'id',
-        'created_at'
+        'title',
+        'phone_no',
+        'address',
+        'rate',
+        'type',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
 
     /**
@@ -31,13 +37,13 @@ class CarBrandRepository extends BaseRepository
      **/
     public function model()
     {
-        return CarBrand::class;
+        return BanksRate::class;
     }
 
     public function saveRecord($request)
     {
         $input = $request->all();
-        $carBrand = $this->create($input);
+        $bankRate = $this->create($input);
         // Media Data
         if ($request->hasFile('media')) {
             $media = [];
@@ -49,26 +55,25 @@ class CarBrandRepository extends BaseRepository
                 $media[] = Utils::handlePicture($mediaFile);
             }
 
-            $carBrand->media()->createMany($media);
+            $bankRate->media()->createMany($media);
         }
-        return $carBrand;
+        return $bankRate;
     }
 
-    public function updateRecord($request, $carBrand)
+    public function updateRecord($request, $bankRate)
     {
         if ($request->hasFile('media')) {
             $media = [];
             $mediaFiles = $request->file('media');
             $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
-            Media::where('instance_id',$carBrand->id)->delete();
             foreach ($mediaFiles as $mediaFile) {
 //                $media[] = $this->handlePicture($mediaFile);
                 $media[] = Utils::handlePicture($mediaFile);
             }
 
-            $carBrand->media()->createMany($media);
+            $bankRate->media()->createMany($media);
         }
-        return $carBrand;
+        return $bankRate;
     }
 }

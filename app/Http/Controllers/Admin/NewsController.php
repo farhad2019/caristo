@@ -55,7 +55,7 @@ class NewsController extends AppBaseController
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         $categories = [];
-        $cats = $this->categoryRepository->getRootCategories();
+        $cats = $this->categoryRepository->getRootCategories2();
         foreach ($cats as $category) {
             if ($category->childCategory()->count() > 0) {
                 $categories[$category->name] = $category->childCategory->pluck('name', 'id');
@@ -116,7 +116,7 @@ class NewsController extends AppBaseController
         }
 
         $categories = [];
-        $cats = $this->categoryRepository->getRootCategories();
+        $cats = $this->categoryRepository->getRootCategories2();
         foreach ($cats as $category) {
             if ($category->childCategory()->count() > 0) {
                 $categories[$category->name] = $category->childCategory->pluck('name', 'id');
