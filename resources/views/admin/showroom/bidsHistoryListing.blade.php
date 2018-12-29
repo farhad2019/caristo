@@ -29,8 +29,15 @@
                 </div>
             </div>
 
+            <div class="bit_container">
+                <i class="bit_close"><span class="icon-close2"></span></i>
+                <ul class="car_listing" id="car-list">
+
+                </ul>
+            </div>
+
             @if($cars->count() > 0)
-                <ul class="car_listing">
+                <ul class="car_listing parent">
                     @foreach($cars as $car)
                         <li class="clearfix current active">
                             <a href="#car_detail1" class="car" data-id="{{ $car->id }}"
@@ -66,7 +73,6 @@
         </div>
         <div class="car_detail_wrap" id="car_detail1">
             <!-- dummy car details -->
-
             <div class="dummy_wrap">
                 <p class="ref_num">Reference Number:<span>-</span></p>
                 <div class="shadow"></div>
@@ -172,8 +178,8 @@
                     </div>
                 </div>
             </div>
-
             <!-- -->
+
             {{--@php($car = $cars[2])
             <p class="ref_num">Reference Number:<span>{{ $car->ref_num }}</span></p>
             <div class="shadow"></div>
@@ -181,11 +187,11 @@
                 @foreach($car->media as $media)
                     <figure style="background-image: url({{ $media->file_url }});"></figure>
                 @endforeach
+                --}}{{--<figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
                 <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
                 <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
                 <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
-                <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
-                <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
+                <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>--}}{{--
             </div>
 
             <div class="car_detail clearfix">
@@ -247,7 +253,7 @@
                                 </p>
                             </li>
                         @endforeach
-                        <li>
+                        --}}{{--<li>
                             <span class="icon-icon-14"></span>
                             <p>
                                 <small>Warranty remaining</small>
@@ -267,7 +273,7 @@
                                 <small>RMNG. warranty</small>
                                 18 Months
                             </p>
-                        </li>
+                        </li>--}}{{--
                         @foreach($car->carFeatures as $carFeature)
                             <li>
                                 <span class="{{ $carFeature->icon_css }}"></span>
@@ -366,16 +372,17 @@
                 if (carType === 10) {
                     $.ajax({
                         method: "GET",
-                        url: '{{ url('admin/tradeInCars') }}/' + carId,
+                        url: '{{ url('admin/bidsHistories') }}/' + carId,
                         type: "JSON",
                         async: false
                     }).done(function (responce) {
                         var data = JSON.parse(responce).success;
 
                         $.each(data, function (key, car) {
-                            var li = "<li class=\"clearfix active\">\n" +
-                                "                        <a href=\"#car_detail1\" class='car' data-id='" + car.trade_against.id + "' title=\"\">\n" +
-                                "                            <figure style=\"background-image: url('http://localhost/CaristoCratApp/api/resize/public/no_image.png?w=50&h=50');\"></figure>\n" +
+                            console.log(car.id);
+                            var li = "<li class=\"clearfix \">\n" +
+                                "                        <a href=\"#car_detail1\" class='car' data-id='" + car.trade_against.id + "' data-trade='" + car.id + "' title=\"\">\n" +
+                                "                            <figure style=\"background-image: url(' " + car.trade_against.media[0].file_url + " ');\"></figure>\n" +
                                 "                            <div class=\"content\">\n" +
                                 "                                <h3>" + car.trade_against.year + " " + car.trade_against.car_model.brand.name + " " + car.trade_against.car_model.name + "</h3>\n" +
                                 "                                <p>" + car.trade_against.year + " • " + car.trade_against.kilometer + "  km • Chasis " + car.trade_against.chassis + " <span></span></p>\n" +
@@ -387,9 +394,12 @@
 
                     });
                 } else {
+
+                    var tradeInId = $(this).data('trade');
+
                     $.ajax({
                         method: "GET",
-                        url: '{{ url('admin/'.Request::segments()[1].'/') }}/' + carId,
+                        url: '{{ url('admin/makeBids/') }}/' + carId + '?tradId=' + tradeInId,
                         type: "JSON",
                         async: false
                     }).done(function (responce) {

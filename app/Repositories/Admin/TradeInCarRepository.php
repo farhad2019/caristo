@@ -4,7 +4,9 @@ namespace App\Repositories\Admin;
 
 use App\Models\TradeInCar;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use InfyOm\Generator\Common\BaseRepository;
+use function MongoDB\BSON\toJSON;
 
 /**
  * Class TradeInCarRepository
@@ -35,6 +37,30 @@ class TradeInCarRepository extends BaseRepository
     public function model()
     {
         return TradeInCar::class;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getTradeInCarsWithoutBid($id)
+    {
+        return $this->model
+            ->where('owner_car_id', $id)
+            ->whereRaw(DB::raw('amount IS NULL'))
+            ->get();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getTradeInCarsWithBid($id)
+    {
+        return $this->model
+            ->where('owner_car_id', $id)
+            ->whereRaw(DB::raw('amount IS NOT NULL'))
+            ->get();
     }
 
     /**

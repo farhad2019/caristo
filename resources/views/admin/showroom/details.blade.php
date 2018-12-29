@@ -130,7 +130,7 @@
 
                 <h4>Place a Bid now</h4>
                 {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeIn->id], "id"=>"submitBit", 'method' => 'patch']) !!}
-                <input type="number" id="amount_bit" name="amount" placeholder="AED"
+                <input type="text" id="amount_bit" name="amount" placeholder="AED"
                        value="{{ isset($tradeIn)? number_format($tradeIn->amount):'' }}"
                        min="1">
                 <button type="submit" class="submit" name="">submit</button>
@@ -257,18 +257,13 @@
     pauseBtn.addEventListener('click', pauseTimer);
 
     $(function () {
-
         $(document).on('submit', '#submitBit', function () {
-
             if (!$.trim($('#amount_bit').val())) {
-                $('#amount_bit').css('border', '1px solid #ff081c')
+                $('#amount_bit').css('border', '1px solid #ff081c');
                 return false;
             }
-
             return true
-
         });
-
     });
 
     jQuery('#amount_bit').keyup(function () {

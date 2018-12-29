@@ -16,8 +16,8 @@
                 <span class="icon-icon-1"></span> New Requests
             </a>
         </li>
-        <li class="{{ (Request::segments()[1] == 'bidsHistories')?'current':'' }}">
-            <a href="{{ route('admin.bidsHistories.index') }}" title="Bid History">
+        <li class="{{ (Request::segments()[1] == 'tradeInCars')?'current':'' }}">
+            <a href="{{ route('admin.tradeInCars.index') }}" title="Bid History">
                 <span class="icon-icon-2"></span> Bid History
             </a>
         </li>

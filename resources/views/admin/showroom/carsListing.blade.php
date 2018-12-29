@@ -399,7 +399,7 @@
 
                     $.ajax({
                         method: "GET",
-                        url: '{{ url('admin/'.Request::segments()[1].'/') }}/' + carId + '?tradId=' + tradeInId,
+                        url: '{{ url('admin/makeBids/') }}/' + carId + '?tradId=' + tradeInId,
                         type: "JSON",
                         async: false
                     }).done(function (responce) {
