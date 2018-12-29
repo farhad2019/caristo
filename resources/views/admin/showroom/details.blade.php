@@ -102,7 +102,8 @@
             @endforeach
         </ul>
     </div>
-    @if(Request::segments()[1] == 'makeBids')
+
+    @if(empty($tradeIn->amount))
         <div class="right">
             <div class="bid_widget">
                 <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">
@@ -141,7 +142,7 @@
     @else
         <div class="right">
             <div class="bid_widget">
-                <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">
+{{--                <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">--}}
                 <h3>Your Bid Amount</h3>
                 <div class="svg_container">
                     <div class="circle">
@@ -196,7 +197,6 @@
 
     update(wholeTime, wholeTime); //refreshes progress bar
     displayTimeLeft(wholeTime);
-
 
     function timer(seconds) { //counts time, takes seconds
         var remainTime = Date.now() + (seconds * 1000);

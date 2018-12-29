@@ -29,7 +29,7 @@
 
             <!-- Year Field -->
             <dt>{!! Form::label('kilometer', 'Kilometer:') !!}</dt>
-            <dd>{!! $myCar->kilometer .' Km' ?? 'N/A' !!}</dd>
+            <dd>{!! $myCar->kilometer ? $myCar->kilometer .' Km': 'N/A' !!}</dd>
 
             <!-- Year Field -->
             <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
@@ -167,10 +167,10 @@
                                 <li>
                                     {!! $attribute->carAttribute->name !!} :
                                     @php
-                                    $options_array = \App\Models\AttributeOption::where('id', $attribute->value)->get();
-                                    foreach ($options_array as $opt) {
-                                        echo $opt['option_array']['name'];
-                                    }
+                                        $options_array = \App\Models\AttributeOption::where('id', $attribute->value)->get();
+                                        foreach ($options_array as $opt) {
+                                            echo $opt['option_array']['name'];
+                                        }
                                     @endphp
                                 </li>
                             @endif
@@ -315,4 +315,3 @@
     <div class="box-footer"></div>
     <!-- box-footer -->
 </div>
-
