@@ -8,9 +8,9 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateTradeInCarRequest;
 use App\Http\Requests\Admin\UpdateTradeInCarRequest;
 use App\Repositories\Admin\TradeInCarRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class TradeInCarController extends AppBaseController
 {
@@ -67,7 +67,6 @@ class TradeInCarController extends AppBaseController
         $tradeInCar = $this->tradeInCarRepository->create($input);
 
         Flash::success('Trade In Car saved successfully.');
-
         return redirect(route('admin.tradeInCars.index'));
     }
 
@@ -125,14 +124,14 @@ class TradeInCarController extends AppBaseController
     public function update($id, UpdateTradeInCarRequest $request)
     {
         $tradeInCar = $this->tradeInCarRepository->findWithoutFail($id);
-
+        dd($id, $request->all());
         if (empty($tradeInCar)) {
             Flash::error('Trade In Car not found');
 
             return redirect(route('admin.tradeInCars.index'));
         }
 
-        $tradeInCar = $this->tradeInCarRepository->update($request->all(), $id);
+        $tradeInCar = $this->tradeInCarRepository->updateRecord($request, $tradeInCar);
 
         Flash::success('Trade In Car updated successfully.');
 
