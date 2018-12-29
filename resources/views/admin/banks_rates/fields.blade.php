@@ -19,7 +19,7 @@
 <!-- Rate Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('rate', 'Rate:') !!}
-    {!! Form::text('rate', null, ['class' => 'form-control']) !!}
+    {!! Form::number('rate', null, ['class' => 'form-control','maxlength'=>3]) !!}
 </div>
 
 <!-- Type Field -->

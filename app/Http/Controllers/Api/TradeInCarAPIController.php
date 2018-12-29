@@ -141,7 +141,7 @@ class TradeInCarAPIController extends AppBaseController
     public function store(CreateTradeInCarAPIRequest $request)
     {
         $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
-        return $this->sendResponse($tradeInCar->toArray(), 'Trade In Car saved successfully');
+        return $this->sendResponse($tradeInCar->toArray(), 'Car traded in successful');
     }
 
     /**

@@ -40,3 +40,43 @@
 
 
 
+@if($getBankRequest)
+    <div class="container" style="width: 100%;">
+        <h3>Request(s)</h3>
+
+        <table id="datatable" class="table table-striped table-bordered" data-form="deleteForm">
+            <thead>
+            <tr>
+                <th style="width: 5%;">ID</th>
+                <th style="width: 20%;">User Name</th>
+                <th style="width: 20%;">User Email</th>
+                <th style="width: 20%;">User Phone no</th>
+                <th style="width: 20%;">Car Name</th>
+                <th style="width: 15%;">Created At</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+
+            <?php $i=1;
+            foreach ($getBankRequest as $bankRequest){?>
+            <tr>
+                <td  class="abc">{{ $i}}</td>
+                <td  class="abc"><a href="{{URL::to('/')}}/admin/users/{{$bankRequest['id']}}">{{ $bankRequest['name']}}</a></td>
+                <td  class="abc">{{ $bankRequest['email']}}</td>
+                <td  class="abc">{{ $bankRequest['country_code']}} {{ $bankRequest['phone']}}</td>
+                {{--<td  class="abc">{!! $bankRequest['userDetail']['details']['first_name'] .' '.$bankRequest['userDetail']['details']['last_name'] !!}</td>--}}
+                <td  class="abc"><a href="{{URL::to('/')}}/admin/cars/{{$bankRequest['carDetail']['id']}}">{!! $bankRequest['carDetail']['name'] or "N/A" !!} </a></td>
+                <td  class="abc">{!! $bankRequest->created_at->timezone(session('timezone')) !!} </td>
+            </tr>
+            <?php $i = $i +1;} ?>
+
+            </tbody>
+        </table>
+    </div>
+@endif
+
+
+
+
