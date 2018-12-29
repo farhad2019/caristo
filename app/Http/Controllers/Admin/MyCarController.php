@@ -485,7 +485,7 @@ class MyCarController extends AppBaseController
                 'amount'                    => 'sometimes|nullable|required',
                 'regional_specification_id' => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
-                'media'                     => 'required',
+                'media'                     => 'sometimes',
                 'media.*'                   => 'image|mimes:jpg,jpeg,png',
             ], [
                 'category_id.required' => 'The category field is required.',
@@ -509,7 +509,7 @@ class MyCarController extends AppBaseController
                 'average_mkp'               => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
                 'phone'                     => 'sometimes|nullable|phone',
-                'media'                     => 'required',
+                'media'                     => 'sometimes',
                 'media.*'                   => 'image|mimes:jpg,jpeg,png',
                 'attribute.*'               => 'attr'
             ], [
@@ -536,7 +536,7 @@ class MyCarController extends AppBaseController
                 'regional_specification_id' => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
                 'phone'                     => 'sometimes|nullable|phone',
-                'media'                     => 'required',
+                'media'                     => 'sometimes',
                 'media.*'                   => 'image|mimes:jpg,jpeg,png',
                 'attribute.*'               => 'attr'
             ], [

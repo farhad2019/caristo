@@ -192,7 +192,7 @@
             <!-- Regional Specification Field -->
             <div class="form-group col-sm-6 region">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
-                {!! Form::select('attribute['.$attribute->id.']', $options, $value, ['class' => 'form-control select2', ($attribute->type == 40)? 'multiple':'']) !!}
+                {!! Form::select('attribute['.$attribute->id.']', $options, $value, ['class' => 'form-control select2']) !!}
             </div>
             @php($options = [])
         @else
@@ -464,7 +464,7 @@
             @foreach($myCar->media as $media)
                 <div style="position: relative; display: inline; padding-right: 10px">
                     <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
-                        <img src="{{ $media->file_url }}" width="120" >
+                        <img src="{{ $media->file_url }}" width="120">
                     </a>
                     <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
                           style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;

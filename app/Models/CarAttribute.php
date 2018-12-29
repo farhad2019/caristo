@@ -56,9 +56,9 @@ class CarAttribute extends Model
     public static $ATTRIBUTE_TYPES = [
         self::TEXT            => 'text',
         self::NUMBER          => 'number',
-        self::SELECT_SINGLE   => 'select - single',
-        self::SELECT_MULTIPLE => 'select - multiple',
-        /*self::FILE_SINGLE     => 'file - single',
+        self::SELECT_SINGLE   => 'select - box',
+        /*self::SELECT_MULTIPLE => 'select - multiple',
+        self::FILE_SINGLE     => 'file - single',
         self::FILE_MULTIPLE   => 'file - multiple'*/
     ];
 
