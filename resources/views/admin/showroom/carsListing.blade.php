@@ -49,7 +49,8 @@
                                 @endif
                                 <div class="content">
                                     <h3>{{ $car->year }} {{ $car->carModel->brand->name }} {{ $car->carModel->name }}</h3>
-                                    <p>{{ $car->year }} • {{ number_format($car->kilometer) }} km <br>
+                                    <p>{{ $car->year }}
+                                         {{ $car->kilometer? ' • '. number_format($car->kilometer).' km' : ''}} <br>
                                         Chassis {{ $car->chassis }}
                                         {{--<span>Reference Number: 0123456789</span>--}}
                                     </p>
