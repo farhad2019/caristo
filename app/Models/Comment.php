@@ -135,4 +135,9 @@ class Comment extends Model
         return $this->belongsTo(News::class);
     }
 
+    public function userwithtrash()
+    {
+        return $this->belongsTo(User::class,'user_id')->withTrashed();
+    }
+
 }
