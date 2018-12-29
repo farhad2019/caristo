@@ -131,3 +131,5 @@ Route::resource('v1/regionalSpecifications', 'RegionalSpecificationAPIController
 Route::resource('v1/bidsHistories', 'BidsHistoryAPIController');
 
 Route::resource('v1/cars', 'CarAPIController');
+
+Route::resource('v1/banksRates', 'BanksRateAPIController');

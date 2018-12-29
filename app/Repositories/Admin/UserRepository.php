@@ -85,7 +85,8 @@ class UserRepository extends BaseRepository
             $category['news'] = $this->getChildFavorites($categoryModel, $limit, $offset);
             $categories[] = $category;
         } else {
-            foreach ($categoryRepo->getRootCategories() as $rootCategory) {
+
+            foreach ($categoryRepo->getRootCategories2() as $rootCategory) {
                 $category = $rootCategory->toArray();
                 $category['news'] = $this->getChildFavorites($rootCategory, $limit, $offset);
                 $categories[] = $category;
