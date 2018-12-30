@@ -4,6 +4,7 @@ namespace App\Repositories\Admin;
 
 use App\Models\TradeInCar;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use InfyOm\Generator\Common\BaseRepository;
@@ -42,9 +43,10 @@ class TradeInCarRepository extends BaseRepository
 
     /**
      * @param bool $hasBid
+     * @param array $search
      * @return mixed
      */
-    public function getTradeInCars($hasBid = false)
+    public function getTradeInCars($hasBid = false, $search = [])
     {
         return $this->model
             ->when(($hasBid), function ($q) {
@@ -53,6 +55,28 @@ class TradeInCarRepository extends BaseRepository
             ->when((!$hasBid), function ($q) {
                 return $q->whereRaw(DB::raw('amount IS NULL'));
             })
+            ->when((!empty(array_filter($search))), function ($q) use ($search) {
+                return $q->whereHas('tradeAgainst', function ($tradeAgainst) use ($search) {
+                    return $tradeAgainst
+                        ->where('kilometer', 'like', '%' . $search['keyword'] . '%')
+                        ->orWhere('year', 'like', '%' . $search['keyword'] . '%')
+                        ->orWhere('chassis', 'like', '%' . $search['keyword'] . '%')
+                        ->orWhereHas('carModel', function ($carModel) use ($search) {
+                            return $carModel->whereHas('translations', function ($tr) use ($search) {
+                                return $tr->where('name', 'like', '%' . $search['keyword'] . '%')
+                                    ->where('locale', App::getLocale('en'));
+                            })
+                                ->orWhereHas('brand', function ($brand) use ($search) {
+                                    return $brand->whereHas('translations', function ($tr) use ($search) {
+                                        return $tr->where('name', 'like', '%' . $search['keyword'] . '%')
+                                            ->where('locale', App::getLocale('en'));
+                                    });
+                                });
+                        });
+
+                });
+            })
+            ->orderBy('created_at', 'DESC')
             ->get();
     }
 

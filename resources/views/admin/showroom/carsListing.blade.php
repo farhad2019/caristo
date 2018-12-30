@@ -14,7 +14,7 @@
             <div class="tab_serach">
                 <div class="row no-gutters">
                     <div class="col-md-6">
-                        <form action="{{ url('admin/'.Request::segments()[1]) }}" method="GET">
+                        <form action="{{ url('admin/tradeInCars') }}" method="GET">
                             <input type="text" name="keyword" placeholder="Search" value="{{@$_REQUEST['keyword']}}">
                         </form>
                     </div>

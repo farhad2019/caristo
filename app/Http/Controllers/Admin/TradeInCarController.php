@@ -10,6 +10,8 @@ use App\Http\Requests\Admin\UpdateTradeInCarRequest;
 use App\Repositories\Admin\TradeInCarRepository;
 use App\Repositories\Admin\NotificationRepository;
 use App\Http\Controllers\AppBaseController;
+use function GuzzleHttp\Promise\all;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
@@ -49,9 +51,9 @@ class TradeInCarController extends AppBaseController
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $tradeInCarDataTable->render('admin.trade_in_cars.index');
     }*/
-    public function index(TradeInCarDataTable $tradeInCarDataTable)
+    public function index(Request $request, TradeInCarDataTable $tradeInCarDataTable)
     {
-        $tradeInRequests = $this->tradeInCarRepository->getTradeInCars();
+        $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(false, $request->all());
 
         if (Auth::user()->hasRole('showroom-owner')) {
             return view('admin.showroom.carsListing')
@@ -169,14 +171,14 @@ class TradeInCarController extends AppBaseController
 
         ################# NOTIFICATION ####################
         $notification = [
-            'sender_id'   => $tradeInCar->user_id,
+            'sender_id'   => Auth::id(),
             'action_type' => Notification::NOTIFICATION_TYPE_NEW_BID,
             'url'         => null,
-            'ref_id'      => $tradeInCar->customer_car_id,
+            'ref_id'      => $tradeInCar->id,
             'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_NEW_BID]
         ];
 
-        $this->notificationRepository->notification($notification, $tradeInCar->owner_car_id);
+        $this->notificationRepository->notification($notification, $tradeInCar->user_id);
 
 
         Flash::success('Trade In Request successfully.');
