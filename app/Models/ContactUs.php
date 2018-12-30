@@ -24,6 +24,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          type="integer",
  *          format="int32"
  *      ),
+ *     @SWG\Property(
+ *          property="bank_id",
+ *          description="bank_id",
+ *          type="integer",
+ *          format="int32"
+ *      ),
  *      @SWG\Property(
  *          property="name",
  *          description="name",
@@ -50,7 +56,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      ),
  *      @SWG\Property(
  *          property="type",
- *          description="type: 10=consultancy, 20=my Shopper",
+ *          description="type: 10=consultancy, 20=my Shopper,30=bank",
  *          type="integer",
  *          format="int32"
  *      )
@@ -66,6 +72,7 @@ class ContactUs extends Model
     public $fillable = [
         'type',
         'car_id',
+        'bank_id',
         'user_id',
         'name',
         'email',
@@ -142,8 +149,23 @@ class ContactUs extends Model
         'email'        => 'required|email',
         'country_code' => 'required',
         'phone'        => 'required',
-        'type'         => 'required|in:10,20'
+        'type'         => 'required|in:10,20,30'
     ];
 
+
+    public function bankDetail()
+    {
+        return $this->belongsTo(BanksRate::class,'bank_id');
+    }
+
+    public function carDetail()
+    {
+        return $this->belongsTo(Car::class,'car_id');
+    }
+
+    public function userDetail()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 
 }

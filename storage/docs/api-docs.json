@@ -4848,6 +4848,11 @@
                     "type": "integer",
                     "format": "int32"
                 },
+                "bank_id": {
+                    "description": "bank_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
                 "name": {
                     "description": "name",
                     "type": "string"
@@ -4869,7 +4874,7 @@
                     "default": "1234567"
                 },
                 "type": {
-                    "description": "type: 10=consultancy, 20=my Shopper",
+                    "description": "type: 10=consultancy, 20=my Shopper,30=bank",
                     "type": "integer",
                     "format": "int32"
                 }

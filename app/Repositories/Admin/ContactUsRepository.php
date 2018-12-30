@@ -46,4 +46,9 @@ class ContactUsRepository extends BaseRepository
         $contactUs = $this->create($input);
         return $contactUs;
     }
+
+    public function getUserRequest($bankId)
+    {
+        return $this->model->with(['bankDetail','carDetail','userDetail'])->where('bank_id',$bankId)->get();
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateBanksRateRequest;
 use App\Http\Requests\Admin\UpdateBanksRateRequest;
 use App\Repositories\Admin\BanksRateRepository;
+use App\Repositories\Admin\ContactUsRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Response;
@@ -23,9 +24,13 @@ class BanksRateController extends AppBaseController
     /** @var  BanksRateRepository */
     private $banksRateRepository;
 
-    public function __construct(BanksRateRepository $banksRateRepo)
+    /** @var  ContatcUsRepository */
+    private $contactUsRepository;
+
+    public function __construct(BanksRateRepository $banksRateRepo,ContactUsRepository $contactUsRepository)
     {
         $this->banksRateRepository = $banksRateRepo;
+        $this->contactUsRepository = $contactUsRepository;
         $this->ModelName = 'banksRates';
         $this->BreadCrumbName = 'BanksRate';
     }
@@ -90,7 +95,9 @@ class BanksRateController extends AppBaseController
         }
 
         BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $banksRate);
-        return view('admin.banks_rates.show')->with('banksRate', $banksRate);
+
+        $getBankRequest =  $this->contactUsRepository->getUserRequest($id);
+        return view('admin.banks_rates.show')->with(['banksRate'=> $banksRate,'getBankRequest'=>$getBankRequest]);
     }
 
     /**
