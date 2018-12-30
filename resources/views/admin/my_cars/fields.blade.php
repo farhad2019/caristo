@@ -413,33 +413,24 @@
     </div>
 </div>
 
-
 <div class="form-group col-sm-12 regions">
-    <?php $explodeLifeCycle = explode('-',@$myCar->life_cycle); ?>
+    <?php $explodeLifeCycle = explode('-', @$myCar->life_cycle); ?>
     <hr>
     <h3>Life Cycle</h3>
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Lifecycle', 'From:') !!}
         {{--{!! Form::number('from', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
-        <select class="form-control" name="from">
-            @foreach($years as $year)
-            <option value="{{$year}}" @if(@$explodeLifeCycle[0] == $year) selected @endif>{{$year}}</option>
-            @endforeach
-            {{--{!! Form::select('year', $years, date('Y'), ['class' => 'form-control select2']) !!}--}}
-        </select>
+        {!! Form::select('from', $years, @$explodeLifeCycle[0], ['class' => 'form-control select2']) !!}
     </div>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Lifecycle', 'To:') !!}
         {{--{!! Form::number('to', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
-        <select class="form-control" name="to">
-            @foreach($years as $year)
-                <option value="{{$year}}" @if(@$explodeLifeCycle[1] == $year) selected @endif>{{$year}}</option>
-            @endforeach
-        </select>
+        {!! Form::select('to', $years, @$explodeLifeCycle[1], ['class' => 'form-control select2']) !!}
     </div>
     <hr>
 </div>
+
 <div class="form-group col-sm-12 regions">
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Depreciation_Trend', 'Depreciation Trend (%):') !!}
@@ -505,27 +496,10 @@
     <a href="{!! route('admin.myCars.index') !!}" class="btn btn-default">Cancel</a>
 </div>
 @push('scripts')
-<script>
-    $(document).ready(function () {
-        var id = $('#category_id').val();
-        if (id == 28) {
-            $('.regions').show();
-            $('.region').hide();
-        } else {
-            $('.regions').hide();
-            $('.region').show();
-        }
-
-        if (parseInt(id) === 25 || parseInt(id) === 28) {
-            $('.category2528').hide();
-        } else if (parseInt(id) === 26 || parseInt(id) === 27) {
-            $('.category2528').show();
-        }
-
-        $('#category_id').on('change', function () {
-            var cat_id = $(this).val();
-
-            if (cat_id == 28) {
+    <script>
+        $(document).ready(function () {
+            var id = $('#category_id').val();
+            if (id == 28) {
                 $('.regions').show();
                 $('.region').hide();
             } else {
@@ -533,19 +507,36 @@
                 $('.region').show();
             }
 
-            if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
+            if (parseInt(id) === 25 || parseInt(id) === 28) {
                 $('.category2528').hide();
-            } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
+            } else if (parseInt(id) === 26 || parseInt(id) === 27) {
                 $('.category2528').show();
             }
-        });
 
-        $("#datepicker").datepicker({
-            format: "yyyy",
-            viewMode: "years",
-            minViewMode: "years"
-        });
+            $('#category_id').on('change', function () {
+                var cat_id = $(this).val();
 
-    });
-</script>
+                if (cat_id == 28) {
+                    $('.regions').show();
+                    $('.region').hide();
+                } else {
+                    $('.regions').hide();
+                    $('.region').show();
+                }
+
+                if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
+                    $('.category2528').hide();
+                } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
+                    $('.category2528').show();
+                }
+            });
+
+            $("#datepicker").datepicker({
+                format: "yyyy",
+                viewMode: "years",
+                minViewMode: "years"
+            });
+
+        });
+    </script>
 @endpush
