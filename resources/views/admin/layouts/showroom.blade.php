@@ -83,9 +83,9 @@
     <p>Powered BY <a href="https://www.ingic.com" title="" target="_blank">INGIC</a></p>
 </div>
 
-<script src="{{ url('public/js/showroom/xlib.js') }}"></script>
+<script src="{{ url('public/js/showroom/xlib_new.js') }}"></script>
 <script src="{{ url('public/js/showroom/bootstrap-notify.min.js') }}"></script>
-<script src="{{ url('public/js/showroom/script.js') }}"></script>
+<script src="{{ url('public/js/showroom/script_new.js') }}"></script>
 
 @stack('scripts')
 </body>
