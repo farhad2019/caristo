@@ -191,8 +191,6 @@
     @endif
 </div>
 
-<script src="{{ url('public/js/showroom/xlib.js') }}"></script>
-<script src="{{ url('public/js/showroom/bootstrap-notify.min.js') }}"></script>
 <script src="{{ url('public/js/showroom/script.js') }}"></script>
 
 <script>
@@ -211,9 +209,9 @@
     }
 
     //circle ends
-    const displayOutput = document.querySelector('.display-remain-time');
-    const pauseBtn = document.getElementById('pause');
-    const setterBtns = document.querySelectorAll('button[data-setter]');
+    var displayOutput = document.querySelector('.display-remain-time');
+    var pauseBtn = document.getElementById('pause');
+    var setterBtns = document.querySelectorAll('button[data-setter]');
 
     var intervalTimer;
     var timeLeft;

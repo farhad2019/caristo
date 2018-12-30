@@ -95,7 +95,7 @@ class TradeInCarController extends AppBaseController
     {
         $input = $request->all();
 
-        $tradeInCar = $this->tradeInCarRepository->create($input);
+        $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
 
         Flash::success('Trade In Car saved successfully.');
         return redirect(route('admin.tradeInCars.index'));

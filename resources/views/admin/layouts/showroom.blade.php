@@ -84,7 +84,6 @@
 </div>
 <script src="{{ url('public/js/showroom/xlib.js') }}"></script>
 <script src="{{ url('public/js/showroom/bootstrap-notify.min.js') }}"></script>
-<script src="{{ url('public/js/showroom/script.js') }}"></script>
 
 @stack('scripts')
 </body>

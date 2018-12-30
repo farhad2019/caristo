@@ -140,6 +140,10 @@ class TradeInCarAPIController extends AppBaseController
      */
     public function store(CreateTradeInCarAPIRequest $request)
     {
+        $tradeInCarRequest = $this->tradeInCarRepository->findWhere(['owner_car_id' => $request->owner_car_id, 'customer_car_id' => $request->customer_car_id]);
+        if ($tradeInCarRequest->count() > 0){
+            return $this->sendError('This car has already been traded!');
+        }
         $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
         return $this->sendResponse($tradeInCar->toArray(), 'Car traded in successful');
     }

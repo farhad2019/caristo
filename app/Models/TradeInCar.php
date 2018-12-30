@@ -55,8 +55,20 @@ class TradeInCar extends Model
 
     protected $dates = ['deleted_at'];
 
+    /**
+     * Sunday
+     * Monday
+     * Tuesday
+     * Wednesday
+     * Thursday
+     * Friday
+     * Saturday
+     */
+    const WEEK_END = ['Friday'];
+
     public $fillable = [
         'owner_car_id',
+        'bid_close_at',
         'customer_car_id',
         'user_id',
         'amount',

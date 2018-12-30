@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin;
 
 use App\Models\TradeInCar;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use InfyOm\Generator\Common\BaseRepository;
@@ -64,6 +65,33 @@ class TradeInCarRepository extends BaseRepository
         $input = $request->all();
         $input['user_id'] = Auth::id();
         $input['amount'] = null;
+
+        // current date + 1
+        $date = Carbon::now()->addDay();
+
+        // day name in string
+        $day = $date->format('l');
+
+        //matches is this day is weekend
+        if (in_array($day, TradeInCar::WEEK_END)) {
+
+            // add 1 more day
+            $expire_at = $date->addDay();
+
+            // day name in string
+            $expire_at_day = $expire_at->format('l');
+
+            //matches is this day is weekend
+            if (in_array($expire_at_day, TradeInCar::WEEK_END)) {
+
+                // add 1 more day
+                $expire_at = $date->addDay();
+            }
+        } else {
+            $expire_at = $date;
+        }
+        $input['bid_close_at'] = $expire_at;
+
         $tradeInCar = $this->create($input);
 
         return $tradeInCar;
