@@ -70,7 +70,7 @@
                     <!-- Country Code Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('country_code', 'Country Code:') !!}
-                        {!! Form::number('country_code', $user->details->country_code?? null, ['class' => 'form-control', 'min'=> 1,'max'=>5]) !!}
+                        {!! Form::number('country_code', $user->details->country_code?? null, ['class' => 'form-control']) !!}
                     </div>
 
                     <!-- Phone Field -->
