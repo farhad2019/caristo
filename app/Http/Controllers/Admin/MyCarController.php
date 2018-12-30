@@ -477,6 +477,7 @@ class MyCarController extends AppBaseController
      */
     public function update($id, Request $request)
     {
+
         if ($request->category_id == MyCar::LIMITEDADDITION) {
             $validatedData = $request->validate([
                 'category_id'               => 'sometimes|nullable|required',
@@ -560,7 +561,6 @@ class MyCarController extends AppBaseController
             Flash::error('Car not found');
             return redirect(route('admin.myCars.index'));
         }
-
         $myCar = $this->myCarRepository->updateRecord($request, $myCar);
 
         if ($request->category_id != MyCar::LIMITEDADDITION) {

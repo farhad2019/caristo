@@ -13,7 +13,7 @@
                 width: 15%;
             }
 
-            .dash_tabss {
+            .dash_tabs {
                 width: 100%;
             }
 

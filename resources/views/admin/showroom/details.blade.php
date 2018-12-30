@@ -1,10 +1,3 @@
-<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
-
-<link rel="stylesheet" href="{{ url('public/css/showroom/lib.css') }}">
-<link rel="stylesheet" href="{{ url('public/css/showroom/style.css') }}">
-<link rel="stylesheet" href="{{ url('public/fonts/showroom/style.css') }}">
-<link rel="stylesheet" href="{{ url('public/css/showroom/responsive.css') }}">
-
 <p class="ref_num">Reference Number:<span>{{ $tradeInRequest->tradeAgainst->ref_num }}</span></p>
 <div class="shadow"></div>
 <div class="car_slider_warap">
@@ -190,8 +183,6 @@
         </div>
     @endif
 </div>
-
-<script src="{{ url('public/js/showroom/script.js') }}"></script>
 
 <script>
     //circle start
