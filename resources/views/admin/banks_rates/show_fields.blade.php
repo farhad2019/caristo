@@ -63,7 +63,7 @@
             foreach ($getBankRequest as $bankRequest){?>
             <tr>
                 <td  class="abc">{{ $i}}</td>
-                <td  class="abc"><a href="{{URL::to('/')}}/admin/users/{{$bankRequest['id']}}">{{ $bankRequest['name']}}</a></td>
+                <td  class="abc"><a href="{{URL::to('/')}}/admin/users/{{$bankRequest['user_id']}}">{{ $bankRequest['name']}}</a></td>
                 <td  class="abc">{{ $bankRequest['email']}}</td>
                 <td  class="abc">{{ $bankRequest['country_code']}} {{ $bankRequest['phone']}}</td>
                 {{--<td  class="abc">{!! $bankRequest['userDetail']['details']['first_name'] .' '.$bankRequest['userDetail']['details']['last_name'] !!}</td>--}}
