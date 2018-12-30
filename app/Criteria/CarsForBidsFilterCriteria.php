@@ -114,7 +114,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         $region = $this->request->get('regions', -1);
         $model = $model->when(($region > 0), function ($query) use ($region) {
             return $query->whereHas('carRegions', function ($carRegions) use ($region) {
-                return $carRegions->where('region_id', $region);
+                return $carRegions->whereIn('region_id', explode(',', $region));
             });
         });
 
