@@ -29,7 +29,7 @@
 
             <!-- Year Field -->
             <dt>{!! Form::label('kilometer', 'Kilometer:') !!}</dt>
-            <dd>{!! $myCar->kilometre .' Km' ?? 'N/A' !!}</dd>
+            <dd>{!! $myCar->kilometer ? $myCar->kilometer .' Km': 'N/A' !!}</dd>
 
             <!-- Year Field -->
             <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
@@ -93,7 +93,7 @@
         {{--<dt>{!! Form::label('country_code', 'Country Code:') !!}</dt>--}}
         {{--<dd>{!! $myCar->country_code?? 'N/A' !!}</dd>--}}
 
-            <!-- Phone Field -->
+        <!-- Phone Field -->
             <dt>{!! Form::label('phone', 'Phone:') !!}</dt>
             <dd>{!! $myCar['owner']['details']['country_code'] ?? 'N/A' !!} - {!! $myCar['owner']['details']['phone'] ?? 'N/A' !!}</dd>
 
@@ -161,11 +161,18 @@
                 @if($myCar->myCarAttributes->count() > 0)
                     @foreach($myCar->myCarAttributes as $attribute)
                         <ul>
-                            @if($attribute->carAttribute->type == \App\Models\CarAttribute::TEXT || $attribute->carAttribute->type == \App\Models\CarAttribute::TEXT )
+                            @if($attribute->carAttribute->type == \App\Models\CarAttribute::TEXT || $attribute->carAttribute->type == \App\Models\CarAttribute::NUMBER )
                                 <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
                             @else
-                                <li>{!! $attribute->carAttribute->name !!}
-                                    : {!! \App\Models\AttributeOption::where('id', $attribute->value)->first()['option_array']['name'] !!}</li>
+                                <li>
+                                    {!! $attribute->carAttribute->name !!} :
+                                    @php
+                                        $options_array = \App\Models\AttributeOption::where('id', $attribute->value)->get();
+                                        foreach ($options_array as $opt) {
+                                            echo $opt['option_array']['name'];
+                                        }
+                                    @endphp
+                                </li>
                             @endif
                         </ul>
                     @endforeach
@@ -308,4 +315,3 @@
     <div class="box-footer"></div>
     <!-- box-footer -->
 </div>
-

@@ -102,7 +102,8 @@
             @endforeach
         </ul>
     </div>
-    @if(Request::segments()[1] == 'makeBids')
+
+    @if(empty($tradeIn->amount))
         <div class="right">
             <div class="bid_widget">
                 <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">
@@ -130,7 +131,7 @@
 
                 <h4>Place a Bid now</h4>
                 {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeIn->id], "id"=>"submitBit", 'method' => 'patch']) !!}
-                <input type="number" id="amount_bit" name="amount" placeholder="AED"
+                <input type="text" id="amount_bit" name="amount" placeholder="AED"
                        value="{{ isset($tradeIn)? number_format($tradeIn->amount):'' }}"
                        min="1">
                 <button type="submit" class="submit" name="">submit</button>
@@ -141,7 +142,7 @@
     @else
         <div class="right">
             <div class="bid_widget">
-                <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">
+{{--                <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">--}}
                 <h3>Your Bid Amount</h3>
                 <div class="svg_container">
                     <div class="circle">
@@ -196,7 +197,6 @@
 
     update(wholeTime, wholeTime); //refreshes progress bar
     displayTimeLeft(wholeTime);
-
 
     function timer(seconds) { //counts time, takes seconds
         var remainTime = Date.now() + (seconds * 1000);
@@ -257,18 +257,13 @@
     pauseBtn.addEventListener('click', pauseTimer);
 
     $(function () {
-
         $(document).on('submit', '#submitBit', function () {
-
             if (!$.trim($('#amount_bit').val())) {
-                $('#amount_bit').css('border', '1px solid #ff081c')
+                $('#amount_bit').css('border', '1px solid #ff081c');
                 return false;
             }
-
             return true
-
         });
-
     });
 
     jQuery('#amount_bit').keyup(function () {

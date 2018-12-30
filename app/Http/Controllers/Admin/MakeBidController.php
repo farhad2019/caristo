@@ -59,7 +59,9 @@ class MakeBidController extends AppBaseController
     {
         //$tradeInCars = $this->tradeInCarRepository->findWhereIn('owner_car_id', Auth::user()->cars->pluck('id')->toArray());
         //dd($tradeInCars);
-        $myCars = Auth::user()->cars()->whereHas('myTradeCars')->get();
+        $myCars = Auth::user()->cars()->whereHas('myTradeCars', function ($cars){
+            return $cars->whereRaw('amount IS NULL');
+        })->get();
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         if (Auth::user()->hasRole('showroom-owner')) {

@@ -12,6 +12,7 @@ use App\Repositories\Admin\BidsHistoryRepository;
 use App\Repositories\Admin\MakeBidRepository;
 use App\Repositories\Admin\MyCarRepository;
 use App\Http\Controllers\AppBaseController;
+use App\Repositories\Admin\TradeInCarRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -34,11 +35,15 @@ class BidsHistoryController extends AppBaseController
     /** @var  MakeBidRepository */
     private $makeBidRepository;
 
-    public function __construct(BidsHistoryRepository $bidsHistoryRepo, MyCarRepository $carRepo, MakeBidRepository $makeBidRepo)
+    /** @var  TradeInCarRepository */
+    private $tradeInCarRepository;
+
+    public function __construct(BidsHistoryRepository $bidsHistoryRepo, MyCarRepository $carRepo, MakeBidRepository $makeBidRepo, TradeInCarRepository $tradeInCarRepo)
     {
         $this->bidsHistoryRepository = $bidsHistoryRepo;
         $this->carRepository = $carRepo;
         $this->makeBidRepository = $makeBidRepo;
+        $this->tradeInCarRepository = $tradeInCarRepo;
         $this->ModelName = 'bidsHistories';
         $this->BreadCrumbName = 'BidsHistory';
     }
@@ -55,6 +60,8 @@ class BidsHistoryController extends AppBaseController
         $this->carRepository->pushCriteria(new BidsHistoryForShowroomOwnerCriteria($request));
         $cars = $this->carRepository->all();
         $bid = $this->makeBidRepository->findWhere(['car_id' => 70, 'user_id' => Auth::id()])->first();
+
+        $myCars = Auth::user()->cars()->whereHas('myTradeCars')->get();
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.showroom.bidsHistoryListing')->with([
@@ -101,6 +108,18 @@ class BidsHistoryController extends AppBaseController
      */
     public function show($id)
     {
+        $tradeInCar = $this->tradeInCarRepository->getTradeInCarsWithBid($id);
+
+        if (empty($tradeInCar)) {
+            return json_encode(['fail' => 'Trade In Car not found']);
+            /*Flash::error('Trade In Car not found');
+            return redirect(route('admin.tradeInCars.index'));*/
+        }
+
+        return json_encode(['success' => $tradeInCar]);
+        /*BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $tradeInCar);
+        return view('admin.trade_in_cars.show')->with('tradeInCar', $tradeInCar);*/
+
         //region Description
         $car = $this->carRepository->findWithoutFail($id);
         //endregion

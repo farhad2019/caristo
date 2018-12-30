@@ -122,11 +122,7 @@ class TradeInCar extends Model
      * @var array
      */
     public static $update_rules = [
-        'owner_car_id'    => 'required',
-        'customer_car_id' => 'required',
-        'user_id'         => 'required',
-        'amount'          => 'required',
-        'notes'           => 'required'
+        'amount' => 'required'
     ];
 
     /**

@@ -612,7 +612,7 @@ body {
     height: 10px;
     position: absolute;
     right: 20px;
-    top: 50%;
+    top: 30%;
     transform: translateY(-50%);
     background: #cbcbcb;
     display: block;

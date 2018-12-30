@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\UpdateTradeInCarRequest;
 use App\Repositories\Admin\TradeInCarRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
 
 class TradeInCarController extends AppBaseController
@@ -36,8 +37,23 @@ class TradeInCarController extends AppBaseController
      * @param TradeInCarDataTable $tradeInCarDataTable
      * @return Response
      */
+    /*public function index(TradeInCarDataTable $tradeInCarDataTable)
+    {
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        return $tradeInCarDataTable->render('admin.trade_in_cars.index');
+    }*/
     public function index(TradeInCarDataTable $tradeInCarDataTable)
     {
+        $myCars = Auth::user()->cars()->whereHas('myTradeCars', function ($cars) {
+            return $cars->whereRaw('amount IS NOT NULL');
+        })->get();
+
+        if (Auth::user()->hasRole('showroom-owner')) {
+            return view('admin.showroom.bidsHistoryListing')->with([
+                'cars' => $myCars,
+//            'bid' => $bid
+            ]);
+        }
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $tradeInCarDataTable->render('admin.trade_in_cars.index');
     }
@@ -79,7 +95,7 @@ class TradeInCarController extends AppBaseController
      */
     public function show($id)
     {
-        $tradeInCar = $this->tradeInCarRepository->findWhere(['owner_car_id' => $id]);
+        $tradeInCar = $this->tradeInCarRepository->getTradeInCarsWithoutBid($id);
 
         if (empty($tradeInCar)) {
             return json_encode(['fail' => 'Trade In Car not found']);
@@ -123,19 +139,16 @@ class TradeInCarController extends AppBaseController
      */
     public function update($id, UpdateTradeInCarRequest $request)
     {
+        ;
         $tradeInCar = $this->tradeInCarRepository->findWithoutFail($id);
-        dd($id, $request->all());
         if (empty($tradeInCar)) {
             Flash::error('Trade In Car not found');
-
             return redirect(route('admin.tradeInCars.index'));
         }
 
         $tradeInCar = $this->tradeInCarRepository->updateRecord($request, $tradeInCar);
-
-        Flash::success('Trade In Car updated successfully.');
-
-        return redirect(route('admin.tradeInCars.index'));
+        Flash::success('Trade In Request successfully.');
+        return redirect(route('admin.makeBids.index'));
     }
 
     /**

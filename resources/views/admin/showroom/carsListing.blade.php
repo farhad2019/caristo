@@ -49,7 +49,8 @@
                                 @endif
                                 <div class="content">
                                     <h3>{{ $car->year }} {{ $car->carModel->brand->name }} {{ $car->carModel->name }}</h3>
-                                    <p>{{ $car->year }} • {{ number_format($car->kilometer) }} km <br>
+                                    <p>{{ $car->year }}
+                                         {{ $car->kilometer? ' • '. number_format($car->kilometer).' km' : ''}} <br>
                                         Chassis {{ $car->chassis }}
                                         {{--<span>Reference Number: 0123456789</span>--}}
                                     </p>
@@ -379,7 +380,7 @@
                         var data = JSON.parse(responce).success;
 
                         $.each(data, function (key, car) {
-                            console.log(car.id);
+
                             var li = "<li class=\"clearfix \">\n" +
                                 "                        <a href=\"#car_detail1\" class='car' data-id='" + car.trade_against.id + "' data-trade='" + car.id + "' title=\"\">\n" +
                                 "                            <figure style=\"background-image: url(' " + car.trade_against.media[0].file_url + " ');\"></figure>\n" +
@@ -399,7 +400,7 @@
 
                     $.ajax({
                         method: "GET",
-                        url: '{{ url('admin/'.Request::segments()[1].'/') }}/' + carId + '?tradId=' + tradeInId,
+                        url: '{{ url('admin/makeBids/') }}/' + carId + '?tradId=' + tradeInId,
                         type: "JSON",
                         async: false
                     }).done(function (responce) {
