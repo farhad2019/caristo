@@ -24,16 +24,16 @@ class MyCarDataTable extends DataTable
             return $model->category->name;
         });
 
-        $dataTable->editColumn('carModel.translations.name', function ($model) {
-            return $model->carModel->name;
-        });
-
         $dataTable->editColumn('carModel.brand.translations.name', function ($model) {
             return $model->carModel->brand->name ?? '-';
         });
 
+        $dataTable->editColumn('carModel.translations.name', function ($model) {
+            return $model->carModel->name;
+        });
+
         $dataTable->editColumn('amount', function ($model) {
-            return @$model->amount .' AED';
+            return $model->amount .' AED' ?? '-';
         });
 
         $dataTable->editColumn('image', function ($model) {
@@ -44,7 +44,11 @@ class MyCarDataTable extends DataTable
             }
         });
 
-        $dataTable->rawColumns(['action', 'image']);
+        $dataTable->editColumn('brand', function ($model) {
+            return @$model->carModel->brand->name;
+        });
+
+        $dataTable->rawColumns(['action','image']);
 
         return $dataTable->addColumn('action', 'admin.my_cars.datatables_actions');
     }
@@ -105,7 +109,7 @@ class MyCarDataTable extends DataTable
     {
         return [
             'id',
-            'image'  => [
+            'image' => [
                 'orderable'  => false,
                 'searchable' => false,
             ],
@@ -119,7 +123,7 @@ class MyCarDataTable extends DataTable
                 'title' => 'Model'
             ],
             'year',
-            'amount',
+            'amount'
         ];
     }
 

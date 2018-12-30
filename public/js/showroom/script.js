@@ -2,7 +2,7 @@ window.pressed = function(){
     var uploadwrap = document.getElementById('upload');
     if(uploadwrap.value == "")
     {
-        
+
     }
     else
     {
@@ -77,7 +77,7 @@ $(document).ready(function(){
             'close'
         ]
       });
-    
+
 });
 
 $(document).on('click', function(){
@@ -88,12 +88,12 @@ $(document).on('click', function(){
 
 
 $(window).on("load",function(){
-  
+
     var $grid = $('.grid').isotope({
       layoutMode: 'packery',
       itemSelector: '.grid-item',
       packery: {
-      gutter: 0            
+      gutter: 0
       }
 
         });
@@ -108,6 +108,6 @@ $(window).on("load",function(){
       autoplay:true,
       autoplaySpeed:2000
     });
-       
-                
+
+
     });
