@@ -40,33 +40,16 @@ class TradeInCarRepository extends BaseRepository
     }
 
     /**
-     * @param $id
-     * @return mixed
-     */
-    public function getTradeInCarsWithoutBid($id = 0)
-    {
-        return $this->model->when(($id > 0), function ($q) use ($id) {
-            return $q->where('owner_car_id', $id);
-        })
-            ->whereRaw(DB::raw('amount IS NULL'))
-            ->get();
-    }
-
-    /**
-     * @param int $id
      * @param bool $hasBid
      * @return mixed
      */
-    public function getTradeInCars($id = 0, $hasBid = false)
+    public function getTradeInCars($hasBid = false)
     {
         return $this->model
-            ->when(($id > 0), function ($q) use ($id) {
-                return $q->where('owner_car_id', $id);
-            })
-            ->when(($hasBid), function ($q) use ($id) {
+            ->when(($hasBid), function ($q) {
                 return $q->whereRaw(DB::raw('amount IS NOT NULL'));
             })
-            ->when((!$hasBid), function ($q) use ($id) {
+            ->when((!$hasBid), function ($q) {
                 return $q->whereRaw(DB::raw('amount IS NULL'));
             })
             ->get();

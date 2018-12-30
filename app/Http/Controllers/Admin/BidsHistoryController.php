@@ -56,7 +56,7 @@ class BidsHistoryController extends AppBaseController
      */
     public function index(BidsHistoryDataTable $bidsHistoryDataTable)
     {
-        $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(0, true);
+        $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(true);
 
         if (Auth::user()->hasRole('showroom-owner')) {
             return view('admin.showroom.carsListing')
