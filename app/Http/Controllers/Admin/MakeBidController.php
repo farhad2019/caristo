@@ -50,28 +50,29 @@ class MakeBidController extends AppBaseController
      * @param MakeBidDataTable $makeBidDataTable
      * @return Response
      */
+    public function index(MakeBidDataTable $makeBidDataTable)
+    {
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        return $makeBidDataTable->render('admin.make_bids.index');
+    }
     /*public function index(MakeBidDataTable $makeBidDataTable)
     {
+//        $tradeInCars = $this->tradeInCarRepository->findWhereIn('owner_car_id', Auth::user()->cars->pluck('id')->toArray());
+//        dd($tradeInCars);
+//        $myCars = Auth::user()->cars()->whereHas('myTradeCars', function ($cars) {
+//            return $cars->whereRaw('amount IS NULL');
+//        })->get();
+//        $tradeInRequests = $this->tradeInCarRepository->getTradeInCarsWithoutBid();
+//
+//        if (Auth::user()->hasRole('showroom-owner')) {
+//            return view('admin.showroom.carsListing')->with([
+//                'tradeInRequests' => $tradeInRequests,
+////            'bid' => $bid
+//            ]);
+//        }
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $makeBidDataTable->render('admin.make_bids.index');
     }*/
-    public function index(MakeBidDataTable $makeBidDataTable)
-    {
-        //$tradeInCars = $this->tradeInCarRepository->findWhereIn('owner_car_id', Auth::user()->cars->pluck('id')->toArray());
-        //dd($tradeInCars);
-        $myCars = Auth::user()->cars()->whereHas('myTradeCars', function ($cars){
-            return $cars->whereRaw('amount IS NULL');
-        })->get();
-
-        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        if (Auth::user()->hasRole('showroom-owner')) {
-            return view('admin.showroom.carsListing')->with([
-                'cars' => $myCars,
-//            'bid' => $bid
-            ]);
-        }
-        return $makeBidDataTable->render('admin.make_bids.index');
-    }
 
     /**
      * Show the form for creating a new MakeBid.
@@ -120,7 +121,7 @@ class MakeBidController extends AppBaseController
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $car);
         if (Auth::user()->hasRole('showroom-owner')) {
             return view('admin.showroom.details')->with([
-                'car' => $car,
+                'car'     => $car,
                 'tradeIn' => $tradeInRequest
             ]);
         }

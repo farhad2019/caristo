@@ -44,16 +44,24 @@ class TradeInCarController extends AppBaseController
     }*/
     public function index(TradeInCarDataTable $tradeInCarDataTable)
     {
-        $myCars = Auth::user()->cars()->whereHas('myTradeCars', function ($cars) {
-            return $cars->whereRaw('amount IS NOT NULL');
-        })->get();
+        $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(0, false);
 
         if (Auth::user()->hasRole('showroom-owner')) {
-            return view('admin.showroom.bidsHistoryListing')->with([
-                'cars' => $myCars,
-//            'bid' => $bid
-            ]);
+            return view('admin.showroom.carsListing')
+                ->with([
+                    'tradeInRequests' => $tradeInRequests
+                ]);
         }
+//        $myCars = Auth::user()->cars()->whereHas('myTradeCars', function ($cars) {
+//            return $cars->whereRaw('amount IS NOT NULL');
+//        })->get();
+//
+//        if (Auth::user()->hasRole('showroom-owner')) {
+//            return view('admin.showroom.bidsHistoryListing')->with([
+//                'cars' => $myCars,
+////            'bid' => $bid
+//            ]);
+//        }
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $tradeInCarDataTable->render('admin.trade_in_cars.index');
     }
@@ -95,15 +103,20 @@ class TradeInCarController extends AppBaseController
      */
     public function show($id)
     {
-        $tradeInCar = $this->tradeInCarRepository->getTradeInCarsWithoutBid($id);
+        $tradeInRequest = $this->tradeInCarRepository->findWithoutFail($id);
 
-        if (empty($tradeInCar)) {
+        if (empty($tradeInRequest)) {
             return json_encode(['fail' => 'Trade In Car not found']);
             /*Flash::error('Trade In Car not found');
             return redirect(route('admin.tradeInCars.index'));*/
         }
-
-        return json_encode(['success' => $tradeInCar]);
+        if (Auth::user()->hasRole('showroom-owner')) {
+            return view('admin.showroom.details')->with([
+                //'car'     => $car,
+                'tradeInRequest' => $tradeInRequest
+            ]);
+        }
+//        return json_encode(['success' => $tradeInRequest]);
         /*BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $tradeInCar);
         return view('admin.trade_in_cars.show')->with('tradeInCar', $tradeInCar);*/
     }

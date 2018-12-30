@@ -119,7 +119,7 @@ class MakeBid extends Model
      * Friday
      * Saturday
      */
-    const WEEK_END = ['Friday', 'Saturday'];
+    const WEEK_END = ['Friday'];
 
     public $fillable = [
         'car_id',

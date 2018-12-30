@@ -29,29 +29,23 @@
                 </div>
             </div>
 
-            <div class="bit_container">
-                <i class="bit_close"><span class="icon-close2"></span></i>
-                <ul class="car_listing" id="car-list">
-
-                </ul>
-            </div>
-
-            @if($cars->count() > 0)
-                <ul class="car_listing parent">
-                    @foreach($cars as $car)
+            @if($tradeInRequests->count() > 0)
+                <ul class="car_listing">
+                    @foreach($tradeInRequests as $tradeInRequest)
                         <li class="clearfix current active">
-                            <a href="#car_detail1" class="car" data-id="{{ $car->id }}"
-                               data-type="{{ $car->owner_type }}" title="">
-                                @if(isset($car->media[0]))
-                                    <figure style="background-image: url({{ $car->media[0]->file_url }});"></figure>
+                            <a href="#car_detail1" class="car" data-id="{{ $tradeInRequest->id }}"
+                               title="">
+                                @if(isset($tradeInRequest->tradeAgainst->media[0]))
+                                    <figure style="background-image: url({{ $tradeInRequest->tradeAgainst->media[0]->file_url }});"></figure>
                                 @else
                                     <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
                                 @endif
                                 <div class="content">
-                                    <h3>{{ $car->year }} {{ $car->carModel->brand->name }} {{ $car->carModel->name }}</h3>
-                                    <p>{{ $car->year }}
-                                         {{ $car->kilometer? ' • '. number_format($car->kilometer).' km' : ''}} <br>
-                                        Chassis {{ $car->chassis }}
+                                    <h3>{{ $tradeInRequest->tradeAgainst->year }} {{ $tradeInRequest->tradeAgainst->carModel->brand->name }} {{ $tradeInRequest->tradeAgainst->carModel->name }}</h3>
+                                    <p>{{ $tradeInRequest->tradeAgainst->year }}
+                                        {{ $tradeInRequest->tradeAgainst->kilometer? ' • '. number_format($tradeInRequest->tradeAgainst->kilometer).' km' : ''}}
+                                        <br>
+                                        Chassis {{ $tradeInRequest->tradeAgainst->chassis }}
                                         {{--<span>Reference Number: 0123456789</span>--}}
                                     </p>
                                 </div>
@@ -359,8 +353,7 @@
     <script>
         $(document).ready(function () {
             $('body').on('click', '.car', function () {
-                var carId = $(this).data('id');
-                var carType = $(this).data('type');
+                var id = $(this).data('id');
 
                 // $('.active').toggleClass('clearfix current');
                 // $(this).toggleClass('clearfix current active');
@@ -370,54 +363,27 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                if (carType === 10) {
-                    $.ajax({
-                        method: "GET",
-                        url: '{{ url('admin/tradeInCars') }}/' + carId,
-                        type: "JSON",
-                        async: false
-                    }).done(function (responce) {
-                        var data = JSON.parse(responce).success;
 
-                        $.each(data, function (key, car) {
-
-                            var li = "<li class=\"clearfix \">\n" +
-                                "                        <a href=\"#car_detail1\" class='car' data-id='" + car.trade_against.id + "' data-trade='" + car.id + "' title=\"\">\n" +
-                                "                            <figure style=\"background-image: url(' " + car.trade_against.media[0].file_url + " ');\"></figure>\n" +
-                                "                            <div class=\"content\">\n" +
-                                "                                <h3>" + car.trade_against.year + " " + car.trade_against.car_model.brand.name + " " + car.trade_against.car_model.name + "</h3>\n" +
-                                "                                <p>" + car.trade_against.year + " • " + car.trade_against.kilometer + "  km • Chasis " + car.trade_against.chassis + " <span></span></p>\n" +
-                                "                            </div>\n" +
-                                "                        </a>\n" +
-                                "                    </li>";
-                            $('#car-list').append(li);
-                        });
-
+                $.ajax({
+                    method: "GET",
+                    url: '{{ url('admin/tradeInCars') }}/' + id,
+                    {{--url: '{{ url('admin/makeBids/') }}/' + carId + '?tradId=' + tradeInId,--}}
+                    type: "JSON",
+                    async: false
+                }).done(function (responce) {
+                    $('.car_detail_wrap').html('');
+                    $('.car_detail_wrap').html(responce);
+                    /!* Car Slider *!/
+                    $('.car_slider_warap').slick({
+                        infinite: true,
+                        arrows: false,
+                        dots: true,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        autoplaySpeed: 2000
                     });
-                } else {
-
-                    var tradeInId = $(this).data('trade');
-
-                    $.ajax({
-                        method: "GET",
-                        url: '{{ url('admin/makeBids/') }}/' + carId + '?tradId=' + tradeInId,
-                        type: "JSON",
-                        async: false
-                    }).done(function (responce) {
-                        $('.car_detail_wrap').html('');
-                        $('.car_detail_wrap').html(responce);
-                        /!* Car Slider *!/
-                        $('.car_slider_warap').slick({
-                            infinite: true,
-                            arrows: false,
-                            dots: true,
-                            slidesToShow: 1,
-                            slidesToScroll: 1,
-                            autoplay: true,
-                            autoplaySpeed: 2000
-                        });
-                    });
-                }
+                });
             });
         });
     </script>

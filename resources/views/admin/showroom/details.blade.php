@@ -1,7 +1,7 @@
-<p class="ref_num">Reference Number:<span>{{ $car->ref_num }}</span></p>
+<p class="ref_num">Reference Number:<span>{{ $tradeInRequest->tradeAgainst->ref_num }}</span></p>
 <div class="shadow"></div>
 <div class="car_slider_warap">
-    @foreach($car->media as $media)
+    @foreach($tradeInRequest->tradeAgainst->media as $media)
         <figure style="background-image: url({{ $media->file_url }});"></figure>
     @endforeach
     {{--<figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
@@ -13,51 +13,51 @@
 
 <div class="car_detail clearfix">
     <div class="left">
-        <h2 class="car_model">{{ $car->year }} {{ $car->carModel->brand->name }} {{ $car->carModel->name }}</h2>
+        <h2 class="car_model">{{ $tradeInRequest->tradeAgainst->year }} {{ $tradeInRequest->tradeAgainst->carModel->brand->name }} {{ $tradeInRequest->tradeAgainst->carModel->name }}</h2>
         <ul>
             <li>
                 <span class="icon-icon-5"></span>
                 <p>
                     <small>Model</small>
-                    {{ $car->carModel->name }}
+                    {{ $tradeInRequest->tradeAgainst->carModel->name }}
                 </p>
             </li>
             <li>
                 <span class="icon-icon-6"></span>
                 <p>
                     <small>year</small>
-                    {{ $car->year }}
+                    {{ $tradeInRequest->tradeAgainst->year }}
                 </p>
             </li>
             <li>
                 <span class="icon-icon-7"></span>
                 <p>
                     <small>KM</small>
-                    {{ number_format($car->kilometer) }}
+                    {{ ($tradeInRequest->tradeAgainst->kilometer)? number_format($tradeInRequest->tradeAgainst->kilometer) : '-' }}
                 </p>
             </li>
             <li>
                 <span class="icon-icon-8"></span>
                 <p>
                     <small>Chassis</small>
-                    {{ $car->chassis }}
+                    {{ $tradeInRequest->tradeAgainst->chassis }}
                 </p>
             </li>
             <li>
                 <span class="icon-icon-9"></span>
                 <p>
                     <small>Regional Specs</small>
-                    {{ $car->regionalSpecs->name }}
+                    {{ $tradeInRequest->tradeAgainst->regionalSpecs->name }}
                 </p>
             </li>
             <li>
                 <span class="icon-icon-12"></span>
                 <p>
                     <small>engine type</small>
-                    {{ $car->engineType->name?? '-' }}
+                    {{ $tradeInRequest->tradeAgainst->engineType->name?? '-' }}
                 </p>
             </li>
-            @foreach($car->carAttributes as $attribute)
+            @foreach($tradeInRequest->tradeAgainst->carAttributes as $attribute)
                 <li>
                     <span class="{{ $attribute->icon }}"></span>
                     <p>
@@ -90,8 +90,8 @@
                     <small>RMNG. warranty</small>
                     18 Months
                 </p>
-            </li>--}}
-            @foreach($car->carFeatures as $carFeature)
+            </li>
+            @foreach($tradeInRequest->tradeAgainst->carFeatures as $carFeature)
                 <li>
                     <span class="{{ $carFeature->icon_css }}"></span>
                     <p>
@@ -99,11 +99,11 @@
                         Yes
                     </p>
                 </li>
-            @endforeach
+            @endforeach--}}
         </ul>
     </div>
 
-    @if(empty($tradeIn->amount))
+    @if(empty($tradeInRequest->amount))
         <div class="right">
             <div class="bid_widget">
                 <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">
@@ -121,7 +121,7 @@
                                 </g>
                             </g>
                         </svg>
-                    </div> {{--$car->bid_close_at->diffForHumans()--}}
+                    </div> {{--$tradeInRequest->tradeAgainst->bid_close_at->diffForHumans()--}}
 
                     <div class="controlls">
                         <div class="display-remain-time" style="font-size: 18px;"></div>
@@ -130,19 +130,32 @@
                 </div>
 
                 <h4>Place a Bid now</h4>
-                {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeIn->id], "id"=>"submitBit", 'method' => 'patch']) !!}
+                {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeInRequest->id], "id"=>"submitBit", 'method' => 'patch']) !!}
                 <input type="text" id="amount_bit" name="amount" placeholder="AED"
-                       value="{{ isset($tradeIn)? number_format($tradeIn->amount):'' }}"
-                       min="1">
+                       value="{{ isset($tradeIn)? number_format($tradeInRequest->amount):'' }}" required>
                 <button type="submit" class="submit" name="">submit</button>
-                {!! Form::hidden('car_id', $car->id) !!}
+                {!! Form::hidden('car_id', $tradeInRequest->tradeAgainst->id) !!}
                 {!! Form::close() !!}
+            </div>
+        </div>
+        <div class="right" style="margin-top: 12px">
+            <div class="bid_widget">
+                <h3 style="text-align: left; margin-bottom: 10px;">Trade In Against: </h3>
+                @if($tradeInRequest->myCar->media->count() > 0)
+                    <img src="{{ $tradeInRequest->myCar->media[0]->file_url }}" alt="" width="230" height="150">
+                @else
+                    <img src="{{ url('storage/app/public/dummy-img.jpg') }}" alt="" width="230" height="150">
+                @endif
+                <h2 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->brand->name }}</h2>
+                <h3 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->name }}</h3>
+                <h4 style="text-align: left; color: gray">{{ $tradeInRequest->myCar->year }}</h4>
+                <h2 style="text-align: left;">AED {{ number_format($tradeInRequest->myCar->amount) }}</h2>
             </div>
         </div>
     @else
         <div class="right">
             <div class="bid_widget">
-{{--                <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">--}}
+                {{--                <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">--}}
                 <h3>Your Bid Amount</h3>
                 <div class="svg_container">
                     <div class="circle">
@@ -159,7 +172,7 @@
                         </svg>
                     </div>
                     <div class="controlls">
-                        <div class="" style="font-size: 18px;">{{ number_format($tradeIn->amount) }}
+                        <div class="" style="font-size: 18px;">{{ number_format($tradeInRequest->amount) }}
                             AED
                         </div>
                         <button class="play" id="pause"></button>
@@ -191,7 +204,7 @@
 
     var intervalTimer;
     var timeLeft;
-    var wholeTime = {{ $car->bid_close_at->diffInSeconds(now()) }}; //0.5 * 2400; // manage this to set the whole time
+    var wholeTime = {{ $tradeInRequest->tradeAgainst->bid_close_at->diffInSeconds(now()) }}; //0.5 * 2400; // manage this to set the whole time
     var isPaused = false;
     var isStarted = false;
 

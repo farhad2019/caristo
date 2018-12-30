@@ -51,13 +51,21 @@ class BidsHistoryController extends AppBaseController
     /**
      * Display a listing of the BidsHistory.
      *
-     * @param Request $request
+     * @param BidsHistoryDataTable $bidsHistoryDataTable
      * @return Response
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
-    public function index(Request $request)
+    public function index(BidsHistoryDataTable $bidsHistoryDataTable)
     {
-        $this->carRepository->pushCriteria(new BidsHistoryForShowroomOwnerCriteria($request));
+        $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(0, true);
+
+        if (Auth::user()->hasRole('showroom-owner')) {
+            return view('admin.showroom.carsListing')
+                ->with([
+                    'tradeInRequests' => $tradeInRequests
+                ]);
+        }
+
+        /*$this->carRepository->pushCriteria(new BidsHistoryForShowroomOwnerCriteria($request));
         $cars = $this->carRepository->all();
         $bid = $this->makeBidRepository->findWhere(['car_id' => 70, 'user_id' => Auth::id()])->first();
 
@@ -67,8 +75,9 @@ class BidsHistoryController extends AppBaseController
         return view('admin.showroom.bidsHistoryListing')->with([
             'cars' => $cars,
             'bid'  => $bid
-        ]);
-        //return $bidsHistoryDataTable->render('admin.bids_histories.index');
+        ]);*/
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+        return $bidsHistoryDataTable->render('admin.bids_histories.index');
     }
 
     /**
@@ -108,7 +117,7 @@ class BidsHistoryController extends AppBaseController
      */
     public function show($id)
     {
-        $tradeInCar = $this->tradeInCarRepository->getTradeInCarsWithBid($id);
+        $tradeInCar = $this->tradeInCarRepository->getTradeInCars($id, true);
 
         if (empty($tradeInCar)) {
             return json_encode(['fail' => 'Trade In Car not found']);

@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url('public/css/showroom/lib.css') }}">
-    <link rel="stylesheet" href="{{ url('public/css/showroom/style_new.css') }}">
+    <link rel="stylesheet" href="{{ url('public/css/showroom/style.css') }}">
     <link rel="stylesheet" href="{{ url('public/fonts/showroom/style.css') }}">
     <link rel="stylesheet" href="{{ url('public/css/showroom/responsive.css') }}">
 
@@ -33,7 +33,7 @@
             -moz-appearance: textfield;
         }
     </style>
-@stack('css')
+    @stack('css')
 </head>
 
 <body class="home-page">
@@ -53,10 +53,10 @@
             </div>
             <div class="col-8 login_info">
                 @if(isset(Auth::user()->showroomDetails->logo_url))
-                <figure class="login_dp"
-                        style="background-image: url({{ Auth::user()->showroomDetails->logo_url }});"></figure>{{--background-size: 40px;--}}
+                    <figure class="login_dp"
+                            style="background-image: url({{ Auth::user()->showroomDetails->logo_url }});"></figure>{{--background-size: 40px;--}}
                 @endif
-                    <h3 class="login_name">
+                <h3 class="login_name">
                     <small>Welcome</small>
                     {{ \Illuminate\Support\Facades\Auth::user()->name }}
                 </h3>
@@ -85,7 +85,7 @@
 </div>
 <script src="{{ url('public/js/showroom/xlib.js') }}"></script>
 <script src="{{ url('public/js/showroom/bootstrap-notify.min.js') }}"></script>
-<script src="{{ url('public/js/showroom/script_new.js') }}"></script>
+<script src="{{ url('public/js/showroom/script.js') }}"></script>
 
 @stack('scripts')
 </body>

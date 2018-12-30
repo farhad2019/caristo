@@ -1,5 +1,5 @@
 <!--<div class="dash_tabs">-->
-<div class="dash_tabss">
+<div class="dash_tabs">
     <ul>
         {{--<li class="{{ (Request::segments()[1] == 'myCars')?'current':'' }}">
             <a href="{{ route('admin.myCars.index') }}" title="New Requests">
@@ -11,13 +11,13 @@
                 <span class="icon-icon-5"></span> My Cars
             </a>
         </li>--}}
-        <li class="{{ (Request::segments()[1] == 'makeBids')?'current':'' }}">
-            <a href="{{ route('admin.makeBids.index') }}" title="New Requests">
+        <li class="{{ (Request::segments()[1] == 'tradeInCars')?'current':'' }}">
+            <a href="{{ route('admin.tradeInCars.index') }}" title="New Requests">
                 <span class="icon-icon-1"></span> New Requests
             </a>
         </li>
-        <li class="{{ (Request::segments()[1] == 'tradeInCars')?'current':'' }}">
-            <a href="{{ route('admin.tradeInCars.index') }}" title="Bid History">
+        <li class="{{ (Request::segments()[1] == 'bidsHistories')?'current':'' }}">
+            <a href="{{ route('admin.bidsHistories.index') }}" title="Bid History">
                 <span class="icon-icon-2"></span> Bid History
             </a>
         </li>
