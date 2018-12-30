@@ -26,7 +26,42 @@ class UserShowroomRepository extends BaseRepository
         return UserShowroom::class;
     }
 
+    /**
+     * @param $request
+     * @param $user_id
+     * @return mixed
+     */
     public function updateRecord($request, $user_id)
+    {
+        $input = $request->showroom;
+        $input['user_id'] = $user_id;
+
+        // Media Data
+        if ($request->hasFile('showroom_media')) {
+            $mediaFile = $request->file('showroom_media');
+            $input['logo'] = Storage::putFile('media_files', $mediaFile);
+            //$showroom->media()->delete();
+            //$media = [];
+//            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+//
+//            foreach ($mediaFiles as $mediaFile) {
+////                $media[] = $this->handlePicture($mediaFile);
+//                $media[] = Utils::handlePicture($mediaFile);
+//            }
+//
+//            $showroom->media()->createMany($media);
+        }
+
+        $showroom = $this->model->updateOrCreate(['user_id' => $user_id], $input);
+        return $showroom;
+    }
+
+    /**
+     * @param $request
+     * @param $user_id
+     * @return mixed
+     */
+    public function updateRecordNew($request, $user_id)
     {
         $input = $request->only(['showroom_name', 'showroom_address', 'showroom_phone', 'showroom_about', 'showroom_email']);
 

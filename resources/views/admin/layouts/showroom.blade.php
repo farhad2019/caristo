@@ -52,9 +52,11 @@
                 </a>
             </div>
             <div class="col-8 login_info">
+                @if(isset(Auth::user()->showroomDetails->logo_url))
                 <figure class="login_dp"
                         style="background-image: url({{ Auth::user()->showroomDetails->logo_url }});"></figure>{{--background-size: 40px;--}}
-                <h3 class="login_name">
+                @endif
+                    <h3 class="login_name">
                     <small>Welcome</small>
                     {{ \Illuminate\Support\Facades\Auth::user()->name }}
                 </h3>

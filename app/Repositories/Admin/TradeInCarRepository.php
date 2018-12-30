@@ -71,6 +71,7 @@ class TradeInCarRepository extends BaseRepository
     {
         $input = $request->all();
         $input['user_id'] = Auth::id();
+        $input['amount'] = null;
         $tradeInCar = $this->create($input);
 
         return $tradeInCar;

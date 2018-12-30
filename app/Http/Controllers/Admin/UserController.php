@@ -131,6 +131,10 @@ class UserController extends AppBaseController
         $this->userRepository->attachRole($user->id, Role::SHOWROOM_OWNER_ROLE);
         $userDetail = $this->userDetailRepository->create($data);
 
+        $showroomDeatails['user_id'] = $user->id;
+        $showroomDeatails['name'] = $user->name . "'s Showroom'";
+        $showroomDeatails = $this->showroomRepository->create($showroomDeatails);
+
         Flash::success('User saved successfully.');
         return redirect(route('admin.users.index'));
     }
@@ -248,7 +252,7 @@ class UserController extends AppBaseController
             $this->showroomRepository->updateRecord($request, $id);
         }
 
-        if ($user->hasRole('showroom-owner')) {
+        if (Auth::user()->hasRole('showroom-owner')) {
             Flash::success('Profile Updated successfully.');
             return redirect(route('admin.users.profile'));
         }
@@ -332,7 +336,7 @@ class UserController extends AppBaseController
         unset($data['first_name']);
         $user = $this->userRepository->update($data, $id);
 
-        $this->showroomRepository->updateRecord($request, $id);
+        $this->showroomRepository->updateRecordNew($request, $id);
 
         if ($user->hasRole('showroom-owner')) {
             Flash::success('Profile Updated successfully.');
