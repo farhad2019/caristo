@@ -23,6 +23,7 @@ class CategoryCriteria implements CriteriaInterface
             $model = $model->where('parent_id', $parent_id);
         }
 
+        $model = $model->orderBy('created_at', 'ASC');
         return $model;
     }
 

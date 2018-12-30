@@ -372,6 +372,7 @@
                     async: false
                 }).done(function (responce) {
                     $('.car_detail_wrap').html('');
+                    $('.bid_widget').html('');
                     $('.car_detail_wrap').html(responce);
                     /!* Car Slider *!/
                     $('.car_slider_warap').slick({

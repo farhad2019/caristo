@@ -1,3 +1,10 @@
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url('public/css/showroom/lib.css') }}">
+<link rel="stylesheet" href="{{ url('public/css/showroom/style.css') }}">
+<link rel="stylesheet" href="{{ url('public/fonts/showroom/style.css') }}">
+<link rel="stylesheet" href="{{ url('public/css/showroom/responsive.css') }}">
+
 <p class="ref_num">Reference Number:<span>{{ $tradeInRequest->tradeAgainst->ref_num }}</span></p>
 <div class="shadow"></div>
 <div class="car_slider_warap">
@@ -132,7 +139,8 @@
                 <h4>Place a Bid now</h4>
                 {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeInRequest->id], "id"=>"submitBit", 'method' => 'patch']) !!}
                 <input type="text" id="amount_bit" name="amount" placeholder="AED"
-                       value="{{ isset($tradeIn)? number_format($tradeInRequest->amount):'' }}" required>
+                       value="{{ isset($tradeIn)? number_format($tradeInRequest->amount):'' }}"
+                       min="1">
                 <button type="submit" class="submit" name="">submit</button>
                 {!! Form::hidden('car_id', $tradeInRequest->tradeAgainst->id) !!}
                 {!! Form::close() !!}
@@ -182,6 +190,11 @@
         </div>
     @endif
 </div>
+
+<script src="{{ url('public/js/showroom/xlib.js') }}"></script>
+<script src="{{ url('public/js/showroom/bootstrap-notify.min.js') }}"></script>
+<script src="{{ url('public/js/showroom/script.js') }}"></script>
+
 <script>
     //circle start
     var progressBar = document.querySelector('.e-c-progress');
@@ -282,6 +295,4 @@
     jQuery('#amount_bit').keyup(function () {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
-
 </script>
-

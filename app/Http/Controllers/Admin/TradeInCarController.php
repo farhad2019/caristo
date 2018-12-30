@@ -152,7 +152,6 @@ class TradeInCarController extends AppBaseController
      */
     public function update($id, UpdateTradeInCarRequest $request)
     {
-        ;
         $tradeInCar = $this->tradeInCarRepository->findWithoutFail($id);
         if (empty($tradeInCar)) {
             Flash::error('Trade In Car not found');

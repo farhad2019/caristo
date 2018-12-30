@@ -71,7 +71,7 @@ class HomeController extends Controller
 
         BreadcrumbsRegister::Register();
         if (Auth::user()->hasRole('showroom-owner')) {
-            return redirect(route('admin.makeBids.index'));
+            return redirect(route('admin.tradeInCars.index'));
         }
 
         return view('admin.home')->with([

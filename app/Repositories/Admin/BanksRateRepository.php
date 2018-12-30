@@ -71,7 +71,7 @@ class BanksRateRepository extends BaseRepository
 //                $media[] = $this->handlePicture($mediaFile);
                 $media[] = Utils::handlePicture($mediaFile);
             }
-
+            $bankRate->media()->delete();
             $bankRate->media()->createMany($media);
         }
         return $bankRate;

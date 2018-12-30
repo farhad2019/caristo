@@ -120,6 +120,7 @@ class Category extends Model
         'user_id',
         'slug',
         'type',
+        'position',
         'type_text',
         'description',
         'created_at',
