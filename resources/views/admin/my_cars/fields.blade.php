@@ -415,16 +415,28 @@
 
 
 <div class="form-group col-sm-12 regions">
+    <?php $explodeLifeCycle = explode('-',@$myCar->life_cycle); ?>
     <hr>
     <h3>Life Cycle</h3>
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Lifecycle', 'From:') !!}
-        {!! Form::date('from', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}
+        {{--{!! Form::number('from', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
+        <select class="form-control" name="from">
+            @foreach($years as $year)
+            <option value="{{$year}}" @if(@$explodeLifeCycle[0] == $year) selected @endif>{{$year}}</option>
+            @endforeach
+            {{--{!! Form::select('year', $years, date('Y'), ['class' => 'form-control select2']) !!}--}}
+        </select>
     </div>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Lifecycle', 'To:') !!}
-        {!! Form::date('to', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}
+        {{--{!! Form::number('to', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
+        <select class="form-control" name="to">
+            @foreach($years as $year)
+                <option value="{{$year}}" @if(@$explodeLifeCycle[1] == $year) selected @endif>{{$year}}</option>
+            @endforeach
+        </select>
     </div>
     <hr>
 </div>
