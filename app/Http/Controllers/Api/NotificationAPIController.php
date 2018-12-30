@@ -8,6 +8,7 @@ use App\Http\Requests\Api\UpdateNotificationAPIRequest;
 use App\Models\Notification;
 use App\Repositories\Admin\MyCarRepository;
 use App\Repositories\Admin\NotificationRepository;
+use App\Repositories\Admin\TradeInCarRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
@@ -26,10 +27,14 @@ class NotificationAPIController extends AppBaseController
     /** @var  MyCarRepository */
     private $carRepository;
 
-    public function __construct(NotificationRepository $notificationRepo, MyCarRepository $carRepo)
+    /** @var  MyCarRepository */
+    private $tradInRepository;
+
+    public function __construct(NotificationRepository $notificationRepo, MyCarRepository $carRepo,TradeInCarRepository $tradInRepo)
     {
         $this->notificationRepository = $notificationRepo;
         $this->carRepository = $carRepo;
+        $this->tradInRepository = $tradInRepo;
     }
 
     /**
@@ -95,12 +100,14 @@ class NotificationAPIController extends AppBaseController
         $notifications = $this->notificationRepository->all();
         $extraData = [];
         foreach ($notifications as $notification) {
-            $carData = $this->carRepository->findWithoutFail($notification->ref_id);
-            $extraData[] = array_merge($notification->toArray(), [
-                'image_url'  => isset($carData->media[0]) ? $carData->media[0]->file_url : null,
-                'car_name'   => $carData->name,
-                'model_year' => $carData->year,
-                'chassis'    => $carData->chassis
+            //$carData = $this->carRepository->findWithoutFail($notification->ref_id);
+            $tradInfo = $this->tradInRepository->findWithoutFail($notification->ref_id)->toArray();
+
+            $extraData[] = array_merge(@$notification->toArray(), [
+                'image_url'  => isset($tradInfo['trade_against']['media'][0]) ? @$tradInfo['trade_against']['media'][0]['file_url'] : null,
+                'car_name'   => @$tradInfo['trade_against']['car_model']['name'] .' ' .@$tradInfo['trade_against']['car_model']['brand']['name'],
+                'model_year' => @$tradInfo['trade_against']['year'],
+                'chassis'    => @$tradInfo['trade_against']['chassis']
             ]);
         }
 
