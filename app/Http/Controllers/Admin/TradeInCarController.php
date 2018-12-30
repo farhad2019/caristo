@@ -8,10 +8,12 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateTradeInCarRequest;
 use App\Http\Requests\Admin\UpdateTradeInCarRequest;
 use App\Repositories\Admin\TradeInCarRepository;
+use App\Repositories\Admin\NotificationRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
+use App\Models\Notification;
 
 class TradeInCarController extends AppBaseController
 {
@@ -24,9 +26,14 @@ class TradeInCarController extends AppBaseController
     /** @var  TradeInCarRepository */
     private $tradeInCarRepository;
 
-    public function __construct(TradeInCarRepository $tradeInCarRepo)
+    /** @var  NotificationRepository */
+    private $notificationRepository;
+
+
+    public function __construct(NotificationRepository $notificationRepo, TradeInCarRepository $tradeInCarRepo)
     {
         $this->tradeInCarRepository = $tradeInCarRepo;
+        $this->notificationRepository = $notificationRepo;
         $this->ModelName = 'tradeInCars';
         $this->BreadCrumbName = 'TradeInCar';
     }
@@ -159,8 +166,21 @@ class TradeInCarController extends AppBaseController
         }
 
         $tradeInCar = $this->tradeInCarRepository->updateRecord($request, $tradeInCar);
+
+        ################# NOTIFICATION ####################
+        $notification = [
+            'sender_id'   => $tradeInCar->user_id,
+            'action_type' => Notification::NOTIFICATION_TYPE_NEW_BID,
+            'url'         => null,
+            'ref_id'      => $tradeInCar->customer_car_id,
+            'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_NEW_BID]
+        ];
+
+        $this->notificationRepository->notification($notification, $tradeInCar->owner_car_id);
+
+
         Flash::success('Trade In Request successfully.');
-        return redirect(route('admin.makeBids.index'));
+        return redirect(route('admin.tradeInCars.index'));
     }
 
     /**

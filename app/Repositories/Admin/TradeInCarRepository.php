@@ -79,19 +79,19 @@ class TradeInCarRepository extends BaseRepository
         $input = $request->only('amount');
         $tradeInCar = $this->update($input, $tradeInCar->id);
 
-//        if ($bid) {
-//            $this->notificationRepository = App::make(NotificationRepository::class);
-//
-//            $notification = [
-//                'sender_id'   => $bid->user_id,
-//                'action_type' => Notification::NOTIFICATION_TYPE_NEW_BID,
-//                'url'         => null,
-//                'ref_id'      => $input['car_id'],
-//                'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_NEW_BID]
-//            ];
-//
-//            $this->notificationRepository->notification($notification, $bid->cars->owner_id);
-//        }
+        /*if ($tradeInCar) {
+            $this->notificationRepository = App::make(NotificationRepository::class);
+
+            $notification = [
+                'sender_id'   => $tradeInCar->user_id,
+                'action_type' => Notification::NOTIFICATION_TYPE_NEW_BID,
+                'url'         => null,
+                'ref_id'      => $input['car_id'],
+                'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_NEW_BID]
+            ];
+            dd($notification);
+            $this->notificationRepository->notification($notification, $bid->cars->owner_id);
+        }*/
 
         return $tradeInCar;
     }
