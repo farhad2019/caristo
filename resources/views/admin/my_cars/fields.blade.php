@@ -70,14 +70,14 @@
 </div>
 
 <!-- Name Field -->
-<div class="form-group col-sm-6">
+{{--<div class="form-group col-sm-6">
     {!! Form::label('name', 'Name:') !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
-</div>
+</div>--}}
 
-@php($user = \Illuminate\Support\Facades\Auth::user())
+{{--@php($user = \Illuminate\Support\Facades\Auth::user())--}}
 <!-- Email Field -->
-<div class="form-group col-sm-6 region">
+{{--<div class="form-group col-sm-6 region">
     {!! Form::label('email', 'Email:') !!}
     {!! Form::email('email', $user->email, ['class' => 'form-control']) !!}
 </div>
@@ -92,7 +92,7 @@
 <div class="form-group col-sm-6 region">
     {!! Form::label('phone', 'Phone:') !!}
     {!! Form::number('phone', $user->details->phone, ['class' => 'form-control']) !!}
-</div>
+</div>--}}
 
 <!-- Regional Specification Field -->
 <div class="form-group col-sm-6">
@@ -102,7 +102,7 @@
 
 @if(!isset($myCar))
 
-    <div class="clearfix"></div>
+    {{--<div class="clearfix"></div>
 
     <div class="form-group col-sm-12 region">
         {!! Form::label('features', 'Car Features:') !!}
@@ -119,7 +119,7 @@
                 </div>
             @endforeach
         </div>
-    </div>
+    </div>--}}
 
     <div class="clearfix"></div>
 
@@ -154,7 +154,7 @@
         @endif
     @endforeach
 @else
-    <div class="clearfix"></div>
+    {{--<div class="clearfix"></div>
     <div class="form-group col-sm-12 region">
         {!! Form::label('features', 'Car Features:') !!}
         <div class="col-sm-12">
@@ -170,7 +170,7 @@
                 </div>
             @endforeach
         </div>
-    </div>
+    </div>--}}
     <div class="clearfix"></div>
 
     @foreach($attributes as $attribute)

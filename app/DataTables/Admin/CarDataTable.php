@@ -143,7 +143,7 @@ class CarDataTable extends DataTable
     {
         return [
             'id',
-            'name',
+            //'name',
             'category.translations.name'       => [
                 'title' => 'Category',
             ],

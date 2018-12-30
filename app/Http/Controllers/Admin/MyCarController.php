@@ -299,11 +299,11 @@ class MyCarController extends AppBaseController
                 }
             }
 
-            if (!empty(array_filter($request->feature))) {
+            /*if (!empty(array_filter($request->feature))) {
                 foreach ($request->feature as $key => $item) {
                     $myCar->carFeatures()->attach($key);
                 }
-            }
+            }*/
         }
 
         Flash::success('Car saved successfully.');
@@ -575,7 +575,7 @@ class MyCarController extends AppBaseController
                 $myCar->carAttributes()->sync($carAttributes, false);
             }
 
-            if (!empty(array_filter($request->feature))) {
+            /*if (!empty(array_filter($request->feature))) {
                 $carFeatures = [];
                 foreach ($request->feature as $key => $item) {
                     if (!empty($item)) {
@@ -585,7 +585,7 @@ class MyCarController extends AppBaseController
 
                 $myCar->myCarFeatures()->delete();
                 $myCar->carFeatures()->sync($carFeatures, false);
-            }
+            }*/
         }
 
         Flash::success('Car updated successfully.');
