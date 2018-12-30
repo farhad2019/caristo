@@ -118,9 +118,9 @@ class MyCarRepository extends BaseRepository
             $input['amount'] = $request->amount;
             $input['notes'] = $request->notes;
             $input['limited_edition_specs'] = json_encode($limited);
-            $from = date('Y', strtotime($request->from));
-            $to = date('Y', strtotime($request->to));
-            $input['life_cycle'] = $from . '-' . $to;
+//            $from = date('Y', strtotime($request->from));
+//            $to = date('Y', strtotime($request->to));
+            $input['life_cycle'] = $request->from . '-' . $request->to;
 
             $input['depreciation_trend'] = $request->depreciation_trend;
             $myCar = $this->create($input);
@@ -303,9 +303,9 @@ class MyCarRepository extends BaseRepository
             $input['amount'] = $request->amount;
             $input['notes'] = $request->notes;
             $input['limited_edition_specs'] = json_encode($limited);
-            $from = date('Y', strtotime($request->from));
-            $to = date('Y', strtotime($request->to));
-            $input['life_cycle'] = $from . '-' . $to;
+//            $from = date('Y', strtotime($request->from));
+//            $to = date('Y', strtotime($request->to));
+            $input['life_cycle'] = $request->from . '-' . $request->to;
             $input['depreciation_trend'] = $request->depreciation_trend;
             $myCar = $this->update($input, $myCar->id);
 //            $input['region'] = $request->regions;

@@ -5,7 +5,11 @@ namespace App\Observers;
 use App\Jobs\SendPushNotification;
 use App\Models\NotificationUser;
 use App\Repositories\Admin\MyCarRepository;
+use App\Repositories\Admin\TradeInCarRepository;
 
+/**
+ * @property mixed tradeInRequest
+ */
 class NotificationObserver
 {
     protected $carRepository;
@@ -15,11 +19,12 @@ class NotificationObserver
      */
     public function created(NotificationUser $notificationUser)
     {
-        //$this->carRepository = App()->make(MyCarRepository::class);
+        $this->tradeInRequest = App()->make(TradeInCarRepository::class);
+        $clientCar = $this->tradeInRequest->findWhere(['id' => $notificationUser->notification->ref_id]);
         $message = $notificationUser->notification->message;
         $deviceData = $notificationUser->user->devices->toArray();
         $extraPayload = [
-            'ref_id' => $notificationUser->notification->ref_id
+            'ref_id' => $clientCar->my_car->id
         ];
         /*$carData = $this->carRepository->findWithoutFail($notificationUser->notification->ref_id);
         $extraData = [
