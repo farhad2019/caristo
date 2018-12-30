@@ -112,7 +112,7 @@
     <!-- box-footer -->
 </div>
 @if($myCar->category_id != \App\Models\MyCar::LIMITEDADDITION)
-    <div class="box">
+    {{--<div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Car Features</h3>
             <div class="box-tools pull-right">
@@ -141,7 +141,7 @@
             </dd>
         </div>
         <div class="box-footer"></div>
-    </div>
+    </div>--}}
 
     <div class="box">
         <div class="box-header with-border">

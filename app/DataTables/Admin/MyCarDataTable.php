@@ -17,7 +17,7 @@ class MyCarDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        $query = $query->with(['carModel.translations', 'category.translations']);
+        $query = $query->with(['carModel.translations', 'category.translations', 'carModel.brand.translations']);
         $dataTable = new EloquentDataTable($query);
 
         $dataTable->editColumn('category.translations.name', function ($model) {
@@ -27,6 +27,24 @@ class MyCarDataTable extends DataTable
         $dataTable->editColumn('carModel.translations.name', function ($model) {
             return $model->carModel->name;
         });
+
+        $dataTable->editColumn('carModel.brand.translations.name', function ($model) {
+            return $model->carModel->brand->name ?? '-';
+        });
+
+        $dataTable->editColumn('amount', function ($model) {
+            return @$model->amount .' AED';
+        });
+
+        $dataTable->editColumn('image', function ($model) {
+            if (count($model->media) > 0) {
+                return "<a class='showGallerySingle' data-id='" . $model->id . "' data-toggle='modal' data-target='#imageGallerySingle'><img src='" . @$model->media[0]->fileUrl . "' width='80'/></a>";
+            } else {
+                return "<span class='label label-default'>None</span>";
+            }
+        });
+
+        $dataTable->rawColumns(['action', 'image']);
 
         return $dataTable->addColumn('action', 'admin.my_cars.datatables_actions');
     }
@@ -40,7 +58,10 @@ class MyCarDataTable extends DataTable
     public function query(MyCar $model)
     {
         $id = Auth::id();
-        return $model->select('cars.*', 'car_model_translations.name as model_name')->join('car_models', 'car_models.id', '=', 'cars.model_id')->leftJoin('car_model_translations', 'car_models.id', '=', 'car_model_translations.car_model_id')->where(['owner_id' => $id, 'car_model_translations.locale' => 'en'])->newQuery();
+        return $model->select('cars.*', 'car_model_translations.name as model_name')
+            ->join('car_models', 'car_models.id', '=', 'cars.model_id')
+            ->leftJoin('car_model_translations', 'car_models.id', '=', 'car_model_translations.car_model_id')
+            ->where(['owner_id' => $id, 'car_model_translations.locale' => 'en'])->newQuery();
     }
 
     /**
@@ -84,14 +105,21 @@ class MyCarDataTable extends DataTable
     {
         return [
             'id',
+            'image'  => [
+                'orderable'  => false,
+                'searchable' => false,
+            ],
             'category.translations.name' => [
                 'title' => 'Category',
+            ],
+            'carModel.brand.translations.name' => [
+                'title' => 'Brand'
             ],
             'carModel.translations.name' => [
                 'title' => 'Model'
             ],
             'year',
-            'name'
+            'amount',
         ];
     }
 

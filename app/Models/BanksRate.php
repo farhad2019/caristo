@@ -96,7 +96,9 @@ class BanksRate extends Model
      *
      * @var array
      */
-     protected $with = [];
+     protected $with = [
+         'media'
+     ];
 
     /**
      * The attributes that should be append to toArray.
@@ -110,7 +112,16 @@ class BanksRate extends Model
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'title',
+        'phone_no',
+        'address',
+        'rate',
+        'type',
+        'created_at',
+        'media'
+    ];
 
     /**
      * Validation create rules
