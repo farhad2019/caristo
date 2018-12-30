@@ -15,7 +15,7 @@ class NotificationObserver
      */
     public function created(NotificationUser $notificationUser)
     {
-        $this->carRepository = App()->make(MyCarRepository::class);
+        //$this->carRepository = App()->make(MyCarRepository::class);
         $message = $notificationUser->notification->message;
         $deviceData = $notificationUser->user->devices->toArray();
         /*$carData = $this->carRepository->findWithoutFail($notificationUser->notification->ref_id);

@@ -10,7 +10,7 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($banksRate, ['route' => ['admin.banksRates.update', $banksRate->id], 'method' => 'patch']) !!}
+                   {!! Form::model($banksRate, ['route' => ['admin.banksRates.update', $banksRate->id], 'method' => 'patch', 'files' => true]) !!}
 
                         @include('admin.banks_rates.fields')
 
