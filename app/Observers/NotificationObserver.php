@@ -20,12 +20,13 @@ class NotificationObserver
     public function created(NotificationUser $notificationUser)
     {
         $this->tradeInRequest = App()->make(TradeInCarRepository::class);
-        $clientCar = $this->tradeInRequest->findWhere(['id' => $notificationUser->notification->ref_id]);
+        $clientCar = $this->tradeInRequest->findWhere(['id' => $notificationUser->notification->ref_id])->first();
         $message = $notificationUser->notification->message;
         $deviceData = $notificationUser->user->devices->toArray();
         $extraPayload = [
             //'ref_id' => $clientCar->my_car->id
-            'ref_id' => $notificationUser->notification->ref_id
+            //'ref_id' => $notificationUser->notification->ref_id
+            'ref_id' => $clientCar->customer_car_id
         ];
         /*$carData = $this->carRepository->findWithoutFail($notificationUser->notification->ref_id);
         $extraData = [
