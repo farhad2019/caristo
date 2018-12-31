@@ -57,8 +57,8 @@ class NotificationsHelper
                     'body'  => $msg,
                     'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
                     'sound' => 'default',
-                    'sound' => 'default',
-                    $extraPayLoadData
+                    //'sound' => 'default',
+                    'ref' => $extraPayLoadData['ref_id']
                     /*'extra_payload'  => [
                         //'extra_payload' => $extraPayLoadData,
                         $extraPayLoadData,
