@@ -52,12 +52,12 @@ class NotificationsHelper
             ])*/
             $push = new PushNotification('fcm');
             $push->setMessage([
-                'notification' => [
+                'data' => [
                     'title' => config('app.name'),
                     'body'  => $msg,
                     'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
                     'sound' => 'default',
-                    'data'  => [
+                    'extra_payload'  => [
                         //'extra_payload' => $extraPayLoadData,
                         $extraPayLoadData,
                     ]
