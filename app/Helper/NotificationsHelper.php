@@ -57,10 +57,12 @@ class NotificationsHelper
                     'body'  => $msg,
                     'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
                     'sound' => 'default',
-                    'extra_payload'  => [
+                    'sound' => 'default',
+                    $extraPayLoadData
+                    /*'extra_payload'  => [
                         //'extra_payload' => $extraPayLoadData,
                         $extraPayLoadData,
-                    ]
+                    ]*/
                 ]
             ])
                 ->setApiKey(Config::get('pushNotification.fcm.apiKey'))
