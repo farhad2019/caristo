@@ -203,7 +203,7 @@ class Category extends Model
      */
     public function childCategory()
     {
-        return $this->hasMany(Category::class, 'parent_id', 'id');
+        return $this->hasMany(Category::class, 'parent_id', 'id')->orderBy('created_at','asc');
     }
 
     /**
