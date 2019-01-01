@@ -2,6 +2,7 @@
 
 namespace App\DataTables\Admin;
 
+use App\Helper\Utils;
 use App\Models\CarInteraction;
 use App\Models\MyCar;
 use App\Models\User;
@@ -41,6 +42,16 @@ class UserDataTable extends DataTable
             return '<span style="word-break: break-all">' . implode(",", $model->Roles->pluck('display_name')->toArray()) . '</span>';
         });
 
+        $dataTable->editColumn('dealer_type', function (User $model) {
+            if ($model->details->dealer_type == 10) {
+                return "<span class='badge bg-" . Utils::getBoolCss(1, true) . "'> " . User::$DEALER_TYPE[$model->details->dealer_type] . "</span>";
+            } elseif ($model->details->dealer_type == 20) {
+                return "<span class='badge bg-" . Utils::getBoolCss(0, true) . "'> " . User::$DEALER_TYPE[$model->details->dealer_type] . "</span>";
+            } else {
+                return "-";
+            }
+        });
+
         $dataTable->editColumn('cars_count', function (User $model) {
             return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => 'cars']) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->cars_count . "</span></a>";
         });
@@ -57,7 +68,7 @@ class UserDataTable extends DataTable
             return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_VIEW]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->view_count . "</span></a>";
         });
 
-        $dataTable->rawColumns(['name', 'email', 'action', 'Roles.display_name', 'cars_count', 'favorite_count', 'view_count']);
+        $dataTable->rawColumns(['dealer_type', 'name', 'email', 'action', 'Roles.display_name', 'cars_count', 'favorite_count', 'view_count']);
         return $dataTable->addColumn('action', 'admin.users.datatables_actions');
     }
 
@@ -147,6 +158,7 @@ class UserDataTable extends DataTable
                 'searchable' => true,
                 'title'      => 'Roles'
             ],
+            'dealer_type',
             'cars_count'         => [
                 'title'      => 'My Cars',
                 'orderable'  => false,

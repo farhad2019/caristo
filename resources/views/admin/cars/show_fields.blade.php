@@ -29,11 +29,6 @@
             <dd>{!! $myCar->chassis?? 'N/A' !!}</dd>
         </div>
         <div class="col-md-8">
-        @if($myCar->name)
-            <!-- Name Field -->
-                <dt>{!! Form::label('name', 'Name:') !!}</dt>
-                <dd>{!! $myCar->name?? 'N/A' !!}</dd>
-        @endif
         @if($myCar->category_id)
             <!-- Type Id Field -->
                 <dt>{!! Form::label('category_id', 'Category :') !!}</dt>
@@ -312,7 +307,7 @@
         <dt>{!! Form::label('ownerName', 'Images:') !!}</dt>
         <dd>@if($myCar->media->count() > 0)
                 @foreach($myCar->media as $media)
-                    <a class="showGallery" data-id="{{$myCar->id}}" data-toggle="modal" data-target="#imageGallery">
+                    <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
                         <img src="{{ $media->file_url }}" width="120" style="margin-right: 2%">
                     </a>
                 @endforeach

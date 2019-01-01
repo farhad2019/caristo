@@ -17,8 +17,9 @@
 <dt>{!! Form::label('image', 'Image:') !!}</dt>
 <dd>
     <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
-        <a class='showGallery' data-id='{{ $banksRate->media[0]->id }}' data-toggle='modal'>
-            <img src="{{$banksRate->media()->orderby('created_at', 'desc')->first()->fileUrl}}" style="width: 125px;">
+        <a class="showGallerySingle" data-id="{{ $banksRate->media[0]->id }}" data-toggle="modal" data-target="#imageGallerySingle">
+            <img src="{{$banksRate->media()->orderby('created_at', 'desc')->first()->fileUrl}}"
+                 style="width: 125px;">
         </a>
     </div>
 </dd>

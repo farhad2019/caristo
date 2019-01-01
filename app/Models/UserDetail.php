@@ -88,6 +88,7 @@ class UserDetail extends Model
         'first_name',
         'last_name',
         'country_code',
+        'dealer_type',
         'phone',
         'address',
         'image',
