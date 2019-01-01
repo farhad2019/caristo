@@ -15,23 +15,26 @@
             <!-- Name Field -->
             <dt>{!! Form::label('name', 'Name:') !!}</dt>
             <dd>{!! $myCar->name?? 'N/A' !!}</dd>
+        @if($myCar->category_id)
             <!-- Type Id Field -->
-            <dt>{!! Form::label('type_id', 'Category :') !!}</dt>
-            <dd>{!! isset($myCar->category_id) ? $myCar->category->name : 'N/A' !!}</dd>
+                <dt>{!! Form::label('category_id', 'Category :') !!}</dt>
+                <dd>{!! isset($myCar->category_id) ? $myCar->category->name : 'N/A' !!}</dd>
 
-            <!-- Type Id Field -->
-            <dt>{!! Form::label('type_id', 'Type :') !!}</dt>
-            <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : 'N/A' !!}</dd>
+                <!-- Type Id Field -->
+                <dt>{!! Form::label('type_id', 'Type :') !!}</dt>
+                <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : 'N/A' !!}</dd>
 
-            <!-- Transmission Type Field -->
-            <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
-            <dd>{!! $myCar->transmission_type_text?? 'N/A' !!}</dd>
-
+                <!-- Transmission Type Field -->
+                <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
+                <dd>{!! $myCar->transmission_type_text?? 'N/A' !!}</dd>
+        @endif
+        @if($myCar->category_id == \App\Models\MyCar::APPROVED_PRE_OWNED || $myCar->category_id == \App\Models\MyCar::CLASSIC_CARS)
             <!-- Year Field -->
-            <dt>{!! Form::label('kilometer', 'Kilometer:') !!}</dt>
-            <dd>{!! $myCar->kilometer ? $myCar->kilometer .' Km': 'N/A' !!}</dd>
+                <dt>{!! Form::label('kilometer', 'Kilometer:') !!}</dt>
+                <dd>{!! $myCar->kilometer ? $myCar->kilometer .' Km': 'N/A' !!}</dd>
+        @endif
 
-            <!-- Year Field -->
+        <!-- Year Field -->
             <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
             <dd>{!! $myCar->amount .' AED' ?? 'N/A' !!}</dd>
         </div>
@@ -95,7 +98,8 @@
 
         <!-- Phone Field -->
             <dt>{!! Form::label('phone', 'Phone:') !!}</dt>
-            <dd>{!! $myCar['owner']['details']['country_code'] ?? 'N/A' !!} - {!! $myCar['owner']['details']['phone'] ?? 'N/A' !!}</dd>
+            <dd>{!! $myCar['owner']['details']['country_code'] ?? 'N/A' !!}
+                - {!! $myCar['owner']['details']['phone'] ?? 'N/A' !!}</dd>
 
 
             <!-- Owner Type Field -->
