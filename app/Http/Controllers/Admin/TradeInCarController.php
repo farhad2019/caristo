@@ -43,6 +43,7 @@ class TradeInCarController extends AppBaseController
     /**
      * Display a listing of the TradeInCar.
      *
+     * @param Request $request
      * @param TradeInCarDataTable $tradeInCarDataTable
      * @return Response
      */

@@ -215,7 +215,7 @@ class MyCarController extends AppBaseController
      */
     public function store(Request $request)
     {
-        if ($request->category_id == MyCar::LIMITEDADDITION) {
+        if ($request->category_id == MyCar::LIMITED_EDITION) {
             $validatedData = $request->validate([
                 'category_id'               => 'sometimes|nullable|required',
                 'model_id'                  => 'sometimes|nullable|required',
@@ -292,7 +292,7 @@ class MyCarController extends AppBaseController
 
         $myCar = $this->myCarRepository->saveRecord($request);
 
-        if ($request->category_id != MyCar::LIMITEDADDITION) {
+        if ($request->category_id != MyCar::LIMITED_EDITION) {
             if (!empty(array_filter($request->attribute))) {
                 foreach ($request->attribute as $key => $item) {
                     $myCar->carAttributes()->attach($key, ['value' => $item]);
@@ -478,7 +478,7 @@ class MyCarController extends AppBaseController
     public function update($id, Request $request)
     {
 
-        if ($request->category_id == MyCar::LIMITEDADDITION) {
+        if ($request->category_id == MyCar::LIMITED_EDITION) {
             $validatedData = $request->validate([
                 'category_id'               => 'sometimes|nullable|required',
                 'model_id'                  => 'sometimes|nullable|required',
@@ -563,7 +563,7 @@ class MyCarController extends AppBaseController
         }
         $myCar = $this->myCarRepository->updateRecord($request, $myCar);
 
-        if ($request->category_id != MyCar::LIMITEDADDITION) {
+        if ($request->category_id != MyCar::LIMITED_EDITION) {
 
             if (!empty(array_filter($request->attribute))) {
                 $carAttributes = [];

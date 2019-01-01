@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property MyCar $trade_against
  * @property MyCar $my_car
+ * @property \Carbon\Carbon bid_close_at
  *
  * @SWG\Definition(
  *      definition="TradeInCar",
@@ -82,6 +83,7 @@ class TradeInCar extends Model
      */
     protected $casts = [
         'amount' => 'float',
+        'bid_close_at' => 'Datetime',
         'notes'  => 'string'
     ];
 
@@ -112,6 +114,7 @@ class TradeInCar extends Model
         'myCar',
         'amount',
         'notes',
+        'bid_close_at',
         'tradeAgainst'
     ];
 

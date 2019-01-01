@@ -57,15 +57,15 @@
                     {{ $tradeInRequest->tradeAgainst->engineType->name?? '-' }}
                 </p>
             </li>
-            @foreach($tradeInRequest->tradeAgainst->carAttributes as $attribute)
+            @foreach($tradeInRequest->tradeAgainst->myCarAttributes as $attribute)
                 <li>
-                    <span class="{{ $attribute->icon }}"></span>
+                    <span class="{{ $attribute->carAttribute->icon }}"></span>
                     <p>
-                        <small>{{ $attribute->name }}</small>
-                        @if($attribute->type == 30)
-                            {!! \App\Models\AttributeOption::find($attribute->pivot->value)['option'] !!}
-                        @elseif($attribute->type == 10 || $attribute->type == 20)
-                            {!! $attribute->pivot->value !!}
+                        <small>{{ $attribute->carAttribute->name }}</small>
+                        @if($attribute->carAttribute->type == 30)
+                            {!! \App\Models\AttributeOption::find($attribute->value)['option'] !!}
+                        @elseif($attribute->carAttribute->type == 10 || $attribute->carAttribute->type == 20)
+                            {!! $attribute->value !!}
                         @endif
                     </p>
                 </li>
@@ -225,7 +225,7 @@
 
         var intervalTimer;
         var timeLeft;
-        var wholeTime = {{ $tradeInRequest->tradeAgainst->bid_close_at->diffInSeconds(now()) }}; //0.5 * 2400; // manage this to set the whole time
+        var wholeTime = {{ $tradeInRequest->bid_close_at->diffInSeconds(now()) }}; //0.5 * 2400; // manage this to set the whole time
         var isPaused = false;
         var isStarted = false;
 

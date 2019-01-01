@@ -53,7 +53,8 @@ class TradeInCarRepository extends BaseRepository
                 return $q->whereRaw(DB::raw('amount IS NOT NULL'));
             })
             ->when((!$hasBid), function ($q) {
-                return $q->whereRaw(DB::raw('amount IS NULL'));
+                return $q->whereRaw(DB::raw('amount IS NULL'))
+                ->whereRaw(DB::raw('(bid_close_at > NOW()) > 0'));
             })
             ->when((!empty(array_filter($search))), function ($q) use ($search) {
                 return $q->whereHas('tradeAgainst', function ($tradeAgainst) use ($search) {

@@ -111,7 +111,7 @@
     </div>
     <!-- box-footer -->
 </div>
-@if($myCar->category_id != \App\Models\MyCar::LIMITEDADDITION)
+@if($myCar->category_id != \App\Models\MyCar::LIMITED_EDITION)
     {{--<div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Car Features</h3>
