@@ -12,6 +12,7 @@ use App\Http\Requests\Api\UpdateChangePasswordRequest;
 use App\Http\Requests\Api\UpdateForgotPasswordRequest;
 use App\Http\Requests\Api\UpdateUserProfileRequest;
 use App\Http\Requests\Api\VerifyCodeRequest;
+use App\Models\Role;
 use App\Models\SocialAccount;
 use App\Models\User;
 use App\Models\UserDetail;
@@ -148,7 +149,7 @@ class AuthAPIController extends AppBaseController
 
             }
 
-            $user->roles()->attach([3]);
+            $user->roles()->attach([Role::RANDOM_USER_ROLE]);
             $user->save();
 
             $credentials = [
