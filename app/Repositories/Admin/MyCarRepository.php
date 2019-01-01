@@ -109,6 +109,7 @@ class MyCarRepository extends BaseRepository
             $input['owner_type'] = User::SHOWROOM_OWNER;
 
             $input['model_id'] = $request->model_id;
+            $input['chassis'] = $request->chassis;
             $input['year'] = $request->year;
             $input['price'] = $request->price;
             $input['regional_specification_id'] = $request->regional_specification_id;

@@ -183,7 +183,10 @@ class UserController extends AppBaseController
 
         $roles = $this->roleRepository->all()->where('id', '!=', '1')->pluck('display_name', 'id')->all();
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $user);
-        return view('admin.users.edit')->with(['user' => $user, 'roles' => $roles]);
+        return view('admin.users.edit')->with([
+            'user'        => $user,
+            'roles'       => $roles,
+            'DEALER_TYPE' => User::$DEALER_TYPE]);
     }
 
     /**

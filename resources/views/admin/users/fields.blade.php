@@ -8,7 +8,7 @@
     <!-- Email Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('email', 'Email:') !!}
-        {!! Form::email('email', null, ['class' => 'form-control', isset($use)?'readonly':'']) !!}
+        {!! Form::email('email', null, ['class' => 'form-control']) !!}
     </div>
 
     @if (strpos(Request::url(), 'users') !== false)
@@ -64,7 +64,7 @@
                     <!-- Email Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('email', 'Email:') !!}
-                        {!! Form::email('email', null, ['class' => 'form-control', isset($user)?'readonly':'']) !!}
+                        {!! Form::email('email', null, ['class' => 'form-control', 'readonly']) !!}
                     </div>
 
                     <!-- Country Code Field -->
@@ -79,6 +79,11 @@
                         {!! Form::number('phone', $user->details->phone?? null, ['class' => 'form-control', 'min'=> 1]) !!}
                     </div>
 
+                    {{--<!-- Roles Field -->--}}
+                    {{--<div class="form-group col-sm-6">--}}
+                        {{--{!! Form::label('roles', 'Dealer Type:') !!}--}}
+                        {{--{!! Form::select('dealer_type', $DEALER_TYPE, old('dealer_type')??\App\Models\User::$DEALER_TYPE[$user->details->dealer_type], ['class' => 'form-control select2']) !!}--}}
+                    {{--</div>--}}
                 @if (strpos(Request::url(), 'users') !== false)
 
                     <!-- Roles Field -->
@@ -86,16 +91,16 @@
                             {!! Form::label('roles', 'Roles:') !!}
                             {!! Form::select('roles[]', $roles, null, ['class' => 'form-control select2', 'multiple'=>'multiple']) !!}
                         </div>--}}
-                @endif
+                    @endif
                     <div class="clearfix"></div>
-                <!-- Image Field -->
+                    <!-- Image Field -->
                     <div class="form-group col-sm-3">
                         {!! Form::label('image', 'Image:') !!}
                         {!! Form::file('image', ['class' => 'form-control']) !!}
 
                         @if($user->details)
                             {{--<img src="{{ $user->details->image_url }}" width="80">--}}
-                            <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >
+                            <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
                                 <a class='showGallery' data-id='{{ $user->id }}' data-toggle='modal'>
                                     <img src="{!! $user->details->image_url !!}" style="width: 125px;">
                                 </a>

@@ -10,6 +10,13 @@
     <dd>{!! $user->email !!}</dd>
 </div>
 
+@if($user->details->dealer_type)
+    <div class="col-sm-12">
+        <!-- Email Field -->
+        <dt>{!! Form::label('email', 'Email:') !!}</dt>
+        <dd>{!! \App\Models\User::$DEALER_TYPE[$user->details->dealer_type] !!}</dd>
+    </div>
+@endif
 <div class="col-sm-12">
     <dt>{!! Form::label('phone', 'Phone:') !!}</dt>
     <dd>{!! $user->details->country_code .'-'.$user->details->phone !!}</dd>

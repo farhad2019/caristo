@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    Banks Rates
+    Bank Rates
 @endsection
 
 @section('content')

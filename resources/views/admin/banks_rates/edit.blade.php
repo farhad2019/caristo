@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    {{ $banksRate->name }} <small>Banks Rate</small>
+    {{ $banksRate->name }} <small>Bank Rate</small>
 @endsection
 
 @section('content')

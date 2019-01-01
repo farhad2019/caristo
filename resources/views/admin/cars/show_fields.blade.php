@@ -42,7 +42,7 @@
                 <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
                 <dd>{!! $myCar->transmission_type_text?? 'N/A' !!}</dd>
         @endif
-        @if($myCar->category_id == \App\Models\MyCar::APPROVED_PRE_OWNED || $myCar->category_id == \App\Models\MyCar::CLASSIC_CARS)
+        @if($myCar->category_id == \App\Models\MyCar::APPROVED_PRE_OWNED || $myCar->category_id == \App\Models\MyCar::CLASSIC_CARS || $myCar->category_id == Null)
             <!-- Year Field -->
                 <dt>{!! Form::label('kilometer', 'Kilometer:') !!}</dt>
                 <dd>{!! $myCar->kilometer ? $myCar->kilometer .' Km': 'N/A' !!}</dd>
