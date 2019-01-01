@@ -32,7 +32,7 @@ class BanksRateController extends AppBaseController
         $this->banksRateRepository = $banksRateRepo;
         $this->contactUsRepository = $contactUsRepository;
         $this->ModelName = 'banksRates';
-        $this->BreadCrumbName = 'BanksRate';
+        $this->BreadCrumbName = 'Bank Rates';
     }
 
     /**

@@ -29,9 +29,11 @@
             <dd>{!! $myCar->chassis?? 'N/A' !!}</dd>
         </div>
         <div class="col-md-8">
+        @if($myCar->name)
             <!-- Name Field -->
-            <dt>{!! Form::label('name', 'Name:') !!}</dt>
-            <dd>{!! $myCar->name?? 'N/A' !!}</dd>
+                <dt>{!! Form::label('name', 'Name:') !!}</dt>
+                <dd>{!! $myCar->name?? 'N/A' !!}</dd>
+        @endif
         @if($myCar->category_id)
             <!-- Type Id Field -->
                 <dt>{!! Form::label('category_id', 'Category :') !!}</dt>
@@ -226,7 +228,7 @@
         <div class="box-footer"></div>
     </div>
 
-    <div class="box">
+    {{--<div class="box">
         <div class="box-header with-border">
             <h3 class="box-title">Car Attributes</h3>
             <div class="box-tools pull-right">
@@ -255,7 +257,7 @@
             </dd>
         </div>
         <div class="box-footer"></div>
-    </div>
+    </div>--}}
 @endif
 @if($myCar->carRegions->count() > 0)
     <div class="box">

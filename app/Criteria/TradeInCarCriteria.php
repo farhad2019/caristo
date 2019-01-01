@@ -22,7 +22,7 @@ class TradeInCarCriteria implements CriteriaInterface
 
     public function apply($model, RepositoryInterface $repository)
     {
-        $model = $model->where(['user_id' => Auth::id()]);
+        $model = $model->where(['user_id' => Auth::id()])->orderBy('created_at', 'desc');
 
         return $model;
     }
