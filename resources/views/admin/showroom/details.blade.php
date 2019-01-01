@@ -200,9 +200,7 @@
 </div>
 
 <script>
-
     $(document).ready(function () {
-
         //circle start
         var progressBar = document.querySelector('.e-c-progress');
         var indicator = document.getElementById('e-indicator');
@@ -213,7 +211,7 @@
 
         function update(value, timePercent) {
             //var offset = -length - length * value / (86400);
-            var offset = -length - length * value / (timePercent);
+            var offset = -length - length * value / (86400);
             progressBar.style.strokeDashoffset = offset;
             pointer.style.transform = `rotate(${360 * value / (timePercent)}deg)`;
         }
@@ -246,8 +244,8 @@
                         btn.style.opacity = 1;
                     });
                     displayTimeLeft(wholeTime);
-                    pauseBtn.classList.remove('pause');
-                    pauseBtn.classList.add('play');
+                    //pauseBtn.classList.remove('pause');
+                    // pauseBtn.classList.add('play');
                     return;
                 }
                 displayTimeLeft(timeLeft);
@@ -258,8 +256,8 @@
             if (isStarted === false) {
                 timer(wholeTime);
                 isStarted = true;
-                this.classList.remove('play');
-                this.classList.add('pause');
+                //this.classList.remove('play');
+                // this.classList.add('pause');
 
                 setterBtns.forEach(function (btn) {
                     btn.disabled = true;
@@ -267,13 +265,13 @@
                 });
 
             } else if (isPaused) {
-                this.classList.remove('play');
-                this.classList.add('pause');
+                //this.classList.remove('play');
+                // this.classList.add('pause');
                 timer(timeLeft);
                 isPaused = isPaused ? false : true
             } else {
-                this.classList.remove('pause');
-                this.classList.add('play');
+                //this.classList.remove('pause');
+                // this.classList.add('play');
                 clearInterval(intervalTimer);
                 isPaused = isPaused ? false : true;
             }
