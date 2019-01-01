@@ -131,7 +131,7 @@
 
                 <h4>Place a Bid now</h4>
                 {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeInRequest->id], "id"=>"submitBit", 'method' => 'patch']) !!}
-                <input type="text" id="amount_bit" name="amount" placeholder="AED"
+                <input type="number" id="amount_bit" name="amount" placeholder="AED"
                        value="{{ isset($tradeIn)? number_format($tradeInRequest->amount):'' }}"
                        min="1">
                 <button type="submit" class="submit" name="">submit</button>

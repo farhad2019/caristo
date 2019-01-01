@@ -12,6 +12,23 @@
     <!-- /.box-header -->
     <div class="box-body">
         <div class="col-md-4">
+            <!-- Engine Type Id Field -->
+            <dt>{!! Form::label('engine_type_id', 'Engine Type :') !!}</dt>
+            <dd>{!! isset($myCar->engineType->name) ? $myCar->engineType->name : 'N/A' !!}</dd>
+
+            <!-- Model Id Field -->
+            <dt>{!! Form::label('model_id', 'Model :') !!}</dt>
+            <dd>{!! isset($myCar->carModel->name) ? $myCar->carModel->brand->name.' '.$myCar->carModel->name : 'N/A' !!}</dd>
+
+            <!-- Year Field -->
+            <dt>{!! Form::label('year', 'Year:') !!}</dt>
+            <dd>{!! $myCar->year?? 'N/A' !!}</dd>
+
+            <!-- Year Field -->
+            <dt>{!! Form::label('chassis', 'Chassis:') !!}</dt>
+            <dd>{!! $myCar->chassis?? 'N/A' !!}</dd>
+        </div>
+        <div class="col-md-8">
             <!-- Name Field -->
             <dt>{!! Form::label('name', 'Name:') !!}</dt>
             <dd>{!! $myCar->name?? 'N/A' !!}</dd>
@@ -33,27 +50,12 @@
                 <dt>{!! Form::label('kilometer', 'Kilometer:') !!}</dt>
                 <dd>{!! $myCar->kilometer ? $myCar->kilometer .' Km': 'N/A' !!}</dd>
         @endif
-
-        <!-- Year Field -->
-            <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
-            <dd>{!! $myCar->amount .' AED' ?? 'N/A' !!}</dd>
-        </div>
-        <div class="col-md-8">
-            <!-- Engine Type Id Field -->
-            <dt>{!! Form::label('engine_type_id', 'Engine Type :') !!}</dt>
-            <dd>{!! isset($myCar->engineType->name) ? $myCar->engineType->name : 'N/A' !!}</dd>
-
-            <!-- Model Id Field -->
-            <dt>{!! Form::label('model_id', 'Model :') !!}</dt>
-            <dd>{!! isset($myCar->carModel->name) ? $myCar->carModel->brand->name.' '.$myCar->carModel->name : 'N/A' !!}</dd>
-
+        @if($myCar->amount)
             <!-- Year Field -->
-            <dt>{!! Form::label('year', 'Year:') !!}</dt>
-            <dd>{!! $myCar->year?? 'N/A' !!}</dd>
+                <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
+                <dd>{!! $myCar->amount .' AED' ?? 'N/A' !!}</dd>
 
-            <!-- Year Field -->
-            <dt>{!! Form::label('chassis', 'Chassis:') !!}</dt>
-            <dd>{!! $myCar->chassis?? 'N/A' !!}</dd>
+            @endif
         </div>
     </div>
     <!-- /.box-body -->
@@ -255,39 +257,41 @@
         <div class="box-footer"></div>
     </div>
 @endif
-<div class="box">
-    <div class="box-header with-border">
-        <h3 class="box-title">Regions</h3>
-        <div class="box-tools pull-right">
-            <!-- Collapse Button -->
-            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-minus"></i>
-            </button>
+@if($myCar->carRegions->count() > 0)
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Regions</h3>
+            <div class="box-tools pull-right">
+                <!-- Collapse Button -->
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
         </div>
-        <!-- /.box-tools -->
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-        <dt>{!! Form::label('owner_type', 'Region:') !!}</dt>
-        <dd>
-            @if($myCar->carRegions->count() > 0)
-                @foreach($myCar->carRegions as $region)
+        <!-- /.box-header -->
+        <div class="box-body">
+            <dt>{!! Form::label('owner_type', 'Region:') !!}</dt>
+            <dd>
+                @if($myCar->carRegions->count() > 0)
+                    @foreach($myCar->carRegions as $region)
+                        <ul>
+                            <li>{!! $region->region->name !!}
+                                {{ (empty($region->price)? '' : ': '.number_format($region->price,2)) }}</li>
+                        </ul>
+                    @endforeach
+                @else
                     <ul>
-                        <li>{!! $region->region->name !!}
-                            {{ (empty($region->price)? '' : ': '.number_format($region->price,2)) }}</li>
+                        <li>N/A</li>
                     </ul>
-                @endforeach
-            @else
-                <ul>
-                    <li>N/A</li>
-                </ul>
-            @endif
-        </dd>
+                @endif
+            </dd>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer clearfix"></div>
+        <!-- box-footer -->
     </div>
-    <!-- /.box-body -->
-    <div class="box-footer clearfix"></div>
-    <!-- box-footer -->
-</div>
+@endif
 
 <div class="box">
     <div class="box-header with-border">
