@@ -695,6 +695,9 @@ class AuthAPIController extends AppBaseController
         $details->first_name = $request->input('username', null);
         $details->save();
 
+        $user->roles()->attach([Role::RANDOM_USER_ROLE]);
+        $user->save();
+
         if (!$token = \JWTAuth::fromUser($user)) {
             return $this->sendErrorWithData('Invalid credentials, please try login again');
         }

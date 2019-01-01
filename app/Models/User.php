@@ -107,6 +107,7 @@ class User extends Authenticatable implements JWTSubject
 //        'email'                 => 'required|email',
 //        'phone'                 => 'required|string|max:20',
 //        'roles'                 => 'required',
+        'dealer_type'           => 'required|in:10,20',
         'password'              => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'min:6'
     ];

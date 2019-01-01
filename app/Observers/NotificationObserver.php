@@ -22,7 +22,8 @@ class NotificationObserver
 //        $this->tradeInRequest = App()->make(TradeInCarRepository::class);
 //        $clientCar = $this->tradeInRequest->findWhere(['id' => $notificationUser->notification->ref_id])->first();
         $message = $notificationUser->notification->message;
-        $deviceData = $notificationUser->user->devices->toArray();
+        $deviceData = $notificationUser->user->devices()->where('push_notification', 1)->get()->toArray();
+
         $extraPayload = [
             //'ref_id' => $clientCar->my_car->id
             'ref_id' => $notificationUser->notification->ref_id

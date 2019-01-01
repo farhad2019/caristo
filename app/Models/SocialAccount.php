@@ -113,7 +113,8 @@ class SocialAccount extends Model
         'device_type' => 'required',
         'client_id'   => 'required',
 //        'token'        => 'required',
-        'email'       => 'sometimes|required|email',
+//        'email'       => 'sometimes|required|email',
+        'email'                 => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
     ];
 
     public function user()
