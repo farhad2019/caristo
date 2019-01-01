@@ -37,6 +37,10 @@ class ContactUsRepository extends BaseRepository
         return ContactUs::class;
     }
 
+    /**
+     * @param $request
+     * @return mixed
+     */
     public function saveRecord($request)
     {
         $input = $request->all();
@@ -47,8 +51,12 @@ class ContactUsRepository extends BaseRepository
         return $contactUs;
     }
 
+    /**
+     * @param $bankId
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function getUserRequest($bankId)
     {
-        return $this->model->with(['bankDetail','carDetail','userDetail'])->where('bank_id',$bankId)->get();
+        return $this->model->with(['bankDetail', 'carDetail', 'userDetail'])->where('bank_id', $bankId)->orderBy('created_at', 'desc')->get();
     }
 }

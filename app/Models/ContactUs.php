@@ -15,6 +15,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property BanksRate bank_detail
+ * @property Car car_detail
+ * @property User user_detail
+ *
  * @SWG\Definition(
  *      definition="ContactUs",
  *      required={"car_id", "name", "email", "country_code", "phone", "type"},
@@ -152,20 +156,28 @@ class ContactUs extends Model
         'type'         => 'required|in:10,20,30'
     ];
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function bankDetail()
     {
-        return $this->belongsTo(BanksRate::class,'bank_id');
+        return $this->belongsTo(BanksRate::class, 'bank_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function carDetail()
     {
-        return $this->belongsTo(Car::class,'car_id');
+        return $this->belongsTo(MyCar::class, 'car_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function userDetail()
     {
-        return $this->belongsTo(User::class,'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }

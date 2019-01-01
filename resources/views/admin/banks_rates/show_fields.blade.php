@@ -16,13 +16,12 @@
 
 <dt>{!! Form::label('image', 'Image:') !!}</dt>
 <dd>
-    <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >
+    <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
         <a class='showGallery' data-id='{{ $banksRate->media[0]->id }}' data-toggle='modal'>
             <img src="{{$banksRate->media()->orderby('created_at', 'desc')->first()->fileUrl}}" style="width: 125px;">
         </a>
     </div>
 </dd>
-
 
 <br>
 
@@ -37,8 +36,6 @@
 <!-- Updated At Field -->
 <dt>{!! Form::label('updated_at', 'Updated At:') !!}</dt>
 <dd>{!! $banksRate->updated_at->timezone(session('timezone')) !!}</dd>
-
-
 
 @if($getBankRequest)
     <div class="container" style="width: 100%;">
@@ -58,19 +55,22 @@
             <tbody>
 
 
-
-            <?php $i=1;
+            <?php $i = 1;
             foreach ($getBankRequest as $bankRequest){?>
             <tr>
-                <td  class="abc">{{ $i}}</td>
-                <td  class="abc"><a href="{{URL::to('/')}}/admin/users/{{$bankRequest['user_id']}}">{{ $bankRequest['name']}}</a></td>
-                <td  class="abc">{{ $bankRequest['email']}}</td>
-                <td  class="abc">{{ $bankRequest['country_code']}} {{ $bankRequest['phone']}}</td>
+                <td class="abc">{{ $i}}</td>
+                <td class="abc"><a
+                            href="{{URL::to('/')}}/admin/users/{{$bankRequest['user_id']}}">{{ $bankRequest['name']}}</a>
+                </td>
+                <td class="abc">{{ $bankRequest['email']}}</td>
+                <td class="abc">{{ $bankRequest['country_code']}} {{ $bankRequest['phone']}}</td>
                 {{--<td  class="abc">{!! $bankRequest['userDetail']['details']['first_name'] .' '.$bankRequest['userDetail']['details']['last_name'] !!}</td>--}}
-                <td  class="abc"><a href="{{URL::to('/')}}/admin/cars/{{$bankRequest['carDetail']['id']}}">{!! $bankRequest['carDetail']['name'] or "N/A" !!} </a></td>
-                <td  class="abc">{!! $bankRequest->created_at->timezone(session('timezone')) !!} </td>
+                <td class="abc"><a href="{{URL::to('/')}}/admin/cars/{{$bankRequest['carDetail']['id']}}">
+                        {!! ($bankRequest->carDetail->year .' '.$bankRequest->carDetail->carModel->name .' '.$bankRequest->carDetail->carModel->brand->name) !!} </a>
+                </td>
+                <td class="abc">{!! $bankRequest->created_at->timezone(session('timezone')) !!} </td>
             </tr>
-            <?php $i = $i +1;} ?>
+            <?php $i = $i + 1;} ?>
 
             </tbody>
         </table>
