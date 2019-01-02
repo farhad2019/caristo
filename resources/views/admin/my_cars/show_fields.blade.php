@@ -211,7 +211,6 @@
                                 <li>{!! $label !!} : {!! $value !!}</li>
                             </ul>
                         @endforeach
-
                     </dd>
                 @endforeach
             @else
@@ -219,6 +218,21 @@
                     <li>N/A</li>
                 </ul>
             @endif
+            <dt>{!! Form::label('depreciation_trend', 'Depreciation Trend:') !!}</dt>
+            <dd>
+                @foreach($myCar->depreciation_trend_value as $label => $value)
+                    <ul>
+                        <li>{!! $value['year'] !!} : {!! number_format($value['amount'], 2) !!}</li>
+                    </ul>
+                @endforeach
+            </dd>
+            @php($life_cycle = explode('-',$myCar->life_cycle))
+            <dt>{!! Form::label('life_cycle', 'Life Cycle:') !!}</dt>
+            <dd>
+                <ul>
+                    <li>{!! $life_cycle[0] !!} - {!! $life_cycle[1] !!}</li>
+                </ul>
+            </dd>
         </div>
         <div class="box-footer"></div>
     </div>

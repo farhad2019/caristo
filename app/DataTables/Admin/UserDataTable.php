@@ -158,7 +158,11 @@ class UserDataTable extends DataTable
                 'searchable' => true,
                 'title'      => 'Roles'
             ],
-            'dealer_type',
+            'dealer_type'        => [
+                'title'      => 'Dealer Type',
+                'orderable'  => false,
+                'searchable' => false
+            ],
             'cars_count'         => [
                 'title'      => 'My Cars',
                 'orderable'  => false,
