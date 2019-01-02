@@ -40,6 +40,10 @@ class BanksRateRepository extends BaseRepository
         return BanksRate::class;
     }
 
+    /**
+     * @param $request
+     * @return mixed
+     */
     public function saveRecord($request)
     {
         $input = $request->all();
@@ -60,6 +64,11 @@ class BanksRateRepository extends BaseRepository
         return $bankRate;
     }
 
+    /**
+     * @param $request
+     * @param $bankRate
+     * @return mixed
+     */
     public function updateRecord($request, $bankRate)
     {
         if ($request->hasFile('media')) {

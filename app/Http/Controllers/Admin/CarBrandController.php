@@ -168,14 +168,16 @@ class CarBrandController extends AppBaseController
 
         if (empty($carBrand)) {
             Flash::error('Car Brand not found');
+            return redirect(route('admin.carBrands.index'));
+        }
 
+        if ($carBrand->carModels->count() > 0) {
+            Flash::error('This brand has models. Cannot be deleted');
             return redirect(route('admin.carBrands.index'));
         }
 
         $this->carBrandRepository->delete($id);
-
         Flash::success('Car Brand deleted successfully.');
-
         return redirect(route('admin.carBrands.index'));
     }
 }

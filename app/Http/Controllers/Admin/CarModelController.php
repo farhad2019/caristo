@@ -186,6 +186,11 @@ class CarModelController extends AppBaseController
             return redirect(route('admin.carModels.index'));
         }
 
+        if ($carModel->cars->count() > 0) {
+            Flash::error('This model belongs to car. Cannot be deleted');
+            return redirect(route('admin.carModels.index'));
+        }
+
         $this->carModelRepository->delete($id);
 
         Flash::success('Car Model deleted successfully.');

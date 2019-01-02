@@ -176,6 +176,11 @@ class RegionalSpecificationController extends AppBaseController
             return redirect(route('admin.regionalSpecifications.index'));
         }
 
+        if ($regionalSpecification->cars->count() > 0) {
+            Flash::error('This specifications belongs to car. Cannot be deleted');
+            return redirect(route('admin.regionalSpecifications.index'));
+        }
+
         $this->regionalSpecificationRepository->delete($id);
 
         Flash::success('Regional Specification deleted successfully.');

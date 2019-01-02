@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property ContactUs requests
+ * @property Media media
+ *
  * @SWG\Definition(
  *      definition="BanksRate",
  *      required={"id", "title", "phone_no", "address", "rate", "type", "created_at", "updated_at", "deleted_at"},
@@ -57,15 +60,12 @@ class BanksRate extends Model
     const INSURANCE = 20;
 
     public static $BANK_TYPE_TEXT = [
-        self::BANK    => 'Bank',
+        self::BANK      => 'Bank',
         self::INSURANCE => 'Insurance'
     ];
 
     public $table = 'bank_insurances';
-    
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'id',
@@ -85,10 +85,10 @@ class BanksRate extends Model
      * @var array
      */
     protected $casts = [
-        'title' => 'string',
+        'title'    => 'string',
         'phone_no' => 'string',
-        'address' => 'string',
-        'rate' => 'float'
+        'address'  => 'string',
+        'rate'     => 'float'
     ];
 
     /**
@@ -96,9 +96,9 @@ class BanksRate extends Model
      *
      * @var array
      */
-     protected $with = [
-         'media'
-     ];
+    protected $with = [
+        'media'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -129,12 +129,12 @@ class BanksRate extends Model
      * @var array
      */
     public static $rules = [
-        'title' => 'required',
+        'title'    => 'required',
         'phone_no' => 'required|phone',
-        'address' => 'required',
-        'rate' => 'required',
-        'type' => 'required',
-        'media'   => 'required'
+        'address'  => 'required',
+        'rate'     => 'required',
+        'type'     => 'required',
+        'media'    => 'required'
 
     ];
 
@@ -144,11 +144,11 @@ class BanksRate extends Model
      * @var array
      */
     public static $update_rules = [
-        'title' => 'required',
+        'title'    => 'required',
         'phone_no' => 'required|phone',
-        'address' => 'required',
-        'rate' => 'required',
-        'type' => 'required',
+        'address'  => 'required',
+        'rate'     => 'required',
+        'type'     => 'required',
     ];
 
     /**
@@ -157,16 +157,24 @@ class BanksRate extends Model
      * @var array
      */
     public static $api_rules = [
-        'id' => 'required',
-        'title' => 'required',
-        'phone_no' => 'required',
-        'address' => 'required',
-        'rate' => 'required',
-        'type' => 'required',
+        'id'         => 'required',
+        'title'      => 'required',
+        'phone_no'   => 'required',
+        'address'    => 'required',
+        'rate'       => 'required',
+        'type'       => 'required',
         'created_at' => 'required',
         'updated_at' => 'required',
         'deleted_at' => 'required'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function requests()
+    {
+        return $this->hasMany(ContactUs::class, 'bank_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany

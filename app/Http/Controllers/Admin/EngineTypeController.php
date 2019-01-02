@@ -176,6 +176,11 @@ class EngineTypeController extends AppBaseController
             return redirect(route('admin.engineTypes.index'));
         }
 
+        if ($engineType->cars->count() > 0) {
+            Flash::error('This engine type belongs to car. Cannot be deleted');
+            return redirect(route('admin.engineTypes.index'));
+        }
+
         $this->engineTypeRepository->delete($id);
 
         Flash::success('Engine Type deleted successfully.');

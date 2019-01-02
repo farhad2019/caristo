@@ -9,9 +9,9 @@ use App\Http\Requests\Admin\CreateBanksRateRequest;
 use App\Http\Requests\Admin\UpdateBanksRateRequest;
 use App\Repositories\Admin\BanksRateRepository;
 use App\Repositories\Admin\ContactUsRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class BanksRateController extends AppBaseController
 {
@@ -24,10 +24,10 @@ class BanksRateController extends AppBaseController
     /** @var  BanksRateRepository */
     private $banksRateRepository;
 
-    /** @var  ContatcUsRepository */
+    /** @var  ContactUsRepository */
     private $contactUsRepository;
 
-    public function __construct(BanksRateRepository $banksRateRepo,ContactUsRepository $contactUsRepository)
+    public function __construct(BanksRateRepository $banksRateRepo, ContactUsRepository $contactUsRepository)
     {
         $this->banksRateRepository = $banksRateRepo;
         $this->contactUsRepository = $contactUsRepository;
@@ -43,7 +43,7 @@ class BanksRateController extends AppBaseController
      */
     public function index(BanksRateDataTable $banksRateDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $banksRateDataTable->render('admin.banks_rates.index');
     }
 
@@ -54,7 +54,7 @@ class BanksRateController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.banks_rates.create');
     }
 
@@ -94,10 +94,10 @@ class BanksRateController extends AppBaseController
             return redirect(route('admin.banksRates.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $banksRate);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $banksRate);
 
-        $getBankRequest =  $this->contactUsRepository->getUserRequest($id);
-        return view('admin.banks_rates.show')->with(['banksRate'=> $banksRate,'getBankRequest'=>$getBankRequest]);
+        $getBankRequest = $this->contactUsRepository->getUserRequest($id);
+        return view('admin.banks_rates.show')->with(['banksRate' => $banksRate, 'getBankRequest' => $getBankRequest]);
     }
 
     /**
@@ -117,14 +117,14 @@ class BanksRateController extends AppBaseController
             return redirect(route('admin.banksRates.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $banksRate);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $banksRate);
         return view('admin.banks_rates.edit')->with('banksRate', $banksRate);
     }
 
     /**
      * Update the specified BanksRate in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateBanksRateRequest $request
      *
      * @return Response
@@ -165,10 +165,13 @@ class BanksRateController extends AppBaseController
             return redirect(route('admin.banksRates.index'));
         }
 
+        if ($banksRate->requests->count() > 0) {
+            Flash::error('This bank has requests. Cannot be deleted');
+            return redirect(route('admin.banksRates.index'));
+        }
+
         $this->banksRateRepository->delete($id);
-
         Flash::success('Banks Rate deleted successfully.');
-
         return redirect(route('admin.banksRates.index'));
     }
 }

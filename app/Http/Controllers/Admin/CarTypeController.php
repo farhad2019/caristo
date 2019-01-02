@@ -175,6 +175,11 @@ class CarTypeController extends AppBaseController
             return redirect(route('admin.carTypes.index'));
         }
 
+        if ($carType->cars->count() > 0) {
+            Flash::error('This car type belongs to car. Cannot be deleted');
+            return redirect(route('admin.carTypes.index'));
+        }
+
         $this->carTypeRepository->delete($id);
 
         Flash::success('Car Type deleted successfully.');

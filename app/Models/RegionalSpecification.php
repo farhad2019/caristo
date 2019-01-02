@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property MyCar cars
+ *
  * @SWG\Definition(
  *      definition="RegionalSpecification",
  *      required={"id"},
@@ -94,6 +96,9 @@ class RegionalSpecification extends Model
      */
     public static $api_rules = [];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function cars()
     {
         return $this->hasMany(MyCar::class, 'regional_specification_id');
