@@ -91,7 +91,7 @@
                                 @if(Auth::user()->hasRole('showroom-owner'))
                                     @if(isset(Auth::user()->showroomDetails->logo_url))
                                         <img src="{!! Auth::user()->showroomDetails->logo_url !!}"
-                                             class="user-image" alt="User Image"/>
+                                             class="user-image"/>
                                     @endif
 
                                 @else
@@ -104,8 +104,17 @@
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <img src="{!! Auth::user()->details->image_url !!}"
-                                         class="img-circle" alt="User Image"/>
+                                    @if(Auth::user()->hasRole('showroom-owner'))
+                                        @if(isset(Auth::user()->showroomDetails->logo_url))
+                                            <img src="{!! Auth::user()->showroomDetails->logo_url !!}"
+                                                 class="user-image"/>
+                                        @endif
+
+                                    @else
+                                        <img src="{!! Auth::user()->details->image_url !!}"
+                                             class="img-circle" alt="User Image"/>
+                                    @endif
+
 
                                     <p>
                                         {!! Auth::user()->name !!}
