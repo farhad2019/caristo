@@ -72,8 +72,7 @@ class BanksRateController extends AppBaseController
         //$banksRate = $this->banksRateRepository->create($input);
         $banksRate = $this->banksRateRepository->saveRecord($request);
 
-        Flash::success('Banks Rate saved successfully.');
-
+        Flash::success('Bank Rate saved successfully.');
         return redirect(route('admin.banksRates.index'));
     }
 
@@ -89,8 +88,7 @@ class BanksRateController extends AppBaseController
         $banksRate = $this->banksRateRepository->findWithoutFail($id);
 
         if (empty($banksRate)) {
-            Flash::error('Banks Rate not found');
-
+            Flash::error('Bank Rate not found');
             return redirect(route('admin.banksRates.index'));
         }
 
@@ -112,8 +110,7 @@ class BanksRateController extends AppBaseController
         $banksRate = $this->banksRateRepository->findWithoutFail($id);
 
         if (empty($banksRate)) {
-            Flash::error('Banks Rate not found');
-
+            Flash::error('Bank Rate not found');
             return redirect(route('admin.banksRates.index'));
         }
 
@@ -134,17 +131,14 @@ class BanksRateController extends AppBaseController
         $banksRate = $this->banksRateRepository->findWithoutFail($id);
 
         if (empty($banksRate)) {
-            Flash::error('Banks Rate not found');
-
+            Flash::error('Bank Rate not found');
             return redirect(route('admin.banksRates.index'));
         }
 
         $banksRate = $this->banksRateRepository->update($request->all(), $id);
         $this->banksRateRepository->updateRecord($request, $banksRate);
 
-
-        Flash::success('Banks Rate updated successfully.');
-
+        Flash::success('Bank Rate updated successfully.');
         return redirect(route('admin.banksRates.index'));
     }
 
@@ -160,8 +154,7 @@ class BanksRateController extends AppBaseController
         $banksRate = $this->banksRateRepository->findWithoutFail($id);
 
         if (empty($banksRate)) {
-            Flash::error('Banks Rate not found');
-
+            Flash::error('Bank Rate not found');
             return redirect(route('admin.banksRates.index'));
         }
 
@@ -171,7 +164,7 @@ class BanksRateController extends AppBaseController
         }
 
         $this->banksRateRepository->delete($id);
-        Flash::success('Banks Rate deleted successfully.');
+        Flash::success('Bank Rate deleted successfully.');
         return redirect(route('admin.banksRates.index'));
     }
 }

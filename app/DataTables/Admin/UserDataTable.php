@@ -42,7 +42,7 @@ class UserDataTable extends DataTable
             return '<span style="word-break: break-all">' . implode(",", $model->Roles->pluck('display_name')->toArray()) . '</span>';
         });
 
-        $dataTable->editColumn('dealer_type', function (User $model) {
+        $dataTable->editColumn('details.dealer_type_text', function (User $model) {
             if ($model->details->dealer_type == 10) {
                 return "<span class='badge bg-" . Utils::getBoolCss(1, true) . "'> " . User::$DEALER_TYPE[$model->details->dealer_type] . "</span>";
             } elseif ($model->details->dealer_type == 20) {
@@ -68,7 +68,7 @@ class UserDataTable extends DataTable
             return "<a href='" . route('admin.cars.index', ['owner_id' => $model->id, 'type' => CarInteraction::TYPE_VIEW]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->view_count . "</span></a>";
         });
 
-        $dataTable->rawColumns(['dealer_type', 'name', 'email', 'action', 'Roles.display_name', 'cars_count', 'favorite_count', 'view_count']);
+        $dataTable->rawColumns(['details.dealer_type_text', 'name', 'email', 'action', 'Roles.display_name', 'cars_count', 'favorite_count', 'view_count']);
         return $dataTable->addColumn('action', 'admin.users.datatables_actions');
     }
 
@@ -158,10 +158,8 @@ class UserDataTable extends DataTable
                 'searchable' => true,
                 'title'      => 'Roles'
             ],
-            'dealer_type'        => [
-                'title'      => 'Dealer Type',
-                'orderable'  => false,
-                'searchable' => false
+            'details.dealer_type_text'        => [
+                'title'      => 'Dealer Type'
             ],
             'cars_count'         => [
                 'title'      => 'My Cars',

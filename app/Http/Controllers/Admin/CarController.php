@@ -18,10 +18,10 @@ use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\EngineTypeRepository;
 use App\Repositories\Admin\RegionalSpecificationRepository;
 use App\Repositories\Admin\RegionRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class CarController extends AppBaseController
 {
@@ -223,9 +223,7 @@ class CarController extends AppBaseController
         }
 
         $this->carRepository->delete($id);
-
         Flash::success('Car deleted successfully.');
-
         return redirect(route('admin.cars.index'));
     }
 }

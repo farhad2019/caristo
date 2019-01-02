@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 /**
  * @property integer id
@@ -174,10 +176,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class MyCar extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, CascadeSoftDeletes;
+
+//    use SoftDeletes {
+//        restore as private restoreA;
+//    }
+//    use EntrustUserTrait {
+//        restore as private restoreB;
+//    }
+
+    //protected $cascadeDeletes = ['myCarAttributes', 'views', 'likes', 'favorites', 'carRegions'];
 
     public $table = 'cars';
-
     protected $dates = ['deleted_at', 'bid_close_at'];
 
     const MANUAL = 10;
