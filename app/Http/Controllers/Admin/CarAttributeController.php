@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\CreateCarAttributeRequest;
 use App\Http\Requests\Admin\UpdateCarAttributeRequest;
 use App\Models\CarAttribute;
 use App\Models\CarAttributeTranslation;
+use App\Models\MyCarAttribute;
 use App\Repositories\Admin\AttributeOptionRepository;
 use App\Repositories\Admin\AttributeOptionTranslationRepository;
 use App\Repositories\Admin\CarAttributeRepository;
@@ -183,6 +184,11 @@ class CarAttributeController extends AppBaseController
 
         if (empty($carAttribute)) {
             Flash::error('Car Attribute not found');
+            return redirect(route('admin.carAttributes.index'));
+        }
+
+        if (MyCarAttribute::where('attribute_id', $id)->count() > 0) {
+            Flash::error('Car Attribute belongs to car. Cannot be deleted');
             return redirect(route('admin.carAttributes.index'));
         }
 
