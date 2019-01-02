@@ -2,7 +2,8 @@
     .regions {
         display: none;
     }
-</style><!-- Category Field -->
+</style>
+<!-- Category Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('category_id', 'Category:') !!}
     {!! Form::select('category_id', $categories, null, ['class' => 'form-control select2']) !!}
@@ -56,7 +57,6 @@
     {!! Form::select('region', $regions, null, ['class' => 'form-control select2']) !!}
 </div>
 
-
 <!-- Amount Field -->
 <div class="form-group col-sm-6 region category2528" {{--id="mileage" style="display:none;"--}}>
     {!! Form::label('kilometers', 'Mileage(km):') !!}
@@ -72,7 +72,7 @@
 <!-- Average MKP Field -->
 <div class="form-group col-sm-6 region category2528">
     {!! Form::label('avg_mkp', 'Average MKP(AED):') !!}
-    {!! Form::number('average_mkp', null, ['class' => 'form-control', 'placeholder' => 'Enter Average Market Price']) !!}
+    {!! Form::number('average_mkp', null, ['class' => 'form-control', 'placeholder' => 'Enter Average Market Price', 'pattern'=>"^[1-9]\d*$"]) !!}
 </div>
 
 <!-- Name Field -->
@@ -248,6 +248,7 @@
     <h3>Dimensions & Weight</h3>
     <hr>
 </div>
+
 <div class="form-group col-sm-6 regions">
     {!! Form::label('length', 'Length:') !!}
     {!! Form::number('length', isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']:null, ['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
@@ -277,6 +278,7 @@
     {!! Form::label('WEIGHT', 'WEIGHT:') !!}
     {!! Form::number('weight',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT']:null, ['class' => 'form-control', 'placeholder' => 'Weight in KG']) !!}
 </div>
+
 <div class="form-group col-sm-12 regions">
     <hr>
     <h3>Seating Capacity</h3>
@@ -456,13 +458,14 @@
             <div class="form-group col-sm-6">
                 {!! Form::label('regions','Price in '.$region, null, ['class' => 'form-control']) !!}
                 {!! Form::hidden('regions[]',$key, null, ['class' => 'form-control']) !!}
-                {!! Form::number('price[]', null, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
+                {!! Form::number('price[]', null, ['class' => 'form-control', 'placeholder' => 'Enter Region Price', 'pattern'=>"^[1-9]\d*$"]) !!}
             </div>
         </div>
     @endforeach
 @endif
 
 <div class="clearfix"></div>
+
 <!-- Media Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('media', 'Images:') !!}

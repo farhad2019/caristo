@@ -88,9 +88,17 @@
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
-                                <img src="{!! Auth::user()->details->image_url !!}"
-                                     class="user-image" alt="User Image"/>
-                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                @if(Auth::user()->hasRole('showroom-owner'))
+                                    @if(isset(Auth::user()->showroomDetails->logo_url))
+                                        <img src="{!! Auth::user()->showroomDetails->logo_url !!}"
+                                             class="user-image" alt="User Image"/>
+                                    @endif
+
+                                @else
+                                    <img src="{!! Auth::user()->details->image_url !!}"
+                                         class="user-image" alt="User Image"/>
+                            @endif
+                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                 <span class="hidden-xs">{!! Auth::user()->name !!}</span>
                             </a>
                             <ul class="dropdown-menu">
