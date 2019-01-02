@@ -6,6 +6,7 @@ use App\Models\CarAttribute;
 use App\Models\CarFeature;
 use App\Models\CarInteraction;
 use App\Models\Comment;
+use App\Models\Media;
 use App\Models\Module;
 use App\Models\NewsInteraction;
 use App\Models\NotificationUser;
@@ -51,13 +52,14 @@ class AppServiceProvider extends ServiceProvider
             return str_replace(':attribute', $carAttribute->name, ':attribute is required');
         });
 
-        \Validator::extend('media', function ($attribute, $value, $parameters, $validator) {
-            return strlen($value) > 0;
+        /*\Validator::extend('media', function ($attribute, $value, $parameters, $validator) {
+            return mime_content_type($value[0]);
         });
         \Validator::replacer('media', function ($message, $attribute, $rule, $parameters, $value) {
-            $carAttribute = CarAttribute::where('id', explode(".", $attribute)[1])->first();
+            dd($attribute);
+            $carAttribute = Media::where('instance_id', explode(".", $attribute)[1])->first();
             return str_replace(':attribute', $carAttribute->name, ':attribute is required');
-        });
+        });*/
 
         \Validator::extend('greater_than_field', function ($attribute, $value, $parameters, $validator) {
             $from = $parameters[0];
