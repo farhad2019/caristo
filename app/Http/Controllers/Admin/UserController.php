@@ -288,12 +288,11 @@ class UserController extends AppBaseController
         }
 
         if ($user->cars->count() > 0){
-            if (TradeInCar::whereIn('owner_car_id', $user->cars->pluck('id')->toArray())->orWhereIn('customer_car_id', $user->cars->pluck('id')->toArray())->orWhereIn('user_id', $id)->count() > 0) {
+            if (TradeInCar::whereIn('owner_car_id', $user->cars->pluck('id')->toArray())->orWhereIn('customer_car_id', $user->cars->pluck('id')->toArray())->orWhere('user_id', $id)->count() > 0) {
                 Flash::error('Car cannot be deleted, Trade request found');
-                return redirect(route('admin.cars.index'));
+                return redirect(route('admin.users.index'));
             }
         }
-
 
         $this->userRepository->delete($id);
 
