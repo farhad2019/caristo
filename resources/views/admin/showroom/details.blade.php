@@ -295,6 +295,11 @@
                     $('#amount_bit').css('border', '1px solid #ff081c');
                     return false;
                 }
+                if (($('#amount_bit').val()).length > 8) {
+                    $('#amount_bit').css('border', '1px solid #ff081c');
+                    alert('limit exceed. 1 - 1000000');
+                    return false;
+                }
                 return true
             });
         });
