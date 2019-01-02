@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\CarInteraction;
 use App\Models\NewsInteraction;
 use App\Models\Role;
+use App\Models\TradeInCar;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Repositories\Admin\CarInteractionRepository;
@@ -285,6 +286,14 @@ class UserController extends AppBaseController
             Flash::error('User not found');
             return redirect(route('admin.users.index'));
         }
+
+        if ($user->cars->count() > 0){
+            if (TradeInCar::whereIn('owner_car_id', $user->cars->pluck('id')->toArray())->orWhereIn('customer_car_id', $user->cars->pluck('id')->toArray())->orWhereIn('user_id', $id)->count() > 0) {
+                Flash::error('Car cannot be deleted, Trade request found');
+                return redirect(route('admin.cars.index'));
+            }
+        }
+
 
         $this->userRepository->delete($id);
 
