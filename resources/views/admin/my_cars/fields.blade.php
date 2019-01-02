@@ -446,7 +446,7 @@
             <div class="form-group col-sm-3">
                 {!! Form::label('price','Price in '. $region->region->name) !!}
                 {!! Form::hidden('regions[]',$region->region_id, null, ['class' => 'form-control']) !!}
-                {!! Form::text('price[]', $region->price, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
+                {!! Form::number('price[]', $region->price, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
             </div>
         </div>
     @endforeach

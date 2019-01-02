@@ -314,12 +314,12 @@ class MyCarRepository extends BaseRepository
             if (isset($input['category_id'])) {
                 $regions = [];
                 if ($region > 0) {
-
+                    CarRegion::where('car_id', $myCar->id)->delete();
                     foreach ($request->regions as $key => $val) {
                         $regions['region_id'] = intval($request->regions[$key]);
                         $regions['price'] = $input['price'][$key];
                         $regions['car_id'] = $myCar->id;
-                        CarRegion::where('car_id', $myCar->id)->update($regions);
+                        CarRegion::create($regions);
                     }
                 }
             }

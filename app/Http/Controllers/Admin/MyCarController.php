@@ -506,7 +506,6 @@ class MyCarController extends AppBaseController
      */
     public function update($id, Request $request)
     {
-
         if ($request->category_id == MyCar::LIMITED_EDITION) {
             $validatedData = $request->validate([
                 'category_id'               => 'sometimes|nullable|required',
@@ -515,7 +514,34 @@ class MyCarController extends AppBaseController
                 'amount'                    => 'sometimes|nullable|required',
                 'regional_specification_id' => 'sometimes|nullable|required',
                 'email'                     => 'sometimes|nullable|required|email',
-                'media'                     => 'sometimes',
+                'chassis'                   => 'required',
+                'length'                    => 'required',
+                'width'                     => 'required',
+                'height'                    => 'required',
+                'weight_dist'               => 'required',
+                'trunk'                     => 'required',
+                'weight'                    => 'required',
+                'seats'                     => 'required',
+                'drivetrain'                => 'required',
+                'displacement'              => 'required',
+                'clynders'                  => 'required',
+                'max_speed'                 => 'required',
+                'acceleration'              => 'required',
+                'hp_rpm'                    => 'required',
+                'torque'                    => 'required',
+                'gearbox'                   => 'required',
+                'brakes'                    => 'required',
+                'suspension'                => 'required',
+                'front_tyre'                => 'required',
+                'back_tyre'                 => 'required',
+                'consumbsion'               => 'required',
+                'emission'                  => 'required',
+                'warranty'                  => 'required',
+                'maintenance'               => 'required',
+                'to'                        => 'required|greater_than_field:from',
+                'depreciation_trend'        => 'required',
+                'price.*'                   => 'required',
+                'media'                     => 'required',
                 'media.*'                   => 'image|mimes:jpg,jpeg,png',
             ], [
                 'category_id.required' => 'The category field is required.',
@@ -524,6 +550,7 @@ class MyCarController extends AppBaseController
                 'amount.required'      => 'The amount field is required.',
                 'media.required'       => 'The media is required.',
                 'media.*'              => 'The media must be a file of type: jpg, jpeg, png.',
+                'price.*'              => 'The all price must be filled.',
                 'email.required'       => 'The amount field is required.'
             ]);
         } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
@@ -583,12 +610,13 @@ class MyCarController extends AppBaseController
         }
         $myCar = $this->myCarRepository->findWithoutFail($id);
 
-        if ($request->category_id != $myCar->category_id) {
-            CarRegion::where('car_id', $id)->delete();
-        }
         if (empty($myCar)) {
             Flash::error('Car not found');
             return redirect(route('admin.myCars.index'));
+        }
+
+        if ($request->category_id != $myCar->category_id) {
+            CarRegion::where('car_id', $id)->delete();
         }
         $myCar = $this->myCarRepository->updateRecord($request, $myCar);
 
