@@ -58,6 +58,17 @@ class AppServiceProvider extends ServiceProvider
             $carAttribute = CarAttribute::where('id', explode(".", $attribute)[1])->first();
             return str_replace(':attribute', $carAttribute->name, ':attribute is required');
         });
+
+        \Validator::extend('greater_than_field', function ($attribute, $value, $parameters, $validator) {
+            $from = $parameters[0];
+            $data = $validator->getData();
+            $min_value = $data[$from];
+            return $value > $min_value;
+        });
+
+        \Validator::replacer('greater_than_field', function ($message, $attribute, $rule, $parameters) {
+            return 'Production life cycle start year must be less then end year';
+        });
     }
 
     /**

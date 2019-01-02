@@ -19,9 +19,8 @@ class NotificationCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
         // Implement apply() method.
-        $user_id = Auth::id();
-        $model = $model->whereHas('users', function ($notificationUser) use ($user_id) {
-            return $notificationUser->where('user_id', $user_id);
+        $model = $model->whereHas('users', function ($notificationUser) {
+            return $notificationUser->where('user_id', Auth::id());
         })->orderBy('created_at', 'DESC');
 
         return $model;

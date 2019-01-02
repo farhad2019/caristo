@@ -31,6 +31,7 @@ class CreateNewsRequest extends BaseFormRequest
 
         if (!$youtube_id && $request->media_type == 20) {
             unset($request['video_url']);
+            #TODO: Accept only youtube url. apply custom validation (checkYoutubeURL) in app service provider
             $rules['video_url'] = 'required_without:image|url';
         } else {
             $rules['image'] = 'required_without:video_url|image|mimes:jpg,jpeg,png,bmp|max:5000';

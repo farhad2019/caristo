@@ -416,15 +416,15 @@
 <div class="form-group col-sm-12 regions">
     <?php $explodeLifeCycle = explode('-', @$myCar->life_cycle); ?>
     <hr>
-    <h3>Life Cycle</h3>
+    <h3>Production Life Cycle</h3>
     <hr>
     <div class="form-group col-sm-6 regions">
-        {!! Form::label('Lifecycle', 'From:') !!}
+        {!! Form::label('Lifecycle', 'Start Year:') !!}
         {{--{!! Form::number('from', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
         {!! Form::select('from', $years, @$explodeLifeCycle[0], ['class' => 'form-control select2']) !!}
     </div>
     <div class="form-group col-sm-6 regions">
-        {!! Form::label('Lifecycle', 'To:') !!}
+        {!! Form::label('Lifecycle', 'End Year:') !!}
         {{--{!! Form::number('to', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
         {!! Form::select('to', $years, @$explodeLifeCycle[1], ['class' => 'form-control select2']) !!}
     </div>
