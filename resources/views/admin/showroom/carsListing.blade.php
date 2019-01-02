@@ -41,11 +41,11 @@
                                     <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
                                 @endif
                                 <div class="content">
-                                    <h3>{{ $tradeInRequest->tradeAgainst->year }} {{ $tradeInRequest->tradeAgainst->carModel->brand->name }} {{ $tradeInRequest->tradeAgainst->carModel->name }}</h3>
-                                    <p>{{ $tradeInRequest->tradeAgainst->year }}
-                                        {{ $tradeInRequest->tradeAgainst->kilometer? ' • '. number_format($tradeInRequest->tradeAgainst->kilometer).' km' : ''}}
+                                    <h3>{{ @$tradeInRequest->tradeAgainst->year }} {{ @$tradeInRequest->tradeAgainst->carModel->brand->name }} {{ @$tradeInRequest->tradeAgainst->carModel->name }}</h3>
+                                    <p>{{ @$tradeInRequest->tradeAgainst->year }}
+                                        {{ isset( $tradeInRequest->tradeAgainst->kilometer)? ' • '. number_format($tradeInRequest->tradeAgainst->kilometer).' km' : ''}}
                                         <br>
-                                        Chassis {{ $tradeInRequest->tradeAgainst->chassis }}
+                                        Chassis {{ @$tradeInRequest->tradeAgainst->chassis }}
                                         {{--<span>Reference Number: 0123456789</span>--}}
                                     </p>
                                 </div>

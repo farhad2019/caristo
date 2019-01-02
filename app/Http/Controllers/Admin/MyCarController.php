@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\UpdateMyCarRequest;
 use App\Models\CarRegion;
 use App\Models\MyCar;
 use App\Models\RegionalSpecification;
+use App\Models\TradeInCar;
 use App\Repositories\Admin\CarAttributeRepository;
 use App\Repositories\Admin\CarBrandRepository;
 use App\Repositories\Admin\CarFeatureRepository;
@@ -792,6 +793,10 @@ class MyCarController extends AppBaseController
             return redirect(route('admin.myCars.index'));
         }
 
+        if (TradeInCar::where('owner_car_id', $id)->orWhere('customer_car_id', $id)->count() > 0) {
+            Flash::error('Car cannot be deleted, Trade request found');
+            return redirect(route('admin.cars.index'));
+        }
         $this->myCarRepository->delete($id);
 
         Flash::success('Car deleted successfully.');

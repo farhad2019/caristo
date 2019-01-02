@@ -8,6 +8,7 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateCarRequest;
 use App\Http\Requests\Admin\UpdateCarRequest;
 use App\Models\CarInteraction;
+use App\Models\TradeInCar;
 use App\Repositories\Admin\CarAttributeRepository;
 use App\Repositories\Admin\CarBrandRepository;
 use App\Repositories\Admin\CarFeatureRepository;
@@ -219,6 +220,11 @@ class CarController extends AppBaseController
         if (empty($car)) {
             Flash::error('Car not found');
 
+            return redirect(route('admin.cars.index'));
+        }
+
+        if (TradeInCar::where('owner_car_id', $id)->orWhere('customer_car_id', $id)->count() > 0) {
+            Flash::error('Car cannot be deleted, Trade request found');
             return redirect(route('admin.cars.index'));
         }
 

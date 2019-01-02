@@ -66,7 +66,7 @@
 <!-- Amount Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('amount', 'Amount(AED):') !!}
-    {!! Form::number('amount', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Amount']) !!}
+    {!! Form::number('amount', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Amount', 'pattern'=>"^[1-9]\d*$"]) !!}
 </div>
 
 <!-- Average MKP Field -->
@@ -434,7 +434,7 @@
 <div class="form-group col-sm-12 regions">
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Depreciation_Trend', 'Depreciation Trend (%):') !!}
-        {!! Form::number('depreciation_trend',  null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %']) !!}
+        {!! Form::number('depreciation_trend',  null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min'=>1, 'max'=>99]) !!}
     </div>
 </div>
 <!-- End of Limited Editions Field -->

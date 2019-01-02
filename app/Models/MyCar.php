@@ -47,6 +47,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property CarInteraction user_interactions
  * @property Category category
  * @property TradeInCar my_trade_cars
+ * @property TradeInCar customer_trade_car
  *
  * @property string transmission_type_text
  * @property string top_bids
@@ -185,7 +186,7 @@ class MyCar extends Model
 //        restore as private restoreB;
 //    }
 
-    //protected $cascadeDeletes = ['myCarAttributes', 'views', 'likes', 'favorites', 'carRegions'];
+    //protected $cascadeDeletes = ['myCarAttributes', 'views', 'likes', 'favorites', 'carRegions', 'customer_trade_car', 'my_trade_cars'];
 
     public $table = 'cars';
     protected $dates = ['deleted_at', 'bid_close_at'];
@@ -591,6 +592,13 @@ class MyCar extends Model
     {
         return $this->hasMany(TradeInCar::class, 'owner_car_id');
     }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+//    public function customerTradeCar()
+//    {
+//        return $this->hasMany(TradeInCar::class, 'customer_car_id');
+//    }
 
     /**
      * @return int
