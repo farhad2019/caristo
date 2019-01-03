@@ -15,9 +15,10 @@ class UpdateForgotPasswordRequest extends BaseAPIRequest
     public function rules()
     {
         return [
-            'verification_code' => 'required',
-            'email'             => 'required',
-            'password'          => 'required'
+            'verification_code'     => 'required',
+            'email'                 => 'required',
+            'password'              => 'min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:6'
         ];
     }
 

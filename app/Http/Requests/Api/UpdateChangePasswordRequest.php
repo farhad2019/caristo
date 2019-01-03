@@ -15,8 +15,9 @@ class UpdateChangePasswordRequest extends BaseAPIRequest
     public function rules()
     {
         return [
-            'old_password' => 'required',
-            'password'     => 'required|min:6|confirmed|different:old_password'
+            'old_password'          => 'required',
+            'password'              => 'min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:6',
         ];
     }
 
