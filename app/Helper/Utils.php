@@ -6,6 +6,9 @@ use Image;
 
 class Utils
 {
+    const CAR_DEEP_LINK = 10;
+    const NEWS_DEEP_LINK = 20;
+
     const BOOL_FALSE = 0;
     const BOOL_TRUE = 1;
 
