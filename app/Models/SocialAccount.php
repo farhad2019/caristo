@@ -114,7 +114,7 @@ class SocialAccount extends Model
         'client_id'   => 'required',
 //        'token'        => 'required',
 //        'email'       => 'sometimes|required|email',
-        'email'                 => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
+        'email'                 => 'required|email',
     ];
 
     public function user()

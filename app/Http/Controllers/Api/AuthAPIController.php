@@ -638,6 +638,8 @@ class AuthAPIController extends AppBaseController
         if ($this->uDevice->getByDeviceToken($request->device_token)) {
             $this->uDevice->deleteByDeviceToken($request->device_token);
         }
+
+
         if ($account && $account->user) {
             // Account found. generate token;
             $user = $account->user;
@@ -673,6 +675,10 @@ class AuthAPIController extends AppBaseController
             $account->username = $request->input('username', null);
             $account->expires_at = $request->input('expires_at', null);
             $account->save();
+
+            $user->roles()->attach([Role::RANDOM_USER_ROLE]);
+            $user->save();
+
         }
 
         $user->name = $request->input('username', null);
@@ -694,9 +700,6 @@ class AuthAPIController extends AppBaseController
         }
         $details->first_name = $request->input('username', null);
         $details->save();
-
-        $user->roles()->attach([Role::RANDOM_USER_ROLE]);
-        $user->save();
 
         if (!$token = \JWTAuth::fromUser($user)) {
             return $this->sendErrorWithData('Invalid credentials, please try login again');
