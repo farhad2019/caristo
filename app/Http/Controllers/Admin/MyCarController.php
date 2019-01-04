@@ -266,31 +266,35 @@ class MyCarController extends AppBaseController
 
         } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
             $validatedData = $request->validate([
-                'category_id'               => 'sometimes|nullable|required',
-                'model_id'                  => 'sometimes|nullable|required',
-                'year'                      => 'sometimes|nullable|required',
-                'transmission_type'         => 'sometimes|nullable|required',
-                'engine_type_id'            => 'sometimes|nullable|required',
-                'amount'                    => 'sometimes|nullable|required',
-                'regional_specification_id' => 'sometimes|nullable|required',
-                'kilometer'                 => 'sometimes|nullable|required',
-                'average_mkp'               => 'sometimes|nullable|required',
-                'email'                     => 'sometimes|nullable|required|email',
-                'phone'                     => 'sometimes|nullable|phone',
+                'category_id'               => 'required',
+                'model_id'                  => 'required',
+                'year'                      => 'required',
+                'transmission_type'         => 'required',
+                'engine_type_id'            => 'required',
+                'amount'                    => 'required',
+                'regional_specification_id' => 'required',
+                'kilometer'                 => 'required',
+                'average_mkp'               => 'required',
+                'chassis'                   => 'required',
+                'name'                      => 'required',
+                'email'                     => 'required|email',
+                'phone'                     => 'phone',
                 'media'                     => 'required',
                 'media.*'                   => 'image|mimes:jpg,jpeg,png',
                 'attribute.*'               => 'attr'
             ], [
                 'category_id.required'       => 'The category field is required.',
+                'chassis.required'           => 'The chassis field is required.',
+                'name.required'              => 'The car name field is required.',
                 'model_id.required'          => 'The model field is required.',
                 'year.required'              => 'The year field is required.',
                 'transmission_type.required' => 'The transmission field is required.',
                 'engine_type_id.required'    => 'The engine field is required.',
-                'amount.required'            => 'The amount field is required.',
+                'amount.required'            => 'The Amount field is required.',
                 'media.required'             => 'The media is required.',
                 'media.*'                    => 'The media must be a file of type: jpg, jpeg, png.',
-                'kilometer.required'         => 'The Mileage field is required.',
-                'average_mkp.required'       => 'The Average MKP field is required.',
+                'kilometer.required'         => 'The mileage field is required.',
+                'average_mkp.required'       => 'The average MKP field is required.',
                 'email.required'             => 'The amount field is required.'
             ]);
         } else {
@@ -386,7 +390,7 @@ class MyCarController extends AppBaseController
         if (!empty($myCar->limited_edition_specs)) {
             $limited_edition_specs = json_decode($myCar->limited_edition_specs, true);
         }
-        
+
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
