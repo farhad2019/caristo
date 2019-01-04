@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helper\BreadcrumbsRegister;
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\MyCarRepository;
 use App\Repositories\Admin\NewsRepository;
@@ -82,4 +83,6 @@ class HomeController extends Controller
             'cars'       => $cars
         ]);
     }
+    
+    
 }
