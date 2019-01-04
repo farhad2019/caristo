@@ -170,20 +170,21 @@ class NewsController extends AppBaseController
 
         if (empty($news)) {
             Flash::error('News not found');
-
             return redirect(route('admin.news.index'));
         }
 
         $this->newsRepository->delete($id);
 
         Flash::success('News deleted successfully.');
-
         return redirect(route('admin.news.index'));
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function confirmCancel($id)
     {
-
         $comment = $this->commentRepository->findWithoutFail($id);
         if (empty($comment)) {
             Flash::error('Comment not found');

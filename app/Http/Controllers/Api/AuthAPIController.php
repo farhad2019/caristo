@@ -253,7 +253,6 @@ class AuthAPIController extends AppBaseController
             $this->uDevice->create($deviceData);
 
         }
-
         return $this->respondWithToken($token);
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Eloquent as Model;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -130,11 +130,17 @@ class Comment extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function news()
     {
         return $this->belongsTo(News::class);
     }
 
+    /**
+     * @return mixed
+     */
     public function userwithtrash()
     {
         return $this->belongsTo(User::class,'user_id')->withTrashed();
