@@ -5,7 +5,7 @@ namespace App\Models;
 /**
  * @SWG\Definition(
  *      definition="Register",
- *      required={"name", "email", "address", "image", "password", "password_confirmation"},
+ *      required={"name", "email", "address", "image", "password", "password_confirmation","dob","profession","nationality","gender"},
  *      @SWG\Property(
  *          property="name",
  *          description="User First Name",
@@ -39,6 +39,23 @@ namespace App\Models;
  *          description="Password Confirmation",
  *          type="string"
  *      ),@SWG\Property(
+ *          property="dob",
+ *          description="User Date of Birth",
+ *          type="string"
+ *      ),@SWG\Property(
+ *          property="profession",
+ *          description="User's Profession Confirmation",
+ *          type="string"
+ *      ),@SWG\Property(
+ *          property="nationality",
+ *          description="User's nationality",
+ *          type="string"
+ *      ),@SWG\Property(
+ *          property="gender",
+ *          description="User gender 10 = male, 20 = female",
+ *          type="integer",
+ *          default=10
+ *      ),@SWG\Property(
  *          property="device_token",
  *          description="Device Token",
  *          type="string"
@@ -58,6 +75,10 @@ class Register
      */
     public static $rules = [
         'name'                  => 'required',
+        'dob'                   => 'required',
+        'profession'            => 'required',
+        'nationality'           => 'required',
+        'gender'                => 'required',
         'email'                 => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
 //        'email'                 => 'required|email|unique:users,email',
         'password'              => 'min:6|required_with:password_confirmation|same:password_confirmation',

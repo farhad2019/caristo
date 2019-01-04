@@ -5412,7 +5412,11 @@
                 "address",
                 "image",
                 "password",
-                "password_confirmation"
+                "password_confirmation",
+                "dob",
+                "profession",
+                "nationality",
+                "gender"
             ],
             "properties": {
                 "name": {
@@ -5446,6 +5450,23 @@
                 "password_confirmation": {
                     "description": "Password Confirmation",
                     "type": "string"
+                },
+                "dob": {
+                    "description": "User Date of Birth",
+                    "type": "string"
+                },
+                "profession": {
+                    "description": "User's Profession Confirmation",
+                    "type": "string"
+                },
+                "nationality": {
+                    "description": "User's nationality",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "User gender 10 = male, 20 = female",
+                    "type": "integer",
+                    "default": 10
                 },
                 "device_token": {
                     "description": "Device Token",
