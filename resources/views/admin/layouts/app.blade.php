@@ -290,7 +290,7 @@
         function confirmCancel(id) {
             swal({
                 title: "Are you sure?",
-                text: "You want to cancel the reservation?",
+                text: "Do you want to delete this comment?",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true
@@ -303,7 +303,7 @@
                         if (response === 'Success') {
                             swal({
                                 title: "Success",
-                                text: "Reservation is Cancel",
+                                text: "Comment is deleted",
                                 icon: "success"
                             }).then(function (willDelete) {
                                 location.reload();
