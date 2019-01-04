@@ -8,6 +8,7 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateMediaRequest;
 use App\Http\Requests\Admin\UpdateMediaRequest;
 use App\Repositories\Admin\MediaRepository;
+use App\Repositories\Admin\MyCarRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
 use Response;
@@ -23,9 +24,13 @@ class MediaController extends AppBaseController
     /** @var  MediaRepository */
     private $mediaRepository;
 
-    public function __construct(MediaRepository $mediaRepo)
+    /** @var  MyCarRepository */
+    private $myCarRepository;
+
+    public function __construct(MediaRepository $mediaRepo, MyCarRepository $myCarRepo)
     {
         $this->mediaRepository = $mediaRepo;
+        $this->myCarRepository = $myCarRepo;
         $this->ModelName = 'media';
         $this->BreadCrumbName = 'Media';
     }
@@ -38,7 +43,7 @@ class MediaController extends AppBaseController
      */
     public function index(MediaDataTable $mediaDataTable)
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return $mediaDataTable->render('admin.media.index');
     }
 
@@ -49,7 +54,7 @@ class MediaController extends AppBaseController
      */
     public function create()
     {
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.media.create');
     }
 
@@ -88,7 +93,7 @@ class MediaController extends AppBaseController
             return redirect(route('admin.media.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $media);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $media);
         return view('admin.media.show')->with('media', $media);
     }
 
@@ -109,14 +114,14 @@ class MediaController extends AppBaseController
             return redirect(route('admin.media.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName,$this->BreadCrumbName, $media);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $media);
         return view('admin.media.edit')->with('media', $media);
     }
 
     /**
      * Update the specified Media in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateMediaRequest $request
      *
      * @return Response
@@ -171,10 +176,21 @@ class MediaController extends AppBaseController
             $response['message'] = "Media not found !";
         }
 
-        $this->mediaRepository->delete($id);
-        $response['success'] = true;
-        $response['message'] = "Media deleted successfully !";
-
+        if ($media->instance_type == 'car') {
+            $car = $this->myCarRepository->find($media->instance_id);
+            if ($car->media->count() == 1) {
+                $response['success'] = false;
+                $response['message'] = "Media is required cannot delete all !";
+            } else {
+                $this->mediaRepository->delete($id);
+                $response['success'] = true;
+                $response['message'] = "Media deleted successfully !";
+            }
+        } else {
+            $this->mediaRepository->delete($id);
+            $response['success'] = true;
+            $response['message'] = "Media deleted successfully !";
+        }
         return $response;
     }
 
