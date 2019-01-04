@@ -832,6 +832,30 @@ class AuthAPIController extends AppBaseController
      *          type="string",
      *          required=false,
      *          in="formData"
+     *      ),@SWG\Parameter(
+     *          name="profession",
+     *          description="Profession of User ",
+     *          type="string",
+     *          required=false,
+     *          in="formData"
+     *      ),@SWG\Parameter(
+     *          name="gender",
+     *          description="Gender of User : Male=10, Female=20",
+     *          type="integer",
+     *          required=false,
+     *          in="formData"
+     *      ),@SWG\Parameter(
+     *          name="nationality",
+     *          description="Nationality of User",
+     *          type="string",
+     *          required=false,
+     *          in="formData"
+     *      ),@SWG\Parameter(
+     *          name="dob",
+     *          description="Date of birth of User : yyyy-mm-dd",
+     *          type="string",
+     *          required=false,
+     *          in="formData"
      *      ),
      *     @SWG\Parameter(
      *          name="image",
@@ -862,7 +886,7 @@ class AuthAPIController extends AppBaseController
     {
         $user = \Auth::user();
         $userData = array_filter($request->only(['name']));
-        $details = $request->only(['country_code', 'phone', 'about']);
+        $details = $request->only(['country_code', 'phone', 'about', 'gender', 'nationality', 'profession', 'dob']);
 
         if ($request->hasFile('image')) {
             $mediaFile = $request->file('image');

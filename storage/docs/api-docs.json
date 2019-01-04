@@ -4,7 +4,7 @@
         "title": "Laravel Generator APIs",
         "version": "1.0.0"
     },
-    "basePath": "/api/v1",
+    "basePath": "/CaristoCratApp/api/v1",
     "paths": {
         "/register": {
             "post": {
@@ -487,6 +487,34 @@
                         "name": "about",
                         "in": "formData",
                         "description": "About Me/Bio of User ",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "profession",
+                        "in": "formData",
+                        "description": "Profession of User ",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "gender",
+                        "in": "formData",
+                        "description": "Gender of User : Male=10, Female=20",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "nationality",
+                        "in": "formData",
+                        "description": "Nationality of User",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "dob",
+                        "in": "formData",
+                        "description": "Date of birth of User : yyyy-mm-dd",
                         "required": false,
                         "type": "string"
                     },
