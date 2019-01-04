@@ -33,6 +33,26 @@
 </div>
 
 <div class="col-sm-12">
+    <dt>{!! Form::label('dob', 'Date of Birth:') !!}</dt>
+    <dd>{!! $user->details->dob !!}</dd>
+</div>
+
+<div class="col-sm-12">
+    <dt>{!! Form::label('profession', 'Profession:') !!}</dt>
+    <dd>{!! $user->details->profession !!}</dd>
+</div>
+
+<div class="col-sm-12">
+    <dt>{!! Form::label('nationality', 'Nationality:') !!}</dt>
+    <dd>{!! $user->details->nationality !!}</dd>
+</div>
+
+<div class="col-sm-12">
+    <dt>{!! Form::label('gender', 'Gender:') !!}</dt>
+    <dd>{!! $user->details->gender !!}</dd>
+</div>
+
+<div class="col-sm-12">
     <dt>{!! Form::label('about', 'About Us:') !!}</dt>
     <dd>{!! $user->details->about !!}</dd>
 </div>

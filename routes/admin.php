@@ -53,7 +53,7 @@ Route::resource('categories', 'CategoryController');
 Route::resource('news', 'NewsController');
 
 Route::resource('comments', 'CommentController');
-
+Route::get('/news/confirmCancel/{id}', 'NewsController@confirmCancel');
 Route::resource('media', 'MediaController');
 Route::get('delete-media/{id}', 'MediaController@deleteMedia');
 

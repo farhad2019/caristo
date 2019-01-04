@@ -37,7 +37,7 @@ class UserDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'first_name', 'last_name', 'dealer_type', 'country_code', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login', 'about', 'region_reminder'
+        'user_id', 'first_name', 'last_name', 'dealer_type', 'country_code', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login', 'about', 'region_reminder', 'dob', 'profession', 'nationality', 'gender'
     ];
 
     public static $rules = [];
@@ -64,6 +64,10 @@ class UserDetail extends Model
         'phone'         => 'string',
         'address'       => 'string',
         'image'         => 'string',
+        'dob'           => 'string',
+        'profession'    => 'string',
+        'nationality'   => 'string',
+        'gender'        => 'int',
         'email_updates' => 'boolean',
         'social_login'  => 'boolean',
     ];
@@ -95,6 +99,10 @@ class UserDetail extends Model
         'image',
         'image_url',
         'area_id',
+        'dob',
+        'profession',
+        'nationality',
+        'gender',
         'email_updates',
         'social_login',
         'region_reminder',

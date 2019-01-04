@@ -8,6 +8,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Admin\CreateNewsRequest;
 use App\Http\Requests\Admin\UpdateNewsRequest;
 use App\Repositories\Admin\CategoryRepository;
+use App\Repositories\Admin\CommentRepository;
 use App\Repositories\Admin\NewsRepository;
 use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
@@ -26,10 +27,13 @@ class NewsController extends AppBaseController
     /** @var  CategoryRepository */
     private $categoryRepository;
 
-    public function __construct(NewsRepository $newsRepo, CategoryRepository $categoryRepository)
+    private $commentRepository;
+
+    public function __construct(NewsRepository $newsRepo, CategoryRepository $categoryRepository,CommentRepository $commentRepo)
     {
         $this->newsRepository = $newsRepo;
         $this->categoryRepository = $categoryRepository;
+        $this->commentRepository = $commentRepo;
         $this->ModelName = 'news';
         $this->BreadCrumbName = 'News';
     }
@@ -176,4 +180,18 @@ class NewsController extends AppBaseController
 
         return redirect(route('admin.news.index'));
     }
+
+    public function confirmCancel($id)
+    {
+
+        $comment = $this->commentRepository->findWithoutFail($id);
+        if (empty($comment)) {
+            Flash::error('Comment not found');
+            return redirect(route('admin.news.index'));
+        }
+        $comment->delete();
+
+        Flash::success('Status Updated.');
+        return redirect()->back();
+    }    
 }

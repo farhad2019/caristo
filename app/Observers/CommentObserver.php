@@ -15,8 +15,11 @@ class CommentObserver
 
     public function deleted(Comment $model)
     {
-        $news = $model->news;
-        $news->comments_count -= 1;
-        $news->save();
+        if ($model->news) {
+            $news = $model->news;
+            $news->comments_count -= 1;
+            $news->save();
+
+        }
     }
 }

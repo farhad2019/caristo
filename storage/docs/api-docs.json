@@ -2152,6 +2152,14 @@
                         "type": "integer"
                     },
                     {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
                         "name": "body",
                         "in": "body",
                         "description": "Comment that should be updated",
@@ -2197,6 +2205,14 @@
                         "description": "id of Comment",
                         "required": true,
                         "type": "integer"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
                     }
                 ],
                 "responses": {
@@ -5396,7 +5412,11 @@
                 "address",
                 "image",
                 "password",
-                "password_confirmation"
+                "password_confirmation",
+                "dob",
+                "profession",
+                "nationality",
+                "gender"
             ],
             "properties": {
                 "name": {
@@ -5430,6 +5450,23 @@
                 "password_confirmation": {
                     "description": "Password Confirmation",
                     "type": "string"
+                },
+                "dob": {
+                    "description": "User Date of Birth",
+                    "type": "string"
+                },
+                "profession": {
+                    "description": "User's Profession Confirmation",
+                    "type": "string"
+                },
+                "nationality": {
+                    "description": "User's nationality",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "User gender 10 = male, 20 = female",
+                    "type": "integer",
+                    "default": 10
                 },
                 "device_token": {
                     "description": "Device Token",

@@ -8,6 +8,7 @@ use App\Http\Requests\Api\UpdateCommentAPIRequest;
 use App\Models\Comment;
 use App\Repositories\Admin\CommentRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
@@ -228,6 +229,14 @@ class CommentAPIController extends AppBaseController
      *          required=true,
      *          in="path"
      *      ),
+     *    @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
@@ -289,6 +298,14 @@ class CommentAPIController extends AppBaseController
      *          required=true,
      *          in="path"
      *      ),
+     *       @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
@@ -314,13 +331,17 @@ class CommentAPIController extends AppBaseController
     {
         /** @var Comment $comment */
         $comment = $this->commentRepository->findWithoutFail($id);
-
+        $user = Auth::id();
         if (empty($comment)) {
             return $this->sendError('Comment not found');
         }
-
-        $comment->delete();
+        if ($comment->user_id == $user) {
+            $comment->delete();
+        } else {
+            return $this->sendError('You can not delete this comment');
+        }
 
         return $this->sendResponse($id, 'Comment deleted successfully');
     }
+
 }

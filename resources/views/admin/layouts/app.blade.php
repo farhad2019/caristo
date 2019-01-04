@@ -285,5 +285,48 @@
 {{--<script src="{{ url('public/js/admin/custom.js') }}"></script>--}}
 <script src="{{ url('public/js/admin/custom_new.js') }}"></script>
 
+    <script>
+
+        function confirmCancel(id) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to cancel the reservation?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then(function(willDelete) {
+                if(willDelete){
+                    $.ajax({
+                        url: "confirmCancel/" + id,
+                        method: 'GET'
+                    }).done(function (response) {
+                        if (response === 'Success') {
+                            swal({
+                                title: "Success",
+                                text: "Reservation is Cancel",
+                                icon: "success"
+                            }).then(function (willDelete) {
+                                location.reload();
+                            });
+                        }
+                        else {
+                            location.reload();
+                        }
+
+                    });
+
+                }
+            });
+        }
+//        $('body').on('click', '.news-delete', function () {
+//            var id = $(this).data("id");
+//            $.ajax({
+//                url: "/comments/" + id,
+//                method: 'DELETE'
+//            }).done(function (response) {
+//
+//            });
+//        });
+    </script>
 </body>
 </html>

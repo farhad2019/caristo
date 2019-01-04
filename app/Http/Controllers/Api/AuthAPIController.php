@@ -122,6 +122,10 @@ class AuthAPIController extends AppBaseController
             $userDetails['first_name'] = ucwords($request->name);
             $userDetails['country_code'] = $request->country_code;
             $userDetails['phone'] = $request->phone;
+            $userDetails['dob'] = $request->dob;
+            $userDetails['profession'] = $request->profession;
+            $userDetails['nationality'] = $request->nationality;
+            $userDetails['gender'] = $request->gender;
             $userDetails['address'] = isset($request->address) ? $request->address : null;
             $userDetails['image'] = isset($request->image) ? $request->image : null;
             $userDetails['email_updates'] = isset($request->email_updates) ? $request->email_updates : 1;

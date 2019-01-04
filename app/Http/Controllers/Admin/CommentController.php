@@ -159,6 +159,7 @@ class CommentController extends AppBaseController
 
         Flash::success('Comment deleted successfully.');
 
-        return redirect(route('admin.comments.index'));
+        return redirect()->back();
+//        return redirect(route('admin.comments.index'));
     }
 }

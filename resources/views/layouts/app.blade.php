@@ -42,8 +42,8 @@
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
                     @guest
-                        <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                        <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                    <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                    <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                     @else
                         @ability('super-admin', 'adminpanel')
                         <li><a class="nav-link" href="{{ url('/admin/home') }}">{{ __('Admin Panel') }}</a></li>
@@ -67,7 +67,7 @@
                                 </form>
                             </div>
                         </li>
-                    @endguest
+                        @endguest
                 </ul>
             </div>
         </div>
