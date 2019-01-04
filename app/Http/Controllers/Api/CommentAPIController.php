@@ -228,6 +228,14 @@ class CommentAPIController extends AppBaseController
      *          required=true,
      *          in="path"
      *      ),
+     *    @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
@@ -289,6 +297,14 @@ class CommentAPIController extends AppBaseController
      *          required=true,
      *          in="path"
      *      ),
+     *       @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
@@ -322,5 +338,19 @@ class CommentAPIController extends AppBaseController
         $comment->delete();
 
         return $this->sendResponse($id, 'Comment deleted successfully');
+    }
+
+    public function confirmCancel($id)
+    {
+        $comment = $this->commentRepository->findWithoutFail($id);
+        if (empty($comment)) {
+            Flash::error('Property not found');
+            return redirect(route('admin.cars.index'));
+        }
+
+        $comment->delete();
+
+        Flash::success('Comment Deleted Updated.');
+        return response('Success');
     }
 }

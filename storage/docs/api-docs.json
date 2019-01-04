@@ -2152,6 +2152,14 @@
                         "type": "integer"
                     },
                     {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
                         "name": "body",
                         "in": "body",
                         "description": "Comment that should be updated",
@@ -2197,6 +2205,14 @@
                         "description": "id of Comment",
                         "required": true,
                         "type": "integer"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
                     }
                 ],
                 "responses": {

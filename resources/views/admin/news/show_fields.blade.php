@@ -85,7 +85,11 @@
                 <div class="comment-text">
                       <span class="username">
                         {{$row->userwithtrash->detailswithtrash->first_name.' '.$row->userwithtrash->detailswithtrash->last_name}}
-                          <span class="text-muted pull-right">{{$row->created_at->timezone(session('timezone'))}}</span>
+                          <span class="text-muted pull-right">{{$row->created_at->timezone(session('timezone'))}}</span></br>
+                          <span class="text-muted pull-right">
+                              <a onclick='confirmCancel("{{$row->id}} "); return false;' class='btn btn-xs'>
+                               <i class="fa fa-trash fa-2x"></i> </a>
+                             </span>
                       </span><!-- /.username -->
                     {{$row->comment_text}}
                 </div>
