@@ -85,7 +85,7 @@ class RegionAPIController extends AppBaseController
     {
         $this->regionRepository->pushCriteria(new RequestCriteria($request));
         $this->regionRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $regions = $this->regionRepository->all();
+        $regions = $this->regionRepository->orderBy('created_at', 'ASC')->all();
 
         return $this->sendResponse($regions->toArray(), 'Regions retrieved successfully');
     }

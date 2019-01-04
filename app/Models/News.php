@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use App\Helper\Utils;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ *
+ * @property int id
+ * @property string link
+ *
  * @SWG\Definition(
  *      definition="News",
  *      required={"id", "category_id", "is_featured"},
@@ -58,6 +63,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          type="integer",
  *          format="int32"
  *      )
+ *
  * )
  */
 class News extends Model
@@ -131,6 +137,7 @@ class News extends Model
      * @var array
      */
     protected $appends = [
+        'link',
         'is_liked',
         'is_viewed',
         'is_favorite',
@@ -156,6 +163,7 @@ class News extends Model
         'is_liked',
         'is_viewed',
         'is_favorite',
+        'link',
         'media',
         'source_image_url',
 //        'category'
@@ -258,5 +266,13 @@ class News extends Model
     {
         return ($this->source_image && file_exists(storage_path('app/' . $this->source_image))) ? route('api.resize', ['img' => $this->source_image]) : route('api.resize', ['img' => 'public/no_image.png', 'w=50', 'h=50']);
 
+    }
+
+    /**
+     * @return string
+     */
+    public function getLinkAttribute()
+    {
+        return url('') . '?type=' . Utils::NEWS_DEEP_LINK . '&id=' . $this->id;
     }
 }

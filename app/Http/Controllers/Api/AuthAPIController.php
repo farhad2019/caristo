@@ -228,7 +228,7 @@ class AuthAPIController extends AppBaseController
         $credentials = $request->only(['email', 'password']);
 
         if (!$token = auth()->guard('api')->attempt($credentials)) {
-            return $this->sendErrorWithData("Invalid Login Credentials", 403);
+            return $this->sendErrorWithData("Invalid password or username. Please try again.", 403);
         }
 
         // check if device token exists in in coming  params

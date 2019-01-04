@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helper\Utils;
 use Carbon\Carbon;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -61,6 +62,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property mixed|null limited_edition_specs_array
  * @property mixed|null owner_type_text
  * @property array|null depreciation_trend_value
+ * @property string link
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -271,7 +273,7 @@ class MyCar extends Model
         'media',
         'myCarAttributes',
         'regionalSpecs',
-        'myCarFeatures',
+//        'myCarFeatures',
         'carRegions',
         'category',
 //        'bids',
@@ -285,6 +287,7 @@ class MyCar extends Model
      */
     protected $appends = [
         'transmission_type_text',
+        'link',
         'owner_type_text',
 //        'views_count',
         'top_bids',
@@ -321,6 +324,7 @@ class MyCar extends Model
         'notes',
         'top_bids',
         'ref_num',
+        'link',
 //        'bids',
         'transmission_type_text',
         'owner_type_text',
@@ -334,7 +338,7 @@ class MyCar extends Model
         'like_count',
         'is_favorite',
         'bid_close_at',
-        'myCarFeatures',
+//        'myCarFeatures',
         'limited_edition_specs_array',
         'depreciation_trend_value',
         'life_cycle',
@@ -700,5 +704,13 @@ class MyCar extends Model
         } else {
             return null;
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getLinkAttribute()
+    {
+        return url('') . '?type=' . Utils::CAR_DEEP_LINK . '&id=' . $this->id;
     }
 }
