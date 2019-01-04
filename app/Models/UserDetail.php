@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer email_updates
  * @property integer social_login
  * @property integer region_reminder
+ * @property integer is_verified
  * @property int gender
  * @property string created_at
  * @property string updated_at
@@ -114,6 +115,7 @@ class UserDetail extends Model
         'image_url',
         'area_id',
         'dob',
+        'is_verified',
         'profession',
         'nationality',
         'gender',

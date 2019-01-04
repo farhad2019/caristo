@@ -251,6 +251,11 @@ class AuthAPIController extends AppBaseController
 
             $user = auth()->guard('api')->setToken($token)->user()->toArray();
 
+            if ($user['details']['is_verified'] == 0) {
+                auth()->guard('api')->logout();
+                return $this->sendResponse([], 'Please verified Your Email');
+            }
+
             // check if device token exists
             if ($this->uDevice->getByDeviceToken($request->device_token)) {
                 $this->uDevice->deleteByDeviceToken($request->device_token);
@@ -390,7 +395,6 @@ class AuthAPIController extends AppBaseController
     public function logout()
     {
         auth()->guard('api')->logout();
-
         return $this->sendResponse([], 'Successfully logged out');
     }
 

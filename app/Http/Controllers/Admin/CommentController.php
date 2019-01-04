@@ -177,7 +177,7 @@ class CommentController extends AppBaseController
 
     public function getAlertNotification()
     {
-        $count = Comment::where('status', 20)->all()->count();
+        $count = Comment::where('status', 20)->count();
         return $count;
     }
 
