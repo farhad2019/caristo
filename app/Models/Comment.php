@@ -42,6 +42,7 @@ class Comment extends Model
         'id',
         'user_id',
         'news_id',
+        'status',
         'comment_text',
         'created_at'
     ];
@@ -87,6 +88,7 @@ class Comment extends Model
         'user_id',
         'created_at',
         'updated_at',
+        'status',
         'user'
     ];
 
