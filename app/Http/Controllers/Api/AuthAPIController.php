@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthAPIController extends AppBaseController
 {
@@ -137,7 +138,7 @@ class AuthAPIController extends AppBaseController
 
             $this->userDetailRepository->create($userDetails);
 
-            // check if device token exists in incomign  params
+            // check if device token exists in incoming  params
             if (isset($request->device_token) && isset($request->device_token)) {
                 // check if device token exists
                 if ($this->uDevice->getByDeviceToken($request->device_token)) {
@@ -150,7 +151,6 @@ class AuthAPIController extends AppBaseController
                 $deviceData['push_notification'] = isset($request->push_notification) ? $request->push_notification : 1;
 
                 $this->uDevice->create($deviceData);
-
             }
 
             $user->roles()->attach([Role::RANDOM_USER_ROLE]);
@@ -162,29 +162,40 @@ class AuthAPIController extends AppBaseController
             ];
 
             if (!$token = auth()->guard('api')->attempt($credentials)) {
-                return $this->sendErrorWithData("Invalid Login Credentials", 403);
+                return $this->sendErrorWithData("Invalid password or username. Please try again", 403);
             }
-
-            return $this->respondWithToken($token);
 
 //            $token = JWTAuth::attempt($credentials);
 //            $token = auth()->guard('api')->attempt($credentials);
-//            $userById = $this->userRepository->find($user->id);
-//
-//            $userById = $userById->toArray();
-            /*DB::table('user_verifications')->insert(['user_id'=>$user->id,'token'=>$verification_code]);
-              $subject = "Please verify your email address.";
-              Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
-                  function($mail) use ($email, $name, $subject){
-                      $mail->from(getenv('FROM_EMAIL_ADDRESS'), "From User/Company Name Goes Here");
-                      $mail->to($email, $name);
-                      $mail->subject($subject);
-                  });*/
-//            return $this->sendResponse(['user' => $userById, 'token' => $token], 'User Registered successfully.');
+            $userById = $this->userRepository->find($user->id)->toArray();
+
+            $verification_code = rand(1000, 9999);
+            $email = $userById['email'];
+            $name = $userById['name'];
+
+            $check = DB::table('password_resets')->where('email', $email)->first();
+            if ($check) {
+                DB::table('password_resets')->where('email', $email)->delete();
+            }
+
+            DB::table('password_resets')->insert(['email' => $email, 'code' => $verification_code, 'created_at' => Carbon::now()]);
+
+//            DB::table('user_verifications')->where('user_id', $user->id)->delete();
+//            DB::table('user_verifications')->insert(['user_id' => $user->id, 'token' => $verification_code]);
+            $subject = "Please verify your email address.";
+
+            Mail::send('email.verify', ['name' => $userById['name'], 'verification_code' => $verification_code],
+                function ($mail) use ($email, $name, $subject) {
+                    $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrate App");
+                    $mail->to($email, $name);
+                    $mail->subject($subject);
+                });
+            return $this->sendResponse(['user' => $userById, 'token' => $token], 'User Registered successfully.');
         } catch (\Exception $e) {
-            //return $this->sendErrorWithData("Invalid Login Credentials", 403, $e);
-            return $this->sendError('Internal Server Error', 500);
+//            return $this->sendErrorWithData("Invalid Login Credentials", 403, $e->getMessage());
+            return $this->sendError($e->getMessage(), 500);
         }
+        //return $this->respondWithToken($token);
     }
 
     /**
@@ -485,6 +496,13 @@ class AuthAPIController extends AppBaseController
      *          required=true,
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="email",
+     *          description="user_email",
+     *          type="string",
+     *          required=false,
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
@@ -507,14 +525,39 @@ class AuthAPIController extends AppBaseController
     {
         $code = $request->verification_code;
 
-        $check = DB::table('password_resets')->where('code', $code)->first();
-        if (!is_null($check)) {
-            $data['email'] = $check->email;
-            $data['code'] = "valid";
+        if (empty($request->email)) {
+            $check = DB::table('password_resets')->where('code', $code)->first();
+            if (!is_null($check)) {
+                $data['email'] = $check->email;
+                $data['code'] = "valid";
 //            DB::table('password_resets')->where('code', $check->email)->delete();
-            return $this->sendResponse(['user' => $data], 'Verified');
+                return $this->sendResponse(['user' => $data], 'Verified');
+            } else {
+                return $this->sendErrorWithData('Code Is Invalid', 403);
+            }
         } else {
-            return $this->sendErrorWithData('Code Is Invalid', 403);
+            $check = DB::table('password_resets')->where(['code' => $code, 'email' => $request->email])->first();
+            if (!is_null($check)) {
+                DB::table('password_resets')->where(['email' => $request->email])->delete();
+                //$user = $this->userRepository->findWhere(['email' => $request->email])->first();
+
+                $user = $this->userRepository->getUserByEmail($request->email);
+
+                $userDetails = $this->userDetailRepository->findWhere(['user_id' => $user->id])->first();
+                $userDetails->is_verified = 1;
+                $userDetails->save();
+
+                $user->refresh();
+                $token = JWTAuth::fromUser($user);
+                $user = array_merge($user->toArray(), [
+                    'access_token' => $token,
+                    'token_type'   => 'bearer',
+                    'expires_in'   => auth()->guard('api')->factory()->getTTL() * 60
+                ]);
+                return $this->sendResponse(['user' => $user], 'Logged in successfully');
+            } else {
+                return $this->sendErrorWithData('Code Is Invalid', 403);
+            }
         }
     }
 

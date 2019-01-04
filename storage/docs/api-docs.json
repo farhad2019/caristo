@@ -264,6 +264,13 @@
                         "description": "verification code",
                         "required": true,
                         "type": "integer"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "user_email",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
