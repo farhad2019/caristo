@@ -13,7 +13,11 @@
         </li>--}}
         <li class="{{ (Request::segments()[1] == 'tradeInCars')?'current':'' }}">
             <a href="{{ route('admin.tradeInCars.index') }}" title="New Requests">
-                <span class="icon-icon-1"></span> New Requests
+                <span class="icon-icon-1"></span> New Requests <i class="badge"></i>
+
+                    {{--Span--}}
+                </a>
+
             </a>
         </li>
         <li class="{{ (Request::segments()[1] == 'bidsHistories')?'current':'' }}">

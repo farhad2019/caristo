@@ -52,7 +52,7 @@ Route::resource('categories', 'CategoryController');
 
 Route::resource('news', 'NewsController');
 
-Route::resource('comments', 'CommentController');
+
 Route::get('/news/confirmCancel/{id}', 'NewsController@confirmCancel');
 Route::resource('media', 'MediaController');
 Route::get('delete-media/{id}', 'MediaController@deleteMedia');
@@ -99,6 +99,9 @@ Route::resource('tradeInCars', 'TradeInCarController');
 
 Route::resource('banksRates', 'BanksRateController');
 
+Route::resource('comments', 'CommentController');
 Route::post('notification', 'CommentController@getNotification');
 Route::post('alert', 'CommentController@getAlertNotification');
 Route::get('unread/{id}', 'CommentController@markRead');
+
+Route::Get('tradealert', 'TradeInCarController@getCount');
