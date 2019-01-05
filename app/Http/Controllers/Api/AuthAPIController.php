@@ -253,7 +253,7 @@ class AuthAPIController extends AppBaseController
 
             if ($user['details']['is_verified'] == 0) {
                 auth()->guard('api')->logout();
-                return $this->sendResponse([], 'Please verified Your Email');
+                return $this->sendErrorWithData("Please verified Your Email", 403);
             }
 
             // check if device token exists

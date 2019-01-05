@@ -102,6 +102,7 @@ class BanksRateDataTable extends DataTable
                 'title'      => 'Logo',
                 'orderable'  => false,
                 'searchable' => false,
+                'exportable' => false
             ]
         ];
     }

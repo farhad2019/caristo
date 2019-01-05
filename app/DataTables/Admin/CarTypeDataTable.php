@@ -92,6 +92,7 @@ class CarTypeDataTable extends DataTable
             'image'             => [
                 'orderable'  => false,
                 'searchable' => false,
+                'exportable' => false
             ]
         ];
     }

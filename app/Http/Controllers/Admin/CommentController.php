@@ -166,7 +166,6 @@ class CommentController extends AppBaseController
             $resultArray[$i]['created_at'] = $resultArray[$i]['created_at']->timezone(session('timezone'));
             $i++;
         }
-//        dd($resultArray);
 
         if (empty($data)) {
             Flash::error('Notification not found');
@@ -175,15 +174,23 @@ class CommentController extends AppBaseController
         return $resultArray;
     }
 
+    /**
+     * @return mixed
+     */
     public function getAlertNotification()
     {
         $count = Comment::where('status', 20)->count();
         return $count;
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function markRead($id)
     {
         $value['status'] = 10;
         Comment::where('id',$id)->update($value);
+        return true;
     }
 }

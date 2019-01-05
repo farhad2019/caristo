@@ -106,6 +106,7 @@ class CategoryDataTable extends DataTable
             'image'                      => [
                 'orderable'  => false,
                 'searchable' => false,
+                'exportable' => false
             ],
             'category_translations.name' => [
                 'title'     => 'Parent Category',

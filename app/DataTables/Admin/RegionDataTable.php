@@ -90,7 +90,8 @@ class RegionDataTable extends DataTable
             'name',
             'flag' => [
                 'searchable' => false,
-                'orderable'  => false
+                'orderable'  => false,
+                'exportable' => false
 
             ]
         ];
