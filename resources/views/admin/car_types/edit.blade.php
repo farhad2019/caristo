@@ -2,7 +2,7 @@
 
 @section('title')
     Edit
-    <small>Car Type</small>
+    <small>Segments</small>
 @endsection
 
 @section('content')

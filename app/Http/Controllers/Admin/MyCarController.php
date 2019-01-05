@@ -494,6 +494,7 @@ class MyCarController extends AppBaseController
             'attributes'            => $attributes,
             'features'              => $features,
             'transmission_type'     => MyCar::$TRANSMISSION_TYPE_TEXT,
+            'status'                => MyCar::$STATUS,
             'carTypes'              => $carTypes,
             'carModels'             => $carModels,
             'brands'                => $brands,

@@ -74,7 +74,7 @@ class CarTypeController extends AppBaseController
     {
         $carType = $this->carTypeRepository->saveRecord($request);
 
-        Flash::success('Car Type saved successfully.');
+        Flash::success('Segments saved successfully.');
         if (isset($request->continue)) {
             $redirect_to = redirect(route('admin.carTypes.create'));
         } elseif (isset($request->translation)) {
@@ -96,7 +96,7 @@ class CarTypeController extends AppBaseController
     {
         $carType = $this->carTypeRepository->findWithoutFail($id);
         if (empty($carType)) {
-            Flash::error('Car Type not found');
+            Flash::error('Segments not found');
             return redirect(route('admin.carTypes.index'));
         }
 
@@ -119,7 +119,7 @@ class CarTypeController extends AppBaseController
     {
         $carType = $this->carTypeRepository->findWithoutFail($id);
         if (empty($carType)) {
-            Flash::error('Car Type not found');
+            Flash::error('Segments not found');
             return redirect(route('admin.carTypes.index'));
         }
 
@@ -144,13 +144,13 @@ class CarTypeController extends AppBaseController
 
         $carType = $this->carTypeRepository->findWithoutFail($id);
         if (empty($carType)) {
-            Flash::error('Car Type not found');
+            Flash::error('Segments not found');
             return redirect(route('admin.carTypes.index'));
         }
         $carTypes= $this->carTypeRepository->updateRecord($request, $carType);
         $this->carTypeTranslationRepository->updateRecord($request, $carType);
 
-        Flash::success('Car Type updated successfully.');
+        Flash::success('Segments updated successfully.');
         if (isset($request->continue)) {
             $redirect_to = redirect(route('admin.carTypes.create'));
         } else {
@@ -171,18 +171,18 @@ class CarTypeController extends AppBaseController
         $carType = $this->carTypeRepository->findWithoutFail($id);
 
         if (empty($carType)) {
-            Flash::error('Car Type not found');
+            Flash::error('Segments not found');
             return redirect(route('admin.carTypes.index'));
         }
 
         if ($carType->cars->count() > 0) {
-            Flash::error('This car type belongs to car. Cannot be deleted');
+            Flash::error('This Segments belongs to car. Cannot be deleted');
             return redirect(route('admin.carTypes.index'));
         }
 
         $this->carTypeRepository->delete($id);
 
-        Flash::success('Car Type deleted successfully.');
+        Flash::success('Segments deleted successfully.');
         return redirect(route('admin.carTypes.index'));
     }
 }

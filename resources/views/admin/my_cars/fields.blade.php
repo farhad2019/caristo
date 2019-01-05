@@ -35,7 +35,7 @@
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('type_id', 'Car Type:') !!}
+    {!! Form::label('type_id', 'Segments:') !!}
     {!! Form::select('type_id', $carTypes, null, ['class' => 'form-control select2']) !!}
 </div>
 
@@ -577,6 +577,20 @@
     </div>
 </div>
 
+<!-- is_featured Field -->
+<div class="form-group col-sm-2">
+    {!! Form::label('is_featured', 'Is Featured:') !!}
+    {!! Form::hidden('is_featured', 0, false) !!} <br>
+    {!! Form::checkbox('is_featured', 1, @$myCar->is_featured, ['class'=> 'form-control', 'data-toggle'=>'toggle']) !!}
+</div>
+
+@if(isset($myCar))
+    <!-- Status Field -->
+    <div class="form-group col-sm-2 clearfix">
+        {!! Form::label('status', 'Status:') !!}
+        {!! Form::select('status', $status, $myCar->status, ['class' => 'form-control', ($myCar->status == 30)? 'disabled' : '']) !!}
+    </div>
+@endif
 <!-- Year Field -->
 <div class="form-group col-sm-12 clearfix">
     {!! Form::label('notes', 'Description:') !!}

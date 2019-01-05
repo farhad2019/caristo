@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    Car Types
+    Segments
 @endsection
 
 @section('content')

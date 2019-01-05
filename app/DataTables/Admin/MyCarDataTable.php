@@ -2,6 +2,8 @@
 
 namespace App\DataTables\Admin;
 
+use App\Helper\Utils;
+use App\Models\CarInteraction;
 use App\Models\MyCar;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Services\DataTable;
@@ -20,20 +22,28 @@ class MyCarDataTable extends DataTable
         $query = $query->with(['carModel.translations', 'category.translations', 'carModel.brand.translations']);
         $dataTable = new EloquentDataTable($query);
 
+        $dataTable->editColumn('created_at', function ($model) {
+            return $model->created_at->format('M d, Y');
+        });
+
         $dataTable->editColumn('category.translations.name', function ($model) {
             return $model->category->name;
         });
 
         $dataTable->editColumn('carModel.brand.translations.name', function ($model) {
-            return $model->carModel->brand->name ?? '-';
+            return $model->carModel->brand->name . ' ' . $model->carModel->name . ' ' . $model->year;
         });
+
+//        $dataTable->editColumn('carModel.brand.translations.name', function ($model) {
+//            return $model->carModel->brand->name;
+//        });
 
         $dataTable->editColumn('carModel.translations.name', function ($model) {
             return $model->carModel->name;
         });
 
         $dataTable->editColumn('amount', function ($model) {
-            return $model->amount .' AED' ?? '-';
+            return $model->amount . ' AED' ?? '-';
         });
 
         $dataTable->editColumn('image', function ($model) {
@@ -48,7 +58,30 @@ class MyCarDataTable extends DataTable
             return @$model->carModel->brand->name;
         });
 
-        $dataTable->rawColumns(['action','image']);
+        $dataTable->editColumn('is_featured', function ($model) {
+            return "<span class='badge bg-" . Utils::getBoolCss($model->is_featured, true) . "'> <i class='fa fa-" . ($model->is_featured ? "check" : "times") . "'></i> " . Utils::getBoolText($model->is_featured) . "</span>";
+        });
+
+        $dataTable->editColumn('status', function ($model) {
+            if ($model->status == 10)
+                return '<span class="badge bg-blue" >' . $model->status_text . '</span>';
+            elseif ($model->status == 20)
+                return '<span class="badge bg-red" >' . $model->status_text . '</span>';
+            elseif ($model->status == 30)
+                return '<span class="badge bg-green" >' . $model->status_text . '</span>';
+            else
+                return $model->status_text;
+        });
+
+        $dataTable->editColumn('views_count', function (MyCar $model) {
+            return "<a href='javascript:void(0)'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . @$model->views_count . "</span></a>";
+        });
+
+        $dataTable->editColumn('favorite_count', function (MyCar $model) {
+            return "<a href='javascript:void(0)'> <span class='badge badge-success'> <i class='fa fa-heart'></i> " . @$model->favorite_count . "</span></a>";
+        });
+
+        $dataTable->rawColumns(['action', 'image', 'views_count', 'favorite_count', 'is_featured', 'status']);
 
         return $dataTable->addColumn('action', 'admin.my_cars.datatables_actions');
     }
@@ -109,21 +142,32 @@ class MyCarDataTable extends DataTable
     {
         return [
             'id',
-            'image' => [
-                'orderable'  => false,
-                'searchable' => false,
-            ],
-            'category.translations.name' => [
+            'created_at',
+//            'image'                            => [
+//                'orderable'  => false,
+//                'searchable' => false,
+//            ],
+            'category.translations.name'       => [
                 'title' => 'Category',
             ],
             'carModel.brand.translations.name' => [
-                'title' => 'Brand'
+                'title' => 'Name'
             ],
-            'carModel.translations.name' => [
-                'title' => 'Model'
+//            'carModel.translations.name'       => [
+//                'title' => 'Model'
+//            ],
+//            'year',
+            'amount',
+            'is_featured'                      => [
+                'title' => 'Featured'
             ],
-            'year',
-            'amount'
+            'status',
+            'views_count'                      => [
+                'title' => 'User Views'
+            ],
+            'favorite_count'                   => [
+                'title' => 'User Favorites'
+            ]
         ];
     }
 

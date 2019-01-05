@@ -23,6 +23,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property integer transmission_type
  * @property integer owner_id
  * @property integer owner_type
+ * @property integer status
  * @property double kilometer
  * @property double amount
  * @property string bid_close_at
@@ -63,6 +64,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property mixed|null owner_type_text
  * @property array|null depreciation_trend_value
  * @property string link
+ * @property string status_text
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -193,13 +195,26 @@ class MyCar extends Model
     public $table = 'cars';
     protected $dates = ['deleted_at', 'bid_close_at'];
 
+    const ACTIVE = 10;
+    const INACTIVE = 20;
+    const SOLD = 30;
+
+    public static $STATUS = [
+        self::ACTIVE   => 'Active',
+        self::INACTIVE => 'In Active',
+        self::SOLD     => 'Sold'
+    ];
+
     const MANUAL = 10;
     const AUTOMATIC = 20;
+
     const SHOWROOM = 10;
     const USER = 20;
+
     const LIMITED_EDITION = 28;
     const APPROVED_PRE_OWNED = 26;
     const CLASSIC_CARS = 27;
+
     const FOURWD = '4WD';
     const AWD = 'AWD';
     const FWD = 'FWD';
@@ -223,6 +238,7 @@ class MyCar extends Model
     ];
 
     public $fillable = [
+        'is_featured',
         'views_count',
         'favorite_count',
         'like_count',
@@ -250,6 +266,7 @@ class MyCar extends Model
         'limited_edition_specs',
         'depreciation_trend',
         'life_cycle',
+        'status'
     ];
 
     /**
@@ -288,6 +305,7 @@ class MyCar extends Model
     protected $appends = [
         'transmission_type_text',
         'link',
+        'status_text',
         'owner_type_text',
 //        'views_count',
         'top_bids',
@@ -345,6 +363,9 @@ class MyCar extends Model
         'category',
 //        'carFeatures',
         'created_at',
+        'is_featured',
+        'status',
+        'status_text'
     ];
 
     /**
@@ -712,5 +733,13 @@ class MyCar extends Model
     public function getLinkAttribute()
     {
         return url('') . '?type=' . Utils::CAR_DEEP_LINK . '&id=' . $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatusTextAttribute()
+    {
+        return self::$STATUS[$this->status];
     }
 }

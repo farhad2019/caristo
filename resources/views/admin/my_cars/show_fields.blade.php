@@ -27,7 +27,20 @@
             <!-- Year Field -->
             <dt>{!! Form::label('chassis', 'Chassis:') !!}</dt>
             <dd>{!! $myCar->chassis?? 'N/A' !!}</dd>
+
+            <!-- Status Field -->
+            <dt>{!! Form::label('status', 'Status:') !!}</dt>
+            @if($myCar->status == 10)
+                <dd>{!! '<span class="badge bg-blue" >'. $myCar->status_text .'</span>' !!}</dd>
+            @elseif($myCar->status == 20)
+                <dd>{!! '<span class="badge bg-red" >'. $myCar->status_text .'</span>' !!}</dd>
+            @elseif($myCar->status == 30)
+                <dd>{!! '<span class="badge bg-green" >'. $myCar->status_text .'</span>' !!}</dd>
+            @else
+                <dd>{!! $myCar->status_text !!}</dd>
+            @endif
         </div>
+
         <div class="col-md-8">
         @if($myCar->category_id)
             <!-- Type Id Field -->
@@ -35,7 +48,7 @@
                 <dd>{!! isset($myCar->category_id) ? $myCar->category->name : 'N/A' !!}</dd>
 
                 <!-- Type Id Field -->
-                <dt>{!! Form::label('type_id', 'Type :') !!}</dt>
+                <dt>{!! Form::label('type_id', 'Segments:') !!}</dt>
                 <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : 'N/A' !!}</dd>
 
                 <!-- Transmission Type Field -->
@@ -52,7 +65,16 @@
                 <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
                 <dd>{!! $myCar->amount .' AED' ?? 'N/A' !!}</dd>
 
-            @endif
+        @endif
+
+        <!-- Status Field -->
+            <dt>{!! Form::label('status', 'Featured:') !!}</dt>
+            <dd>
+                <span class='badge bg-{{App\Helper\Utils::getBoolCss($myCar->is_featured, true)}}'>
+                    <i class='fa fa-{{ ($myCar->is_featured ? "check" : "times") }}'></i>
+                    {{ App\Helper\Utils::getBoolText($myCar->is_featured) }}
+                </span>
+            </dd>
         </div>
     </div>
     <!-- /.box-body -->

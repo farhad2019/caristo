@@ -96,7 +96,7 @@ class CarTypeAPIController extends AppBaseController
         $this->carTypeRepository->pushCriteria(new LimitOffsetCriteria($request));
         $carTypes = $this->carTypeRepository->all();
 
-        return $this->sendResponse($carTypes->toArray(), 'Car Types retrieved successfully');
+        return $this->sendResponse($carTypes->toArray(), 'Segments retrieved successfully');
     }
 
     /**
@@ -143,7 +143,7 @@ class CarTypeAPIController extends AppBaseController
 
         $carTypes = $this->carTypeRepository->create($input);
 
-        return $this->sendResponse($carTypes->toArray(), 'Car Type saved successfully');
+        return $this->sendResponse($carTypes->toArray(), 'Segments saved successfully');
     }
 
     /**
@@ -190,10 +190,10 @@ class CarTypeAPIController extends AppBaseController
         $carType = $this->carTypeRepository->findWithoutFail($id);
 
         if (empty($carType)) {
-            return $this->sendError('Car Type not found');
+            return $this->sendError('Segments not found');
         }
 
-        return $this->sendResponse($carType->toArray(), 'Car Type retrieved successfully');
+        return $this->sendResponse($carType->toArray(), 'Segments retrieved successfully');
     }
 
     /**
@@ -250,7 +250,7 @@ class CarTypeAPIController extends AppBaseController
         $carType = $this->carTypeRepository->findWithoutFail($id);
 
         if (empty($carType)) {
-            return $this->sendError('Car Type not found');
+            return $this->sendError('Segments not found');
         }
 
         $carType = $this->carTypeRepository->update($input, $id);
@@ -303,11 +303,11 @@ class CarTypeAPIController extends AppBaseController
         $carType = $this->carTypeRepository->findWithoutFail($id);
 
         if (empty($carType)) {
-            return $this->sendError('Car Type not found');
+            return $this->sendError('Segments not found');
         }
 
         $carType->delete();
 
-        return $this->sendResponse($id, 'Car Type deleted successfully');
+        return $this->sendResponse($id, 'Segments deleted successfully');
     }
 }
