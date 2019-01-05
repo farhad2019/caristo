@@ -264,6 +264,13 @@
                         "description": "verification code",
                         "required": true,
                         "type": "integer"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "user_email",
+                        "required": false,
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -487,6 +494,34 @@
                         "name": "about",
                         "in": "formData",
                         "description": "About Me/Bio of User ",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "profession",
+                        "in": "formData",
+                        "description": "Profession of User ",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "gender",
+                        "in": "formData",
+                        "description": "Gender of User : Male=10, Female=20",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "nationality",
+                        "in": "formData",
+                        "description": "Nationality of User",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "dob",
+                        "in": "formData",
+                        "description": "Date of birth of User : yyyy-mm-dd",
                         "required": false,
                         "type": "string"
                     },

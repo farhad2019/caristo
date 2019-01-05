@@ -129,7 +129,8 @@ class UserController extends AppBaseController
         $data['user_id'] = $user->id;
         $data['first_name'] = $user->name;
         $data['dealer_type'] = $input['dealer_type'] ?? null;
-        $data['dealer_type'] = $input['dealer_type'] == 10 ? 'Official Dealer' : 'Market Dealer';
+        $data['dealer_type_text'] = $input['dealer_type'] == 10 ? 'Official Dealer' : 'Market Dealer';
+
         $this->userRepository->attachRole($user->id, Role::SHOWROOM_OWNER_ROLE);
         $userDetail = $this->userDetailRepository->create($data);
 

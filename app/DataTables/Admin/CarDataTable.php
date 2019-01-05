@@ -157,6 +157,7 @@ class CarDataTable extends DataTable
             'image'                            => [
                 'orderable'  => false,
                 'searchable' => false,
+                'exportable' => false
             ],
             'views_count'                      => [
                 'title' => 'User Views'

@@ -129,7 +129,8 @@ class NewsDataTable extends DataTable
             'image'                      => [
                 'orderable'  => false,
                 'searchable' => false,
-                'title'     => 'Image/Video'
+                'title'     => 'Image/Video',
+                'exportable' => false
             ],
             'views_count'                => [
                 'title' => 'Views'

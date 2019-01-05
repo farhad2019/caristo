@@ -49,7 +49,7 @@
 
 <div class="col-sm-12">
     <dt>{!! Form::label('gender', 'Gender:') !!}</dt>
-    <dd>{!! $user->details->gender !!}</dd>
+    <dd>{!! $user->details->gender_label !!}</dd>
 </div>
 
 <div class="col-sm-12">

@@ -78,8 +78,9 @@ $(function () {
                     if (response.success) {
                         location.reload();
                     }
-                    else
-                        alert('Something Went Wrong!');
+                    else {
+                        alert(response.message);
+                    }
                 });
             }
         });

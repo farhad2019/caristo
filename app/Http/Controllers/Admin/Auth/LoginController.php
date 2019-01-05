@@ -49,6 +49,12 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
+    /**
+     * @param Request $request
+     * @param $user
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws ValidationException
+     */
     protected function authenticated(Request $request, $user)
     {
         session(['timezone' => $request->timezone]); // saving to session
@@ -61,7 +67,6 @@ class LoginController extends Controller
                 $this->username() => [trans('auth.failed')],
             ]);
         }
-
     }
 
     /**

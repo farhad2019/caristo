@@ -39,6 +39,7 @@
             -webkit-appearance: none;
             margin: 0;
         }
+
         .unread {
             background: #afe8f5fa;
         }
@@ -118,9 +119,9 @@
                                 @else
                                     <img src="{!! Auth::user()->details->image_url !!}"
                                          class="user-image" alt="User Image"/>
-                                    @endif
-                                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                    <span class="hidden-xs">{!! Auth::user()->name !!}</span>
+                            @endif
+                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs">{!! Auth::user()->name !!}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
@@ -168,8 +169,8 @@
         </header>
 
         <!-- Left side column. contains the logo and sidebar -->
-        @include('admin.layouts.sidebar')
-                <!-- Content Wrapper. Contains page content -->
+    @include('admin.layouts.sidebar')
+    <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <section class="content-header clearfix" style="min-height:40px">
                 <h1 class="pull-left">@yield('title')</h1>
@@ -279,141 +280,159 @@
             </div>
         </div>
     </div>
-    @endif
+@endif
 
-            <!-- jQuery 3.1.1 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!--  Bootstrap Toogle switch-->
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+<!-- jQuery 3.1.1 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--  Bootstrap Toogle switch-->
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
-    <!-- AdminLTE App -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js"></script>
+<!-- AdminLTE App -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js"></script>
 
 
-    <script src="https://adminlte.io/themes/AdminLTE/plugins/bootstrap-slider/bootstrap-slider.js"></script>
+<script src="https://adminlte.io/themes/AdminLTE/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    <!-- SweetAlert -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+<!-- SweetAlert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <!-- SweetAlert -->
-    <script src="{{ url('public/vendor/live_url/jquery.liveurl.js') }}"></script>
+<!-- SweetAlert -->
+<script src="{{ url('public/vendor/live_url/jquery.liveurl.js') }}"></script>
 
-    {{--    @yield('scripts')--}}
-    @stack('scripts')
-    {{--<script src="{{ url('public/js/admin/custom.js') }}"></script>--}}
-    <script src="{{ url('public/js/admin/custom_new.js') }}"></script>
+{{--    @yield('scripts')--}}
+@stack('scripts')
+{{--<script src="{{ url('public/js/admin/custom.js') }}"></script>--}}
+<script src="{{ url('public/js/admin/custom_new.js') }}"></script>
 
-    <script>
+<script>
 
-        function confirmCancel(id) {
-            swal({
-                title: "Are you sure?",
-                text: "You want to cancel the reservation?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true
-            }).then(function (willDelete) {
-                if (willDelete) {
-                    $.ajax({
-                        url: "confirmCancel/" + id,
-                        method: 'GET'
-                    }).done(function (response) {
-                        if (response === 'Success') {
-                            swal({
-                                title: "Success",
-                                text: "Reservation is Cancel",
-                                icon: "success"
-                            }).then(function (willDelete) {
-                                location.reload();
-                            });
-                        }
-                        else {
+    function confirmCancel(id) {
+        swal({
+            title: "Are you sure?",
+            text: "Do you want to delete this comment?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then(function (willDelete) {
+            if (willDelete) {
+                $.ajax({
+                    url: "confirmCancel/" + id,
+                    method: 'GET'
+                }).done(function (response) {
+                    if (response === 'Success') {
+                        swal({
+                            title: "Success",
+                            text: "Comment is deleted",
+                            icon: "success"
+                        }).then(function (willDelete) {
                             location.reload();
-                        }
+                        });
+                    }
+                    else {
+                        location.reload();
+                    }
+                });
+            }
+        });
+    }
 
-                    });
+    $(document).ready(function () {
+        refreshData();
+        var old_count;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
+        $.ajax({
+            type: "POST",
+            url: "{{ url('admin/alert') }}",
+            success: function (data) {
+                old_count = data;
+            }
+        });
+
+        setInterval(function () {
+            refreshData();
+            var msg;
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-        }
 
-        $(document).ready(function () {
-            refreshData();
-            var old_count;
             $.ajax({
                 type: "POST",
                 url: "alert",
                 success: function (data) {
-                    old_count = data;
+                    if (data > old_count) {
+                        msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + data + '</span>';
+                        $(".alert-msg").html(msg);
+                        old_count = data;
+                    }
+                }
+            });
+        }, 5000);
+
+        function refreshData() {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                type: 'POST',
+                url: 'notification',
+                dataType: 'JSON',
+                data: {
+                    _token: token
+                },
+                success: function (data) {
+                    var arr = [];
+                    var html;
+                    var count = 0;
+                    // var path = window.location.protocol + "//" + window.location.hostname + "/CaristoCratApp/admin/" + 'news/';
+                    var path = '{{ url('admin/news/') }}' + '/';
+
+                    $.each(data, function (index, item) {
+                        if (item.status === 20) {
+                            count++;
+                            html = '<li><a class="unread" data-id="' + item.id + '" href="' + path + item.news_id + '"><p>' + item.user.name + '</p><i class="fa fa-ticket text-aqua"></i>' + item.comment_text + '</a></li>';
+                        } else {
+                            html = '<li><a class="" href="' + path + item.news_id + '"><i class="fa fa-ticket text-aqua"></i> ' + item.comment_text + ' <small class="pull-right"> </a></li>';
+                        }
+
+                        arr.push(html);
+                    });
+
+                    $(".notifications-menu .dropdown-menu li.header span").html(count);
+                    var msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + count + '</span>';
+                    $(".alert-msg").html(msg);
+                    $(".notifications-menu .dropdown-menu li").find('ul.menu').html(arr);
+                }
+                ,
+                error: function () {
+                }
+            });
+        }
+
+        $('body').on('click', 'li a.unread', function () {
+            var id = $(this).data("id");
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-            setInterval(function () {
-                refreshData();
-                var msg;
-                $.ajax({
-                    type: "POST",
-                    url: "alert",
-                    success: function (data) {
-                        if (data > old_count) {
-                            msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + data + '</span>';
-                            $(".alert-msg").html(msg);
-                            old_count = data;
-                        }
-                    }
-                });
-            }, 5000);
+            $.ajax({
+                url: "unread/" + id,
+                method: 'GET'
+            }).done(function (response) {
 
-            function refreshData() {
-                var token = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    type: 'POST',
-                    url: 'notification',
-                    dataType: 'JSON',
-                    data: {
-                        _token: token
-                    },
-                    success: function (data) {
-                        var arr = [];
-                        var html;
-                        var count = 0;
-                        var path = window.location.protocol + "//" + window.location.hostname + "/CaristoCratApp/admin/" + 'news/';
-                        $.each(data, function (index, item) {
-                            console.log(window.location.host);
-                            if (item.status == 20) {
-                                count++;
-                                html = '<li><a class="unread" data-id="' + item.id + '" href="' + path + item.news_id + '"><p>' + item['user']['name'] + '</p><i class="fa fa-ticket text-aqua"></i> ' + item.comment_text + '</a></li>';
-                            } else {
-                                html = '<li><a class="" href="' + path + item.news_id + '"><i class="fa fa-ticket text-aqua"></i> ' + item.comment_text + ' <small class="pull-right"> </a></li>';
-                            }
-
-                            arr.push(html);
-                        });
-
-                        $(".notifications-menu .dropdown-menu li.header span").html(count);
-                        var msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + count + '</span>';
-                        $(".alert-msg").html(msg);
-                        $(".notifications-menu .dropdown-menu li").find('ul.menu').html(arr);
-                    }
-                    ,
-                    error: function () {
-                    }
-                });
-            }
-
-            $('body').on('click', 'li a.unread', function () {
-                var id = $(this).data("id");
-                $.ajax({
-                    url: "unread/" + id,
-                    method: 'GET'
-                }).done(function (response) {
-
-                });
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>

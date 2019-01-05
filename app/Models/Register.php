@@ -75,10 +75,6 @@ class Register
      */
     public static $rules = [
         'name'                  => 'required',
-        'dob'                   => 'required',
-        'profession'            => 'required',
-        'nationality'           => 'required',
-        'gender'                => 'required',
         'email'                 => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
 //        'email'                 => 'required|email|unique:users,email',
         'password'              => 'min:6|required_with:password_confirmation|same:password_confirmation',

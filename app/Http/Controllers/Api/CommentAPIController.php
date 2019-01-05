@@ -8,10 +8,10 @@ use App\Http\Requests\Api\UpdateCommentAPIRequest;
 use App\Models\Comment;
 use App\Repositories\Admin\CommentRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Response;
 
 /**
  * Class CommentController
@@ -86,6 +86,7 @@ class CommentAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
     public function index(Request $request)
     {

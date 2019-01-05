@@ -93,6 +93,7 @@ class CarBrandDataTable extends DataTable
                 'title'      => 'Logo',
                 'orderable'  => false,
                 'searchable' => false,
+                'exportable' => false
             ]
         ];
     }
