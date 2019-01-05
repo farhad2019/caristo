@@ -3,12 +3,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0, maximum-scale=1.0"/>
-    <title>Aroma</title>
+    <title>CaristoCrate</title>
     <style>@media screen and (max-device-width: 480px) {
-        body {
-            -webkit-text-size-adjust: none
-        }
-    }</style>
+            body {
+                -webkit-text-size-adjust: none
+            }
+        }</style>
 
     <!-- implement javascript on web page that first first tries to open the deep link
         1. if user has app installed, then they would be redirected to open the app to specified screen
@@ -26,9 +26,10 @@
     </script>-->
 </head>
 <body>
-
 <!-- button to Open App to specific screen for existing app users -->
-<form action="yourapp://app.com/?screen=xxxxx" target="_blank">
+<form action="<?= $_SERVER['REQUEST_URI'] ?>" target="_blank">
+    <input type="hidden" name="type" value="<?= $_GET['type'] ?>">
+    <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
     <input type="submit" value="Open CaristoCrate App"/>
 </form>
 

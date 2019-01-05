@@ -732,7 +732,7 @@ class MyCar extends Model
      */
     public function getLinkAttribute()
     {
-        return url('') . '?type=' . Utils::CAR_DEEP_LINK . '&id=' . $this->id;
+        return url('deepLink.php') . '?type=' . Utils::CAR_DEEP_LINK . '&id=' . $this->id;
     }
 
     /**
