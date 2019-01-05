@@ -48,7 +48,7 @@
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('chassis', 'Chassis:') !!}
-    {!! Form::number('chassis', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Chassis']) !!}
+    {!! Form::text('chassis', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Chassis']) !!}
 </div>
 
 <!-- Engine Type Field -->

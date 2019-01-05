@@ -7,6 +7,7 @@ use App\DataTables\Admin\TradeInCarDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateTradeInCarRequest;
 use App\Http\Requests\Admin\UpdateTradeInCarRequest;
+use App\Models\TradeInCar;
 use App\Repositories\Admin\TradeInCarRepository;
 use App\Repositories\Admin\NotificationRepository;
 use App\Http\Controllers\AppBaseController;
@@ -121,6 +122,8 @@ class TradeInCarController extends AppBaseController
             return redirect(route('admin.tradeInCars.index'));*/
         }
         if (Auth::user()->hasRole('showroom-owner')) {
+            $value['status'] = 10;
+            TradeInCar::where('id',$id)->update($value);
             return view('admin.showroom.details')->with([
                 //'car'     => $car,
                 'tradeInRequest' => $tradeInRequest
@@ -209,4 +212,18 @@ class TradeInCarController extends AppBaseController
 
         return redirect(route('admin.tradeInCars.index'));
     }
+
+   
+    public function getCount()
+    {
+
+        $user = Auth::id();
+        $count = TradeInCar::where(['status'=> 20,'user_id' => $user])->count();
+        return $count;
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
 }

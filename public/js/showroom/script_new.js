@@ -31,13 +31,13 @@ $(document).ready(function () {
 
     /* Dash Tabs */
     /*$(".dash_tabs a").click(function(event) {
-        event.preventDefault();
-        $(this).parent().addClass("current");
-        $(this).parent().siblings().removeClass("current");
-        var tab = $(this).attr("href");
-        $(".dash_tab").not(tab).css("display", "none");
-        $(tab).fadeIn();
-    });*/
+     event.preventDefault();
+     $(this).parent().addClass("current");
+     $(this).parent().siblings().removeClass("current");
+     var tab = $(this).attr("href");
+     $(".dash_tab").not(tab).css("display", "none");
+     $(tab).fadeIn();
+     });*/
 
     $(".car_listing a").click(function (event) {
         $('.right_loader').fadeIn();
@@ -108,3 +108,56 @@ $(window).on("load", function () {
 
 
 });
+
+
+$(document).ready(function () {
+    //refreshData();
+    var old_count;
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        type: "GET",
+        url: "tradealert",
+        success: function (data) {
+            old_count = data;
+            if (data) {
+                if (data != 0) {
+                    $(".badge").html(data);
+                }
+            }
+        }
+
+    });
+
+    setInterval(function () {
+        var msg;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: "tradealert",
+            dataType: 'JSON',
+            success: function (data) {
+                if (data > old_count) {
+                    if (data != 0) {
+                        $(".badge").html(data);
+                        old_count = data;
+                    }
+                }
+                else{
+                    $(".badge").html('');
+                }
+            }
+        });
+    }, 5000);
+
+
+});
+

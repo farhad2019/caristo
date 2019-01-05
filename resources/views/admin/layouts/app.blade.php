@@ -350,9 +350,15 @@
 
         $.ajax({
             type: "POST",
-            url: "{{ url('admin/alert') }}",
+            url: '{{ url('admin/alert/') }}',
             success: function (data) {
                 old_count = data;
+                if (data) {
+                    if (data != 0) {
+
+                        $(".alert-msg").html(data);
+                    }
+                }
             }
         });
 
@@ -367,22 +373,25 @@
 
             $.ajax({
                 type: "POST",
-                url: "alert",
+                url: '{{ url('admin/alert/') }}',
                 success: function (data) {
                     if (data > old_count) {
-                        msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + data + '</span>';
-                        $(".alert-msg").html(msg);
-                        old_count = data;
+                        if (data != 0) {
+                            msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + data + '</span>';
+                            $(".alert-msg").html(msg);
+                            old_count = data;
+                        }
                     }
                 }
             });
-        }, 5000);
+        }, 50000);
 
         function refreshData() {
             var token = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 type: 'POST',
-                url: 'notification',
+                url: '{{ url('admin/notification/') }}',
+//                url: 'notification',
                 dataType: 'JSON',
                 data: {
                     _token: token
@@ -406,8 +415,11 @@
                     });
 
                     $(".notifications-menu .dropdown-menu li.header span").html(count);
-                    var msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + count + '</span>';
-                    $(".alert-msg").html(msg);
+                    if(count != 0){
+                        var msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + count + '</span>';
+                        $(".alert-msg").html(msg);
+                    }
+
                     $(".notifications-menu .dropdown-menu li").find('ul.menu').html(arr);
                 }
                 ,
@@ -426,7 +438,8 @@
             });
 
             $.ajax({
-                url: "unread/" + id,
+
+                url: "{{ url('admin/unread/') }}/" + id,
                 method: 'GET'
             }).done(function (response) {
 
