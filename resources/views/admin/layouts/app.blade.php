@@ -365,7 +365,7 @@
                         }
                     }
                 });
-            }, 50000);
+            }, 5000);
 
             function refreshData() {
                 var token = $('meta[name="csrf-token"]').attr('content');
