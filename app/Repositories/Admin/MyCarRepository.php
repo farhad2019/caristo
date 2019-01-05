@@ -189,9 +189,9 @@ class MyCarRepository extends BaseRepository
             $mediaFiles = $request->file('media');
             $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
-            foreach ($mediaFiles as $mediaFile) {
+            foreach ($mediaFiles as $key => $mediaFile) {
                 $media[] = [
-                    'title'    => $mediaFile->getClientOriginalName(),
+                    'title'    => $key,
                     'filename' => Storage::putFile('media_files', $mediaFile)
                 ]; //Utils::handlePicture($mediaFile);
                 //$media[] = Utils::handlePicture($mediaFile);
@@ -227,13 +227,16 @@ class MyCarRepository extends BaseRepository
 
             $myCar->media()->createMany($media);
         }
-
-
     }
 
+    /**
+     * @param $request
+     * @param $myCar
+     * @return mixed
+     */
     public function updateRecord($request, $myCar)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone','kilometer', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'regions', 'price', 'description']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'kilometer', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'regions', 'price', 'description']);
         if ($request->category_id == MyCar::LIMITED_EDITION) {
             $limited = array(
                 'Dimensions_Weight'    => array(
@@ -346,10 +349,10 @@ class MyCarRepository extends BaseRepository
             $mediaFiles = $request->file('media');
             $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
-            foreach ($mediaFiles as $mediaFile) {
+            foreach ($mediaFiles as $key => $mediaFile) {
                 //$media[] = Utils::handlePicture($mediaFile);
                 $media[] = [
-                    'title'    => $mediaFile->getClientOriginalName(),
+                    'title'    => $key,
                     'filename' => Storage::putFile('media_files', $mediaFile)
                 ];
             }
