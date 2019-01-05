@@ -218,12 +218,13 @@ class MyCarController extends AppBaseController
     {
         if ($request->category_id == MyCar::LIMITED_EDITION) {
             $validatedData = $request->validate([
-                'category_id'               => 'sometimes|nullable|required',
-                'model_id'                  => 'sometimes|nullable|required',
-                'year'                      => 'sometimes|nullable|required',
-                'amount'                    => 'sometimes|nullable|required',
-                'regional_specification_id' => 'sometimes|nullable|required',
-                'email'                     => 'sometimes|nullable|required|email',
+                'category_id'               => 'required',
+                'model_id'                  => 'required',
+                'year'                      => 'required',
+                'amount'                    => 'required',
+                'regional_specification_id' => 'required',
+                'name'                      => 'required',
+//                'email'                     => 'required|email',
                 'chassis'                   => 'required',
                 'length'                    => 'required',
                 'width'                     => 'required',
@@ -250,7 +251,8 @@ class MyCarController extends AppBaseController
                 'maintenance'               => 'required',
                 'to'                        => 'required|greater_than_field:from',
                 'depreciation_trend'        => 'required',
-                'price.*'                   => 'required',
+                'price'                     => 'required',
+                'price.*'                   => 'numeric',
                 'media'                     => 'required',
                 'media.*'                   => 'image|mimes:jpg,jpeg,png',
             ], [
@@ -260,8 +262,9 @@ class MyCarController extends AppBaseController
                 'amount.required'      => 'The amount field is required.',
                 'media.required'       => 'The media is required.',
                 'media.*'              => 'The media must be a file of type: jpg, jpeg, png.',
+                'price.required'       => 'The price must be filled.',
                 'price.*'              => 'The all price must be filled.',
-                'email.required'       => 'The amount field is required.'
+                'name.required'        => 'The name field is required.'
             ]);
 
         } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {

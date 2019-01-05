@@ -465,103 +465,116 @@
 @endif
 
 <div class="clearfix"></div>
-<!-- Media Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('media', 'Front Image:') !!}
-    {!! Form::file('media[front]', ['class' => 'form-control']) !!}
-    <br>
-    @if(isset($myCar))
-        @if($myCar->media->count() > 0)
-            @php($media = $myCar->media[0])
-            <div style="position: relative; display: inline; padding-right: 10px">
-                <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
-                    <img src="{{ $media->file_url }}" width="120">
-                </a>
-                <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                      style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
+<div class="">
+    <!-- Media Field -->
+    <div class="form-group col-sm-4">
+        {!! Form::label('media', 'Front Image:') !!}
+        {!! Form::file('media[front]', ['class' => 'form-control']) !!}
+        <br>
+        @if(isset($myCar))
+            @if($myCar->media->count() > 0)
+                @php($media = $myCar->media[0])
+                <div style="position: relative; display: inline; padding-right: 10px">
+                    <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
+                        <img src="{{ $media->file_url }}" width="120">
+                    </a>
+                    <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
+                          style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
                 </span>
-            </div>
+                </div>
+            @endif
         @endif
-    @endif
-</div>
+    </div>
 
-<!-- Media Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('media', 'Back Image:') !!}
-    {!! Form::file('media[back]', ['class' => 'form-control']) !!}
-    <br>
-    @if(isset($myCar))
-        @if($myCar->media->count() > 0)
-            @php($media = $myCar->media[1])
-            <div style="position: relative; display: inline; padding-right: 10px">
-                <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
-                    <img src="{{ $media->file_url }}" width="120">
-                </a>
-                <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                      style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
+    <!-- Media Field -->
+    <div class="form-group col-sm-4">
+        {!! Form::label('media', 'Back Image:') !!}
+        {!! Form::file('media[back]', ['class' => 'form-control']) !!}
+        <br>
+        @if(isset($myCar))
+            @if($myCar->media->count() > 0)
+                @if(isset( $myCar->media[1]))
+                    @php($media = $myCar->media[1])
+                    <div style="position: relative; display: inline; padding-right: 10px">
+                        <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
+                            <img src="{{ $media->file_url }}" width="120">
+                        </a>
+                        <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
+                              style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
                 </span>
-            </div>
+                    </div>
+                @endif
+            @endif
         @endif
-    @endif
-</div>
+    </div>
 
-<!-- Media Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('media', 'Right Image:') !!}
-    {!! Form::file('media[right]', ['class' => 'form-control']) !!}
-    <br>
-    @if(isset($myCar))
-        @if($myCar->media->count() > 0)
-            @php($media = $myCar->media[2])
-            <div style="position: relative; display: inline; padding-right: 10px">
-                <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
-                    <img src="{{ $media->file_url }}" width="120">
-                </a>
-                <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                      style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
+    <!-- Media Field -->
+    <div class="form-group col-sm-4">
+        {!! Form::label('media', 'Right Image:') !!}
+        {!! Form::file('media[right]', ['class' => 'form-control']) !!}
+        <br>
+        @if(isset($myCar))
+            @if($myCar->media->count() > 0)
+                @if(isset( $myCar->media[2]))
+                    @php($media = $myCar->media[2])
+                    <div style="position: relative; display: inline; padding-right: 10px">
+                        <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
+                            <img src="{{ $media->file_url }}" width="120">
+                        </a>
+                        <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
+                              style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
                 </span>
-            </div>
+                    </div>
+                @endif
+            @endif
         @endif
-    @endif
+    </div>
 </div>
+<div class="clearfix"></div>
+<div class="">
+    <!-- Media Field -->
+    <div class="form-group col-sm-4">
+        {!! Form::label('media', 'Left Image:') !!}
+        {!! Form::file('media[left]', ['class' => 'form-control']) !!}
+        <br>
+        @if(isset($myCar))
+            @if($myCar->media->count() > 0)
+                @if(isset( $myCar->media[3]))
+                    @php($media = $myCar->media[3])
+                    <div style="position: relative; display: inline; padding-right: 10px">
+                        <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
+                            <img src="{{ $media->file_url }}" width="120">
+                        </a>
+                        <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
+                              style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
+                </span>
+                    </div>
+                @endif
+            @endif
+        @endif
+    </div>
 
-<!-- Media Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('media', 'Left Image:') !!}
-    {!! Form::file('media[left]', ['class' => 'form-control']) !!}
-    <br>
-    @if(isset($myCar))
-        @if($myCar->media->count() > 0)
-            @php($media = $myCar->media[3])
-            <div style="position: relative; display: inline; padding-right: 10px">
-                <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
-                    <img src="{{ $media->file_url }}" width="120">
-                </a>
-                <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                      style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
+    <!-- Media Field -->
+    <div class="form-group col-sm-4">
+        {!! Form::label('media', 'Interior Image:') !!}
+        {!! Form::file('media[interior]', ['class' => 'form-control']) !!}
+        <br>
+        @if(isset($myCar))
+            @if($myCar->media->count() > 0)
+                @if(isset( $myCar->media[4]))
+                    @php($media = $myCar->media[4])
+                    <div style="position: relative; display: inline; padding-right: 10px">
+                        <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
+                            <img src="{{ $media->file_url }}" width="120">
+                        </a>
+                        <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
+                              style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
                 </span>
-            </div>
+                    </div>
+                @endif
+            @endif
         @endif
-    @endif
-</div>
-<!-- Media Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('media', 'Interior Image:') !!}
-    {!! Form::file('media[interior]', ['class' => 'form-control']) !!}
-    <br>
-    @if(isset($myCar))
-        @if($myCar->media->count() > 0)
-            @php($media = $myCar->media[4])
-            <div style="position: relative; display: inline; padding-right: 10px">
-                <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
-                    <img src="{{ $media->file_url }}" width="120">
-                </a>
-                <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                      style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
-                </span>
-            </div>
-        @endif
-    @endif
+    </div>
 </div>
 
 <!-- Year Field -->

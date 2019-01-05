@@ -321,7 +321,7 @@
         @if($myCar->media->count() > 0)
             @foreach($myCar->media as $media)
                 <div class="col-sm-4">
-                    <dt>{!! Form::label('engine_type_id', $media->title.' :') !!}</dt>
+                    <dt>{!! Form::label('engine_type_id', ucwords($media->title).' :') !!}</dt>
                     <dd>
                         <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
                             <img src="{{ $media->file_url }}" width="120" style="margin-right: 2%">
