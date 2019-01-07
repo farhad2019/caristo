@@ -11,30 +11,26 @@
 
         {{-- Car lsiting--}}
         <div class="dash_tab_content dash_tab" id="tab1">
-            <div class="tab_serach">
-                <div class="row no-gutters">
-                    <div class="col-md-6">
-                        <form action="{{ url('admin/tradeInCars') }}" method="GET">
-                            <input type="text" name="keyword" placeholder="Search" value="{{@$_REQUEST['keyword']}}">
-                        </form>
-                    </div>
-                    {{--<div class="col-md-6 sort_parent">
-                        <label>Sort by:</label>
-                        <div class="select">
-                            <select>
-                                <option value="" selected disabled>Recent</option>
-                            </select>
-                        </div>
-                    </div>--}}
-                </div>
-            </div>
-
             @if($tradeInRequests->count() > 0)
+                <div class="tab_serach">
+                    <div class="row no-gutters">
+                        <div class="col-md-6">
+                            <form action="{{ url('admin/tradeInCars') }}" method="GET">
+                                <input type="text" name="keyword" placeholder="Search"
+                                       value="{{@$_REQUEST['keyword']}}">
+                            </form>
+                        </div>
+                        <div class="col-md-6 sort_parent">
+                            <label>Total Trade In Reqeusts:</label>
+                            <div class=""> {{ $tradeInRequests->count() }}</div>
+                        </div>
+                    </div>
+                </div>
+
                 <ul class="car_listing">
                     @foreach($tradeInRequests as $tradeInRequest)
-                        <li class="clearfix current active">
-                            <a href="#car_detail1" class="car" data-id="{{ $tradeInRequest->id }}"
-                               title="">
+                        <li class="clearfix current car{{$tradeInRequest->id}} {{ $tradeInRequest->status == 20 ? 'active':'' }}">
+                            <a href="#car_detail1" class="car" data-id="{{ $tradeInRequest->id }}" title="">
                                 @if(isset($tradeInRequest->tradeAgainst->media[0]))
                                     <figure style="background-image: url({{ $tradeInRequest->tradeAgainst->media[0]->file_url }});"></figure>
                                 @else
@@ -54,6 +50,14 @@
                     @endforeach
                 </ul>
             @else
+                <div class="tab_serach">
+                    <div class="row no-gutters">
+                        <div class="col-md-6">  
+                        </div>
+                        <div class="col-md-6 sort_parent">
+                        </div>
+                    </div>
+                </div>
                 <span>No Records Found</span>
             @endif
         </div>
@@ -371,6 +375,13 @@
                     type: "JSON",
                     async: false
                 }).done(function (responce) {
+                    $(".car" + id).removeClass("active");
+                    var unreadCount = $('.badge').html();
+                    if (unreadCount > 1) {
+                        $('.badge').html(unreadCount - 1);
+                    } else {
+                        $('.badge').html('');
+                    }
                     $('.car_detail_wrap').html('');
                     $('.bid_widget').html('');
                     $('.car_detail_wrap').html(responce);

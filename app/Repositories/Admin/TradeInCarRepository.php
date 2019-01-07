@@ -44,9 +44,10 @@ class TradeInCarRepository extends BaseRepository
     /**
      * @param bool $hasBid
      * @param array $search
+     * @param int $status
      * @return mixed
      */
-    public function getTradeInCars($hasBid = false, $search = [])
+    public function getTradeInCars($hasBid = false, $search = [], $status = 0)
     {
         return $this->model
             ->when(($hasBid), function ($q) {
@@ -76,6 +77,9 @@ class TradeInCarRepository extends BaseRepository
                         });
 
                 });
+            })
+            ->when(($status > 0), function ($q) use ($status) {
+                return $q->where('status', $status);
             })
             ->whereIn('owner_car_id', Auth::user()->cars()->pluck('id')->toArray())
             ->orderBy('created_at', 'DESC')

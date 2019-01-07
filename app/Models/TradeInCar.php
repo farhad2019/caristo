@@ -73,6 +73,7 @@ class TradeInCar extends Model
         'customer_car_id',
         'user_id',
         'amount',
+        'status',
         'notes'
     ];
 
@@ -82,9 +83,9 @@ class TradeInCar extends Model
      * @var array
      */
     protected $casts = [
-        'amount' => 'float',
+        'amount'       => 'float',
         'bid_close_at' => 'Datetime',
-        'notes'  => 'string'
+        'notes'        => 'string'
     ];
 
     /**

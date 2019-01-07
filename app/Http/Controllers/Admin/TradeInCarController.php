@@ -32,7 +32,11 @@ class TradeInCarController extends AppBaseController
     /** @var  NotificationRepository */
     private $notificationRepository;
 
-
+    /**
+     * TradeInCarController constructor.
+     * @param NotificationRepository $notificationRepo
+     * @param TradeInCarRepository $tradeInCarRepo
+     */
     public function __construct(NotificationRepository $notificationRepo, TradeInCarRepository $tradeInCarRepo)
     {
         $this->tradeInCarRepository = $tradeInCarRepo;
@@ -121,11 +125,10 @@ class TradeInCarController extends AppBaseController
             /*Flash::error('Trade In Car not found');
             return redirect(route('admin.tradeInCars.index'));*/
         }
+
         if (Auth::user()->hasRole('showroom-owner')) {
-            $value['status'] = 10;
-            TradeInCar::where('id',$id)->update($value);
+            $this->tradeInCarRepository->update(['status' => 10], $id);
             return view('admin.showroom.details')->with([
-                //'car'     => $car,
                 'tradeInRequest' => $tradeInRequest
             ]);
         }
@@ -213,17 +216,12 @@ class TradeInCarController extends AppBaseController
         return redirect(route('admin.tradeInCars.index'));
     }
 
-   
+    /**
+     * @return mixed
+     */
     public function getCount()
     {
-
-        $user = Auth::id();
-        $count = TradeInCar::where(['status'=> 20,'user_id' => $user])->count();
-        return $count;
+        $tradeInRequestsCount = $this->tradeInCarRepository->getTradeInCars(false, [], 20)->count();
+        return $tradeInRequestsCount;
     }
-
-    /**
-     * @param $id
-     * @return bool
-     */
 }

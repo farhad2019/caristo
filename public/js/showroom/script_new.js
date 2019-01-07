@@ -1,15 +1,12 @@
 window.pressed = function () {
     var uploadwrap = document.getElementById('upload');
     if (uploadwrap.value == "") {
-
     }
     else {
-
     }
 };
 
 $(document).ready(function () {
-
     $('.login_name').on('click', function (e) {
         e.stopPropagation();
         $('.login_dropdown').stop(0, 0).slideToggle();
@@ -52,7 +49,6 @@ $(document).ready(function () {
         $(tab).fadeIn();
     });
 
-
     /* FancyBox 3 */
     $('[data-fancybox]').fancybox({
         arrows: true,
@@ -74,25 +70,19 @@ $(document).ready(function () {
             'close'
         ]
     });
-
 });
 
 $(document).on('click', function () {
-
     $('.login_dropdown').slideUp();
-
 });
 
-
 $(window).on("load", function () {
-
     var $grid = $('.grid').isotope({
         layoutMode: 'packery',
         itemSelector: '.grid-item',
         packery: {
             gutter: 0
         }
-
     });
 
     /* Car Slider */
@@ -105,10 +95,7 @@ $(window).on("load", function () {
         autoplay: true,
         autoplaySpeed: 2000
     });
-
-
 });
-
 
 $(document).ready(function () {
     //refreshData();
@@ -124,40 +111,35 @@ $(document).ready(function () {
         url: "tradealert",
         success: function (data) {
             old_count = data;
-            if (data) {
-                if (data != 0) {
-                    $(".badge").html(data);
-                }
+            if (data > 0) {
+                $(".badge").html('');
+                $(".badge").html(data);
+            } else {
+                $(".badge").html('');
             }
         }
-
     });
 
     setInterval(function () {
-        var msg;
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         $.ajax({
             type: "GET",
             url: "tradealert",
             dataType: 'JSON',
             success: function (data) {
-                if (data > old_count) {
-                    if (data != 0) {
-                        $(".badge").html(data);
-                        old_count = data;
-                    }
-                }
-                else{
+                if (data > 0) {
+                    $(".badge").html('');
+                    $(".badge").html(data);
+                    old_count = data;
+                } else {
                     $(".badge").html('');
                 }
             }
         });
     }, 5000);
-
-
 });
-
