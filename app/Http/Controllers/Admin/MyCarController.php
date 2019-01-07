@@ -547,7 +547,7 @@ class MyCarController extends AppBaseController
                     'amount'             => 'required',
                     'name'               => 'required',
                     'chassis'            => 'required',
-                    'is_featured'        => 'check_featured',
+                    'is_featured'        => 'check_featured_update',
                     'length'             => 'required',
                     'width'              => 'required',
                     'height'             => 'required',
@@ -603,7 +603,7 @@ class MyCarController extends AppBaseController
                 'average_mkp' => 'required',
                 'kilometer'   => 'required',
                 'name'        => 'required',
-                'is_featured' => 'check_featured',
+                'is_featured' => 'check_featured_update',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
                 'attribute.*' => 'attr'
             ]), [
@@ -633,7 +633,7 @@ class MyCarController extends AppBaseController
                 'year'        => 'required',
                 'amount'      => 'required',
                 'phone'       => 'phone',
-                'is_featured' => 'check_featured',
+                'is_featured' => 'check_featured_update',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
                 'attribute.*' => 'attr'
             ]), [
@@ -851,7 +851,7 @@ class MyCarController extends AppBaseController
 
         if (TradeInCar::where('owner_car_id', $id)->orWhere('customer_car_id', $id)->count() > 0) {
             Flash::error('Car cannot be deleted, Trade request found');
-            return redirect(route('admin.cars.index'));
+            return redirect(route('admin.myCars.index'));
         }
         $this->myCarRepository->delete($id);
 

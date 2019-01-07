@@ -580,7 +580,7 @@
 <div class="form-group col-sm-2">
     {!! Form::label('is_featured', 'Is Featured:') !!}
     {!! Form::hidden('is_featured', 0, false) !!} <br>
-    {!! Form::checkbox('is_featured', 1, @$myCar->is_featured, ['class'=> 'form-control', 'data-toggle'=>'toggle']) !!}
+    {!! Form::checkbox('is_featured', 1, true, ['class'=> 'form-control', 'data-toggle'=>'toggle']) !!}
 </div>
 
 @if(isset($myCar))

@@ -18,6 +18,7 @@ use App\Observers\NewsInteractionObserver;
 use App\Observers\NotificationObserver;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -68,12 +69,24 @@ class AppServiceProvider extends ServiceProvider
         \Validator::extend('check_featured', function ($attribute, $value, $parameters, $validator) {
             if ($value == 1) {
                 $featured_car_count = Auth::user()->cars()->where('is_featured', 1)->count();
-                return $featured_car_count <= MyCar::FEATURED_CAR_LIMIT;
+                return $featured_car_count < MyCar::FEATURED_CAR_LIMIT;
             }
             return true;
         });
 
         \Validator::replacer('check_featured', function ($message, $attribute, $rule, $parameters, $value) {
+            return 'Your featured cars have reached to the limit.(' . MyCar::FEATURED_CAR_LIMIT . ')';
+        });
+
+        \Validator::extend('check_featured_update', function ($attribute, $value, $parameters, $validator) {
+            if ($value == 1) {
+                $featured_car_count = Auth::user()->cars()->where('is_featured', 1)->where('id', '!=', Request::segment(3))->count();
+                return $featured_car_count < MyCar::FEATURED_CAR_LIMIT;
+            }
+            return true;
+        });
+
+        \Validator::replacer('check_featured_update', function ($message, $attribute, $rule, $parameters, $value) {
             return 'Your featured cars have reached to the limit.(' . MyCar::FEATURED_CAR_LIMIT . ')';
         });
     }
