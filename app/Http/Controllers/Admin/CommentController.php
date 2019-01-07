@@ -159,6 +159,8 @@ class CommentController extends AppBaseController
     public function getNotification()
     {
         $data = Comment::where('deleted_at',null)->orderBy('created_at','desc')->get();
+//        $data = $this->commentRepository->where('deleted_at',null)->get();
+        
         $resultArray = [];
         $i =0;
         foreach ($data as $item){

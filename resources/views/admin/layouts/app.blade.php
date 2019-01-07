@@ -406,7 +406,7 @@
                     $.each(data, function (index, item) {
                         if (item.status === 20) {
                             count++;
-                            html = '<li><a class="unread" data-id="' + item.id + '" href="' + path + item.news_id + '"><p>' + item.user.name + '</p><i class="fa fa-ticket text-aqua"></i>' + item.comment_text + '</a></li>';
+                            html = '<li><a class="unread" data-id="' + item.id + '" href="' + path + item.news_id + '"><p>' + item.userwithtrash.name + '</p><i class="fa fa-ticket text-aqua"></i>' + item.comment_text + '</a></li>';
                         } else {
                             html = '<li><a class="" href="' + path + item.news_id + '"><i class="fa fa-ticket text-aqua"></i> ' + item.comment_text + ' <small class="pull-right"> </a></li>';
                         }
