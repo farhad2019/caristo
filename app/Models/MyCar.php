@@ -214,9 +214,10 @@ class MyCar extends Model
     const SHOWROOM = 10;
     const USER = 20;
 
-    const LIMITED_EDITION = 28;
+    const OUTLET_MALL = 25;
     const APPROVED_PRE_OWNED = 26;
     const CLASSIC_CARS = 27;
+    const LIMITED_EDITION = 28;
 
     const FOURWD = '4WD';
     const AWD = 'AWD';
