@@ -77,7 +77,7 @@
 
 <!-- Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('name', 'Name:') !!}
+    {!! Form::label('name', 'Car Name:') !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
 
@@ -291,11 +291,11 @@
 
 <div class="form-group col-sm-12 regions">
     <hr>
-    <h3>Drivetrain</h3>
+    <h3>Drive Train</h3>
     <hr>
     <div class="form-group col-sm-6 regions">
-        {!! Form::label('DRIVETRAIN', 'DRIVETRAIN:') !!}
-        {!! Form::select('drivetrain', \App\Models\MyCar::$DRIVETRAIN,  isset($limited_edition_specs)? $limited_edition_specs['Drivetrain']['DRIVETRAIN']:null, ['class' => 'form-control select2']) !!}
+        {!! Form::label('drive_train', 'Drive Train:') !!}
+        {!! Form::select('drive_train', \App\Models\MyCar::$DRIVE_TRAIN,  isset($limited_edition_specs)? $limited_edition_specs['DRIVE_TRAIN']['drive_train']:null, ['class' => 'form-control select2']) !!}
     </div>
 </div>
 
@@ -308,8 +308,8 @@
         {!! Form::number('displacement',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['DISPLACEMENT']:null, ['class' => 'form-control', 'placeholder' => 'Displacement is CC']) !!}
     </div>
     <div class="form-group col-sm-6 regions">
-        {!! Form::label('CLYNDERS', 'NO. OF  CLYNDERS:') !!}
-        {!! Form::number('clynders',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['NO. OF CYLINDER']:null, ['class' => 'form-control', 'placeholder' => 'NO. OF  CLYNDERS']) !!}
+        {!! Form::label('cylinders', 'NO. OF  cylinders:') !!}
+        {!! Form::number('cylinders',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['NO. OF CYLINDER']:null, ['class' => 'form-control', 'placeholder' => 'NO. OF  cylinders']) !!}
     </div>
 </div>
 
@@ -385,8 +385,8 @@
     <h3>Fuel</h3>
     <hr>
     <div class="form-group col-sm-6 regions">
-        {!! Form::label('FUEL_CONSUMBSION', 'FUEL CONSUMBSION:') !!}
-        {!! Form::number('consumbsion',  isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']:null, ['class' => 'form-control', 'placeholder' => 'FUEL CONSUMPTION L/100KM']) !!}
+        {!! Form::label('FUEL_CONSUMPTION', 'FUEL CONSUMPTION:') !!}
+        {!! Form::number('consumption',  isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']:null, ['class' => 'form-control', 'placeholder' => 'FUEL CONSUMPTION L/100KM']) !!}
     </div>
 </div>
 
@@ -396,8 +396,7 @@
     <hr>
     <div class="form-group col-sm-6 regions">
         {!! Form::label('Emission', 'Emission:') !!}
-        {!! Form::text('emission',  isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']:null, ['class' => 'form-control', 'placeholder' => 'Emission in gmCO2/KM
-']) !!}
+        {!! Form::text('emission',  isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']:null, ['class' => 'form-control', 'placeholder' => 'Emission in gmCO2/KM']) !!}
     </div>
 </div>
 
@@ -637,13 +636,6 @@
                     $('.category2528').show();
                 }
             });
-
-            $("#datepicker").datepicker({
-                format: "yyyy",
-                viewMode: "years",
-                minViewMode: "years"
-            });
-
         });
     </script>
 @endpush

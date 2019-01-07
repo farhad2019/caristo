@@ -128,7 +128,8 @@ class UserController extends AppBaseController
 
         $data['user_id'] = $user->id;
         $data['first_name'] = $user->name;
-        $data['dealer_type'] = $input['dealer_type'] ?? null;
+        $data['gender'] = isset($input['gender']) ? $input['gender'] : 10;
+        $data['dealer_type'] = isset($input['dealer_type']) ? $input['dealer_type'] : 10;
         $data['dealer_type_text'] = $input['dealer_type'] == 10 ? 'Official Dealer' : 'Market Dealer';
 
         $this->userRepository->attachRole($user->id, Role::SHOWROOM_OWNER_ROLE);
@@ -288,7 +289,7 @@ class UserController extends AppBaseController
             return redirect(route('admin.users.index'));
         }
 
-        if ($user->cars->count() > 0){
+        if ($user->cars->count() > 0) {
             if (TradeInCar::whereIn('owner_car_id', $user->cars->pluck('id')->toArray())->orWhereIn('customer_car_id', $user->cars->pluck('id')->toArray())->orWhere('user_id', $id)->count() > 0) {
                 Flash::error('Car cannot be deleted, Trade request found');
                 return redirect(route('admin.users.index'));

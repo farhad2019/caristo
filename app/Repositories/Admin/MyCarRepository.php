@@ -61,12 +61,12 @@ class MyCarRepository extends BaseRepository
                 'Seating_Capacity'     => array(
                     'MAX.NO OF SEATS' => $request->seats,
                 ),
-                'Drivetrain'           => array(
-                    'DRIVETRAIN' => $request->drivetrain,
+                'DRIVE_TRAIN'           => array(
+                    'drive_train' => $request->drive_train,
                 ),
                 'Engine'               => array(
                     'DISPLACEMENT'    => $request->displacement,
-                    'NO. OF CYLINDER' => $request->clynders,
+                    'NO. OF CYLINDER' => $request->cylinders,
                 ),
                 'Performance'          => array(
                     'MAX SPEED'          => $request->max_speed,
@@ -88,7 +88,7 @@ class MyCarRepository extends BaseRepository
                     'BACK TYRE'  => $request->back_tyre,
                 ),
                 'Fuel'                 => array(
-                    'FUEL CONSUMPTION' => $request->consumbsion,
+                    'FUEL CONSUMPTION' => $request->consumption,
                 ),
                 'Emission'             => array(
                     'EMISSION' => $request->emission,
@@ -249,12 +249,12 @@ class MyCarRepository extends BaseRepository
                 'Seating_Capacity'     => array(
                     'MAX.NO OF SEATS' => $request->seats,
                 ),
-                'Drivetrain'           => array(
-                    'DRIVETRAIN' => $request->drivetrain,
+                'DRIVE_TRAIN'           => array(
+                    'drive_train' => $request->drive_train,
                 ),
                 'Engine'               => array(
                     'DISPLACEMENT'    => $request->displacement,
-                    'NO. OF CYLINDER' => $request->clynders,
+                    'NO. OF CYLINDER' => $request->cylinders,
                 ),
                 'Performance'          => array(
                     'MAX SPEED'          => $request->max_speed,
@@ -276,7 +276,7 @@ class MyCarRepository extends BaseRepository
                     'BACK TYRE'  => $request->back_tyre,
                 ),
                 'Fuel'                 => array(
-                    'FUEL CONSUMPTION' => $request->consumbsion,
+                    'FUEL CONSUMPTION' => $request->consumption,
                 ),
                 'Emission'             => array(
                     'EMISSION' => $request->emission,

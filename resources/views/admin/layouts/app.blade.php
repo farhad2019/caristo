@@ -302,13 +302,14 @@
 <!-- SweetAlert -->
 <script src="{{ url('public/vendor/live_url/jquery.liveurl.js') }}"></script>
 
+<script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
+
 {{--    @yield('scripts')--}}
 @stack('scripts')
 {{--<script src="{{ url('public/js/admin/custom.js') }}"></script>--}}
 <script src="{{ url('public/js/admin/custom_new.js') }}"></script>
 
 <script>
-
     function confirmCancel(id) {
         swal({
             title: "Are you sure?",
@@ -354,8 +355,7 @@
             success: function (data) {
                 old_count = data;
                 if (data) {
-                    if (data != 0) {
-
+                    if (data > 0) {
                         $(".alert-msg").html(data);
                     }
                 }
@@ -415,7 +415,7 @@
                     });
 
                     $(".notifications-menu .dropdown-menu li.header span").html(count);
-                    if(count != 0){
+                    if (count != 0) {
                         var msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + count + '</span>';
                         $(".alert-msg").html(msg);
                     }

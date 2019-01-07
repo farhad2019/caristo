@@ -29,6 +29,16 @@
                 border-left: 1px solid #c6c6c6;
             }
 
+            textarea {
+                font-size: 13px;
+                border-bottom: 1px solid #d5d5d5;
+                border-top: none;
+                border-right: none;
+                border-left: none;
+                width: 100%;
+                Resize: none
+            }
+
         </style>
     @endpush
 
@@ -78,13 +88,11 @@
             <input type="text" name="phone" placeholder="Phone" value="{{ $user->details->phone }}" required> <br>
             <br>
             <textarea name="address" placeholder="Address"
-                      style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; padding: 0 0 7px; width: 100%;"
                       required>{{ $user->details->address == null ? '' : $user->details->address }}</textarea> <br>
             <br>
 
 
             <textarea name="about" placeholder="About"
-                      style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; padding: 0 0 7px; width: 100%;"
                       required>{{ $user->details->about == null ? '' : $user->details->about }}</textarea> <br> <br>
             <input type="text" name="password" placeholder="Password"> <br> <br>
             <input type="text" name="password_confirmation" placeholder="Confirm Password"> <br> <br>
@@ -100,29 +108,25 @@
                 <input type="text" name="name" placeholder="Name" value="{{ old('name')? old('name'): $user->name }}"
                        required> <br> <br>
                 <div class="left" style="width: 48%;">
-                    <input type="text" name="email" placeholder="Email"
-                           value="{{ old('email')? old('email'): $user->email }}" required readonly
-                           style="opacity: 0.6"> <br> <br>
+                    {{--<input type="text" name="email" placeholder="Email"--}}
+                    {{--value="{{ old('email')? old('email'): $user->email }}" required readonly--}}
+                    {{--style="opacity: 0.6"> <br> <br>--}}
                     {{--<textarea name="address" placeholder="Address"--}}
-                              {{--style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; width: 100%;"--}}
-                              {{--required>{{ old('address')?old('address'): $user->details->address }}</textarea>--}}
-                    <br>
-                    <br>
+                    {{--required>{{ old('address')?old('address'): $user->details->address }}</textarea>--}}
+                    <input type="text" name="phone" placeholder="Phone" value="{{ $user->details->phone }}" required>
                     {{--<input type="password" name="password" placeholder="Password"> <br> <br>--}}
                     {{--<label>Logo:</label>
                     <input type="file" name="showroom_media">--}}
                 </div>
                 <div class="right" style="width: 48%;">
-                    <input type="text" name="phone" placeholder="Phone" value="{{ $user->details->phone }}" required>
                     {{--<input type="password" name="password_confirmation" placeholder="Confirm Password"> <br> <br>--}}
                     {{--<img src="{{ $user->details->image_url }}" width="80">--}}
                 </div>
-
-                <textarea name="about" placeholder="About"
-                          style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none; width: 100%;"
-                          required>{{ old('about')? old('about')  : $user->details->about }}</textarea> <br>
                 <br>
-
+                <br>
+                <textarea name="about" placeholder="About"
+                          required>{{ old('about')? old('about')  : $user->details->about }}</textarea>
+                <br>
             </div>
         </div>
 
@@ -133,9 +137,8 @@
                        value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" required>
                 <br> <br>
                 <div class="left" style="width: 48%;">
-                        <textarea name="showroom_address" placeholder="Show Room Address"
-                                  style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none;  width: 100%;"
-                                  required>{{ old('showroom_address')? old('showroom_address') : $user->showroomDetails->address }}</textarea>
+                    <textarea name="showroom_address" placeholder="Show Room Address"
+                              required>{{ old('showroom_address')? old('showroom_address') : $user->showroomDetails->address }}</textarea>
                     <br> <br>
                     <input type="text" name="showroom_phone" placeholder="Show Room Phone"
                            value="{{ old('showroom_phone')?old('showroom_phone'): $user->showroomDetails->phone }}"
@@ -153,11 +156,10 @@
 
                 <div class="right" style="width: 48%;">
                         <textarea name="showroom_about" placeholder="Show Room About"
-                                  style="font-size: 13px; border-bottom: 1px solid #d5d5d5; border-top: none; border-right: none; border-left: none;  width: 100%;"
                                   required>{{ old('showroom_about')? old('showroom_about'): $user->showroomDetails->about }}</textarea>
                     <br> <br>
                     <input type="text" name="showroom_email" placeholder="Show Room Email"
-                           value="{{ $user->showroomDetails->email }}" required> <br> <br>
+                           value="{{ $user->showroomDetails->email }}" required readonly> <br> <br>
                     <input type="password" name="password_confirmation" placeholder="Confirm Password"> <br> <br>
                     <img src="{{ Auth::user()->showroomDetails->logo_url }}" width="80">
                 </div>

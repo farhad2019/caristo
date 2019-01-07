@@ -132,6 +132,9 @@ $(document).ready(function () {
             url: "tradealert",
             dataType: 'JSON',
             success: function (data) {
+                if (data > old_count) {
+                    $.playSound('http://localhost/CaristoCratApp/storage/app/public/notification.mp3');
+                }
                 if (data > 0) {
                     $(".badge").html('');
                     $(".badge").html(data);

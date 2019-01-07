@@ -4,7 +4,6 @@
     @include('flash::message')
     <div class="left_side">
         {{-- side menu --}}
-
         <span class="icon-close2 left_side_close"></span>
         @include('admin.layouts.showroom_sidebar')
         {{-- side menu End--}}
@@ -52,7 +51,7 @@
             @else
                 <div class="tab_serach">
                     <div class="row no-gutters">
-                        <div class="col-md-6">  
+                        <div class="col-md-6">
                         </div>
                         <div class="col-md-6 sort_parent">
                         </div>

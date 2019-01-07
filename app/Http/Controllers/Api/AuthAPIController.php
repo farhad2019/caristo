@@ -126,7 +126,7 @@ class AuthAPIController extends AppBaseController
             $userDetails['dob'] = $request->dob;
             $userDetails['profession'] = $request->profession;
             $userDetails['nationality'] = $request->nationality;
-            $userDetails['gender'] = $request->gender;
+            $userDetails['gender'] = isset($request->gender) ? $request->gender : 10;
             $userDetails['address'] = isset($request->address) ? $request->address : null;
             $userDetails['image'] = isset($request->image) ? $request->image : null;
             $userDetails['email_updates'] = isset($request->email_updates) ? $request->email_updates : 1;
@@ -711,6 +711,7 @@ class AuthAPIController extends AppBaseController
                 $user = User::create($userData);
                 $userDetails['user_id'] = $user->id;
                 $userDetails['phone'] = $request->input('phone', null);
+                $userDetails['gender'] = $request->input('gender', 10);
                 UserDetail::create($userDetails);
 
             }

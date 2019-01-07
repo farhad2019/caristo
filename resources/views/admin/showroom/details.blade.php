@@ -139,9 +139,9 @@
                 {!! Form::close() !!}
             </div>
         </div>
-        <div class="right" style="margin-top: 12px">
+        {{--<div class="right" style="margin-top: 12px">
             <div class="bid_widget">
-                <h3 style="text-align: left; margin-bottom: 10px;">Trade In Against: </h3>
+                <h3 style="text-align: left; margin-bottom: 10px;">My Car: </h3>
                 @if($tradeInRequest->myCar->media->count() > 0)
                     <img src="{{ $tradeInRequest->myCar->media[0]->file_url }}" alt="" width="230" height="150">
                 @else
@@ -152,7 +152,7 @@
                 <h4 style="text-align: left; color: gray">{{ $tradeInRequest->myCar->year }}</h4>
                 <h2 style="text-align: left;">AED {{ number_format($tradeInRequest->myCar->amount) }}</h2>
             </div>
-        </div>
+        </div>--}}
     @else
         <div class="right">
             <div class="bid_widget">
@@ -181,22 +181,21 @@
                 </div>
             </div>
         </div>
-
-        <div class="right" style="margin-top: 12px">
-            <div class="bid_widget">
-                <h3 style="text-align: left; margin-bottom: 10px;">Trade In Against: </h3>
-                @if($tradeInRequest->myCar->media->count() > 0)
-                    <img src="{{ $tradeInRequest->myCar->media[0]->file_url }}" alt="" width="230" height="150">
-                @else
-                    <img src="{{ url('storage/app/public/dummy-img.jpg') }}" alt="" width="230" height="150">
-                @endif
-                <h2 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->brand->name }}</h2>
-                <h3 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->name }}</h3>
-                <h4 style="text-align: left; color: gray">{{ $tradeInRequest->myCar->year }}</h4>
-                <h2 style="text-align: left;">AED {{ number_format($tradeInRequest->myCar->amount) }}</h2>
-            </div>
-        </div>
     @endif
+    <div class="right" style="margin-top: 12px">
+        <div class="bid_widget">
+            <h3 style="text-align: left; margin-bottom: 10px;">My Car: </h3>
+            @if($tradeInRequest->myCar->media->count() > 0)
+                <img src="{{ $tradeInRequest->myCar->media[0]->file_url }}" alt="" width="230" height="150">
+            @else
+                <img src="{{ url('storage/app/public/dummy-img.jpg') }}" alt="" width="230" height="150">
+            @endif
+            <h2 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->brand->name }}</h2>
+            <h3 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->name }}</h3>
+            <h4 style="text-align: left; color: gray">{{ $tradeInRequest->myCar->year }}</h4>
+            <h2 style="text-align: left;">AED {{ number_format($tradeInRequest->myCar->amount) }}</h2>
+        </div>
+    </div>
 </div>
 
 <script>

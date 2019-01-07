@@ -26,7 +26,7 @@
 
 <div class="form-group col-sm-6 regions">
     {!! Form::label('type', 'Type:') !!}
-    {!! Form::select('type', \App\Models\BanksRate::$BANK_TYPE_TEXT,  isset($limited_edition_specs)? $limited_edition_specs['Drivetrain']['DRIVETRAIN']:null, ['class' => 'form-control select2']) !!}
+    {!! Form::select('type', \App\Models\BanksRate::$BANK_TYPE_TEXT,  null, ['class' => 'form-control select2']) !!}
 </div>
 
 
@@ -34,9 +34,7 @@
     {!! Form::label('name', 'Media*:') !!}
     {!! Form::file('media', ['class' => 'form-control']) !!}
 
-
     @if(isset($banksRate) && count($banksRate->media)>0)
-
         <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >
             <a class='showGallery' data-id='{{ $banksRate->media[0]->id }}' data-toggle='modal'>
                 <img src="{{$banksRate->media()->orderby('created_at', 'desc')->first()->fileUrl}}" style="width: 125px;">

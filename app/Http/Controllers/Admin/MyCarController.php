@@ -218,112 +218,114 @@ class MyCarController extends AppBaseController
     {
         if ($request->category_id == MyCar::LIMITED_EDITION) {
             $validatedData = $request->validate([
-                'category_id'               => 'required',
-                'model_id'                  => 'required',
-                'year'                      => 'required',
-                'amount'                    => 'required',
-                'regional_specification_id' => 'required',
-                'name'                      => 'required',
+//                'category_id'               => 'required',
+//                'model_id'                  => 'required',
+//                'year'                      => 'required',
+//                'regional_specification_id' => 'required',
 //                'email'                     => 'required|email',
-                'chassis'                   => 'required',
-                'length'                    => 'required',
-                'width'                     => 'required',
-                'height'                    => 'required',
-                'weight_dist'               => 'required',
-                'trunk'                     => 'required',
-                'weight'                    => 'required',
-                'seats'                     => 'required',
-                'drivetrain'                => 'required',
-                'displacement'              => 'required',
-                'clynders'                  => 'required',
-                'max_speed'                 => 'required',
-                'acceleration'              => 'required',
-                'hp_rpm'                    => 'required',
-                'torque'                    => 'required',
-                'gearbox'                   => 'required',
-                'brakes'                    => 'required',
-                'suspension'                => 'required',
-                'front_tyre'                => 'required',
-                'back_tyre'                 => 'required',
-                'consumbsion'               => 'required',
-                'emission'                  => 'required',
-                'warranty'                  => 'required',
-                'maintenance'               => 'required',
-                'to'                        => 'required|greater_than_field:from',
-                'depreciation_trend'        => 'required',
-                'price'                     => 'required',
-                'price.*'                   => 'numeric',
-                'media'                     => 'required',
-                'media.*'                   => 'image|mimes:jpg,jpeg,png',
+                'amount'             => 'required',
+                'name'               => 'required',
+                'chassis'            => 'required',
+                'length'             => 'required',
+                'width'              => 'required',
+                'height'             => 'required',
+                'weight_dist'        => 'required',
+                'trunk'              => 'required',
+                'weight'             => 'required',
+                'seats'              => 'required',
+                'drive_train'        => 'required',
+                'displacement'       => 'required',
+                'cylinders'          => 'required',
+                'max_speed'          => 'required',
+                'acceleration'       => 'required',
+                'hp_rpm'             => 'required',
+                'torque'             => 'required',
+                'gearbox'            => 'required',
+                'brakes'             => 'required',
+                'suspension'         => 'required',
+                'front_tyre'         => 'required',
+                'back_tyre'          => 'required',
+                'consumption'        => 'required',
+                'emission'           => 'required',
+                'warranty'           => 'required',
+                'maintenance'        => 'required',
+                'to'                 => 'required|greater_than_field:from',
+                'depreciation_trend' => 'required',
+                'price'              => 'required',
+                'price.*'            => 'numeric',
+                'media'              => 'required',
+                'media.*'            => 'image|mimes:jpg,jpeg,png|max:500'
             ], [
-                'category_id.required' => 'The category field is required.',
-                'model_id.required'    => 'The model field is required.',
-                'year.required'        => 'The year field is required.',
-                'amount.required'      => 'The amount field is required.',
-                'media.required'       => 'The media is required.',
-                'media.*'              => 'The media must be a file of type: jpg, jpeg, png.',
-                'price.required'       => 'The price must be filled.',
-                'price.*'              => 'The all price must be filled.',
-                'name.required'        => 'The name field is required.'
+//                'category_id.required' => 'The category field is required.',
+//                'model_id.required'    => 'The model field is required.',
+//                'year.required'        => 'The year field is required.',
+                'amount.required' => 'The amount field is required.',
+                'media.required'  => 'The media is required.',
+                'media.*.mimes'   => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.*'         => 'The media may not be greater than 500 kilobytes.',
+                'price.required'  => 'The price must be filled.',
+                'price.*'         => 'The all price must be filled.',
+                'name.required'   => 'The name field is required.',
             ]);
-
         } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
             $validatedData = $request->validate([
-                'category_id'               => 'required',
-                'model_id'                  => 'required',
-                'year'                      => 'required',
-                'transmission_type'         => 'required',
-                'engine_type_id'            => 'required',
-                'amount'                    => 'required',
-                'regional_specification_id' => 'required',
-                'kilometer'                 => 'required',
-                'average_mkp'               => 'required',
-                'chassis'                   => 'required',
-                'name'                      => 'required',
-                'email'                     => 'required|email',
-                'phone'                     => 'phone',
-                'media'                     => 'required',
-                'media.*'                   => 'image|mimes:jpg,jpeg,png',
-                'attribute.*'               => 'attr'
+//                'category_id'               => 'required',
+//                'model_id'                  => 'required',
+//                'transmission_type'         => 'required',
+//                'engine_type_id'            => 'required',
+//                'regional_specification_id' => 'required',
+//                'email'                     => 'required|email',
+//                'phone'                     => 'phone',
+//                'year'        => 'required',
+                'chassis'     => 'required',
+                'amount'      => 'required',
+                'average_mkp' => 'required',
+                'kilometer'   => 'required',
+                'name'        => 'required',
+                'media'       => 'required',
+                'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
+                'attribute.*' => 'attr'
             ], [
-                'category_id.required'       => 'The category field is required.',
-                'chassis.required'           => 'The chassis field is required.',
-                'name.required'              => 'The car name field is required.',
-                'model_id.required'          => 'The model field is required.',
-                'year.required'              => 'The year field is required.',
-                'transmission_type.required' => 'The transmission field is required.',
-                'engine_type_id.required'    => 'The engine field is required.',
-                'amount.required'            => 'The Amount field is required.',
-                'media.required'             => 'The media is required.',
-                'media.*'                    => 'The media must be a file of type: jpg, jpeg, png.',
-                'kilometer.required'         => 'The mileage field is required.',
-                'average_mkp.required'       => 'The average MKP field is required.',
-                'email.required'             => 'The amount field is required.'
+//                'category_id.required'       => 'The category field is required.',
+//                'model_id.required'          => 'The model field is required.',
+//                'transmission_type.required' => 'The transmission field is required.',
+//                'engine_type_id.required'    => 'The engine field is required.',
+//                'email.required'             => 'The amount field is required.',
+//                'year.required'        => 'The year field is required.',
+                'chassis.required'     => 'The chassis field is required.',
+                'amount.required'      => 'The Amount field is required.',
+                'average_mkp.required' => 'The average MKP field is required.',
+                'kilometer.required'   => 'The mileage field is required.',
+                'name.required'        => 'The car name field is required.',
+                'media.required'       => 'The media is required.',
+                'media.*.mimes'        => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.*'              => 'The media may not be greater than 500 kilobytes.',
             ]);
         } else {
             $validatedData = $request->validate([
-                'category_id'               => 'sometimes|nullable|required',
-                'model_id'                  => 'sometimes|nullable|required',
-                'year'                      => 'sometimes|nullable|required',
-                'transmission_type'         => 'sometimes|nullable|required',
-                'engine_type_id'            => 'sometimes|nullable|required',
-                'amount'                    => 'sometimes|nullable|required',
-                'regional_specification_id' => 'sometimes|nullable|required',
-                'email'                     => 'sometimes|nullable|required|email',
-                'phone'                     => 'sometimes|nullable|phone',
-                'media'                     => 'required',
-                'media.*'                   => 'image|mimes:jpg,jpeg,png',
-                'attribute.*'               => 'attr'
+//                'category_id'               => 'required',
+//                'model_id'                  => 'required',
+//                'transmission_type'         => 'required',
+//                'engine_type_id'            => 'required',
+//                'regional_specification_id' => 'required',
+//                'email'                     => 'required|email',
+                'year'        => 'required',
+                'amount'      => 'required',
+                'phone'       => 'phone',
+                'media'       => 'required',
+                'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
+                'attribute.*' => 'attr'
             ], [
-                'category_id.required'       => 'The category field is required.',
-                'model_id.required'          => 'The model field is required.',
-                'year.required'              => 'The year field is required.',
-                'transmission_type.required' => 'The transmission field is required.',
-                'engine_type_id.required'    => 'The engine field is required.',
-                'amount.required'            => 'The amount field is required.',
-                'media.required'             => 'The media is required.',
-                'media.*'                    => 'The media must be a file of type: jpg, jpeg, png.',
-                'email.required'             => 'The amount field is required.'
+//                'category_id.required'       => 'The category field is required.',
+//                'model_id.required'          => 'The model field is required.',
+//                'transmission_type.required' => 'The transmission field is required.',
+//                'engine_type_id.required'    => 'The engine field is required.',
+//                'email.required'             => 'The email field is required.',
+                'year.required'   => 'The year field is required.',
+                'amount.required' => 'The amount field is required.',
+                'media.required'  => 'The media is required.',
+                'media.*.mimes'   => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.*'         => 'The media may not be greater than 500 kilobytes.',
             ]);
         }
 
@@ -343,7 +345,7 @@ class MyCarController extends AppBaseController
             }*/
         }
 
-        Flash::success('Car saved successfully.');
+        Flash::success('Car saved successfully . ');
         return redirect(route('admin.myCars.index'));
     }
 
@@ -522,94 +524,168 @@ class MyCarController extends AppBaseController
         }
 
         if ($myCar->media->count() == 0) {
-            $imageValidation = [];
-            $imageValidation = array_merge([
-                'media' => 'required'
-            ], [
-                'category_id'               => 'sometimes|nullable|required',
-                'model_id'                  => 'sometimes|nullable|required',
-                'year'                      => 'sometimes|nullable|required',
-                'amount'                    => 'sometimes|nullable|required',
-                'regional_specification_id' => 'sometimes|nullable|required',
-                'email'                     => 'sometimes|nullable|required|email',
-                'chassis'                   => 'required',
-                'length'                    => 'required',
-                'width'                     => 'required',
-                'height'                    => 'required',
-                'weight_dist'               => 'required',
-                'trunk'                     => 'required',
-                'weight'                    => 'required',
-                'seats'                     => 'required',
-                'drivetrain'                => 'required',
-                'displacement'              => 'required',
-                'clynders'                  => 'required',
-                'max_speed'                 => 'required',
-                'acceleration'              => 'required',
-                'hp_rpm'                    => 'required',
-                'torque'                    => 'required',
-                'gearbox'                   => 'required',
-                'brakes'                    => 'required',
-                'suspension'                => 'required',
-                'front_tyre'                => 'required',
-                'back_tyre'                 => 'required',
-                'consumbsion'               => 'required',
-                'emission'                  => 'required',
-                'warranty'                  => 'required',
-                'maintenance'               => 'required',
-                'to'                        => 'required|greater_than_field:from',
-                'depreciation_trend'        => 'required',
-                'price.*'                   => 'required',
-                'media.*'                   => 'image|mimes:jpg,jpeg,png',
-            ]);
+            $imageValidation = ['media' => 'required'];
         } else {
-            $imageValidation = [
-                'category_id'               => 'sometimes|nullable|required',
-                'model_id'                  => 'sometimes|nullable|required',
-                'year'                      => 'sometimes|nullable|required',
-                'amount'                    => 'sometimes|nullable|required',
-                'regional_specification_id' => 'sometimes|nullable|required',
-                'email'                     => 'sometimes|nullable|required|email',
-                'chassis'                   => 'required',
-                'length'                    => 'required',
-                'width'                     => 'required',
-                'height'                    => 'required',
-                'weight_dist'               => 'required',
-                'trunk'                     => 'required',
-                'weight'                    => 'required',
-                'seats'                     => 'required',
-                'drivetrain'                => 'required',
-                'displacement'              => 'required',
-                'clynders'                  => 'required',
-                'max_speed'                 => 'required',
-                'acceleration'              => 'required',
-                'hp_rpm'                    => 'required',
-                'torque'                    => 'required',
-                'gearbox'                   => 'required',
-                'brakes'                    => 'required',
-                'suspension'                => 'required',
-                'front_tyre'                => 'required',
-                'back_tyre'                 => 'required',
-                'consumbsion'               => 'required',
-                'emission'                  => 'required',
-                'warranty'                  => 'required',
-                'maintenance'               => 'required',
-                'to'                        => 'required|greater_than_field:from',
-                'depreciation_trend'        => 'required',
-                'price.*'                   => 'required',
-                'media.*'                   => 'image|mimes:jpg,jpeg,png',
-            ];
+            $imageValidation = [];
         }
 
         if ($request->category_id == MyCar::LIMITED_EDITION) {
-            $validatedData = $request->validate($imageValidation, [
-                'category_id.required' => 'The category field is required.',
+            $validatedData = $request->validate(
+                array_merge(array_filter($imageValidation), [
+//                'category_id'               => 'required',
+//                'model_id'                  => 'required',
+//                'year'                      => 'required',
+//                'regional_specification_id' => 'required',
+//                'email'                     => 'required|email',
+                    'amount'             => 'required',
+                    'name'               => 'required',
+                    'chassis'            => 'required',
+                    'length'             => 'required',
+                    'width'              => 'required',
+                    'height'             => 'required',
+                    'weight_dist'        => 'required',
+                    'trunk'              => 'required',
+                    'weight'             => 'required',
+                    'seats'              => 'required',
+                    'drive_train'        => 'required',
+                    'displacement'       => 'required',
+                    'cylinders'          => 'required',
+                    'max_speed'          => 'required',
+                    'acceleration'       => 'required',
+                    'hp_rpm'             => 'required',
+                    'torque'             => 'required',
+                    'gearbox'            => 'required',
+                    'brakes'             => 'required',
+                    'suspension'         => 'required',
+                    'front_tyre'         => 'required',
+                    'back_tyre'          => 'required',
+                    'consumption'        => 'required',
+                    'emission'           => 'required',
+                    'warranty'           => 'required',
+                    'maintenance'        => 'required',
+                    'to'                 => 'required|greater_than_field:from',
+                    'depreciation_trend' => 'required',
+                    'price'              => 'required',
+                    'price.*'            => 'numeric',
+                    'media.*'            => 'image|mimes:jpg,jpeg,png|max:500'
+                ]), [
+                /*'category_id.required' => 'The category field is required.',
                 'model_id.required'    => 'The model field is required.',
-                'year.required'        => 'The year field is required.',
-                'amount.required'      => 'The amount field is required.',
+                'year.required'        => 'The year field is required.',*/
+                'amount.required' => 'The amount field is required.',
+                'price.required'  => 'The price must be filled.',
+                'price.*'         => 'The all price must be filled.',
+                'name.required'   => 'The name field is required.',
+                'media.required'  => 'The media is required.',
+                'media.*.mimes'   => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.*'         => 'The media may not be greater than 500 kilobytes.'
+            ]);
+        } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
+            $validatedData = $request->validate(array_merge(array_filter($imageValidation), [
+//                'category_id'               => 'required',
+//                'model_id'                  => 'required',
+//                'transmission_type'         => 'required',
+//                'engine_type_id'            => 'required',
+//                'regional_specification_id' => 'required',
+//                'email'                     => 'required|email',
+//                'phone'                     => 'phone',
+//                'year'        => 'required',
+                'chassis'     => 'required',
+                'amount'      => 'required',
+                'average_mkp' => 'required',
+                'kilometer'   => 'required',
+                'name'        => 'required',
+                'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
+                'attribute.*' => 'attr'
+            ]), [
+//                'category_id.required'       => 'The category field is required.',
+//                'model_id.required'          => 'The model field is required.',
+//                'transmission_type.required' => 'The transmission field is required.',
+//                'engine_type_id.required'    => 'The engine field is required.',
+//                'email.required'             => 'The amount field is required.',
+//                'year.required'        => 'The year field is required.',
+                'chassis.required'     => 'The chassis field is required.',
+                'amount.required'      => 'The Amount field is required.',
+                'average_mkp.required' => 'The average MKP field is required.',
+                'kilometer.required'   => 'The mileage field is required.',
+                'name.required'        => 'The car name field is required.',
                 'media.required'       => 'The media is required.',
-                'media.*'              => 'The media must be a file of type: jpg, jpeg, png.',
-                'price.*'              => 'The all price must be filled.',
-                'email.required'       => 'The amount field is required.'
+                'media.*.mimes'        => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.*'              => 'The media may not be greater than 500 kilobytes.',
+            ]);
+        } else {
+            $validatedData = $request->validate(array_merge(array_filter($imageValidation), [
+//                'category_id'               => 'required',
+//                'model_id'                  => 'required',
+//                'transmission_type'         => 'required',
+//                'engine_type_id'            => 'required',
+//                'regional_specification_id' => 'required',
+//                'email'                     => 'required|email',
+                'year'        => 'required',
+                'amount'      => 'required',
+                'phone'       => 'phone',
+                'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
+                'attribute.*' => 'attr'
+            ]), [
+//                'category_id.required'       => 'The category field is required.',
+//                'model_id.required'          => 'The model field is required.',
+//                'transmission_type.required' => 'The transmission field is required.',
+//                'engine_type_id.required'    => 'The engine field is required.',
+//                'email.required'             => 'The email field is required.',
+                'year.required'   => 'The year field is required.',
+                'amount.required' => 'The amount field is required.',
+                'media.required'  => 'The media is required.',
+                'media.*.mimes'   => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.*'         => 'The media may not be greater than 500 kilobytes.',
+            ]);
+        }
+
+        /*if ($request->category_id == MyCar::LIMITED_EDITION) {
+            $validatedData = $request->validate(array_merge(array_filter($imageValidation), [
+//                'category_id'               => 'sometimes | nullable | required',
+//                'model_id'                  => 'sometimes | nullable | required',
+//                'year'                      => 'sometimes | nullable | required',
+//                'regional_specification_id' => 'sometimes | nullable | required',
+//                'email'                     => 'sometimes | nullable | required | email',
+                'amount'             => 'required',
+                'chassis'            => 'required',
+                'length'             => 'required',
+                'width'              => 'required',
+                'height'             => 'required',
+                'weight_dist'        => 'required',
+                'trunk'              => 'required',
+                'weight'             => 'required',
+                'seats'              => 'required',
+                'drive_train'        => 'required',
+                'displacement'       => 'required',
+                'cylinders'          => 'required',
+                'max_speed'          => 'required',
+                'acceleration'       => 'required',
+                'hp_rpm'             => 'required',
+                'torque'             => 'required',
+                'gearbox'            => 'required',
+                'brakes'             => 'required',
+                'suspension'         => 'required',
+                'front_tyre'         => 'required',
+                'back_tyre'          => 'required',
+                'consumption'        => 'required',
+                'emission'           => 'required',
+                'warranty'           => 'required',
+                'maintenance'        => 'required',
+                'to'                 => 'required|greater_than_field:from',
+                'depreciation_trend' => 'required',
+                'price .*'           => 'required',
+                'media.*'            => 'image|mimes:jpg,jpeg,png|max:500'
+            ]), [
+//                'category_id . required' => 'The category field is required . ',
+//                'model_id . required'    => 'The model field is required . ',
+//                'year . required'        => 'The year field is required . ',
+//                'email . required'       => 'The amount field is required . '
+                'amount.required' => 'The amount field is required . ',
+                'media.required'  => 'The media is required.',
+                'media.*.mimes'   => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.*'         => 'The media may not be greater than 500 kilobytes.',
+                'price.*'         => 'The all price must be filled . ',
             ]);
         } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
             if ($myCar->media->count() == 0) {
@@ -628,10 +704,10 @@ class MyCarController extends AppBaseController
                     'average_mkp'               => 'required',
                     'chassis'                   => 'required',
                     'name'                      => 'required',
-                    'email'                     => 'required|email',
+                    'email'                     => 'required | email',
                     'phone'                     => 'phone',
-                    'media.*'                   => 'image|mimes:jpg,jpeg,png',
-                    'attribute.*'               => 'attr'
+                    'media .*'                  => 'image | mimes:jpg,jpeg,png | max = 500',
+                    'attribute .*'              => 'attr'
                 ]);
             } else {
                 $imageValidation = [];
@@ -647,24 +723,24 @@ class MyCarController extends AppBaseController
                     'average_mkp'               => 'required',
                     'chassis'                   => 'required',
                     'name'                      => 'required',
-//                    'email'                     => 'required|email',
+//                    'email'                     => 'required | email',
                     'phone'                     => 'phone',
-                    'media.*'                   => 'image|mimes:jpg,jpeg,png',
-                    'attribute.*'               => 'attr'
+                    'media .*'                  => 'image | mimes:jpg,jpeg,png | max = 500',
+                    'attribute .*'              => 'attr'
                 ];
             }
             $validatedData = $request->validate($imageValidation, [
-                'category_id.required'       => 'The category field is required.',
-                'model_id.required'          => 'The model field is required.',
-                'year.required'              => 'The year field is required.',
-                'transmission_type.required' => 'The transmission field is required.',
-                'engine_type_id.required'    => 'The engine field is required.',
-                'amount.required'            => 'The amount field is required.',
-                'media.required'             => 'The media is required.',
-                'media.*'                    => 'The media must be a file of type: jpg, jpeg, png.',
-                'kilometer.required'         => 'The Mileage field is required.',
-                'average_mkp.required'       => 'The Average MKP field is required.',
-//                'email.required'             => 'The amount field is required.'
+                'category_id . required'       => 'The category field is required . ',
+                'model_id . required'          => 'The model field is required . ',
+                'year . required'              => 'The year field is required . ',
+                'transmission_type . required' => 'The transmission field is required . ',
+                'engine_type_id . required'    => 'The engine field is required . ',
+                'amount . required'            => 'The amount field is required . ',
+                'media . required'             => 'The media is required . ',
+                'media .*'                     => 'The media must be a file of type: jpg, jpeg, png . ',
+                'kilometer . required'         => 'The Mileage field is required . ',
+                'average_mkp . required'       => 'The Average MKP field is required . ',
+//                'email . required'             => 'The amount field is required . '
             ]);
         } else {
             if ($myCar->media->count() == 0) {
@@ -672,46 +748,46 @@ class MyCarController extends AppBaseController
                 $imageValidation = array_merge([
                     'media' => 'required'
                 ], [
-                    'category_id'               => 'sometimes|nullable|required',
-                    'model_id'                  => 'sometimes|nullable|required',
-                    'year'                      => 'sometimes|nullable|required',
-                    'transmission_type'         => 'sometimes|nullable|required',
-                    'engine_type_id'            => 'sometimes|nullable|required',
-                    'amount'                    => 'sometimes|nullable|required',
-                    'regional_specification_id' => 'sometimes|nullable|required',
-                    'email'                     => 'sometimes|nullable|required|email',
-                    'phone'                     => 'sometimes|nullable|phone',
-                    'media.*'                   => 'image|mimes:jpg,jpeg,png',
-                    'attribute.*'               => 'attr'
+                    'category_id'               => 'sometimes | nullable | required',
+                    'model_id'                  => 'sometimes | nullable | required',
+                    'year'                      => 'sometimes | nullable | required',
+                    'transmission_type'         => 'sometimes | nullable | required',
+                    'engine_type_id'            => 'sometimes | nullable | required',
+                    'amount'                    => 'sometimes | nullable | required',
+                    'regional_specification_id' => 'sometimes | nullable | required',
+                    'email'                     => 'sometimes | nullable | required | email',
+                    'phone'                     => 'sometimes | nullable | phone',
+                    'media .*'                  => 'image | mimes:jpg,jpeg,png | max = 500',
+                    'attribute .*'              => 'attr'
                 ]);
             } else {
                 $imageValidation = [];
                 $imageValidation = [
-                    'category_id'               => 'sometimes|nullable|required',
-                    'model_id'                  => 'sometimes|nullable|required',
-                    'year'                      => 'sometimes|nullable|required',
-                    'transmission_type'         => 'sometimes|nullable|required',
-                    'engine_type_id'            => 'sometimes|nullable|required',
-                    'amount'                    => 'sometimes|nullable|required',
-                    'regional_specification_id' => 'sometimes|nullable|required',
-                    'email'                     => 'sometimes|nullable|required|email',
-                    'phone'                     => 'sometimes|nullable|phone',
-                    'media.*'                   => 'image|mimes:jpg,jpeg,png',
-                    'attribute.*'               => 'attr'
+                    'category_id'               => 'sometimes | nullable | required',
+                    'model_id'                  => 'sometimes | nullable | required',
+                    'year'                      => 'sometimes | nullable | required',
+                    'transmission_type'         => 'sometimes | nullable | required',
+                    'engine_type_id'            => 'sometimes | nullable | required',
+                    'amount'                    => 'sometimes | nullable | required',
+                    'regional_specification_id' => 'sometimes | nullable | required',
+                    'email'                     => 'sometimes | nullable | required | email',
+                    'phone'                     => 'sometimes | nullable | phone',
+                    'media .*'                  => 'image | mimes:jpg,jpeg,png | max = 500',
+                    'attribute .*'              => 'attr'
                 ];
             }
             $validatedData = $request->validate($imageValidation, [
-                'category_id.required'       => 'The category field is required.',
-                'model_id.required'          => 'The model field is required.',
-                'year.required'              => 'The year field is required.',
-                'transmission_type.required' => 'The transmission field is required.',
-                'engine_type_id.required'    => 'The engine field is required.',
-                'amount.required'            => 'The amount field is required.',
-                'media.required'             => 'The media is required.',
-                'media.*'                    => 'The media must be a file of type: jpg, jpeg, png.',
-                'email.required'             => 'The amount field is required.'
+                'category_id . required'       => 'The category field is required . ',
+                'model_id . required'          => 'The model field is required . ',
+                'year . required'              => 'The year field is required . ',
+                'transmission_type . required' => 'The transmission field is required . ',
+                'engine_type_id . required'    => 'The engine field is required . ',
+                'amount . required'            => 'The amount field is required . ',
+                'media . required'             => 'The media is required . ',
+                'media .*'                     => 'The media must be a file of type: jpg, jpeg, png . ',
+                'email . required'             => 'The amount field is required . '
             ]);
-        }
+        }*/
 
 
         if ($request->category_id != $myCar->category_id) {
@@ -744,7 +820,7 @@ class MyCarController extends AppBaseController
             }*/
         }
 
-        Flash::success('Car updated successfully.');
+        Flash::success('Car updated successfully . ');
         return redirect(route('admin.myCars.index'));
     }
 
@@ -769,7 +845,7 @@ class MyCarController extends AppBaseController
         }
         $this->myCarRepository->delete($id);
 
-        Flash::success('Car deleted successfully.');
+        Flash::success('Car deleted successfully . ');
         return redirect(route('admin.myCars.index'));
     }
 }

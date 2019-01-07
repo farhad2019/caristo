@@ -2,7 +2,7 @@
 
 @section('title')
     Edit
-    <small>Segments</small>
+    <small>Segment</small>
 @endsection
 
 @section('content')

@@ -225,7 +225,7 @@ class MyCar extends Model
         self::AUTOMATIC => 'Automatic'
     ];
 
-    public static $DRIVETRAIN = [
+    public static $DRIVE_TRAIN = [
         self::FOURWD => '4WD',
         self::AWD    => 'AWD',
         self::FWD    => 'FWD',
