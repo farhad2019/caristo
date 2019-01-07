@@ -195,6 +195,9 @@ class MyCar extends Model
     public $table = 'cars';
     protected $dates = ['deleted_at', 'bid_close_at'];
 
+    const CAR_LIMIT = 10;
+    const FEATURED_CAR_LIMIT = 3;
+
     const ACTIVE = 10;
     const INACTIVE = 20;
     const SOLD = 30;

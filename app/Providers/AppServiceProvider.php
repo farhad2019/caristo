@@ -8,6 +8,7 @@ use App\Models\CarInteraction;
 use App\Models\Comment;
 use App\Models\Media;
 use App\Models\Module;
+use App\Models\MyCar;
 use App\Models\NewsInteraction;
 use App\Models\NotificationUser;
 use App\Observers\CarsInteractionObserver;
@@ -16,6 +17,7 @@ use App\Observers\ModuleObserver;
 use App\Observers\NewsInteractionObserver;
 use App\Observers\NotificationObserver;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -52,15 +54,6 @@ class AppServiceProvider extends ServiceProvider
             return str_replace(':attribute', $carAttribute->name, ':attribute is required');
         });
 
-        /*\Validator::extend('media', function ($attribute, $value, $parameters, $validator) {
-            return mime_content_type($value[0]);
-        });
-        \Validator::replacer('media', function ($message, $attribute, $rule, $parameters, $value) {
-            dd($attribute);
-            $carAttribute = Media::where('instance_id', explode(".", $attribute)[1])->first();
-            return str_replace(':attribute', $carAttribute->name, ':attribute is required');
-        });*/
-
         \Validator::extend('greater_than_field', function ($attribute, $value, $parameters, $validator) {
             $from = $parameters[0];
             $data = $validator->getData();
@@ -70,6 +63,18 @@ class AppServiceProvider extends ServiceProvider
 
         \Validator::replacer('greater_than_field', function ($message, $attribute, $rule, $parameters) {
             return 'Production life cycle start year must be less then end year';
+        });
+
+        \Validator::extend('check_featured', function ($attribute, $value, $parameters, $validator) {
+            if ($value == 1) {
+                $featured_car_count = Auth::user()->cars()->where('is_featured', 1)->count();
+                return $featured_car_count <= MyCar::FEATURED_CAR_LIMIT;
+            }
+            return true;
+        });
+
+        \Validator::replacer('check_featured', function ($message, $attribute, $rule, $parameters, $value) {
+            return 'Your featured cars have reached to the limit.(' . MyCar::FEATURED_CAR_LIMIT . ')';
         });
     }
 

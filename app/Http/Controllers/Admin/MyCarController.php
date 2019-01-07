@@ -104,6 +104,10 @@ class MyCarController extends AppBaseController
      */
     public function create()
     {
+        if (Auth::user()->cars()->count() >= MyCar::CAR_LIMIT) {
+            Flash::error('Your cars have reached to the limit.(' . MyCar::CAR_LIMIT . ')');
+            return redirect(route('admin.myCars.index'));
+        }
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
@@ -226,6 +230,7 @@ class MyCarController extends AppBaseController
                 'amount'             => 'required',
                 'name'               => 'required',
                 'chassis'            => 'required',
+                'is_featured'        => 'check_featured',
                 'length'             => 'required',
                 'width'              => 'required',
                 'height'             => 'required',
@@ -283,6 +288,7 @@ class MyCarController extends AppBaseController
                 'kilometer'   => 'required',
                 'name'        => 'required',
                 'media'       => 'required',
+                'is_featured' => 'check_featured',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
                 'attribute.*' => 'attr'
             ], [
@@ -314,6 +320,7 @@ class MyCarController extends AppBaseController
                 'phone'       => 'phone',
                 'media'       => 'required',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
+                'is_featured' => 'check_featured',
                 'attribute.*' => 'attr'
             ], [
 //                'category_id.required'       => 'The category field is required.',
@@ -540,6 +547,7 @@ class MyCarController extends AppBaseController
                     'amount'             => 'required',
                     'name'               => 'required',
                     'chassis'            => 'required',
+                    'is_featured'        => 'check_featured',
                     'length'             => 'required',
                     'width'              => 'required',
                     'height'             => 'required',
@@ -595,6 +603,7 @@ class MyCarController extends AppBaseController
                 'average_mkp' => 'required',
                 'kilometer'   => 'required',
                 'name'        => 'required',
+                'is_featured' => 'check_featured',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
                 'attribute.*' => 'attr'
             ]), [
@@ -624,6 +633,7 @@ class MyCarController extends AppBaseController
                 'year'        => 'required',
                 'amount'      => 'required',
                 'phone'       => 'phone',
+                'is_featured' => 'check_featured',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
                 'attribute.*' => 'attr'
             ]), [
