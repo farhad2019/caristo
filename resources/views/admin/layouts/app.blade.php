@@ -181,7 +181,7 @@
 
         <!-- Main Footer -->
         <footer class="main-footer" style="max-height: 100px;text-align: center">
-            <strong>Copyright © {{ date('Y')  }} <a href="#">{{ config('app.name')  }}</a>.</strong> All rights
+            <strong>Copyright © {{ date('Y')  }} <a href="https://www.ingic.com" target="_blank">INGIC</a>.</strong> All rights
             reserved.
         </footer>
         <!-- Modal2 -->

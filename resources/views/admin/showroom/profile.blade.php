@@ -161,7 +161,7 @@
                                   required>{{ old('showroom_about')? old('showroom_about'): $user->showroomDetails->about }}</textarea>
                     <br> <br>
                     <input type="text" name="showroom_email" placeholder="Show Room Email"
-                           value="{{ $user->showroomDetails->email }}" required readonly style="opacity: 0.6"> <br> <br>
+                           value="{{ $user->email }}" required readonly style="opacity: 0.6"> <br> <br>
                     <input type="password" name="password_confirmation" placeholder="Confirm Password"> <br> <br>
                     <img src="{{ Auth::user()->showroomDetails->logo_url }}" width="80">
                 </div>

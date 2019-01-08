@@ -115,6 +115,9 @@ class User extends Authenticatable implements JWTSubject
     public static $updateRules = [
         'name'                  => 'required|max:20',
         'email'                 => 'required|email',
+        'profession'            => 'required',
+        'dob'                   => 'required|date_format:Y-m-d|before:today',
+        'nationality'           => 'required',
         'country_code'          => 'required|max:5',
         'phone'                 => 'phone|max:20',
         'roles'                 => 'sometimes|required',
@@ -126,7 +129,7 @@ class User extends Authenticatable implements JWTSubject
     public static $updateShowroomProfileRules = [
         'name'                  => 'required|max:30',
         'profession'            => 'required',
-        'dob'                   => 'required',
+        'dob'                   => 'required|date_format:Y-m-d|before:today',
         'nationality'           => 'required',
 //        'email'                 => 'required|email',
         'phone'                 => 'required|phone|max:25',

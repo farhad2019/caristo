@@ -323,13 +323,17 @@ class UserController extends AppBaseController
                 'gender' => UserDetail::$GENDER
             ]);
         }
-        return view('admin.users.edit')->with(
-            [
-                'user'   => $user,
-                'gender' => UserDetail::$GENDER
-            ]);
+        return view('admin.users.edit')->with([
+            'user'   => $user,
+            'gender' => UserDetail::$GENDER
+        ]);
     }
 
+    /**
+     * @param $id
+     * @param UpdateShowroomProfileRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function updateShowroomProfile($id, UpdateShowroomProfileRequest $request)
     {
         $user = $this->userRepository->findWithoutFail($id);

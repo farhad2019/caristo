@@ -80,7 +80,7 @@
 </section>
 
 <div class="copyright_text">
-    <p>©2018, All Rights Reserved</p>
+    <p>© {{ date('Y')  }}, All Rights Reserved</p>
     <p>Powered BY <a href="https://www.ingic.com" title="" target="_blank">INGIC</a></p>
 </div>
 

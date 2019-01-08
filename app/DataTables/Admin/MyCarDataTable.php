@@ -74,11 +74,11 @@ class MyCarDataTable extends DataTable
         });
 
         $dataTable->editColumn('views_count', function (MyCar $model) {
-            return "<a href='javascript:void(0)'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . @$model->views_count . "</span></a>";
+            return "<span class='badge badge-success'> <i class='fa fa-eye'></i> " . @$model->views_count . "</span>";
         });
 
         $dataTable->editColumn('favorite_count', function (MyCar $model) {
-            return "<a href='javascript:void(0)'> <span class='badge badge-success'> <i class='fa fa-heart'></i> " . @$model->favorite_count . "</span></a>";
+            return "<span class='badge badge-success'> <i class='fa fa-heart'></i> " . @$model->favorite_count . "</span>";
         });
 
         $dataTable->rawColumns(['action', 'image', 'views_count', 'favorite_count', 'is_featured', 'status']);
