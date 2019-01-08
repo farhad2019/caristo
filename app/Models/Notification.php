@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string deleted_at
  *
  * @property string users_csv
+ * @property integer delivery_status
  *
  * @SWG\Definition(
  *      definition="Notification",
@@ -111,7 +112,9 @@ class Notification extends Model
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'delivery_status'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
@@ -123,6 +126,7 @@ class Notification extends Model
         'action_type',
         'ref_id',
         'message',
+        'delivery_status',
         'created_at',
     ];
 
@@ -170,5 +174,16 @@ class Notification extends Model
     public function getUsersCsvAttribute()
     {
         return implode(",", $this->users->pluck('name')->all());
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeliveryStatusAttribute()
+    {
+
+        $delivery_status = 0;
+        $delivery_status = NotificationUser::where('notification_id', $this->id)->pluck('status')->first();
+        return $delivery_status;
     }
 }

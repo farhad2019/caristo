@@ -3,6 +3,7 @@
 namespace App\Criteria;
 
 use App\Models\CarInteraction;
+use App\Models\MyCar;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         $dealer = $this->request->get('dealer', -1);
         $model = $model->when(($dealer > 0), function ($query) use ($dealer) {
             return $query->whereHas('owner', function ($owner) use ($dealer) {
-                return $owner->whereHas('details', function ($details) use ($dealer){
+                return $owner->whereHas('details', function ($details) use ($dealer) {
                     return $details->where('dealer_type', $dealer);
                 });
             });
@@ -118,7 +119,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             });
         });
 
-       // $model = $model->orderBy('views_count', SORT_DESC);
+        $model = $model->where('status', MyCar::ACTIVE);
 
         return $model;
     }

@@ -341,15 +341,20 @@
     <div class="box-body">
         <!-- Property Title Field -->
         @if($myCar->media->count() > 0)
+            @php($count = 0)
             @foreach($myCar->media as $media)
+                @php($count++)
                 <div class="col-sm-4">
                     <dt>{!! Form::label('engine_type_id', ucwords($media->title).' :') !!}</dt>
                     <dd>
                         <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
-                            <img src="{{ $media->file_url }}" width="120" style="margin-right: 2%">
+                            <img src="{{ $media->file_url }}" width="120" height="70" style="margin-right: 2%">
                         </a>
                     </dd>
                 </div>
+                @if(($count%3) == 0)
+                    <div class="col-sm-12 clearfix"><br></div>
+                @endif
             @endforeach
         @else
             N/A

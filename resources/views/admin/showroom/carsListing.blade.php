@@ -52,8 +52,14 @@
                 <div class="tab_serach">
                     <div class="row no-gutters">
                         <div class="col-md-6">
+                            <form action="{{ url('admin/tradeInCars') }}" method="GET">
+                                <input type="text" name="keyword" placeholder="Search"
+                                       value="{{@$_REQUEST['keyword']}}">
+                            </form>
                         </div>
                         <div class="col-md-6 sort_parent">
+                            <label>Total Trade In Reqeusts:</label>
+                            <div class=""> {{ $tradeInRequests->count() }}</div>
                         </div>
                     </div>
                 </div>

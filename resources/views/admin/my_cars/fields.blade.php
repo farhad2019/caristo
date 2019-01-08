@@ -407,7 +407,7 @@
     <hr>
     <div class="form-group col-sm-6 regions {{ $errors->has('drive_train') ? ' has-error' : '' }}">
         {!! Form::label('drive_train', 'Drive Train:') !!}
-        {!! Form::select('drive_train', \App\Models\MyCar::$DRIVE_TRAIN,  isset($limited_edition_specs)? $limited_edition_specs['DRIVE_TRAIN']['drive_train']:null, ['class' => 'form-control select2']) !!}
+        {!! Form::select('drive_train', \App\Models\MyCar::$DRIVE_TRAIN,  isset($limited_edition_specs['DRIVE_TRAIN']['drive_train'])? $limited_edition_specs['DRIVE_TRAIN']['drive_train']:null, ['class' => 'form-control select2']) !!}
         @if ($errors->has('drive_train'))
             <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('drive_train') }}</strong>

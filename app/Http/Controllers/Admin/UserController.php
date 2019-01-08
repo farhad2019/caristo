@@ -323,7 +323,11 @@ class UserController extends AppBaseController
                 'gender' => UserDetail::$GENDER
             ]);
         }
-        return view('admin.users.edit')->with('user', $user);
+        return view('admin.users.edit')->with(
+            [
+                'user'   => $user,
+                'gender' => UserDetail::$GENDER
+            ]);
     }
 
     public function updateShowroomProfile($id, UpdateShowroomProfileRequest $request)

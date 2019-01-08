@@ -6,6 +6,7 @@ use App\Criteria\NotificationCriteria;
 use App\Http\Requests\Api\CreateNotificationAPIRequest;
 use App\Http\Requests\Api\UpdateNotificationAPIRequest;
 use App\Models\Notification;
+use App\Models\NotificationUser;
 use App\Repositories\Admin\MyCarRepository;
 use App\Repositories\Admin\NotificationRepository;
 use App\Repositories\Admin\TradeInCarRepository;
@@ -30,7 +31,7 @@ class NotificationAPIController extends AppBaseController
     /** @var  MyCarRepository */
     private $tradInRepository;
 
-    public function __construct(NotificationRepository $notificationRepo, MyCarRepository $carRepo,TradeInCarRepository $tradInRepo)
+    public function __construct(NotificationRepository $notificationRepo, MyCarRepository $carRepo, TradeInCarRepository $tradInRepo)
     {
         $this->notificationRepository = $notificationRepo;
         $this->carRepository = $carRepo;
@@ -98,6 +99,7 @@ class NotificationAPIController extends AppBaseController
         $this->notificationRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->notificationRepository->pushCriteria(new NotificationCriteria($request));
         $notifications = $this->notificationRepository->all();
+
         $extraData = [];
         foreach ($notifications as $notification) {
             //$carData = $this->carRepository->findWithoutFail($notification->ref_id);
@@ -105,12 +107,12 @@ class NotificationAPIController extends AppBaseController
 
             $extraData[] = array_merge(@$notification->toArray(), [
                 'image_url'  => isset($tradInfo['trade_against']['media'][0]) ? @$tradInfo['trade_against']['media'][0]['file_url'] : null,
-                'car_name'   => @$tradInfo['trade_against']['car_model']['name'] .' ' .@$tradInfo['trade_against']['car_model']['brand']['name'],
+                'car_name'   => @$tradInfo['trade_against']['car_model']['name'] . ' ' . @$tradInfo['trade_against']['car_model']['brand']['name'],
                 'model_year' => @$tradInfo['trade_against']['year'],
                 'chassis'    => @$tradInfo['trade_against']['chassis']
             ]);
         }
-
+        NotificationUser::whereIn('notification_id', $notifications->pluck('id')->toArray())->update(['status' => NotificationUser::STATUS_READ]);
         return $this->sendResponse($extraData, 'Notifications retrieved successfully');
     }
 

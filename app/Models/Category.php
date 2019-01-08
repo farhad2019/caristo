@@ -130,13 +130,13 @@ class Category extends Model
         'childCategory',
         'clicks_count',
 //        'deleted_at'
-//        'unread_count'
+        'unread_count'
     ];
 
     /**
      * @var array
      */
-    protected $hidden = ['unread_count'];
+//    protected $hidden = ['unread_count'];
 
     /**
      * Validation create rules
@@ -203,7 +203,7 @@ class Category extends Model
      */
     public function childCategory()
     {
-        return $this->hasMany(Category::class, 'parent_id', 'id')->orderBy('created_at','asc');
+        return $this->hasMany(Category::class, 'parent_id', 'id')->orderBy('created_at', 'asc');
     }
 
     /**
@@ -249,10 +249,11 @@ class Category extends Model
         })->count();
 
         // FIXME: Find a better way.
-        foreach ($this->childCategory as $child) {
-            $unread += $child->unread_count;
+        if (!empty($this->childCategory)) {
+            foreach ($this->childCategory as $child) {
+                $unread += $child->unread_count;
+            }
         }
-
         return $unread;
     }
 

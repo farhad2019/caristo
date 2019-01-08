@@ -220,9 +220,16 @@ class MyCarRepository extends BaseRepository
             $mediaFiles = $request->file('media');
             $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
-            foreach ($mediaFiles as $mediaFile) {
-                $media[] = Utils::handlePicture($mediaFile);
+            foreach ($mediaFiles as $key => $mediaFile) {
+                //$media[] = Utils::handlePicture($mediaFile);
+                $media[] = [
+                    'title'    => $key,
+                    'filename' => Storage::putFile('media_files', $mediaFile)
+                ];
             }
+//            foreach ($mediaFiles as $mediaFile) {
+//                $media[] = Utils::handlePicture($mediaFile);
+//            }
 
             $myCar->media()->createMany($media);
         }
@@ -337,8 +344,6 @@ class MyCarRepository extends BaseRepository
                     $regions['car_id'] = $myCar->id;
                     CarRegion::where('id', $id)->update($regions);
                 }
-
-
             }
         }
 
