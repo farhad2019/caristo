@@ -157,6 +157,13 @@ class UserAPIController extends AppBaseController
      *          type="integer",
      *          required=true,
      *          in="path"
+     *      ), @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
      *      ),
      *      @SWG\Response(
      *          response=200,

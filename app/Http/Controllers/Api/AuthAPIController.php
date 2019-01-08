@@ -184,7 +184,7 @@ class AuthAPIController extends AppBaseController
 //            DB::table('user_verifications')->insert(['user_id' => $user->id, 'token' => $verification_code]);
             $subject = "Please verify your email address.";
 
-            Mail::send('email.verify', ['name' => $userById['name'], 'verification_code' => $verification_code],
+            Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
                 function ($mail) use ($email, $name, $subject) {
                     $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrate App");
                     $mail->to($email, $name);
@@ -252,8 +252,31 @@ class AuthAPIController extends AppBaseController
             $user = auth()->guard('api')->setToken($token)->user()->toArray();
 
             if ($user['details']['is_verified'] == 0) {
+
+                $verification_code = rand(1000, 9999);
+                $email = $user['email'];
+                $name = $user['name'];
+
+                $check = DB::table('password_resets')->where('email', $email)->first();
+                if ($check) {
+                    DB::table('password_resets')->where('email', $email)->delete();
+                }
+
+                DB::table('password_resets')->insert(['email' => $email, 'code' => $verification_code, 'created_at' => Carbon::now()]);
+
+//            DB::table('user_verifications')->where('user_id', $user->id)->delete();
+//            DB::table('user_verifications')->insert(['user_id' => $user->id, 'token' => $verification_code]);
+                $subject = "Please verify your email address.";
+
+                Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
+                    function ($mail) use ($email, $name, $subject) {
+                        $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrate App");
+                        $mail->to($email, $name);
+                        $mail->subject($subject);
+                    });
+
                 auth()->guard('api')->logout();
-                return $this->sendErrorWithData("Please verified Your Email", 403);
+                return $this->sendErrorWithData("Please verified Your Email", 200);
             }
 
             // check if device token exists
@@ -742,14 +765,18 @@ class AuthAPIController extends AppBaseController
 
         $details = UserDetail::where('user_id', $user->id)->first();
         $details->social_login = 1;
-        if ($request->hasFile('image')) {
-            $mediaFile = $request->file('image');
-            $media = Utils::handlePicture($mediaFile, 'profiles');
-            $details->image = $media['filename'];
-        } else {
-            $details->image = $request->input('image', null);
+        if ($details->image == null) {
+            if ($request->hasFile('image')) {
+                $mediaFile = $request->file('image');
+                $media = Utils::handlePicture($mediaFile, 'profiles');
+                $details->image = $media['filename'];
+            } else {
+                $details->image = $request->input('image', null);
+            }
         }
-        $details->first_name = $request->input('username', null);
+        if ($details->first_name == null) {
+            $details->first_name = $request->input('username', null);
+        }
         $details->save();
 
         if (!$token = \JWTAuth::fromUser($user)) {
@@ -934,7 +961,7 @@ class AuthAPIController extends AppBaseController
     {
         $user = \Auth::user();
         $userData = array_filter($request->only(['name']));
-        $details = $request->only(['country_code', 'phone', 'about', 'gender', 'nationality', 'profession', 'dob']);
+        $details = $request->only(['name', 'country_code', 'phone', 'about', 'gender', 'nationality', 'profession', 'dob']);
 
         if ($request->hasFile('image')) {
             $mediaFile = $request->file('image');
@@ -954,6 +981,7 @@ class AuthAPIController extends AppBaseController
 //                $details['phone'] = $details['country_code'] . $details['phone'];
 //                unset($details['country_code']);
 //            }
+            $details['first_name'] = $request->name;
             $this->userDetailRepository->update($details, $user->details->id);
         }
 

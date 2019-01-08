@@ -376,6 +376,7 @@
                 url: '{{ url('admin/alert/') }}',
                 success: function (data) {
                     if (data > old_count) {
+                        $.playSound('http://localhost/CaristoCratApp/storage/app/public/notification.mp3');
                         if (data != 0) {
                             msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + data + '</span>';
                             $(".alert-msg").html(msg);
@@ -384,7 +385,7 @@
                     }
                 }
             });
-        }, 50000);
+        }, 5000);
 
         function refreshData() {
             var token = $('meta[name="csrf-token"]').attr('content');
