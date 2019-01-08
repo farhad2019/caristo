@@ -190,7 +190,9 @@ class UserController extends AppBaseController
         return view('admin.users.edit')->with([
             'user'        => $user,
             'roles'       => $roles,
-            'DEALER_TYPE' => User::$DEALER_TYPE]);
+            'DEALER_TYPE' => User::$DEALER_TYPE,
+            'gender'      => UserDetail::$GENDER
+        ]);
     }
 
     /**

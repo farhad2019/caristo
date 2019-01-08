@@ -22,6 +22,7 @@ class CreateNewsRequest extends BaseFormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * @param Request $request
      * @return array
      */
     public function rules(Request $request)
@@ -34,7 +35,8 @@ class CreateNewsRequest extends BaseFormRequest
             #TODO: Accept only youtube url. apply custom validation (checkYoutubeURL) in app service provider
             $rules['video_url'] = 'required_without:image|url';
         } else {
-            $rules['image'] = 'required_without:video_url|image|mimes:jpg,jpeg,png,bmp|max:5000';
+            $rules['image'] = 'required_without:video_url';
+//            $rules['image'] = 'required_without:video_url|image|mimes:jpg,jpeg,png,bmp|max:5000';
         }
 
         return $rules;
