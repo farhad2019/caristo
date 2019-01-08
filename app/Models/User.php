@@ -78,7 +78,6 @@ class User extends Authenticatable implements JWTSubject
     const MARKET_DEALER = 20;
 
     public static $DEALER_TYPE = [
-        null                  => 'Select Dealer Type',
         self::OFFICIAL_DEALER => 'Official Dealer',
         self::MARKET_DEALER   => 'Market Dealer'
     ];

@@ -4,8 +4,8 @@
 @endsection
 @section('content')
     <div class="content">
-        <div class="box box-primary">
-            <div class="box-body">
+        {{--<div class="box box-primary">--}}
+            {{--<div class="box-body">--}}
                 <div class="row" style="padding-left: 20px">
                     <dl class="dl-horizontal">
                         @include('admin.users.show_fields')
@@ -32,7 +32,7 @@
                     </div>
                     {!! Form::close() !!}
                 </div>
-            </div>
-        </div>
+            {{--</div>--}}
+        {{--</div>--}}
     </div>
 @endsection

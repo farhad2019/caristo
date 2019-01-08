@@ -128,7 +128,6 @@ class UserController extends AppBaseController
 
         $data['user_id'] = $user->id;
         $data['first_name'] = $user->name;
-        $data['gender'] = isset($input['gender']) ? $input['gender'] : 10;
         $data['dealer_type'] = isset($input['dealer_type']) ? $input['dealer_type'] : 10;
         $data['dealer_type_text'] = $input['dealer_type'] == 10 ? 'Official Dealer' : 'Market Dealer';
 

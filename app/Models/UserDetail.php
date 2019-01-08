@@ -41,6 +41,7 @@ class UserDetail extends Model
     const FEMALE = 20;
 
     public static $GENDER = [
+        0            => 'Select Gender',
         self::MALE   => 'Male',
         self::FEMALE => 'Female'
     ];

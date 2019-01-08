@@ -810,8 +810,10 @@
 <!-- is_featured Field -->
 <div class="form-group col-sm-2  {{ $errors->has('is_featured') ? ' has-error' : '' }}">
     {!! Form::label('is_featured', 'Is Featured:') !!}
-    {!! Form::hidden('is_featured', 0, false) !!} <br>
-    {!! Form::checkbox('is_featured', 1, @$myCar->is_featured, ['class'=> 'form-control', 'data-toggle'=>'toggle']) !!}
+    {!! Form::select('is_featured', App\Helper\Utils::$BOOLS, null, ['class' => 'form-control']) !!}
+
+    {{--{!! Form::hidden('is_featured', 0, false) !!} <br>
+    {!! Form::checkbox('is_featured', 1, @$myCar->is_featured, ['class'=> 'form-control', 'data-toggle'=>'toggle']) !!}--}}
     @if ($errors->has('is_featured'))
         <span class="help-block" style="color: red;">
             <strong>{{ $errors->first('is_featured') }}</strong>
