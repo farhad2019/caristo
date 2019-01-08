@@ -218,124 +218,9 @@ class MyCarController extends AppBaseController
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Request $request)
+    public function store(CreateMyCarRequest $request)
     {
-        if ($request->category_id == MyCar::LIMITED_EDITION) {
-            $validatedData = $request->validate([
-//                'category_id'               => 'required',
-//                'model_id'                  => 'required',
-//                'year'                      => 'required',
-//                'regional_specification_id' => 'required',
-//                'email'                     => 'required|email',
-                'amount'             => 'required',
-                'name'               => 'required',
-                'chassis'            => 'required',
-                'is_featured'        => 'check_featured',
-                'length'             => 'required',
-                'width'              => 'required',
-                'height'             => 'required',
-                'weight_dist'        => 'required',
-                'trunk'              => 'required',
-                'weight'             => 'required',
-                'seats'              => 'required',
-                'drive_train'        => 'required',
-                'displacement'       => 'required',
-                'cylinders'          => 'required',
-                'max_speed'          => 'required',
-                'acceleration'       => 'required',
-                'hp_rpm'             => 'required',
-                'torque'             => 'required',
-                'gearbox'            => 'required',
-                'brakes'             => 'required',
-                'suspension'         => 'required',
-                'front_tyre'         => 'required',
-                'back_tyre'          => 'required',
-                'consumption'        => 'required',
-                'emission'           => 'required',
-                'warranty'           => 'required',
-                'maintenance'        => 'required',
-                'to'                 => 'required|greater_than_field:from',
-                'depreciation_trend' => 'required',
-                'price'              => 'required',
-                'price.*'            => 'numeric',
-                'media'              => 'required',
-                'media.*'            => 'image|mimes:jpg,jpeg,png|max:500'
-            ], [
-//                'category_id.required' => 'The category field is required.',
-//                'model_id.required'    => 'The model field is required.',
-//                'year.required'        => 'The year field is required.',
-                'amount.required' => 'The amount field is required.',
-                'media.required'  => 'The media is required.',
-                'media.*.mimes'   => 'The media must be a file of type: jpg, jpeg, png.',
-                'media.*'         => 'The media may not be greater than 500 kilobytes.',
-                'price.required'  => 'The price must be filled.',
-                'price.*'         => 'The all price must be filled.',
-                'name.required'   => 'The name field is required.',
-            ]);
-        } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
-            $validatedData = $request->validate([
-//                'category_id'               => 'required',
-//                'model_id'                  => 'required',
-//                'transmission_type'         => 'required',
-//                'engine_type_id'            => 'required',
-//                'regional_specification_id' => 'required',
-//                'email'                     => 'required|email',
-//                'phone'                     => 'phone',
-//                'year'        => 'required',
-                'chassis'     => 'required',
-                'amount'      => 'required',
-                'average_mkp' => 'required',
-                'kilometer'   => 'required',
-                'name'        => 'required',
-                'media'       => 'required',
-                'is_featured' => 'check_featured',
-                'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
-                'attribute.*' => 'attr'
-            ], [
-//                'category_id.required'       => 'The category field is required.',
-//                'model_id.required'          => 'The model field is required.',
-//                'transmission_type.required' => 'The transmission field is required.',
-//                'engine_type_id.required'    => 'The engine field is required.',
-//                'email.required'             => 'The amount field is required.',
-//                'year.required'        => 'The year field is required.',
-                'chassis.required'     => 'The chassis field is required.',
-                'amount.required'      => 'The Amount field is required.',
-                'average_mkp.required' => 'The average MKP field is required.',
-                'kilometer.required'   => 'The mileage field is required.',
-                'name.required'        => 'The car name field is required.',
-                'media.required'       => 'The media is required.',
-                'media.*.mimes'        => 'The media must be a file of type: jpg, jpeg, png.',
-                'media.*'              => 'The media may not be greater than 500 kilobytes.',
-            ]);
-        } else {
-            $validatedData = $request->validate([
-//                'category_id'               => 'required',
-//                'model_id'                  => 'required',
-//                'transmission_type'         => 'required',
-//                'engine_type_id'            => 'required',
-//                'regional_specification_id' => 'required',
-//                'email'                     => 'required|email',
-                'year'        => 'required',
-                'amount'      => 'required',
-                'phone'       => 'phone',
-                'media'       => 'required',
-                'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
-                'is_featured' => 'check_featured',
-                'attribute.*' => 'attr'
-            ], [
-//                'category_id.required'       => 'The category field is required.',
-//                'model_id.required'          => 'The model field is required.',
-//                'transmission_type.required' => 'The transmission field is required.',
-//                'engine_type_id.required'    => 'The engine field is required.',
-//                'email.required'             => 'The email field is required.',
-                'year.required'   => 'The year field is required.',
-                'amount.required' => 'The amount field is required.',
-                'media.required'  => 'The media is required.',
-                'media.*.mimes'   => 'The media must be a file of type: jpg, jpeg, png.',
-                'media.*'         => 'The media may not be greater than 500 kilobytes.',
-            ]);
-        }
-
+        //$request->validate($validationArray, $validationMessages);
         $myCar = $this->myCarRepository->saveRecord($request);
 
         if ($request->category_id != MyCar::LIMITED_EDITION) {
@@ -535,6 +420,8 @@ class MyCarController extends AppBaseController
         } else {
             $imageValidation = [];
         }
+        
+        $request->validate($imageValidation);
 
         if ($request->category_id == MyCar::LIMITED_EDITION) {
             $validatedData = $request->validate(
