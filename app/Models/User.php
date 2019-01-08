@@ -124,12 +124,15 @@ class User extends Authenticatable implements JWTSubject
 
     public static $updateShowroomProfileRules = [
         'name'                  => 'required|max:30',
+        'profession'            => 'required',
+        'dob'                   => 'required',
+        'nationality'           => 'required',
 //        'email'                 => 'required|email',
         'phone'                 => 'required|phone|max:25',
         'password'              => 'sometimes|nullable|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'sometimes|nullable|min:6',
         'address'               => 'sometimes|nullable|max:70',
-        'about'                 => 'sometimes|nullable|max:70',
+//        'about'                 => 'sometimes|nullable|max:70',
         'showroom_name'         => 'required|max:30',
         'showroom_email'        => 'required|email',
         'showroom_phone'        => 'required|phone|max:25',

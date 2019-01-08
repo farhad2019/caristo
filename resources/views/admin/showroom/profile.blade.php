@@ -106,24 +106,24 @@
                  style="margin-top: 0px; margin-left: 0px; padding-top: 0px; padding-left: 15px;">
                 <h3>Contact Person: </h3> <br>
                 <input type="text" name="name" placeholder="Name" value="{{ old('name')? old('name'): $user->name }}"
-                       required> <br> <br>
+                       required maxlength="25"> <br> <br>
                 <div class="left" style="width: 48%;">
-                    <input type="text" name="profession" placeholder="Profession" value="{{ old('profession')? old('profession'): $user->details->profession }}"> <br> <br>
+                    <input type="text" name="profession" placeholder="Profession" value="{{ old('profession')? old('profession'): $user->details->profession }}" required maxlength="15"> <br> <br>
                     {{--<textarea name="address" placeholder="Address"--}}
                     {{--required>{{ old('address')?old('address'): $user->details->address }}</textarea>--}}
-                    <input type="text" name="phone" placeholder="Phone" value="{{ $user->details->phone }}" required>
+                    <input type="text" name="phone" placeholder="Phone" value="{{ $user->details->phone }}"  required maxlength="15">
                     {{--<input type="password" name="password" placeholder="Password"> <br> <br>--}}
                     {{--<label>Logo:</label>
                     <input type="file" name="showroom_media">--}} <br> <br>
-                    <input type="date" name="dob" value="{{ old('dob')? old('dob'): $user->details->dob }}">
+                    <input type="date" name="dob" value="{{ old('dob')? old('dob'): $user->details->dob }}" required>
                 </div>
                 <div class="right" style="width: 48%;">
-                    <select name="gender">
+                    <select name="gender" required>
                         @foreach($gender as $key => $value)
                             <option value="{{ $key }}" {{ ($key == $user->details->gender)  ? 'selected' : '' }}>{{ $value }}</option>
                         @endforeach
                     </select> <br> <br>
-                    <input type="text" name="nationality" placeholder="Nationality" value="{{ old('nationality')? old('nationality'): $user->details->nationality }}"> <br> <br>
+                    <input type="text" name="nationality" placeholder="Nationality" value="{{ old('nationality')? old('nationality'): $user->details->nationality }}" required maxlength="15"> <br> <br>
                     {{--<img src="{{ $user->details->image_url }}" width="80">--}}
                     <textarea name="about" placeholder="About"
                               required>{{ old('about')? old('about')  : $user->details->about }}</textarea>
