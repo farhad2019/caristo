@@ -119,8 +119,9 @@ class UserDataTable extends DataTable
      */
     public function html()
     {
+//        dd(!(isset($this->interaction_id) && isset($this->interaction_type)));
         $buttons = [];
-        if (\Entrust::can('users.create') || \Entrust::hasRole('super-admin')) {
+        if ((\Entrust::can('users.create') || \Entrust::hasRole('super-admin')) && !(isset($this->interaction_id) && isset($this->interaction_type))) {
             $buttons = ['create'];
         }
 
@@ -154,19 +155,19 @@ class UserDataTable extends DataTable
             'id',
             'name',
             'email',
-            'Roles.display_name' => [
+            'Roles.display_name'       => [
                 'searchable' => true,
                 'title'      => 'Roles'
             ],
-            'details.dealer_type_text'        => [
-                'title'      => 'Dealer Type'
+            'details.dealer_type_text' => [
+                'title' => 'Dealer Type'
             ],
-            'cars_count'         => [
+            'cars_count'               => [
                 'title'      => 'My Cars',
                 'orderable'  => false,
                 'searchable' => false
             ],
-            'favorite_count'     => [
+            'favorite_count'           => [
                 'title'      => 'Favorite Cars',
                 'orderable'  => false,
                 'searchable' => false
@@ -176,7 +177,7 @@ class UserDataTable extends DataTable
 //                'orderable'  => false,
 //                'searchable' => false
 //            ],
-            'view_count'         => [
+            'view_count'               => [
                 'title'      => 'Viewed Cars',
                 'orderable'  => false,
                 'searchable' => false

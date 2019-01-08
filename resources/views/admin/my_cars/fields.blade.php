@@ -3,6 +3,8 @@
         display: none;
     }
 </style>
+
+{{--{{ dd($errors) }}--}}
 <!-- Category Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('category_id', 'Category:') !!}
@@ -191,8 +193,7 @@
             <!-- Regional Specification Field -->
             <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
-                {!! Form::select('attribute['.$attribute->id.']', $options, null, ['class' => 'form-control select2', ($attribute->type == 40)?
-                'multiple':'']) !!}
+                {!! Form::select('attribute['.$attribute->id.']', $options, null, ['class' => 'form-control select2', ($attribute->type == 40)?'multiple':'']) !!}
 
                 @if ($errors->has('attribute.'.$attribute->id))
                     <span class="help-block" style="color: red;">
@@ -237,23 +238,23 @@
     @foreach($attributes as $attribute)
         @php($value = (in_array($attribute->id, $myCar->myCarAttributes->pluck('attr_id')->toArray())?($myCar->myCarAttributes[array_search($attribute->id, $myCar->myCarAttributes->pluck('attr_id')->toArray())]->value): null))
         @if($attribute->type == 10)
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute') ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::text('attribute['.$attribute->id.']', $value, ['class' => 'form-control', 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
 
-                @if ($errors->has('attribute'))
+                @if ($errors->has('attribute.'.$attribute->id))
                     <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first('attribute') }}</strong>
+                    <strong>{{ $errors->first('attribute.'.$attribute->id) }}</strong>
                 </span>
                 @endif
             </div>
         @elseif($attribute->type == 20)
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute') ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::number('attribute['.$attribute->id.']', (int)$value, ['class' => 'form-control', 'step' =>0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
-                @if ($errors->has('attribute'))
+                @if ($errors->has('attribute.'.$attribute->id))
                     <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first('attribute') }}</strong>
+                    <strong>{{ $errors->first('attribute.'.$attribute->id) }}</strong>
                 </span>
                 @endif
             </div>
@@ -262,24 +263,24 @@
                 @php($options[$item['id']] = $item['name'])
             @endforeach
             <!-- Regional Specification Field -->
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute') ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::select('attribute['.$attribute->id.']', $options, $value, ['class' => 'form-control select2']) !!}
-                @if ($errors->has('attribute'))
+                @if ($errors->has('attribute.'.$attribute->id))
                     <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first('attribute') }}</strong>
+                    <strong>{{ $errors->first('attribute.'.$attribute->id) }}</strong>
                 </span>
                 @endif
             </div>
             @php($options = [])
         @else
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute') ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
                 {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
                 'multiple':'']) !!}
-                @if ($errors->has('attribute'))
+                @if ($errors->has('attribute.'.$attribute->id))
                     <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first('attribute') }}</strong>
+                    <strong>{{ $errors->first('attribute.'.$attribute->id) }}</strong>
                 </span>
                 @endif
             </div>

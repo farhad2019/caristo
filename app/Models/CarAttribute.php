@@ -54,9 +54,9 @@ class CarAttribute extends Model
     const FILE_MULTIPLE = 60;*/
 
     public static $ATTRIBUTE_TYPES = [
-        self::TEXT            => 'text',
-        self::NUMBER          => 'number',
-        self::SELECT_SINGLE   => 'select - box',
+        self::TEXT          => 'text',
+        self::NUMBER        => 'number',
+        self::SELECT_SINGLE => 'select - box',
         /*self::SELECT_MULTIPLE => 'select - multiple',
         self::FILE_SINGLE     => 'file - single',
         self::FILE_MULTIPLE   => 'file - multiple'*/
@@ -117,8 +117,8 @@ class CarAttribute extends Model
     public static $rules = [
         'type' => 'required',
         'name' => 'required|max:20',
-        'icon' => 'required',
-        'opt' => 'sometimes',
+        'opt'  => 'sometimes',
+        'icon' => 'required|image|mimes:jpg,jpeg,png'
     ];
 
     /**

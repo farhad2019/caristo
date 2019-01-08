@@ -306,8 +306,8 @@
 
 {{--    @yield('scripts')--}}
 @stack('scripts')
-{{--<script src="{{ url('public/js/admin/custom.js') }}"></script>--}}
-<script src="{{ url('public/js/admin/custom_new.js') }}"></script>
+<script src="{{ url('public/js/admin/custom.js') }}"></script>
+{{--<script src="{{ url('public/js/admin/custom_new.js') }}"></script>--}}
 
 <script>
     function confirmCancel(id) {

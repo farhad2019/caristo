@@ -7,9 +7,12 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Api\CreateNewsAPIRequest;
 use App\Http\Requests\Api\UpdateNewsAPIRequest;
 use App\Models\News;
+use App\Models\NewsInteraction;
+use App\Repositories\Admin\NewsInteractionRepository;
 use App\Repositories\Admin\NewsRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 
@@ -22,9 +25,13 @@ class NewsAPIController extends AppBaseController
     /** @var  NewsRepository */
     private $newsRepository;
 
-    public function __construct(NewsRepository $newsRepo)
+    /** @var  NewsInteractionRepository */
+    private $interactionRepository;
+
+    public function __construct(NewsRepository $newsRepo, NewsInteractionRepository $interactionRepo)
     {
         $this->newsRepository = $newsRepo;
+        $this->interactionRepository = $interactionRepo;
     }
 
     /**
@@ -106,6 +113,15 @@ class NewsAPIController extends AppBaseController
         $this->newsRepository->pushCriteria(new NewsCriteria($request));
 
         $news = $this->newsRepository->all();
+        foreach ($news as $item) {
+            $this->interactionRepository->create([
+                'user_id' => Auth::id(),
+                'news_id' => $item->id,
+                'type'    => NewsInteraction::TYPE_VIEW
+            ]);
+        }
+//        var_dump($news->toArray());
+//        exit();
 //        $this->newsRepository->resetCriteria();
 //        $this->newsRepository->pushCriteria(new RequestCriteria($request));
 //        $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
