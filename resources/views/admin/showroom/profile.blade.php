@@ -108,25 +108,27 @@
                 <input type="text" name="name" placeholder="Name" value="{{ old('name')? old('name'): $user->name }}"
                        required> <br> <br>
                 <div class="left" style="width: 48%;">
-                    {{--<input type="text" name="email" placeholder="Email"--}}
-                    {{--value="{{ old('email')? old('email'): $user->email }}" required readonly--}}
-                    {{--style="opacity: 0.6"> <br> <br>--}}
+                    <input type="text" name="profession" placeholder="Profession" value="{{ old('profession')? old('profession'): $user->details->profession }}"> <br> <br>
                     {{--<textarea name="address" placeholder="Address"--}}
                     {{--required>{{ old('address')?old('address'): $user->details->address }}</textarea>--}}
                     <input type="text" name="phone" placeholder="Phone" value="{{ $user->details->phone }}" required>
                     {{--<input type="password" name="password" placeholder="Password"> <br> <br>--}}
                     {{--<label>Logo:</label>
-                    <input type="file" name="showroom_media">--}}
+                    <input type="file" name="showroom_media">--}} <br> <br>
+                    <input type="date" name="dob" value="{{ old('dob')? old('dob'): $user->details->dob }}">
                 </div>
                 <div class="right" style="width: 48%;">
-                    {{--<input type="password" name="password_confirmation" placeholder="Confirm Password"> <br> <br>--}}
+                    <select name="gender">
+                        @foreach($gender as $key => $value)
+                            <option value="{{ $key }}" {{ ($key == $user->details->gender)  ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                    </select> <br> <br>
+                    <input type="text" name="nationality" placeholder="Nationality" value="{{ old('nationality')? old('nationality'): $user->details->nationality }}"> <br> <br>
                     {{--<img src="{{ $user->details->image_url }}" width="80">--}}
+                    <textarea name="about" placeholder="About"
+                              required>{{ old('about')? old('about')  : $user->details->about }}</textarea>
+                    <br>
                 </div>
-                <br>
-                <br>
-                <textarea name="about" placeholder="About"
-                          required>{{ old('about')? old('about')  : $user->details->about }}</textarea>
-                <br>
             </div>
         </div>
 
@@ -159,7 +161,7 @@
                                   required>{{ old('showroom_about')? old('showroom_about'): $user->showroomDetails->about }}</textarea>
                     <br> <br>
                     <input type="text" name="showroom_email" placeholder="Show Room Email"
-                           value="{{ $user->showroomDetails->email }}" required readonly> <br> <br>
+                           value="{{ $user->showroomDetails->email }}" required readonly style="opacity: 0.6"> <br> <br>
                     <input type="password" name="password_confirmation" placeholder="Confirm Password"> <br> <br>
                     <img src="{{ Auth::user()->showroomDetails->logo_url }}" width="80">
                 </div>

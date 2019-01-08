@@ -316,7 +316,10 @@ class UserController extends AppBaseController
         $this->BreadCrumbName = 'Profile';
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         if ($user->hasRole('showroom-owner')) {
-            return view('admin.showroom.profile')->with('user', $user);
+            return view('admin.showroom.profile')->with([
+                'user'   => $user,
+                'gender' => UserDetail::$GENDER
+            ]);
         }
         return view('admin.users.edit')->with('user', $user);
     }
