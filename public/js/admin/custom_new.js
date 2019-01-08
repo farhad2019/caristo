@@ -304,7 +304,7 @@ $(function () {
 
     $('#imageGallery').on('show.bs.modal', function () {
         //showDivs(1);
-        imgNum = 1;
+        //imgNum = 1;
         $.next();
     });
 
@@ -316,6 +316,9 @@ $(function () {
     };
 
     $('body').on('click', 'a.showGallery', function () {
+
+        imgNum = $(this).data('source');
+
         // TODO: Add Content in Modal Body
         var thisid = $(this).data('id');
         $('#displayImage img', $('#imageGallery')).remove();

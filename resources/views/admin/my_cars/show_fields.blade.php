@@ -347,7 +347,7 @@
                 <div class="col-sm-4">
                     <dt>{!! Form::label('engine_type_id', ucwords($media->title).' :') !!}</dt>
                     <dd>
-                        <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal" data-target="#imageGallery">
+                        <a class="showGallery" data-id="{{$myCar->id}}" data-source="{{ $count }}" data-toggle="modal" data-target="#imageGallery">
                             <img src="{{ $media->file_url }}" width="120" height="70" style="margin-right: 2%">
                         </a>
                     </dd>
