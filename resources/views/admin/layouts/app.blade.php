@@ -341,6 +341,11 @@
     }
 
     $(document).ready(function () {
+
+        setTimeout(function() {
+            $('.alert').fadeOut('fast');
+        }, 3000);
+
         refreshData();
         var old_count;
         $.ajaxSetup({
