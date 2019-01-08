@@ -134,7 +134,7 @@ class BanksRate extends Model
         'address'  => 'required',
         'rate'     => 'required',
         'type'     => 'required',
-        'media'    => 'required'
+        'media'    => 'required|image|mimes:jpg,jpeg,png'
 
     ];
 

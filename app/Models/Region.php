@@ -93,7 +93,7 @@ class Region extends Model
      */
     public static $rules = [
         'name' => 'required',
-        'flag' => 'required'
+        'flag'   => 'required|image|mimes:jpg,jpeg,png'
     ];
 
     /**
