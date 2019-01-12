@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
+ * @property ReviewAspect aspect
+ *
+ * @property string aspect_title
+ *
  */
 class ReviewDetail extends Model
 {
@@ -21,7 +25,7 @@ class ReviewDetail extends Model
 
     public $fillable = [
         'review_id',
-        'type_id',
+        'aspect_id',
         'rating'
     ];
 
@@ -46,14 +50,19 @@ class ReviewDetail extends Model
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'aspect_title'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'aspect_title',
+        'rating'
+    ];
 
     /**
      * Validation create rules
@@ -96,5 +105,19 @@ class ReviewDetail extends Model
         return $this->belongsTo(Review::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function aspect()
+    {
+        return $this->belongsTo(ReviewAspect::class, 'aspect_id');
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getAspectTitleAttribute()
+    {
+        return $this->aspect->title;
+    }
 }

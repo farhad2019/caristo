@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer id
+ * @property string title
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -66,7 +67,7 @@ class ReviewAspect extends Model
      * @var array
      */
     protected $visible = [
-        'id',
+//        'id',
         'title'
     ];
 
