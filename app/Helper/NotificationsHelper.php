@@ -7,8 +7,18 @@ use Edujugon\PushNotification\PushNotification;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Class NotificationsHelper
+ * @package App\Helper
+ */
 class NotificationsHelper
 {
+    /**
+     * @param string $msg
+     * @param array $deviceObject
+     * @param array $extraPayLoadData
+     * @return bool
+     */
     function sendPushNotifications($msg = '', $deviceObject = [], $extraPayLoadData = [])
     {
         $androidDeviceToken = [];
@@ -24,32 +34,6 @@ class NotificationsHelper
         endforeach;
 
         if (!empty($androidDeviceToken)) {
-            /*exit(json_encode([
-                'notification' => [
-                    'title' => config('app.name'),
-                    'body'  => $msg,
-                    'sound' => 'default',
-                    'data'  => [
-                        'extra_payload' => $extraPayLoadData,
-                    ],
-                ]
-            ]));
-            $push->setMessage([
-                'notification' => [
-                    'title' => config('app.name'),
-                    'body'  => $msg,
-                    'sound' => 'default'
-                ],
-                'data'         => [
-                    'extra_payload' => $extraPayLoadData
-                ],
-                'android'      => [
-                    'ttl'          => '86400',
-                    'notification' => [
-                        'click_action' => 'MainActivity'
-                    ]
-                ]
-            ])*/
             $push = new PushNotification('fcm');
             $push->setMessage([
                 'data' => [
@@ -58,7 +42,7 @@ class NotificationsHelper
                     'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
                     'sound' => 'default',
                     //'sound' => 'default',
-                    'ref' => $extraPayLoadData['ref_id']
+                    'ref'   => $extraPayLoadData['ref_id']
                     /*'extra_payload'  => [
                         //'extra_payload' => $extraPayLoadData,
                         $extraPayLoadData,
@@ -71,6 +55,32 @@ class NotificationsHelper
                 ->send();
         }
 
+        /*exit(json_encode([
+            'notification' => [
+                'title' => config('app.name'),
+                'body'  => $msg,
+                'sound' => 'default',
+                'data'  => [
+                    'extra_payload' => $extraPayLoadData,
+                ],
+            ]
+        ]));
+        $push->setMessage([
+            'notification' => [
+                'title' => config('app.name'),
+                'body'  => $msg,
+                'sound' => 'default'
+            ],
+            'data'         => [
+                'extra_payload' => $extraPayLoadData
+            ],
+            'android'      => [
+                'ttl'          => '86400',
+                'notification' => [
+                    'click_action' => 'MainActivity'
+                ]
+            ]
+        ])*/
         /*if ($androidDeviceToken) {
             $push = new PushNotification('fcm');
             $push->setMessage([
@@ -98,8 +108,8 @@ class NotificationsHelper
         }*/
 
         /*Apn*/
-        if ($iosDeviceToken) {
-            $push = new PushNotification('apn');
+        if (!empty($iosDeviceToken)) {
+            /*$push = new PushNotification('apn');
 
             $push->setMessage([
                 'aps' => [
@@ -113,10 +123,27 @@ class NotificationsHelper
                         'ref_id'      => $extraPayLoadData['ref_id'],
                     ]
                 ]
-            ])->setDevicesToken($iosDeviceToken)->send();
+            ])->setDevicesToken($iosDeviceToken)->send();*/
+            $push = new PushNotification('fcm');
+            $test = $push->setMessage([
+                'data' => [
+                    'title' => config('app.name'),
+                    'body'  => $msg,
+                    'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
+                    'sound' => 'default',
+                    //'sound' => 'default',
+                    'ref'   => $extraPayLoadData['ref_id']
+                    /*'extra_payload'  => [
+                        'extra_payload' => $extraPayLoadData,
+                        $extraPayLoadData,
+                    ]*/
+                ]
+            ])
+                ->setApiKey(Config::get('pushNotification.fcm.apiKey'))
+                ->setConfig(['dry_run' => false])
+                ->setDevicesToken($iosDeviceToken)
+                ->send();
         }
         return true;
     }
 }
-
-

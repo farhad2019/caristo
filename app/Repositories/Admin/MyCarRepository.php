@@ -61,7 +61,7 @@ class MyCarRepository extends BaseRepository
                 'Seating_Capacity'     => array(
                     'MAX.NO OF SEATS' => $request->seats,
                 ),
-                'DRIVE_TRAIN'           => array(
+                'DRIVE_TRAIN'          => array(
                     'drive_train' => $request->drive_train,
                 ),
                 'Engine'               => array(
@@ -256,7 +256,7 @@ class MyCarRepository extends BaseRepository
                 'Seating_Capacity'     => array(
                     'MAX.NO OF SEATS' => $request->seats,
                 ),
-                'DRIVE_TRAIN'           => array(
+                'DRIVE_TRAIN'          => array(
                     'drive_train' => $request->drive_train,
                 ),
                 'Engine'               => array(
@@ -333,6 +333,8 @@ class MyCarRepository extends BaseRepository
                 }
             }
         } else {
+            $input['limited_edition_specs'] = null;
+
             $myCar = $this->update($input, $myCar->id);
 
             if ($input['category_id'] == MyCar::LIMITED_EDITION) {

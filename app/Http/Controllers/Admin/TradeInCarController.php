@@ -59,6 +59,7 @@ class TradeInCarController extends AppBaseController
     }*/
     public function index(Request $request, TradeInCarDataTable $tradeInCarDataTable)
     {
+
         $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(false, $request->all());
 
         if (Auth::user()->hasRole('showroom-owner')) {

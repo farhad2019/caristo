@@ -65,6 +65,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property array|null depreciation_trend_value
  * @property string link
  * @property string status_text
+ * @property mixed|null front_image
  *
  * @SWG\Definition(
  *     definition="MyCarAttributes",
@@ -189,14 +190,13 @@ class MyCar extends Model
 //    use EntrustUserTrait {
 //        restore as private restoreB;
 //    }
-
     //protected $cascadeDeletes = ['myCarAttributes', 'views', 'likes', 'favorites', 'carRegions', 'customer_trade_car', 'my_trade_cars'];
 
     public $table = 'cars';
     protected $dates = ['deleted_at', 'bid_close_at'];
 
-    const CAR_LIMIT = 10;
-    const FEATURED_CAR_LIMIT = 3;
+    const CAR_LIMIT = 15;
+    const FEATURED_CAR_LIMIT = 5;
 
     const ACTIVE = 10;
     const INACTIVE = 20;
@@ -206,6 +206,14 @@ class MyCar extends Model
         self::ACTIVE   => 'Active',
         self::INACTIVE => 'In Active',
         self::SOLD     => 'Sold'
+    ];
+
+    public static $MEDIA_TYPES = [
+        'front'    => 'front',
+        'back'     => 'back',
+        'right'    => 'right',
+        'left'     => 'left',
+        'interior' => 'interior'
     ];
 
     const MANUAL = 10;
@@ -745,5 +753,13 @@ class MyCar extends Model
     public function getStatusTextAttribute()
     {
         return self::$STATUS[$this->status];
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getFrontImageAttribute()
+    {
+        return !empty($this->media()->where('title', 'front')->first()) ? $this->media()->where('title', 'front')->first()->file_url : null;
     }
 }

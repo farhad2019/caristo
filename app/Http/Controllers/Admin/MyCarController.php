@@ -114,7 +114,7 @@ class MyCarController extends AppBaseController
         $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
         $attributes = $this->attributeRepository->all();
         $features = $this->featureRepository->all();
-        $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
+        $carTypes = $this->carTypeRepository->getRootTypes()->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
         $years = ['1950' => "1950",
@@ -206,6 +206,7 @@ class MyCarController extends AppBaseController
             'attributes'        => $attributes,
             'features'          => $features,
             'transmission_type' => MyCar::$TRANSMISSION_TYPE_TEXT,
+            'media_types'       => MyCar::$MEDIA_TYPES,
             'carTypes'          => $carTypes,
             'carModels'         => $carModels,
             'regions'           => $regions,
@@ -215,7 +216,7 @@ class MyCarController extends AppBaseController
     }
 
     /**
-     * @param Request $request
+     * @param CreateMyCarRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(CreateMyCarRequest $request)
@@ -294,7 +295,7 @@ class MyCarController extends AppBaseController
         $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
         $attributes = $this->attributeRepository->all();
         $features = $this->featureRepository->all();
-        $carTypes = $this->carTypeRepository->all()->pluck('name', 'id');
+        $carTypes = $this->carTypeRepository->getRootTypes()->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
         $years = ['1950' => "1950",
@@ -389,6 +390,7 @@ class MyCarController extends AppBaseController
             'features'              => $features,
             'transmission_type'     => MyCar::$TRANSMISSION_TYPE_TEXT,
             'status'                => MyCar::$STATUS,
+            'media_types'           => MyCar::$MEDIA_TYPES,
             'carTypes'              => $carTypes,
             'carModels'             => $carModels,
             'brands'                => $brands,
@@ -420,7 +422,7 @@ class MyCarController extends AppBaseController
         } else {
             $imageValidation = [];
         }
-        
+
         $request->validate($imageValidation);
 
         if ($request->category_id == MyCar::LIMITED_EDITION) {

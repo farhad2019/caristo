@@ -30,17 +30,17 @@ class MyCarDataTable extends DataTable
             return $model->category->name;
         });
 
-        $dataTable->editColumn('carModel.brand.translations.name', function ($model) {
-            return $model->carModel->brand->name . ' ' . $model->carModel->name . ' ' . $model->year;
-        });
+//        $dataTable->editColumn('carModel.brand.translations.name', function ($model) {
+//            return $model->carModel->brand->name . ' ' . $model->carModel->name . ' ' . $model->year;
+//        });
 
 //        $dataTable->editColumn('carModel.brand.translations.name', function ($model) {
 //            return $model->carModel->brand->name;
 //        });
 
-        $dataTable->editColumn('carModel.translations.name', function ($model) {
-            return $model->carModel->name;
-        });
+//        $dataTable->editColumn('carModel.translations.name', function ($model) {
+//            return $model->carModel->name;
+//        });
 
         $dataTable->editColumn('amount', function ($model) {
             return $model->amount . ' AED' ?? '-';
@@ -150,9 +150,7 @@ class MyCarDataTable extends DataTable
             'category.translations.name'       => [
                 'title' => 'Category',
             ],
-            'carModel.brand.translations.name' => [
-                'title' => 'Name'
-            ],
+            'name',
 //            'carModel.translations.name'       => [
 //                'title' => 'Model'
 //            ],

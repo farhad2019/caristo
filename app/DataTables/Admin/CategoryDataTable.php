@@ -24,6 +24,7 @@ class CategoryDataTable extends DataTable
         $dataTable->editColumn('translations.name', function (Category $model) {
             return '<span style="word-break: break-all">' . $model->name . '</span>';
         });
+
         $dataTable->editColumn('category_translations.name', function (Category $model) {
             return ($model->parentCategory) ? "<span class='label label-success' style='word-break: break-all'>" . $model->parentCategory->name . "</span>" : "<span class='label label-default' style='word-break: break-all'>None</span>";
         });

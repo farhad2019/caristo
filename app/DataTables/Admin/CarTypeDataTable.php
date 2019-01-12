@@ -25,10 +25,14 @@ class CarTypeDataTable extends DataTable
         });
 
         $dataTable->editColumn('image', function ($model) {
-            return $model->image ? '<a class="showGallerySingle" data-id="' . $model->id . '" data-toggle="modal" data-target="#imageGallerySingle"><img src="' . $model->image . '" style="width:75px;"></a>' : null;
+            return $model->image ? '<a class="showGallerySingle" data-id="' . $model->id . '" data-toggle="modal" data-target="#imageGallerySingle"><img src="' . $model->un_selected_icon . '" style="width:75px;"></a>' : "<span class='label label-default' style='word-break: break-all'>No Icon</span>";
         });
 
-        $dataTable->rawColumns(['image', 'action']);
+        $dataTable->editColumn('type_translations.name', function (CarType $model) {
+            return ($model->parentCategory) ? "<span class='label label-success' style='word-break: break-all'>" . $model->parentCategory->name . "</span>" : "<span class='label label-default' style='word-break: break-all'>None</span>";
+        });
+
+        $dataTable->rawColumns(['type_translations.name', 'image', 'action']);
         return $dataTable->addColumn('action', 'admin.car_types.datatables_actions');
     }
 
@@ -86,13 +90,17 @@ class CarTypeDataTable extends DataTable
             'id'                => [
                 //'orderable' => false,
             ],
-            'translations.name' => [
-                'title' => 'Name'
-            ],
             'image'             => [
+                'title' => 'Icon',
                 'orderable'  => false,
                 'searchable' => false,
                 'exportable' => false
+            ],
+            'translations.name' => [
+                'title' => 'Name'
+            ],
+            'type_translations.name' => [
+                'title' => 'Parent Name'
             ]
         ];
     }

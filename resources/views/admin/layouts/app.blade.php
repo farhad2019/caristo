@@ -340,7 +340,7 @@
         });
     }
 
-    $(document).ready(function () {
+    /*$(document).ready(function () {
 
         setTimeout(function() {
             $('.alert').fadeOut('fast');
@@ -356,7 +356,7 @@
 
         $.ajax({
             type: "POST",
-            url: '{{ url('admin/alert/') }}',
+{{--            url: '{{ url('admin/alert/') }}',--}}
             success: function (data) {
                 old_count = data;
                 if (data) {
@@ -378,7 +378,7 @@
 
             $.ajax({
                 type: "POST",
-                url: '{{ url('admin/alert/') }}',
+{{--                url: '{{ url('admin/alert/') }}',--}}
                 success: function (data) {
                     if (data > old_count) {
                         $.playSound('http://localhost/CaristoCratApp/storage/app/public/notification.mp3');
@@ -396,7 +396,7 @@
             var token = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
                 type: 'POST',
-                url: '{{ url('admin/notification/') }}',
+{{--                url: '{{ url('admin/notification/') }}',--}}
 //                url: 'notification',
                 dataType: 'JSON',
                 data: {
@@ -407,7 +407,7 @@
                     var html;
                     var count = 0;
                     // var path = window.location.protocol + "//" + window.location.hostname + "/CaristoCratApp/admin/" + 'news/';
-                    var path = '{{ url('admin/news/') }}' + '/';
+{{--                    var path = '{{ url('admin/news/') }}' + '/';--}}
 
                     $.each(data, function (index, item) {
                         if (item.status === 20) {
@@ -445,13 +445,13 @@
 
             $.ajax({
 
-                url: "{{ url('admin/unread/') }}/" + id,
+{{--                url: "{{ url('admin/unread/') }}/" + id,--}}
                 method: 'GET'
             }).done(function (response) {
 
             });
         });
-    });
+    });*/
 </script>
 </body>
 </html>

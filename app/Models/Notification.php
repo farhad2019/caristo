@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
+ *
+ * @property NotificationUser details
  *
  * @property string users_csv
  * @property integer delivery_status
@@ -65,10 +68,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Notification extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, CascadeSoftDeletes;
 
+    protected $cascadeDeletes = ['details'];
     public $table = 'notifications';
-
     protected $dates = ['deleted_at'];
 
     const NOTIFICATION_TYPE_NEW_BID = 10;
@@ -166,6 +169,14 @@ class Notification extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'notification_users')->withPivot('status');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function details()
+    {
+        return $this->hasMany(NotificationUser::class, 'notification_id');
     }
 
     /**

@@ -338,6 +338,17 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(NotificationUser::class, 'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function notificationMaster()
+    {
+        return $this->belongsToMany(Notification::class, 'notification_users')->withPivot('status');
+    }
+
+    /**
+     * @return int
+     */
     public function getPushNotificationAttribute()
     {
         return $this->devices->first()->push_notification ?? 0;

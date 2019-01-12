@@ -18,10 +18,15 @@
 
                         </div>
                         <!-- /.box-header -->
+
                         <div class="box-body">
                             <dt>{!! Form::label('name', __('Name').':') !!}</dt>
-                            <dd><img src="{{ $carType->image }}" width="35"> {!! $translation->name !!}</dd>
+                            <dd><img src="{{ $carType->un_selected_icon }}" width="35"> {!! $translation->name !!}</dd>
+
+                            <dt>{!! Form::label('name', __('Parent').':') !!}</dt>
+                            <dd>{!! ($carType->parentCategory) ? "<span class='label label-success' style='word-break: break-all'>" . $carType->parentCategory->name . "</span>" : "<span class='label label-default' style='word-break: break-all'>None</span>" !!}</dd>
                         </div>
+
                         <div class="box-footer">
                             <dt>{!! Form::label('created_at', __('Created At').':') !!}</dt>
                             <dd>{!! $carType->created_at->format('d M Y') !!}</dd>

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer id
+ * @property integer parent_id
  * @property string created_at
  * @property string updated_at
  * @property string deleted_at
@@ -16,6 +17,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property MyCar cars
  * @property Media media
+ * @property CarType parent_category
+ *
+ * @property mixed|null selected_icon
+ * @property mixed|null un_selected_icon
  *
  * @SWG\Definition(
  *      definition="CarType",
@@ -40,6 +45,7 @@ class CarType extends Model
 
     public $fillable = [
         'id',
+        'parent_id'
     ];
 
     /**
@@ -64,7 +70,9 @@ class CarType extends Model
      * @var array
      */
     protected $appends = [
-        'image'
+        'image',
+        'selected_icon',
+        'un_selected_icon'
     ];
 
     /**
@@ -75,7 +83,9 @@ class CarType extends Model
     protected $visible = [
         'id',
         'name',
-        'image'
+        'image',
+        'selected_icon',
+        'un_selected_icon'
     ];
 
     /**
@@ -84,8 +94,9 @@ class CarType extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|max:50',
-        'image'   => 'required|image|mimes:jpg,jpeg,png'
+        'name'    => 'required|max:50',
+        'image'   => 'required',
+        'image.*' => 'image|mimes:jpg,jpeg,png|max:500',
     ];
 
     /**
@@ -123,6 +134,22 @@ class CarType extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function childCategory()
+    {
+        return $this->hasMany(CarType::class, 'parent_id', 'id')->orderBy('created_at', 'asc');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parentCategory()
+    {
+        return $this->belongsTo(CarType::class, 'parent_id', 'id');
+    }
+
+    /**
      * @return string
      */
     public function getMorphClass()
@@ -135,6 +162,22 @@ class CarType extends Model
      */
     public function getImageAttribute()
     {
-        return !empty($this->media()->first()) ? $this->media()->first()->file_url : null;
+        return !empty($this->media()->where('title', 'selected')->first()) ? $this->media()->where('title', 'selected')->first()->file_url : null;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getSelectedIconAttribute()
+    {
+        return !empty($this->media()->where('title', 'selected')->first()) ? $this->media()->where('title', 'selected')->first()->file_url : null;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getUnSelectedIconAttribute()
+    {
+        return !empty($this->media()->where('title', 'un_selected')->first()) ? $this->media()->where('title', 'un_selected')->first()->file_url : null;
     }
 }

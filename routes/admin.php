@@ -105,3 +105,7 @@ Route::post('alert', 'CommentController@getAlertNotification');
 Route::get('unread/{id}', 'CommentController@markRead');
 
 Route::Get('tradealert', 'TradeInCarController@getCount');
+
+Route::resource('reviewAspects', 'ReviewAspectController');
+
+Route::resource('reviews', 'ReviewController');

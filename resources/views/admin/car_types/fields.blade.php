@@ -7,9 +7,20 @@
         {!! Form::text('name', null, ['class' => 'form-control','maxlength'=>"50", 'size'=>"20"]) !!}
     </div>
 
+    <!-- Slug Field -->
     <div class="form-group col-sm-6">
-        {{ Form::label('image', 'Image') }}
-        {{ Form::file('image', ['class'=>'form-control']) }}
+        {!! Form::label('parent_id', 'Parent Category:') !!}
+        {!! Form::select('parent_id', $root, (isset($carType) ? $carType->parent_id : null), ['class' => 'form-control select2']) !!}
+    </div>
+
+    <div class="form-group col-sm-6">
+        {{ Form::label('image', 'Icon (un selected)') }}
+        {{ Form::file('image[un_selected]', ['class'=>'form-control']) }}
+    </div>
+
+    <div class="form-group col-sm-6">
+        {{ Form::label('image', 'Icon (selected)') }}
+        {{ Form::file('image[selected]', ['class'=>'form-control']) }}
     </div>
 
     <!-- Submit Field -->
@@ -21,7 +32,7 @@
     </div>--}}
 @else
     <div class="clearfix"></div>
-   {{-- <div class="box">--}}
+    {{-- <div class="box">--}}
 
     <div class="">
         <h3 class="box-title" style="margin-left: 10px">Translations</h3>
@@ -54,21 +65,32 @@
         </div>
     </div>
 
-        <div class="form-group col-sm-6">
-            {{ Form::label('image', 'Image') }}
-            {{ Form::file('image', ['class'=>'form-control']) }}
 
-            @if($carType->media->count() > 0)
+    <div class="form-group col-sm-6">
+        {{ Form::label('image', 'Icon (un selected)') }}
+        {{ Form::file('image[un_selected]', ['class'=>'form-control']) }}
+        @if($carType->media->count() > 0)
+            <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
+                <a class='showGallery' data-id='{{ $carType->media[0]->id }}' data-toggle='modal'>
+                    <img src="{!! $carType->un_selected_icon !!}" style="width: 125px;">
+                </a>
+            </div>
+        @endif
+    </div>
 
-                <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >
-                    <a class='showGallery' data-id='{{ $carType->media[0]->id }}' data-toggle='modal'>
-                         <img src="{!! $carType->media[0]->file_url !!}" style="width: 125px;">
-                    </a>
-                </div>
+    <div class="form-group col-sm-6">
+        {{ Form::label('image', 'Icon (selected)') }}
+        {{ Form::file('image[selected]', ['class'=>'form-control']) }}
+        @if($carType->media->count() > 0)
+            <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
+                <a class='showGallery' data-id='{{ $carType->media[1]->id }}' data-toggle='modal'>
+                    <img src="{!! $carType->selected_icon !!}" style="width: 125px; background: black">
+                </a>
+            </div>
+        @endif
+    </div>
 
-            @endif
-        </div>
-        <!-- /.box-body -->
+    <!-- /.box-body -->
     {{--<div class="box-footer">
         <!-- Submit Field -->
         {{--<divss="form-group col-sm-12">
@@ -77,14 +99,14 @@
             <a href="{!! route('admin.carTypes.index') !!}" class="btn btn-default">{{ __('Cancel') }}</a>
         </div>
         </div>--}}
-        <!-- box-footer -->
+    <!-- box-footer -->
     {{--</div>--}}
 
     <div class="clearfix"></div>
 @endif
 
 <div class="form-group col-sm-12">
-{!! Form::submit(__('Save'), ['class' => 'btn btn-primary']) !!}
-{!! Form::submit(__('Save And Add More'), ['class' => 'btn btn-primary', 'name'=>'continue']) !!}
-<a href="{!! route('admin.carTypes.index') !!}" class="btn btn-default">{{ __('Cancel') }}</a>
+    {!! Form::submit(__('Save'), ['class' => 'btn btn-primary']) !!}
+    {!! Form::submit(__('Save And Add More'), ['class' => 'btn btn-primary', 'name'=>'continue']) !!}
+    <a href="{!! route('admin.carTypes.index') !!}" class="btn btn-default">{{ __('Cancel') }}</a>
 </div>

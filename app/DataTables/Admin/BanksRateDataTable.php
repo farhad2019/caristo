@@ -80,7 +80,7 @@ class BanksRateDataTable extends DataTable
             ->parameters([
                 'dom'     => 'Bfrtip',
                 'order'   => [[0, 'desc']],
-                'buttons' => $buttons,
+                'buttons' => $buttons
             ]);
     }
 

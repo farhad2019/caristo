@@ -31,13 +31,15 @@ class CarTypeController extends AppBaseController
     /** @var  LanguageRepository */
     private $languageRepository;
 
+    private $parent = [0 => '(No Parent)'];
+
     public function __construct(CarTypeRepository $carTypeRepo, CarTypeTranslationRepository $carTypeTranslationRepo, LanguageRepository $languageRepo)
     {
         $this->carTypeRepository = $carTypeRepo;
         $this->carTypeTranslationRepository = $carTypeTranslationRepo;
         $this->languageRepository = $languageRepo;
         $this->ModelName = 'carTypes';
-        $this->BreadCrumbName = 'CarType';
+        $this->BreadCrumbName = 'Segments';
     }
 
     /**
@@ -59,8 +61,11 @@ class CarTypeController extends AppBaseController
      */
     public function create()
     {
+        $root = $this->parent + $this->carTypeRepository->findWhere(['parent_id' => 0])->pluck('name', 'id')->toArray();
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return view('admin.car_types.create');
+        return view('admin.car_types.create')->with([
+            'root' => $root
+        ]);
     }
 
     /**
@@ -147,7 +152,7 @@ class CarTypeController extends AppBaseController
             Flash::error('Segments not found');
             return redirect(route('admin.carTypes.index'));
         }
-        $carTypes= $this->carTypeRepository->updateRecord($request, $carType);
+        $carTypes = $this->carTypeRepository->updateRecord($request, $carType);
         $this->carTypeTranslationRepository->updateRecord($request, $carType);
 
         Flash::success('Segments updated successfully.');

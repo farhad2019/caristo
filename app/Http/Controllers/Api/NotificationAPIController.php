@@ -13,6 +13,7 @@ use App\Repositories\Admin\TradeInCarRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 
@@ -97,23 +98,30 @@ class NotificationAPIController extends AppBaseController
     {
         $this->notificationRepository->pushCriteria(new RequestCriteria($request));
         $this->notificationRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $this->notificationRepository->pushCriteria(new NotificationCriteria($request));
-        $notifications = $this->notificationRepository->all();
+//        $this->notificationRepository->pushCriteria(new NotificationCriteria($request));
+
+        $notifications = Auth::user()->notificationMaster()->where('notification_users.deleted_at', null)->get();
+
+//        var_dump($notifications->toSql());
+//        exit();
+//        $notifications = $this->notificationRepository->all();
 
         $extraData = [];
-        foreach ($notifications as $notification) {
-            //$carData = $this->carRepository->findWithoutFail($notification->ref_id);
-            $tradInfo = $this->tradInRepository->findWithoutFail($notification->ref_id)->toArray();
+        if (!empty($notifications)) {
+            foreach ($notifications as $notification) {
+                //$carData = $this->carRepository->findWithoutFail($notification->ref_id);
+                $tradInfo = $this->tradInRepository->findWithoutFail(@$notification->ref_id)->toArray();
 
-            $extraData[] = array_merge(@$notification->toArray(), [
-                'image_url'  => isset($tradInfo['trade_against']['media'][0]) ? @$tradInfo['trade_against']['media'][0]['file_url'] : null,
-                'car_name'   => @$tradInfo['trade_against']['car_model']['name'] . ' ' . @$tradInfo['trade_against']['car_model']['brand']['name'],
-                'model_year' => @$tradInfo['trade_against']['year'],
-                'chassis'    => @$tradInfo['trade_against']['chassis']
-            ]);
+                $extraData[] = array_merge(@$notification->toArray(), [
+                    'image_url'  => isset($tradInfo['trade_against']['media'][0]) ? @$tradInfo['trade_against']['media'][0]['file_url'] : null,
+                    'car_name'   => @$tradInfo['trade_against']['car_model']['name'] . ' ' . @$tradInfo['trade_against']['car_model']['brand']['name'],
+                    'model_year' => @$tradInfo['trade_against']['year'],
+                    'chassis'    => @$tradInfo['trade_against']['chassis']
+                ]);
+            }
+            NotificationUser::whereIn('notification_id', $notifications->pluck('id')->toArray())->update(['status' => NotificationUser::STATUS_READ]);
+            return $this->sendResponse($extraData, 'Notifications retrieved successfully');
         }
-        NotificationUser::whereIn('notification_id', $notifications->pluck('id')->toArray())->update(['status' => NotificationUser::STATUS_READ]);
-        return $this->sendResponse($extraData, 'Notifications retrieved successfully');
     }
 
     /**
@@ -280,33 +288,41 @@ class NotificationAPIController extends AppBaseController
      * @return Response
      * @throws \Exception
      *
-     * //@SWG\Delete(
+     * @SWG\Delete(
      *      path="/notifications/{id}",
      *      summary="Remove the specified Notification from storage",
      *      tags={"Notification"},
      *      description="Delete Notification",
      *      produces={"application/json"},
-     *      //@SWG\Parameter(
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
+     *      ),
+     *      @SWG\Parameter(
      *          name="id",
      *          description="id of Notification",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      //@SWG\Response(
+     *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          //@SWG\Schema(
+     *          @SWG\Schema(
      *              type="object",
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="data",
      *                  type="string"
      *              ),
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -316,14 +332,33 @@ class NotificationAPIController extends AppBaseController
      */
     public function destroy($id)
     {
-        /** @var Notification $notification */
-        $notification = $this->notificationRepository->findWithoutFail($id);
+        if ($id > 0) {
+            $notification = $this->notificationRepository->findWithoutFail($id);
 
-        if (empty($notification)) {
-            return $this->sendError('Notification not found');
+            if (empty($notification)) {
+                return $this->sendError('Notification not found');
+            }
+
+            $notification->details()->where('user_id', Auth::id())->delete();
+            $notification->refresh();
+            if ($notification->details->count() == 0) {
+                $notification->delete();
+            }
+        } else {
+            $notifications = Auth::user()->notificationMaster;
+
+            if (empty($notifications)) {
+                return $this->sendError('Notification not found');
+            }
+
+            foreach ($notifications as $notification) {
+                $notification->details()->where('user_id', Auth::id())->delete();
+                $notification->refresh();
+                if ($notification->details->count() == 0) {
+                    $notification->delete();
+                }
+            }
         }
-
-        $notification->delete();
 
         return $this->sendResponse($id, 'Notification deleted successfully');
     }
