@@ -67,7 +67,7 @@ class ReviewAspect extends Model
      * @var array
      */
     protected $visible = [
-//        'id',
+        'id',
         'title'
     ];
 

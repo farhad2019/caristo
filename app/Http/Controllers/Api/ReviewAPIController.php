@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Criteria\ReviewCriteria;
 use App\Http\Requests\Api\CreateReviewAPIRequest;
 use App\Http\Requests\Api\UpdateReviewAPIRequest;
 use App\Models\Review;
@@ -52,6 +53,13 @@ class ReviewAPIController extends AppBaseController
      *          in="header"
      *      ),
      *      @SWG\Parameter(
+     *          name="car_id",
+     *          description="Car id.",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
      *          type="integer",
@@ -91,6 +99,7 @@ class ReviewAPIController extends AppBaseController
     {
         $this->reviewRepository->pushCriteria(new RequestCriteria($request));
         $this->reviewRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $this->reviewRepository->pushCriteria(new ReviewCriteria($request));
         $reviews = $this->reviewRepository->all();
 
         return $this->sendResponse($reviews->toArray(), 'Reviews retrieved successfully');
