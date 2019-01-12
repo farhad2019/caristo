@@ -356,6 +356,7 @@ class MyCarRepository extends BaseRepository
             $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
             foreach ($mediaFiles as $key => $mediaFile) {
+                $myCar->media()->where('title', $key)->delete();
                 //$media[] = Utils::handlePicture($mediaFile);
                 $media[] = [
                     'title'    => $key,
