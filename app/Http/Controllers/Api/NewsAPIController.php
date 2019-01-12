@@ -106,31 +106,27 @@ class NewsAPIController extends AppBaseController
     {
         \App::setLocale($request->get('locale', 'en'));
 
-        $input = $request->all();
-
         $this->newsRepository->pushCriteria(new RequestCriteria($request));
         $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->newsRepository->pushCriteria(new NewsCriteria($request));
 
         $news = $this->newsRepository->all();
         foreach ($news as $item) {
-            $this->interactionRepository->create([
-                'user_id' => Auth::id(),
+            $this->interactionRepository->createRecord([
                 'news_id' => $item->id,
                 'type'    => NewsInteraction::TYPE_VIEW
             ]);
         }
-//        var_dump($news->toArray());
-//        exit();
-//        $this->newsRepository->resetCriteria();
-//        $this->newsRepository->pushCriteria(new RequestCriteria($request));
-//        $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
-//        $this->newsRepository->pushCriteria(new UnreadNewsCriteria($request));
+/*        var_dump($news->toArray());
+        exit();
+        $this->newsRepository->resetCriteria();
+        $this->newsRepository->pushCriteria(new RequestCriteria($request));
+        $this->newsRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $this->newsRepository->pushCriteria(new UnreadNewsCriteria($request));
 
-        // FIXME: Find a good way to get count.
-//        $count = $this->newsRepository->all()->count();
-
-//        return $this->sendResponse(['unread_count' => $count, 'news' => $news->toArray()], 'News retrieved successfully');
+         FIXME: Find a good way to get count.
+        $count = $this->newsRepository->all()->count();
+        return $this->sendResponse(['unread_count' => $count, 'news' => $news->toArray()], 'News retrieved successfully');*/
         return $this->sendResponse($news->toArray(), 'News retrieved successfully');
     }
 

@@ -207,61 +207,97 @@ class News extends Model
         'is_featured' => 'required'
     ];
 
+    /**
+     * @return $this
+     */
     public function views()
     {
         return $this->hasMany(NewsInteraction::class)->where('type', NewsInteraction::TYPE_VIEW);
     }
 
+    /**
+     * @return $this
+     */
     public function likes()
     {
         return $this->hasMany(NewsInteraction::class)->where('type', NewsInteraction::TYPE_LIKE);
     }
 
+    /**
+     * @return $this
+     */
     public function favorites()
     {
         return $this->hasMany(NewsInteraction::class)->where('type', NewsInteraction::TYPE_FAVORITE);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
     public function media()
     {
         return $this->morphMany(Media::class, 'instance');
     }
 
+    /**
+     * @return string
+     */
     public function getMorphClass()
     {
         return 'news';
     }
 
+    /**
+     * @return bool
+     */
     public function getIsLikedAttribute()
     {
         return ($this->likes()->where('user_id', \Auth::id())->first() != null);
     }
 
+    /**
+     * @return bool
+     */
     public function getIsFavoriteAttribute()
     {
         return ($this->favorites()->where('user_id', \Auth::id())->first() != null);
     }
 
+    /**
+     * @return bool
+     */
     public function getIsViewedAttribute()
     {
         return ($this->views()->where('user_id', \Auth::id())->first() != null);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class, 'news_id');
     }
 
+    /**
+     * @return string
+     */
     public function getSourceImageUrlAttribute()
     {
         return ($this->source_image && file_exists(storage_path('app/' . $this->source_image))) ? route('api.resize', ['img' => $this->source_image]) : route('api.resize', ['img' => 'public/no_image.png', 'w=50', 'h=50']);
