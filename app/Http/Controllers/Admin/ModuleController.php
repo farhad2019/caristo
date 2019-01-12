@@ -14,16 +14,19 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Flash;
+use InfyOm\Generator\Utils\TableFieldsGenerator;
+use Response;
 use InfyOm\Generator\Common\GeneratorFieldRelation;
 use InfyOm\Generator\Utils\GeneratorForeignKey;
 use InfyOm\Generator\Utils\GeneratorTable;
-use InfyOm\Generator\Utils\TableFieldsGenerator;
-use Response;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\VarDumper\Caster\DoctrineCaster;
 
-
+/**
+ * Class ModuleController
+ * @package App\Http\Controllers\admin
+ */
 class ModuleController extends Controller
 {
     protected $BreadCrumbName;
@@ -31,6 +34,9 @@ class ModuleController extends Controller
     protected $ModelName;
     protected $data;
 
+    /**
+     * ModuleController constructor.
+     */
     public function __construct()
     {
         $this->schemaManager = DB::getDoctrineSchemaManager();
@@ -39,6 +45,9 @@ class ModuleController extends Controller
 
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
@@ -46,6 +55,10 @@ class ModuleController extends Controller
         return view('admin.module.list', $this->data);
     }
 
+    /**
+     * @param null $moduleId
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getStep1($moduleId = null)
     {
         \Doctrine\Common\Inflector\Inflector::rules('plural', [
@@ -93,6 +106,10 @@ class ModuleController extends Controller
             return view('admin.module.wizard', $this->data);
     }
 
+    /**
+     * @param CreateModuleRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function postStep1(CreateModuleRequest $request)
     {
         $this->data['table_name'] = $request->table_name;
@@ -111,6 +128,10 @@ class ModuleController extends Controller
         return redirect('admin/module/step2/' . $this->data['id']);
     }
 
+    /**
+     * @param $moduleId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getStep2($moduleId)
     {
         $tablename = Module::where('id', $moduleId)->get()->first();
@@ -146,14 +167,13 @@ class ModuleController extends Controller
             $dataByUser[] = $request_data;
         }
 
-//        dd(json_decode($this->getTableRelation($tablename->table_name)));
 //        $relation = json_decode($this->getTableRelation($tablename->table_name))->relation;
 //        if (isset(json_decode($this->getTableRelation($tablename->table_name))->dbType)) {
 //            $relationType = json_decode($this->getTableRelation($tablename->table_name))->dbType;
 //        } else {
 //            $relationType = json_decode($this->getTableRelation($tablename->table_name))->type;
 //        }
-//        dd($relation,$relationType);
+
         $Config_data = [];
         $count = 0;
         foreach ($this->data['tableFields'] as $key => $item) {
@@ -184,6 +204,10 @@ class ModuleController extends Controller
         return redirect('admin/module/step3/' . $this->data['id']);
     }
 
+    /**
+     * @param $moduleId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getStep3($moduleId)
     {
         $tablename = Module::where('id', $moduleId)->get()->first();
@@ -199,6 +223,10 @@ class ModuleController extends Controller
         return view('admin.module.wizard', $this->data);
     }
 
+    /**
+     * @param UpdateModuleConfigRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function postStep3(UpdateModuleConfigRequest $request)
     {
         $this->data['id'] = $request->id;
@@ -280,6 +308,10 @@ class ModuleController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function getJoinFields(Request $request)
     {
         $this->data['tableFields'] = $this->schemaManager->listTableDetails($request->tablename)->getColumns();
@@ -289,6 +321,10 @@ class ModuleController extends Controller
         return $columns;
     }
 
+    /**
+     * @param $tableName
+     * @return string
+     */
     public function getTableRelation($tableName)
     {
         $tableFieldsGenerator = new TableFieldsGenerator($tableName);
