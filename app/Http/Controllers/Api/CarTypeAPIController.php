@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Criteria\CarTypeCriteria;
 use App\Http\Requests\Api\CreateCarTypeAPIRequest;
 use App\Http\Requests\Api\UpdateCarTypeAPIRequest;
 use App\Models\CarType;
@@ -67,6 +68,14 @@ class CarTypeAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="parent_id",
+     *          description="parent id",
+     *          type="integer",
+     *          required=false,
+     *          default=0,
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
@@ -94,6 +103,7 @@ class CarTypeAPIController extends AppBaseController
         \App::setLocale($request->get('locale', 'en'));
         $this->carTypeRepository->pushCriteria(new RequestCriteria($request));
         $this->carTypeRepository->pushCriteria(new LimitOffsetCriteria($request));
+        $this->carTypeRepository->pushCriteria(new CarTypeCriteria($request));
         $carTypes = $this->carTypeRepository->all();
 
         return $this->sendResponse($carTypes->toArray(), 'Segments retrieved successfully');

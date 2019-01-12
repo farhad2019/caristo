@@ -1738,6 +1738,14 @@
                         "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
                         "required": false,
                         "type": "integer"
+                    },
+                    {
+                        "name": "parent_id",
+                        "in": "query",
+                        "description": "parent id",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0
                     }
                 ],
                 "responses": {

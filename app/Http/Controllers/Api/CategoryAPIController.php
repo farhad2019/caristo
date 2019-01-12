@@ -9,9 +9,9 @@ use App\Http\Requests\Api\UpdateCategoryAPIRequest;
 use App\Models\Category;
 use App\Repositories\Admin\CategoryRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Response;
 
 /**
  * Class CategoryController
@@ -95,6 +95,7 @@ class CategoryAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Repository\Exceptions\RepositoryException
      */
     public function index(Request $request)
     {
