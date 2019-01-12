@@ -25,7 +25,7 @@ class ReviewDetail extends Model
 
     public $fillable = [
         'review_id',
-        'aspect_id',
+        'type_id',
         'rating'
     ];
 
@@ -110,7 +110,7 @@ class ReviewDetail extends Model
      */
     public function aspect()
     {
-        return $this->belongsTo(ReviewAspect::class, 'aspect_id');
+        return $this->belongsTo(ReviewAspect::class, 'type_id');
     }
 
     /**

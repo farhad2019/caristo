@@ -152,7 +152,7 @@ class ReviewAPIController extends AppBaseController
         foreach ($request->rating as $key => $value) {
             $this->reviewDetailRepository->create([
                 'review_id' => $reviews->id,
-                'aspect_id' => array_keys($value)[0],
+                'type_id' => array_keys($value)[0],
                 'rating'    => array_values($value)[0]
             ]);
         }
