@@ -77,21 +77,31 @@ class Review extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'details'
+    ];
 
     /**
      * The attributes that should be append to toArray.
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'user_details'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'id',
+        'average_rating',
+        'review_message',
+        'user_details',
+        'details'
+    ];
 
     /**
      * Validation create rules
@@ -130,7 +140,7 @@ class Review extends Model
      */
     public function reviewBy()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -138,7 +148,7 @@ class Review extends Model
      */
     public function reviewOn()
     {
-        return $this->belongsTo(MyCar::class);
+        return $this->belongsTo(MyCar::class, 'car_id');
     }
 
     /**
@@ -147,5 +157,16 @@ class Review extends Model
     public function details()
     {
         return $this->hasMany(ReviewDetail::class);
+    }
+
+    /**
+     * @return User
+     */
+    public function getUserDetailsAttribute()
+    {
+        return [
+            'user_name' => $this->reviewBy->name,
+            'image_url' => $this->reviewBy->details->image_url,
+        ];
     }
 }

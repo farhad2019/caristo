@@ -302,11 +302,12 @@ class MyCar extends Model
         'media',
         'myCarAttributes',
         'regionalSpecs',
-//        'myCarFeatures',
         'carRegions',
         'category',
-//        'bids',
+        'reviews',
         'engineType'
+//        'myCarFeatures',
+//        'bids',
     ];
 
     /**
@@ -341,26 +342,17 @@ class MyCar extends Model
         'country_code',
         'phone',
         'year',
-        'engineType',
-        'carType',
-        'carModel',
-        'carRegions',
         'amount',
         'average_mkp',
-        'owner',
-        'media',
         'chassis',
         'kilometer',
         'notes',
-        'top_bids',
         'ref_num',
         'link',
 //        'bids',
         'transmission_type_text',
         'owner_type_text',
 //        'carAttributes',
-        'regionalSpecs',
-        'myCarAttributes',
         'is_liked',
         'is_viewed',
         'views_count',
@@ -368,16 +360,26 @@ class MyCar extends Model
         'like_count',
         'is_favorite',
         'bid_close_at',
-//        'myCarFeatures',
-        'limited_edition_specs_array',
         'depreciation_trend_value',
         'life_cycle',
-        'category',
 //        'carFeatures',
         'created_at',
         'is_featured',
         'status',
-        'status_text'
+        'status_text',
+//        'myCarFeatures',
+//        'owner',
+//        'engineType',
+//        'carType',
+//        'carModel',
+//        'carRegions',
+//        'media',
+//        'top_bids',
+//        'regionalSpecs',
+//        'myCarAttributes',
+//        'category',
+//        'limited_edition_specs_array',
+        'reviews',
     ];
 
     /**
@@ -628,6 +630,14 @@ class MyCar extends Model
     public function myTradeCars()
     {
         return $this->hasMany(TradeInCar::class, 'owner_car_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'car_id');
     }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

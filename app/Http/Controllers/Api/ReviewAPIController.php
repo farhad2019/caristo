@@ -9,6 +9,7 @@ use App\Repositories\Admin\ReviewDetailRepository;
 use App\Repositories\Admin\ReviewRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Illuminate\Http\Response;
@@ -143,6 +144,10 @@ class ReviewAPIController extends AppBaseController
      */
     public function store(CreateReviewAPIRequest $request)
     {
+        if (Auth::user()->reviews()->where('car_id', $request->car_id)->count() > 0) {
+            return $this->sendError('Your review had already been record for this car.');
+        }
+
         $reviews = $this->reviewRepository->saveRecord($request);
         foreach ($request->rating as $key => $value) {
             $this->reviewDetailRepository->create([
@@ -151,6 +156,9 @@ class ReviewAPIController extends AppBaseController
                 'rating'    => array_values($value)[0]
             ]);
         }
+        $reviews->refresh();
+        $reviews = $this->reviewRepository->update(['average_rating' => $reviews->details->avg('rating')], $reviews->id);
+        $reviews->refresh();
 
         return $this->sendResponse($reviews->toArray(), 'Review saved successfully');
     }

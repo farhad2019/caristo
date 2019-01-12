@@ -17,9 +17,7 @@ class ReviewDetail extends Model
     use SoftDeletes;
 
     public $table = 'review_details';
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'review_id',
@@ -89,6 +87,14 @@ class ReviewDetail extends Model
         'average_rating' => 'required',
         'review_message' => 'required'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function review()
+    {
+        return $this->belongsTo(Review::class);
+    }
 
 
 }

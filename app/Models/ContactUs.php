@@ -151,8 +151,8 @@ class ContactUs extends Model
         'car_id'       => 'sometimes|exists:cars,id',
         'name'         => 'required',
         'email'        => 'required|email',
-        'country_code' => 'required',
-        'phone'        => 'required',
+//        'country_code' => 'required',
+//        'phone'        => 'required',
         'type'         => 'required|in:10,20,30'
     ];
 
