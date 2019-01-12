@@ -158,7 +158,8 @@ class ReviewAPIController extends AppBaseController
         }
 
         $reviews = $this->reviewRepository->saveRecord($request);
-        foreach ($request->rating as $key => $value) {
+        foreach (\GuzzleHttp\json_decode($request->rating) as $key => $value) {
+            $value = get_object_vars($value);
             $this->reviewDetailRepository->create([
                 'review_id' => $reviews->id,
                 'type_id' => array_keys($value)[0],
