@@ -35,6 +35,7 @@
 
     @if(isset($news))
         @if($news->source_image)
+            <br>
             <img src="{{$news->sourceImageUrl}}" alt="Image not found" width="80" style="padding-top: 10px">
         @endif
     @endif
@@ -51,12 +52,11 @@
     <div id="image">
         {!! Form::label('image', 'Image:') !!}
         {!! Form::file('image[]',  ['class' => 'form-control', 'multiple']) !!}
+        <br>
         @if(isset($news) && count($news->media) > 0)
             @if($news->media[0]->media_type == \App\Models\News::TYPE_IMAGE)
                 @foreach($news->media as $media)
                   {{--  <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="80" style="padding-top: 10px">--}}
-
-
                     <div style="position: relative; display: inline; padding-right: 10px">
                         <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal"
                            data-target="#imageGallery">
@@ -66,8 +66,6 @@
                               style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
                         </span>
                     </div>
-
-
                 @endforeach
             @endif
         @endif

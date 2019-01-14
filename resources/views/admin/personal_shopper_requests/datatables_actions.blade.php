@@ -1,6 +1,5 @@
 {!! Form::open(['route' => ['admin.personalShopperRequests.destroy', $id], 'method' => 'delete']) !!}
 <div class='btn-group'>
-    @endability
     @ability('super-admin' ,'personalShopperRequests.destroy')
     {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', [
         'type' => 'submit',
