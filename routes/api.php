@@ -141,3 +141,5 @@ Route::resource('v1/banksRates', 'BanksRateAPIController');
 Route::resource('v1/consultancyRequests', 'ConsultancyRequestAPIController');
 
 Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIController');
+
+Route::resource('v1/settings', 'SettingAPIController');

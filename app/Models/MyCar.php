@@ -339,6 +339,7 @@ class MyCar extends Model
         'id',
         'name',
         'email',
+        'average_rating',
         'country_code',
         'phone',
         'year',
