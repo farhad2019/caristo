@@ -2279,7 +2279,304 @@
                 }
             }
         },
+        "/consultancyRequests": {
+            "get": {
+                "tags": [
+                    "ConsultancyRequest"
+                ],
+                "summary": "Get a listing of the ConsultancyRequests.",
+                "description": "Get all ConsultancyRequests",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/ConsultancyRequest"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "ConsultancyRequest"
+                ],
+                "summary": "Store a newly created ConsultancyRequest in storage",
+                "description": "Store ConsultancyRequest",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "ConsultancyRequest that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ConsultancyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/ConsultancyRequest"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/consultancyRequests/{id}": {
+            "get": {
+                "tags": [
+                    "ConsultancyRequest"
+                ],
+                "summary": "Display the specified ConsultancyRequest",
+                "description": "Get ConsultancyRequest",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of ConsultancyRequest",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/ConsultancyRequest"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "ConsultancyRequest"
+                ],
+                "summary": "Update the specified ConsultancyRequest in storage",
+                "description": "Update ConsultancyRequest",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of ConsultancyRequest",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "ConsultancyRequest that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ConsultancyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/ConsultancyRequest"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "ConsultancyRequest"
+                ],
+                "summary": "Remove the specified ConsultancyRequest from storage",
+                "description": "Delete ConsultancyRequest",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of ConsultancyRequest",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/contactus": {
+            "get": {
+                "tags": [
+                    "ContactUs"
+                ],
+                "summary": "Get a listing of the contactus.",
+                "description": "Get all contactus",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/ContactUs"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "ContactUs"
@@ -3680,6 +3977,261 @@
                         "name": "id",
                         "in": "path",
                         "description": "id of Page",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/personalShopperRequests": {
+            "get": {
+                "tags": [
+                    "PersonalShopperRequest"
+                ],
+                "summary": "Get a listing of the PersonalShopperRequests.",
+                "description": "Get all PersonalShopperRequests",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/PersonalShopperRequest"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "PersonalShopperRequest"
+                ],
+                "summary": "Store a newly created PersonalShopperRequest in storage",
+                "description": "Store PersonalShopperRequest",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "PersonalShopperRequest that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PersonalShopperRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/PersonalShopperRequest"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/personalShopperRequests/{id}": {
+            "get": {
+                "tags": [
+                    "PersonalShopperRequest"
+                ],
+                "summary": "Display the specified PersonalShopperRequest",
+                "description": "Get PersonalShopperRequest",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of PersonalShopperRequest",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/PersonalShopperRequest"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "PersonalShopperRequest"
+                ],
+                "summary": "Update the specified PersonalShopperRequest in storage",
+                "description": "Update PersonalShopperRequest",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of PersonalShopperRequest",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "PersonalShopperRequest that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/PersonalShopperRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/PersonalShopperRequest"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "PersonalShopperRequest"
+                ],
+                "summary": "Remove the specified PersonalShopperRequest from storage",
+                "description": "Delete PersonalShopperRequest",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of PersonalShopperRequest",
                         "required": true,
                         "type": "integer"
                     }
@@ -5119,6 +5671,70 @@
                 }
             }
         },
+        "ConsultancyRequest": {
+            "required": [
+                "car_id",
+                "name",
+                "email",
+                "country_code",
+                "phone"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "user_id": {
+                    "description": "user_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "car_id": {
+                    "description": "car_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "bank_id": {
+                    "description": "bank_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "type": {
+                    "description": "type",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "name",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "email",
+                    "type": "string"
+                },
+                "country_code": {
+                    "description": "country_code",
+                    "type": "string"
+                },
+                "phone": {
+                    "description": "phone",
+                    "type": "number",
+                    "format": "float"
+                },
+                "subject": {
+                    "description": "subject",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "message",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "status",
+                    "type": "boolean"
+                }
+            }
+        },
         "ContactUs": {
             "required": [
                 "car_id",
@@ -5643,6 +6259,70 @@
                     "description": "id",
                     "type": "integer",
                     "format": "int32"
+                }
+            }
+        },
+        "PersonalShopperRequest": {
+            "required": [
+                "car_id",
+                "name",
+                "email",
+                "country_code",
+                "phone"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "user_id": {
+                    "description": "user_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "car_id": {
+                    "description": "car_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "bank_id": {
+                    "description": "bank_id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "type": {
+                    "description": "type",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "name",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "email",
+                    "type": "string"
+                },
+                "country_code": {
+                    "description": "country_code",
+                    "type": "string"
+                },
+                "phone": {
+                    "description": "phone",
+                    "type": "number",
+                    "format": "float"
+                },
+                "subject": {
+                    "description": "subject",
+                    "type": "string"
+                },
+                "message": {
+                    "description": "message",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "status",
+                    "type": "boolean"
                 }
             }
         },

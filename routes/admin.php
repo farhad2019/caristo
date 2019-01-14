@@ -109,3 +109,7 @@ Route::Get('tradealert', 'TradeInCarController@getCount');
 Route::resource('reviewAspects', 'ReviewAspectController');
 
 Route::resource('reviews', 'ReviewController');
+
+Route::resource('consultancyRequests', 'ConsultancyRequestController');
+
+Route::resource('personalShopperRequests', 'PersonalShopperRequestController');

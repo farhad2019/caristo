@@ -137,3 +137,7 @@ Route::resource('v1/bidsHistories', 'BidsHistoryAPIController');
 Route::resource('v1/cars', 'CarAPIController');
 
 Route::resource('v1/banksRates', 'BanksRateAPIController');
+
+Route::resource('v1/consultancyRequests', 'ConsultancyRequestAPIController');
+
+Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIController');

@@ -31,41 +31,35 @@ class ContactUsAPIController extends AppBaseController
      * @return Response
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
-     * //@SWG\Get(
+     * @SWG\Get(
      *      path="/contactus",
      *      summary="Get a listing of the contactus.",
      *      tags={"ContactUs"},
      *      description="Get all contactus",
      *      produces={"application/json"},
-     *      //@SWG\Parameter(
-     *          name="limit",
-     *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
-     *          type="integer",
-     *          required=false,
-     *          in="query"
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="User Auth Token{ Bearer ABC123 }",
+     *          type="string",
+     *          required=true,
+     *          default="Bearer ABC123",
+     *          in="header"
      *      ),
-     *     //@SWG\Parameter(
-     *          name="offset",
-     *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
-     *          type="integer",
-     *          required=false,
-     *          in="query"
-     *      ),
-     *      //@SWG\Response(
+     *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          //@SWG\Schema(
+     *          @SWG\Schema(
      *              type="object",
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  //@SWG\Items(ref="#/definitions/ContactUs")
+     *                  @SWG\Items(ref="#/definitions/ContactUs")
      *              ),
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -75,11 +69,11 @@ class ContactUsAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $this->contactUsRepository->pushCriteria(new RequestCriteria($request));
-        $this->contactUsRepository->pushCriteria(new LimitOffsetCriteria($request));
-        $contactus = $this->contactUsRepository->all();
+//        $this->contactUsRepository->pushCriteria(new RequestCriteria($request));
+//        $this->contactUsRepository->pushCriteria(new LimitOffsetCriteria($request));
+//        $contactus = $this->contactUsRepository->all();
 
-        return $this->sendResponse($contactus->toArray(), 'contactus retrieved successfully');
+        return $this->sendResponse(['Here you go'], 'contact us retrieved successfully');
     }
 
     /**
