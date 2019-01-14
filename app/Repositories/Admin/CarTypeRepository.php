@@ -39,7 +39,7 @@ class CarTypeRepository extends BaseRepository
     public function getRootTypes()
     {
 //        return $this->model->whereDoesntHave('news')->where('type', Category::NEWS)->get();
-        return $this->model->whereDoesntHave('childCategory')->get();
+        return $this->model->whereDoesntHave('childTypes')->get();
     }
 
     /**
@@ -62,7 +62,7 @@ class CarTypeRepository extends BaseRepository
 
             foreach ($mediaFiles as $key => $mediaFile) {
                 $media[] = [
-                    'title'    => $key,
+                    'title' => $key,
                     'filename' => Storage::putFile('media_files', $mediaFile)
                 ]; //Utils::handlePicture($mediaFile);
                 //$media[] = Utils::handlePicture($mediaFile);
@@ -94,7 +94,7 @@ class CarTypeRepository extends BaseRepository
 
             foreach ($mediaFiles as $key => $mediaFile) {
                 $media[] = [
-                    'title'    => $key,
+                    'title' => $key,
                     'filename' => Storage::putFile('media_files', $mediaFile)
                 ]; //Utils::handlePicture($mediaFile);
                 //$media[] = Utils::handlePicture($mediaFile);
