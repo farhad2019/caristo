@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @property integer id
  * @property string default_language
+ * @property int limit_for_cars
  * @property string email
  * @property string logo
  * @property string phone
@@ -185,7 +186,7 @@ class Setting extends Model
      * @var array
      */
     public static $update_rules = [
-        'default_language' => 'required|exists:locales,code',
+        /*'default_language' => 'required|exists:locales,code',
         'email' => 'required|email',
         'logo' => 'sometimes|required',
         'phone' => 'required',
@@ -194,7 +195,13 @@ class Setting extends Model
         'playstore' => 'required',
         'appstore' => 'required',
         'app_version' => 'required',
-        'force_update' => 'required'
+        'force_update' => 'required',*/
+        'depreciation_trend' => 'required',
+        'limit_for_cars' => 'required',
+        'limit_for_featured_cars' => 'required',
+        'logo' => 'required',
+        'ask_for_consultancy' => 'required',
+        'personal_shopper' => 'required'
     ];
 
     /**

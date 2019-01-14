@@ -18,22 +18,21 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <!-- Title Field -->
-                            <dt>{!! Form::label('title', 'Title:') !!}</dt>
-                            <dd>{!! $setting->title !!}</dd>
+                            <dt> {!! Form::label('ask_for_consultancy', 'Ask For Consultancy:') !!} </dt>
+                            <dd style="word-break: break-all">{!! $setting->ask_for_consultancy !!}</dd>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 "><br></div>
+                        <div class="col-md-12">
                             <!-- Street Field -->
-                            <dt>{!! Form::label('street', 'Street Address:') !!}</dt>
-                            <dd>{!! $setting->address !!}</dd>
+                            <dt>{!! Form::label('personal_shopper', 'Personal Shopper:') !!}</dt>
+                            <dd style="word-break: break-all">{!! $setting->personal_shopper !!}</dd>
                         </div>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <!-- About Field -->
-                        <dt>{!! Form::label('about', 'About:') !!}</dt>
-                        <dd>{!! $setting->about !!}</dd>
+
                     </div>
                     <!-- box-footer -->
                 </div>
@@ -52,28 +51,23 @@
     <div class="box-body">
         <!-- /.box -->
         <div class="col-sm-6">
-
             <!-- Email Field -->
-            <dt>{!! Form::label('email', 'Email:') !!}</dt>
-            <dd>{!! $setting->email !!}</dd>
+            <dt style="width:38%;">{!! Form::label('email', 'Depreciation Trend (%/Year):') !!}</dt>
+            <dd>{!! $setting->depreciation_trend !!} % </dd>
+
+            <!-- Playstore Field -->
+            <dt>{!! Form::label('playstore', 'Add Car Limit:') !!}</dt>
+            <dd>{!! $setting->limit_for_cars !!} / user</dd>
+
+            <!-- Force Update Field -->
+            <dt>{!! Form::label('force_update', 'Featured Cars Limit:') !!}</dt>
+            <dd>{!! $setting->limit_for_featured_cars !!} / user</dd>
 
             <!-- Logo Field -->
             <dt>{!! Form::label('logo', 'Logo:') !!}</dt>
             <dd><img src="{!! $setting->image_url !!}"></dd>
-
-            <!-- Playstore Field -->
-            <dt>{!! Form::label('playstore', 'Play Store:') !!}</dt>
-            <dd>{!! !empty($setting->playstore)? "<a href='".$setting->playstore."' target='_blank'>Play Store</a>" : "#" !!}</dd>
-
-            <!-- Force Update Field -->
-            <dt>{!! Form::label('force_update', 'Force Update:') !!}</dt>
-            <dd>{!! $setting->force_update==1?'<span class="label label-primary">True</span>':'<span class="label label-warning">False</span>' !!}</dd>
-
-            <!-- Created At Field -->
-            <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>
-            <dd>{!! $setting->created_at !!}</dd>
         </div>
-        <div class="col-sm-6">
+        {{--<div class="col-sm-6">
             <!-- Locale Field -->
             <dt>{!! Form::label('locale', 'App Default Language:') !!}</dt>
             <dd>{!! $setting->default_language !!}</dd>
@@ -101,7 +95,7 @@
                     @endforeach
                 </dd>
             @endif
-        </div>
+        </div>--}}
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
@@ -109,7 +103,7 @@
     </div>
     <!-- box-footer -->
 </div>
-<div class="clearfix"></div>
+{{--<div class="clearfix"></div>
 <div class="box">
     <div class="box-header with-border">
 
@@ -123,45 +117,46 @@
 
     </div>
     <!-- box-footer -->
-</div>
+</div>--}}
 
-{!! Form::hidden('latitude', $setting->latitude,['id'=>'old-lat']) !!}
-{!! Form::hidden('longitude', $setting->longitude,['id'=>'old-lon']) !!}
+{{--{!! Form::hidden('latitude', $setting->latitude,['id'=>'old-lat']) !!}
+{!! Form::hidden('longitude', $setting->longitude,['id'=>'old-lon']) !!}--}}
 
+{{--
 @push('scripts')
-    <script type="text/javascript"
-            src='https://maps.google.com/maps/api/js?key=AIzaSyBaqAOKxwrCNbg_Vb6S5DV5XatDsQ1Ydfo&sensor=false&libraries=places'></script>
-    <script src="{{ url('public/js/admin/locationpicker.jquery.min.js') }}"></script>
-    <script>
-        $(function () {
-            var old_lat = $('#old-lat').val() != 0 ? $('#old-lat').val() : 25.110026;
-            var old_lon = $('#old-lon').val() != 0 ? $('#old-lon').val() : 55.145516;
+<script type="text/javascript"
+        src='https://maps.google.com/maps/api/js?key=AIzaSyBaqAOKxwrCNbg_Vb6S5DV5XatDsQ1Ydfo&sensor=false&libraries=places'></script>
+<script src="{{ url('public/js/admin/locationpicker.jquery.min.js') }}"></script>
+<script>
+    $(function () {
+        var old_lat = $('#old-lat').val() != 0 ? $('#old-lat').val() : 25.110026;
+        var old_lon = $('#old-lon').val() != 0 ? $('#old-lon').val() : 55.145516;
 
-            $('#us3').locationpicker({
-                location: {
-                    latitude: old_lat,
-                    longitude: old_lon
-                },
-                radius: 0,
-                inputBinding: {
-                    latitudeInput: $('#us3-lat'),
-                    longitudeInput: $('#us3-lon'),
-                    radiusInput: $('#us3-radius'),
-                    locationNameInput: $('#us3-address')
-                },
-                enableAutocomplete: true,
-                onchanged: function (currentLocation, radius, isMarkerDropped) {
-                    // Uncomment line below to show alert on each Location Changed event
-                    //alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
-                }
-            });
-
-            $('form input#us3-address').on('keyup keypress', function (e) {
-                var keyCode = e.keyCode || e.which;
-                return keyCode !== 13;
-            });
+        $('#us3').locationpicker({
+            location: {
+                latitude: old_lat,
+                longitude: old_lon
+            },
+            radius: 0,
+            inputBinding: {
+                latitudeInput: $('#us3-lat'),
+                longitudeInput: $('#us3-lon'),
+                radiusInput: $('#us3-radius'),
+                locationNameInput: $('#us3-address')
+            },
+            enableAutocomplete: true,
+            onchanged: function (currentLocation, radius, isMarkerDropped) {
+                // Uncomment line below to show alert on each Location Changed event
+                //alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
+            }
         });
-    </script>
+
+        $('form input#us3-address').on('keyup keypress', function (e) {
+            var keyCode = e.keyCode || e.which;
+            return keyCode !== 13;
+        });
+    });
+</script>
 @endpush
 
-<div class="clearfix"></div>
+<div class="clearfix"></div>--}}
