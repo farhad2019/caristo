@@ -71,7 +71,7 @@ class News extends Model
     use SoftDeletes, Translatable;
 
     public $table = 'news';
-    public $translatedAttributes = ['headline', 'description', 'source'];
+    public $translatedAttributes = ['headline', 'description', 'source', 'related_car'];
     protected $dates = ['deleted_at'];
 
     const TYPE_IMAGE = 10;
