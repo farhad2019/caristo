@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin;
 
 use App\Helper\Utils;
+use App\Models\Media;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -65,10 +66,16 @@ class NewsRepository extends BaseRepository
                 $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
                 foreach ($mediaFiles as $mediaFile) {
-                    $media[] = Utils::handlePicture($mediaFile);
+
+                    $input['filename'] = Storage::putFile('media_files', $mediaFile);
+                    $input['title'] = $mediaFile->getClientOriginalName();
+                    $input['instance_id'] = $data->id;
+                    $input['instance_type'] = 'news';
+
+                    Media::create($input);
                 }
 
-                $data->media()->createMany($media);
+            //    $data->media()->createMany($media);
             }
         } elseif ($input['media_type'] == News::TYPE_VIDEO) {
             if (isset($request->video_url) && !$request->video_url == null) {
@@ -81,6 +88,7 @@ class NewsRepository extends BaseRepository
                 $data->media()->createMany($media);
             }
         }
+
 
         return $data;
     }
@@ -104,16 +112,19 @@ class NewsRepository extends BaseRepository
         if ($input['media_type'] == News::TYPE_IMAGE) {
             // Media Data
             if ($request->hasFile('image')) {
-                $media = [];
                 $mediaFiles = $request->file('image');
                 $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
                 foreach ($mediaFiles as $mediaFile) {
-                    $media[] = Utils::handlePicture($mediaFile);
+
+                    $input['filename'] = Storage::putFile('media_files', $mediaFile);
+                    $input['title'] = $mediaFile->getClientOriginalName();
+                    $input['instance_id'] = $data->id;
+                    $input['instance_type'] = 'news';
+
+                    Media::create($input);
                 }
-                // TODO: We are deleting all other media for now.
-                $news->media()->delete();
-                $data->media()->createMany($media);
+
             }
         } elseif ($input['media_type'] == News::TYPE_VIDEO) {
             if (isset($request->video_url) && !$request->video_url == null) {
