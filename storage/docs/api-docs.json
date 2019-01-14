@@ -4594,6 +4594,64 @@
                 }
             }
         },
+        "/settings": {
+            "get": {
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Get a listing of the Settings.",
+                "description": "Get all Settings",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Change the Default Record Count. If not found, Returns All Records in DB.",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Change the Default Offset of the Query. If not found, 0 will be used.",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Setting"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/tradeInCars": {
             "get": {
                 "tags": [
@@ -6501,6 +6559,73 @@
                     "description": "id",
                     "type": "integer",
                     "format": "int32"
+                }
+            }
+        },
+        "Setting": {
+            "required": [
+                "default_language",
+                "email",
+                "logo",
+                "phone",
+                "latitude",
+                "longitude",
+                "playstore",
+                "appstore",
+                "social_links",
+                "app_version",
+                "force_update"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "default_language": {
+                    "description": "default_language",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "email",
+                    "type": "string"
+                },
+                "logo": {
+                    "description": "logo",
+                    "type": "string"
+                },
+                "phone": {
+                    "description": "phone",
+                    "type": "string"
+                },
+                "latitude": {
+                    "description": "latitude",
+                    "type": "string"
+                },
+                "longitude": {
+                    "description": "longitude",
+                    "type": "string"
+                },
+                "playstore": {
+                    "description": "playstore",
+                    "type": "string"
+                },
+                "appstore": {
+                    "description": "appstore",
+                    "type": "string"
+                },
+                "social_links": {
+                    "description": "social_links",
+                    "type": "string"
+                },
+                "app_version": {
+                    "description": "app_version",
+                    "type": "number",
+                    "format": "float"
+                },
+                "force_update": {
+                    "description": "force_update",
+                    "type": "string"
                 }
             }
         },

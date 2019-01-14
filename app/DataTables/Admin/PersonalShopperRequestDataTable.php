@@ -17,6 +17,15 @@ class PersonalShopperRequestDataTable extends DataTable
     public function dataTable($query)
     {
         $dataTable = new EloquentDataTable($query);
+        $dataTable->addColumn('car_name', function (PersonalShopperRequest $model) {
+            return "<a href='" . route('admin.cars.show', ['id' => $model->car_id]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->car_name . "</span></a>";
+        });
+
+        $dataTable->addColumn('phone', function (PersonalShopperRequest $model) {
+            return $model->country_code . "-" . $model->phone . "</span></a>";
+        });
+
+        $dataTable->rawColumns(['car_name', 'phone', 'action']);
 
         return $dataTable->addColumn('action', 'admin.personal_shopper_requests.datatables_actions');
     }
@@ -29,7 +38,7 @@ class PersonalShopperRequestDataTable extends DataTable
      */
     public function query(PersonalShopperRequest $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->select('admin_queries.*', 'cars.name as car_name')->join('cars', "admin_queries.car_id", "=", "cars.id")->where(['admin_queries.type' => 20]);
     }
 
     /**
@@ -68,10 +77,10 @@ class PersonalShopperRequestDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'car_id',
             'name',
             'email',
-            'phone'
+            'phone',
+            'car_name'
         ];
     }
 
