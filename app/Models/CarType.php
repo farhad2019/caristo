@@ -62,7 +62,9 @@ class CarType extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'childTypes'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -84,6 +86,7 @@ class CarType extends Model
         'id',
         'name',
         'image',
+        'childTypes',
         'selected_icon',
         'un_selected_icon'
     ];
@@ -136,7 +139,7 @@ class CarType extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function childCategory()
+    public function childTypes()
     {
         return $this->hasMany(CarType::class, 'parent_id', 'id')->orderBy('created_at', 'asc');
     }
@@ -144,7 +147,7 @@ class CarType extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function parentCategory()
+    public function parentType()
     {
         return $this->belongsTo(CarType::class, 'parent_id', 'id');
     }
