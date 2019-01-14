@@ -1,15 +1,5 @@
 {!! Form::open(['route' => ['admin.consultancyRequests.destroy', $id], 'method' => 'delete']) !!}
 <div class='btn-group'>
-    @ability('super-admin' ,'consultancyRequests.show')
-    <a href="{{ route('admin.consultancyRequests.show', $id) }}" class='btn btn-default btn-xs'>
-        <i class="glyphicon glyphicon-eye-open"></i>
-    </a>
-    @endability
-    @ability('super-admin' ,'consultancyRequests.edit')
-    <a href="{{ route('admin.consultancyRequests.edit', $id) }}" class='btn btn-default btn-xs'>
-        <i class="glyphicon glyphicon-edit"></i>
-    </a>
-    @endability
     @ability('super-admin' ,'consultancyRequests.destroy')
     {!! Form::button('<i class="glyphicon glyphicon-trash"></i>', [
         'type' => 'submit',

@@ -22,6 +22,12 @@
     {!! Form::text('source', null, ['class' => 'form-control liveUrl', 'placeholder' => 'https://www.example.com']) !!}
 </div>
 
+<!-- Related Car Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('related_car', 'Related Car:') !!}
+    {!! Form::text('related_car', null, ['class' => 'form-control liveUrl', 'placeholder' => 'https://www.example.com']) !!}
+</div>
+
 <!-- Source Image Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('source_image', 'Source Image:') !!}
