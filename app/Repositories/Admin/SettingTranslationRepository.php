@@ -42,7 +42,19 @@ class SettingTranslationRepository extends BaseRepository
      */
     public function saveRecord($request, $setting)
     {
-        $input = $request->only(['title', 'address', 'about']);
+        $input = $request->only(['ask_for_consultancy', 'personal_shopper']);
+        foreach ($input['ask_for_consultancy'] as $key => $title) {
+            if (!empty($title)) {
+                $update_data = [];
+                $update_data['setting_id'] = $setting->id;
+                $update_data['locale'] = $key;
+                $update_data['ask_for_consultancy'] = $title;
+                $update_data['personal_shopper'] = $input['personal_shopper'][$key];
+
+                $this->create($update_data);
+            }
+        }
+        /*$input = $request->only(['title', 'address', 'about']);
         foreach ($input['title'] as $key => $title) {
             if (!empty($title)) {
                 $update_data = [];
@@ -54,7 +66,7 @@ class SettingTranslationRepository extends BaseRepository
 
                 $this->create($update_data);
             }
-        }
+        }*/
         return $setting;
     }
 

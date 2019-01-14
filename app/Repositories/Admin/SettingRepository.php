@@ -44,7 +44,7 @@ class SettingRepository extends BaseRepository
      */
     public function saveRecord($request)
     {
-        $input = $request->only(['socialName', 'socialLink', 'logo', 'default_locale', 'email', 'phone', 'latitude', 'longitude', 'playstore', 'appstore', 'social_links', 'force_update', 'app_version']);
+        $input = $request->only(['depreciation_trend', 'limit_for_cars', 'limit_for_featured_cars', 'logo']);
 
         /*$input = $request->only(['socialName', 'socialLink', 'logo', 'default_locale', 'email', 'phone', 'latitude', 'longitude', 'playstore', 'appstore', 'social_links', 'force_update', 'app_version']);
 

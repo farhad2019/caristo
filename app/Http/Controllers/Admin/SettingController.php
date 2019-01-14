@@ -7,6 +7,7 @@ use App\DataTables\Admin\SettingDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateSettingRequest;
 use App\Http\Requests\Admin\UpdateSettingRequest;
+use App\Models\MyCar;
 use App\Models\SettingTranslation;
 use App\Repositories\Admin\LanguageRepository;
 use App\Repositories\Admin\SettingRepository;
