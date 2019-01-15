@@ -8,6 +8,7 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateTradeInCarRequest;
 use App\Http\Requests\Admin\UpdateTradeInCarRequest;
 use App\Models\TradeInCar;
+use App\Repositories\Admin\CarEvaluationBidRepository;
 use App\Repositories\Admin\TradeInCarRepository;
 use App\Repositories\Admin\NotificationRepository;
 use App\Http\Controllers\AppBaseController;
@@ -33,15 +34,20 @@ class TradeInCarController extends AppBaseController
     /** @var  NotificationRepository */
     private $notificationRepository;
 
+    /** @var  CarEvaluationBidRepository */
+    private $bidRepository;
+
     /**
      * TradeInCarController constructor.
      * @param NotificationRepository $notificationRepo
      * @param TradeInCarRepository $tradeInCarRepo
+     * @param CarEvaluationBidRepository $bidRepo
      */
-    public function __construct(NotificationRepository $notificationRepo, TradeInCarRepository $tradeInCarRepo)
+    public function __construct(NotificationRepository $notificationRepo, TradeInCarRepository $tradeInCarRepo, CarEvaluationBidRepository $bidRepo)
     {
         $this->tradeInCarRepository = $tradeInCarRepo;
         $this->notificationRepository = $notificationRepo;
+        $this->bidRepository = $bidRepo;
         $this->ModelName = 'tradeInCars';
         $this->BreadCrumbName = 'TradeInCar';
     }
@@ -60,9 +66,9 @@ class TradeInCarController extends AppBaseController
     }*/
     public function index(Request $request, TradeInCarDataTable $tradeInCarDataTable)
     {
-
         $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(false, $request->all());
-
+//        dd($tradeInRequests);
+//dd($tradeInRequests->getBindings(), $tradeInRequests->toSql());
         if (Auth::user()->hasRole('showroom-owner')) {
             return view('admin.showroom.carsListing')
                 ->with([
@@ -103,9 +109,11 @@ class TradeInCarController extends AppBaseController
      */
     public function store(CreateTradeInCarRequest $request)
     {
-        $input = $request->all();
+        if ($request->type == TradeInCar::TRADE_IN) {
+            $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
+        } else {
 
-        $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
+        }
 
         Flash::success('Trade In Car saved successfully.');
         return redirect(route('admin.tradeInCars.index'));
@@ -176,18 +184,22 @@ class TradeInCarController extends AppBaseController
             return redirect(route('admin.tradeInCars.index'));
         }
 
-        $tradeInCar = $this->tradeInCarRepository->updateRecord($request, $tradeInCar);
+        if ($request->type == TradeInCar::TRADE_IN) {
+            $tradeInCar = $this->tradeInCarRepository->updateRecord($request, $tradeInCar);
+        } else {
+            $tradeInCar = $this->bidRepository->saveRecord($request, $tradeInCar);
+        }
 
         ################# NOTIFICATION ####################
-        $notification = [
-            'sender_id'   => Auth::id(),
+        /*$notification = [
+            'sender_id' => Auth::id(),
             'action_type' => Notification::NOTIFICATION_TYPE_NEW_BID,
-            'url'         => null,
-            'ref_id'      => $tradeInCar->id,
-            'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_NEW_BID]
+            'url' => null,
+            'ref_id' => $tradeInCar->id,
+            'message' => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_NEW_BID]
         ];
 
-        $this->notificationRepository->notification($notification, $tradeInCar->user_id);
+        $this->notificationRepository->notification($notification, $tradeInCar->tradeAgainst->owner_id);*/
 
 
         Flash::success('Trade In Request successfully.');

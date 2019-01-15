@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string deleted_at
  *
  */
-class CarsEvaluationBid extends Model
+class CarEvaluationBid extends Model
 {
     use SoftDeletes;
 
@@ -42,7 +42,9 @@ class CarsEvaluationBid extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'user'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -56,7 +58,10 @@ class CarsEvaluationBid extends Model
      *
      * @var array
      */
-    protected $visible = [];
+    protected $visible = [
+        'user',
+        'amount'
+    ];
 
     /**
      * Validation create rules
@@ -93,7 +98,7 @@ class CarsEvaluationBid extends Model
      */
     public function bids()
     {
-        return $this->belongsTo(CarsEvaluation::class, 'evaluation_id');
+        return $this->belongsTo(TradeInCar::class, 'evaluation_id');
     }
 
     /**

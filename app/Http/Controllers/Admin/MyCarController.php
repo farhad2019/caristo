@@ -243,12 +243,6 @@ class MyCarController extends AppBaseController
                     $myCar->carAttributes()->attach($key, ['value' => $item]);
                 }
             }
-
-            /*if (!empty(array_filter($request->feature))) {
-                foreach ($request->feature as $key => $item) {
-                    $myCar->carFeatures()->attach($key);
-                }
-            }*/
         }
 
         Flash::success('Car saved successfully . ');

@@ -105,6 +105,7 @@ class TradeInCar extends Model
      * @var array
      */
     protected $with = [
+        'evaluationDetails',
         'myCar',
         'tradeAgainst'
     ];
@@ -126,6 +127,8 @@ class TradeInCar extends Model
         'myCar',
         'amount',
         'notes',
+        'type',
+//        'evaluationDetails',
         'bid_close_at',
         'tradeAgainst'
     ];
@@ -174,5 +177,13 @@ class TradeInCar extends Model
     public function tradeAgainst()
     {
         return $this->belongsTo(MyCar::class, 'customer_car_id'); //app user's car
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function evaluationDetails()
+    {
+        return $this->hasMany(CarEvaluationBid::class, 'evaluation_id');
     }
 }

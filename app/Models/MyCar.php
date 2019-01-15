@@ -272,6 +272,7 @@ class MyCar extends Model
         'regional_specification_id',
         'owner_type',
         'average_mkp',
+        'currnecy',
         'amount',
         'kilometer',
         'bid_close_at',
@@ -369,11 +370,11 @@ class MyCar extends Model
         'depreciation_trend_value',
         'life_cycle',
 //        'carFeatures',
+//        'myCarFeatures',
         'created_at',
         'is_featured',
         'status',
         'status_text',
-//        'myCarFeatures',
         'owner',
         'engineType',
         'carType',
@@ -559,14 +560,14 @@ class MyCar extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
      */
-    public function getTopBidsAttribute()
-    {
-        return null;
-//        return $this->bids()
-//            ->orderBy('created_at', 'desc')
-//            ->take(5)
-//            ->get();
-    }
+    /* public function getTopBidsAttribute()
+     {
+         return null;
+ //        return $this->bids()
+ //            ->orderBy('created_at', 'desc')
+ //            ->take(5)
+ //            ->get();
+     }*/
 
     /**
      * @return mixed
@@ -638,6 +639,27 @@ class MyCar extends Model
     public function myTradeCars()
     {
         return $this->hasMany(TradeInCar::class, 'owner_car_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bids()
+    {
+        return $this->hasMany(TradeInCar::class, 'customer_car_id')->without(['tradeAgainst', 'myCar']);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getTopBidsAttribute()
+    {
+        return $this->bids()
+            ->whereHas('evaluationDetails', function ($qwer) {
+                return $qwer->orderBy('amount', 'desc')
+                    ->take(5);
+            })->with('evaluationDetails')
+            ->get()->makeVisible('evaluationDetails');
     }
 
     /**
