@@ -507,7 +507,12 @@ class MyCarController extends AppBaseController
                 'name' => 'required',
                 'is_featured' => 'check_featured_update',
                 'media.*' => 'image|mimes:jpg,jpeg,png|max:500',
-                'attribute.*' => 'attr'
+                'attribute.1' => 'attr',
+                'attribute.2' => 'attr',
+                'attribute.3' => 'attr',
+                'attribute.4' => 'attr',
+                'attribute.5' => 'attr',
+                'attribute.6' => 'attr'
             ]), [
 //                'category_id.required'       => 'The category field is required.',
 //                'model_id.required'          => 'The model field is required.',
@@ -537,7 +542,12 @@ class MyCarController extends AppBaseController
                 'phone' => 'phone',
                 'is_featured' => 'check_featured_update',
                 'media.*' => 'image|mimes:jpg,jpeg,png|max:500',
-                'attribute.*' => 'attr'
+                'attribute.1' => 'attr',
+                'attribute.2' => 'attr',
+                'attribute.3' => 'attr',
+                'attribute.4' => 'attr',
+                'attribute.5' => 'attr',
+                'attribute.6' => 'attr'
             ]), [
 //                'category_id.required'       => 'The category field is required.',
 //                'model_id.required'          => 'The model field is required.',

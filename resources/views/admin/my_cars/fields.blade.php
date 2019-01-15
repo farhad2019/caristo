@@ -878,7 +878,7 @@
         $(document).ready(function () {
             var id = $('#category_id').val();
 
-          /*  if(parseInt(id) == 25 || parseInt(id) == 26 || parseInt(id) == 27) {
+            if(parseInt(id) == 25 || parseInt(id) == 26 || parseInt(id) == 27) {
 
                 $('.cartype').hide();
                 $('.chassis').hide();
@@ -896,9 +896,11 @@
 
             if (parseInt(id) == 28) {
                 $('.regions').show();
+                $('.cartype').show();
                 $('.region').hide();
             } else {
                 $('.regions').hide();
+                $('.cartype').hide();
                 $('.region').show();
             }
 
@@ -906,7 +908,7 @@
                 $('.category2528').show();
             } else if (parseInt(id) === 26 || parseInt(id) === 27) {
                 $('.category2528').hide();
-            }*/
+            }
 
             $('#category_id').on('change', function () {
                 var cat_id = $(this).val();
@@ -926,11 +928,13 @@
                     $('.transmission_type').show();
                 }
 
-                if (cat_id == 28) {
+                if (parseInt(cat_id) == 28) {
                     $('.regions').show();
+                    $('.cartype').show();
                     $('.region').hide();
                 } else {
                     $('.regions').hide();
+                    $('.cartype').hide();
                     $('.region').show();
                 }
 
