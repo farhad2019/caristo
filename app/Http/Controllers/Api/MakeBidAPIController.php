@@ -275,6 +275,27 @@ class MakeBidAPIController extends AppBaseController
     {
         /** @var MakeBid $car */
         $car = $this->carRepository->findWithoutFail($id);
+        $performance_key = array_search(1, array_column($car['myCarAttributes']->toArray(), 'attr_id'));
+        $acceleration_key = array_search(2, array_column($car['myCarAttributes']->toArray(), 'attr_id'));
+        $exterior_key = array_search(4, array_column($car['myCarAttributes']->toArray(), 'attr_id'));
+        $warranty_key = array_search(5, array_column($car['myCarAttributes']->toArray(), 'attr_id'));
+        $interior_key = array_search(3, array_column($car['myCarAttributes']->toArray(), 'attr_id'));
+        $service_key = array_search(6, array_column($car['myCarAttributes']->toArray(), 'attr_id'));
+
+        $specification = array();
+        $specification[0] = array("value" => $car['carModel']['name'], "attr_id" => 0, "attr_name" => "Model", "attr_icon" => null, "attr_option" => null);
+        $specification[1] = array("value" => $car['engineType']['name'], "attr_id" => 0, "attr_name" => "Engine Type", "attr_icon" => null, "attr_option" => null);
+        $specification[2] = array("value" => $car['year'], "attr_id" => 0, "attr_name" => "Model Year", "attr_icon" => null, "attr_option" => null);
+        $specification[3] = $car['myCarAttributes'][$performance_key]->toArray();
+        $specification[4] = array("value" => $car['regionalSpecs']['name'], "attr_id" => 0, "attr_name" => "Regional Specs", "attr_icon" => null, "attr_option" => null);
+        $specification[5] = $car['myCarAttributes'][$acceleration_key]->toArray();
+        $specification[6] = $car['myCarAttributes'][$exterior_key]->toArray();
+        $specification[7] = $car['myCarAttributes'][$warranty_key]->toArray();
+        $specification[8] = $car['myCarAttributes'][$interior_key]->toArray();
+        $specification[9] = $car['myCarAttributes'][$service_key]->toArray();
+
+        $car['specification'] = $specification;
+
         if (empty($car)) {
             return $this->sendError('Car not found');
         }

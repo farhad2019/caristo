@@ -386,6 +386,7 @@ class MyCar extends Model
         'category',
         'limited_edition_specs_array',
         'reviews',
+        'specification'
     ];
 
     /**
