@@ -96,7 +96,12 @@ class CreateMyCarRequest extends BaseFormRequest
                 'media'       => 'required',
                 'is_featured' => 'check_featured',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
-               /* 'attribute.*' => 'attr'*/
+                'attribute.1' => 'attr',
+                'attribute.2' => 'attr',
+                'attribute.3' => 'attr',
+                'attribute.4' => 'attr',
+                'attribute.5' => 'attr',
+                'attribute.6' => 'attr'
             ]);
 
         } else {
@@ -106,7 +111,12 @@ class CreateMyCarRequest extends BaseFormRequest
                 'media'       => 'required',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
                 'is_featured' => 'check_featured',
-                /*'attribute.*' => 'attr'*/
+                'attribute.1' => 'attr',
+                'attribute.2' => 'attr',
+                'attribute.3' => 'attr',
+                'attribute.4' => 'attr',
+                'attribute.5' => 'attr',
+                'attribute.6' => 'attr'
             ]);
 
         }

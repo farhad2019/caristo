@@ -551,20 +551,21 @@ class MyCar extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function bids()
-    {
-        return $this->hasMany(MakeBid::class, 'car_id');
-    }
+//    public function bids()
+//    {
+//        return $this->hasMany(MakeBid::class, 'car_id');
+//    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
      */
     public function getTopBidsAttribute()
     {
-        return $this->bids()
-            ->orderBy('created_at', 'desc')
-            ->take(5)
-            ->get();
+        return null;
+//        return $this->bids()
+//            ->orderBy('created_at', 'desc')
+//            ->take(5)
+//            ->get();
     }
 
     /**

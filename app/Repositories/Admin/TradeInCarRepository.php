@@ -82,7 +82,7 @@ class TradeInCarRepository extends BaseRepository
                 return $q->where('status', $status);
             })
             ->whereIn('owner_car_id', array_merge(Auth::user()->cars()->pluck('id')->toArray(), [null]))
-            ->orWhere(DB::raw('owner_car_id'))
+            ->orWhere(DB::raw('owner_car_id IS NULL'))
             ->orderBy('created_at', 'DESC')
             ->get();
     }

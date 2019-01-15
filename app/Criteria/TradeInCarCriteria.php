@@ -22,8 +22,15 @@ class TradeInCarCriteria implements CriteriaInterface
 
     public function apply($model, RepositoryInterface $repository)
     {
-        $model = $model->where(['user_id' => Auth::id()])->orderBy('created_at', 'desc');
+        $type = $this->request->get('type', -1);
+        $model = $model->when($type == 10, function ($query) use ($type) {
+            return $query->where(['user_id' => Auth::id(), 'type' => $type]);
+        });
 
+        $model = $model->when($type == 20, function ($query) use ($type) {
+            return $query->where(['type' => $type]);
+        });
+        $model = $model->orderBy('created_at', 'desc');
         return $model;
     }
 }

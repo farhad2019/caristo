@@ -317,10 +317,10 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function bids()
-    {
-        return $this->hasMany(MakeBid::class);
-    }
+//    public function bids()
+//    {
+//        return $this->hasMany(MakeBid::class);
+//    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
