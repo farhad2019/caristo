@@ -200,6 +200,7 @@
 
 <script>
     $(document).ready(function () {
+
         //circle start
         var progressBar = document.querySelector('.e-c-progress');
         var indicator = document.getElementById('e-indicator');
@@ -307,6 +308,16 @@
             this.value = this.value.replace(/[^0-9]/g, '');
         });
 
+        ///// Number formating /////
+        webshims.setOptions('forms-ext', {
+            replaceUI: 'auto',
+            types: 'number'
+        });
+        webshims.polyfill('forms forms-ext');
+        ///// Number formating /////
+
     });
+
+
 
 </script>
