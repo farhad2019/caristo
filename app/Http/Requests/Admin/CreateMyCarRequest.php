@@ -38,9 +38,7 @@ class CreateMyCarRequest extends BaseFormRequest
             'price.required'  => 'The price must be filled.',
             'price.*'         => 'The all price must be filled.',
             'name.required'   => 'The name field is required.',
-            'chassis.required'     => 'The chassis field is required.',
             'year.required'   => 'The year field is required.',
-            'average_mkp.required' => 'The average MKP field is required.',
             'kilometer.required'   => 'The mileage field is required.',
 
         ]);
@@ -54,7 +52,7 @@ class CreateMyCarRequest extends BaseFormRequest
 //            'category_id' => 'required',
             'amount'      => 'required',
             'name'        => 'required',
-            'chassis'     => 'required',
+            /*'chassis'     => 'required',*/
         ];
 
 
@@ -94,7 +92,6 @@ class CreateMyCarRequest extends BaseFormRequest
 
         } elseif ($this->input('category_id') == MyCar::APPROVED_PRE_OWNED || $this->input('category_id') == MyCar::CLASSIC_CARS) {
             $validationArray = array_merge($validationArray, [
-                'average_mkp' => 'required',
                 'kilometer'   => 'required',
                 'media'       => 'required',
                 'is_featured' => 'check_featured',

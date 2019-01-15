@@ -5,6 +5,7 @@ namespace App\Repositories\Admin;
 use App\Helper\Utils;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Image;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -60,7 +61,8 @@ class CategoryRepository extends BaseRepository
      */
     public function getCarCategories()
     {
-        return $this->model->where('type', Category::LUX_MARKET)->whereNotIn('parent_id', [0])->get();
+        return ((Auth::user()->hasRole('showroom-owner')) ? $this->model->where('type', Category::LUX_MARKET)->where('slug', '!=', 'luxury-new-cars')->whereNotIn('parent_id', [0])->get() : $this->model->where('type', Category::LUX_MARKET)->whereNotIn('parent_id', [0])->get());
+       // return $this->model->where('type', Category::LUX_MARKET)->whereNotIn('parent_id', [0])->get();
     }
 
     /**
