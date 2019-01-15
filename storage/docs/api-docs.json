@@ -6765,6 +6765,12 @@
                     "type": "number",
                     "format": "float"
                 },
+                "type": {
+                    "description": "type, 10=tradeIn; 20=evaluate",
+                    "type": "number",
+                    "format": "float",
+                    "default": 10
+                },
                 "notes": {
                     "description": "notes",
                     "type": "string"

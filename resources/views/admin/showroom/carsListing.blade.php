@@ -28,7 +28,8 @@
 
                 <ul class="car_listing">
                     @foreach($tradeInRequests as $tradeInRequest)
-                        <li class="clearfix current car{{$tradeInRequest->id}} {{ $tradeInRequest->status == 20 ? 'active':'' }}">
+                        <li style="position: relative" class="clearfix current car{{$tradeInRequest->id}} {{ $tradeInRequest->status == 20 ? 'active':'' }}">
+                            <span class="label label-info" style=" padding: 3px 10px;position: absolute;right: 0; background: #ccc; font-size: 13px;">{{ $tradeInRequest->type == 10 ? 'Trade In' : 'Evaluate' }}</span>
                             <a href="#car_detail1" class="car" data-id="{{ $tradeInRequest->id }}" title="">
                                 @if(isset($tradeInRequest->tradeAgainst->media[0]))
                                     <figure style="background-image: url({{ $tradeInRequest->tradeAgainst->media[0]->file_url }});"></figure>

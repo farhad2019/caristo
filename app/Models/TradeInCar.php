@@ -42,6 +42,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *          format="float"
  *      ),
  *      @SWG\Property(
+ *          property="type",
+ *          description="type, 10=tradeIn; 20=evaluate",
+ *          default=10,
+ *          type="number",
+ *          format="float"
+ *      ),
+ *      @SWG\Property(
  *          property="notes",
  *          description="notes",
  *          type="string"
@@ -55,6 +62,9 @@ class TradeInCar extends Model
     public $table = 'trade_in_cars';
 
     protected $dates = ['deleted_at'];
+
+    const TRADE_IN = 10;
+    const EVALUATE_CAR = 20;
 
     /**
      * Sunday
@@ -73,6 +83,7 @@ class TradeInCar extends Model
         'customer_car_id',
         'user_id',
         'amount',
+        'type',
         'status',
         'notes'
     ];
@@ -83,9 +94,9 @@ class TradeInCar extends Model
      * @var array
      */
     protected $casts = [
-        'amount'       => 'float',
+        'amount' => 'float',
         'bid_close_at' => 'Datetime',
-        'notes'        => 'string'
+        'notes' => 'string'
     ];
 
     /**
@@ -125,11 +136,11 @@ class TradeInCar extends Model
      * @var array
      */
     public static $rules = [
-        'owner_car_id'    => 'required',
+        'owner_car_id' => 'required',
         'customer_car_id' => 'required',
-        'user_id'         => 'required',
-        'amount'          => 'required',
-        'notes'           => 'required'
+        'user_id' => 'required',
+        'amount' => 'required',
+        'notes' => 'required'
     ];
 
     /**
@@ -147,8 +158,6 @@ class TradeInCar extends Model
      * @var array
      */
     public static $api_rules = [
-        'owner_car_id'    => 'required|exists:cars,id',
-        'customer_car_id' => 'required|exists:cars,id'
     ];
 
     /**
