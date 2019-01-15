@@ -63,7 +63,7 @@ class UserDetail extends Model
      * @var array
      */
     protected $with = [
-
+        'regionDetail'
     ];
 
     /**
@@ -80,6 +80,7 @@ class UserDetail extends Model
         'address'       => 'string',
         'image'         => 'string',
         'dob'           => 'string',
+        'expiry_date'   => 'string',
         'profession'    => 'string',
         'nationality'   => 'string',
         'gender'        => 'int',
@@ -128,7 +129,8 @@ class UserDetail extends Model
         'email_updates',
         'social_login',
         'region_reminder',
-        'about'
+        'about',
+        'regionDetail'
     ];
 
     /**
@@ -137,6 +139,11 @@ class UserDetail extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function regionDetail()
+    {
+        return $this->hasOne(Region::class,'id','region_id');
     }
 
     /**

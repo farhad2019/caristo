@@ -152,7 +152,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $with = [
         'details',
-        'showroomDetails'
+        'showroomDetails',
     ];
 
     /**
@@ -194,7 +194,8 @@ class User extends Authenticatable implements JWTSubject
         'like_count',
         'view_count',
         'created_at',
-        'push_notification'
+        'push_notification',
+
     ];
 
     public function restore()
@@ -226,6 +227,11 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(UserDetail::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
