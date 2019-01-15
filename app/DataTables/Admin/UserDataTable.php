@@ -26,7 +26,6 @@ class UserDataTable extends DataTable
         /**
          * for master detail search uncomment next lines
          */
-
         $query = $query->with(['Roles']);
         $dataTable = new EloquentDataTable($query);
 
@@ -69,6 +68,7 @@ class UserDataTable extends DataTable
         });
 
         $dataTable->rawColumns(['details.dealer_type_text', 'name', 'email', 'action', 'Roles.display_name', 'cars_count', 'favorite_count', 'view_count']);
+
         return $dataTable->addColumn('action', 'admin.users.datatables_actions');
     }
 
@@ -95,6 +95,7 @@ class UserDataTable extends DataTable
                 });
             }
         }
+
         return $model->newQuery()->select('users.*')->whereNotIn('users.id', [1, Auth::user()->id]);
     }
 

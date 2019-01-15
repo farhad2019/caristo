@@ -25,7 +25,32 @@
         </div>
     @endif
 
-    <div class="clearfix"></div>
+            <!-- Roles Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('region_id', 'Region:') !!}
+        {!! Form::select('region_id', $regions, null, ['class' => 'form-control select2']) !!}
+    </div>
+
+    <!-- Add Car Limit Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('limit_for_cars', 'Add Car Limit:*') !!}
+        {!! Form::number('limit_for_cars', null, ['class' => 'form-control', 'placeholder' => 'Add Car Limit', 'min'=>1, 'max'=>999]) !!}
+    </div>
+
+    <!-- Featured Cars Limit Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('limit_for_featured_cars', 'Featured Cars Limit:*') !!}
+        {!! Form::number('limit_for_featured_cars', null, ['class' => 'form-control', 'placeholder' => 'Featured Cars Limit', 'min'=>1, 'max'=>999]) !!}
+    </div>
+
+    <!-- Expiry Field -->
+    <div class="form-group col-sm-6">
+        {!! Form::label('expiry_date', 'Date Of Expiry:') !!}
+        {!! Form::date('expiry_date', null, ['class' => 'form-control']) !!}
+    </div>
+
+
+<div class="clearfix"></div>
     <!-- Password Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('password', 'Password:') !!}
@@ -93,8 +118,26 @@
 
                     <!-- Phone Field -->
                     <div class="form-group col-sm-6">
-                        {!! Form::label('nationality', 'Nationality:') !!}
-                        {!! Form::text('nationality', $user->details->nationality, ['class' => 'form-control', 'min'=> 1]) !!}
+                        {!! Form::label('region_id', 'Region:') !!}
+                        {!! Form::select('region_id', $regions, $user->details->region_id, ['class' => 'form-control select2']) !!}
+                    </div>
+
+                    <!-- Add Car Limit Field -->
+                    <div class="form-group col-sm-6">
+                        {!! Form::label('limit_for_cars', 'Add Car Limit:*') !!}
+                        {!! Form::number('limit_for_cars', $user->details->limit_for_cars, ['class' => 'form-control', 'placeholder' => 'Add Car Limit', 'min'=>1, 'max'=>999]) !!}
+                    </div>
+
+                    <!-- Featured Cars Limit Field -->
+                    <div class="form-group col-sm-6">
+                        {!! Form::label('limit_for_featured_cars', 'Featured Cars Limit:*') !!}
+                        {!! Form::number('limit_for_featured_cars', $user->details->limit_for_featured_cars, ['class' => 'form-control', 'placeholder' => 'Featured Cars Limit', 'min'=>1, 'max'=>999]) !!}
+                    </div>
+
+                    <!-- Expiry Field -->
+                    <div class="form-group col-sm-6">
+                        {!! Form::label('expiry_date', 'Date Of Expiry:') !!}
+                        {!! Form::date('expiry_date', $user->details->expiry_date, ['class' => 'form-control']) !!}
                     </div>
 
                     <!-- Phone Field -->

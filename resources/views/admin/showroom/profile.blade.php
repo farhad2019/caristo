@@ -102,6 +102,56 @@
         </div>--}}
 
         <div class="car_detail_wrap" id="car_detail1">
+            <div class="car_detail clearfix tab_serach">
+                <h3>Quota/Country Details: </h3> <br>
+
+                <div>
+                    <span style="width: 45%">Car Limits</span>
+                    <span style="width: 15%">{{$user->details->limit_for_cars}}</span>
+                    <span style="width: 15%">{{ $user->cars->count() }}</span>
+                    <span style="width: 15%">{{$user->details->limit_for_cars - $user->cars->count()}}</span>
+                </div>
+                <br>
+
+                <div>
+                    <span>Featured Car limit</span>
+                    <span style="width: 15%">{{$user->details->limit_for_featured_cars}}</span>
+                    <span style="width: 15%">{{ $user->cars()->where('is_featured',1)->count()}}</span>
+                    <span style="width: 15%">{{$user->details->limit_for_featured_cars - $user->cars()->where('is_featured',1)->count() }}</span>
+                </div>
+                <br>
+
+                <div>
+                    <span>Account Expiry Date</span>
+                    <span style="width: 15%">{{date('d-m-Y',strtotime($user->details->expiry_date))}}</span>
+                </div>
+                <br>
+
+                <div>
+                    <span>Country</span>
+                    <span style="width: 15%">{{$user->details->regionDetail->name}}</span>
+                </div>
+                <br>
+
+                <div>
+                    <span>Currency</span>
+                    <span style="width: 15%">{{$user->details->regionDetail->currency}}</span>
+                </div>
+                <br>
+
+                <div>
+                    <span>Account Type</span>
+                    <span style="width: 15%">{{$user->details->dealer_type_text}}</span>
+                </div>
+                <br>
+
+            </div>
+        </div>
+
+
+
+
+        <div class="car_detail_wrap" id="car_detail1">
             <div class="car_detail clearfix tab_serach"
                  style="margin-top: 0px; margin-left: 0px; padding-top: 0px; padding-left: 15px;">
                 <h3>Contact Person: </h3> <br>

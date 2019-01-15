@@ -52,7 +52,7 @@ class UserDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'first_name', 'last_name', 'dealer_type', 'country_code', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login', 'about', 'region_reminder', 'dob', 'profession', 'nationality', 'gender', 'dealer_type_text'
+        'user_id', 'first_name', 'last_name', 'dealer_type', 'country_code', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login', 'about', 'region_reminder', 'region_id', 'limit_for_cars', 'limit_for_featured_cars', 'expiry_date',  'dob', 'profession', 'nationality', 'gender', 'dealer_type_text'
     ];
 
     public static $rules = [];
@@ -63,7 +63,7 @@ class UserDetail extends Model
      * @var array
      */
     protected $with = [
-
+        'regionDetail'
     ];
 
     /**
@@ -80,6 +80,7 @@ class UserDetail extends Model
         'address'       => 'string',
         'image'         => 'string',
         'dob'           => 'string',
+        'expiry_date'   => 'string',
         'profession'    => 'string',
         'nationality'   => 'string',
         'gender'        => 'int',
@@ -120,11 +121,16 @@ class UserDetail extends Model
         'profession',
         'nationality',
         'gender',
+        'region_id',
+        'limit_for_cars',
+        'limit_for_featured_cars',
+        'expiry_date',
         'gender_label',
         'email_updates',
         'social_login',
         'region_reminder',
-        'about'
+        'about',
+        'regionDetail'
     ];
 
     /**
@@ -133,6 +139,11 @@ class UserDetail extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function regionDetail()
+    {
+        return $this->hasOne(Region::class,'id','region_id');
     }
 
     /**

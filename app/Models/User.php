@@ -116,7 +116,6 @@ class User extends Authenticatable implements JWTSubject
         'email'                 => 'required|email',
         'profession'            => 'required',
         'dob'                   => 'required|date_format:Y-m-d|before:today',
-        'nationality'           => 'required',
         'country_code'          => 'required|max:5',
         'phone'                 => 'phone|max:20',
         'roles'                 => 'sometimes|required',
@@ -129,7 +128,6 @@ class User extends Authenticatable implements JWTSubject
         'name'                  => 'required|max:30',
         'profession'            => 'required',
         'dob'                   => 'required|date_format:Y-m-d|before:today',
-        'nationality'           => 'required',
 //        'email'                 => 'required|email',
         'phone'                 => 'required|phone|max:25',
         'password'              => 'sometimes|nullable|min:6|required_with:password_confirmation|same:password_confirmation',
@@ -152,7 +150,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $with = [
         'details',
-        'showroomDetails'
+        'showroomDetails',
     ];
 
     /**
@@ -194,7 +192,8 @@ class User extends Authenticatable implements JWTSubject
         'like_count',
         'view_count',
         'created_at',
-        'push_notification'
+        'push_notification',
+
     ];
 
     public function restore()
@@ -226,6 +225,11 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(UserDetail::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
