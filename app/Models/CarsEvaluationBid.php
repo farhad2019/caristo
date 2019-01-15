@@ -14,28 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string updated_at
  * @property string deleted_at
  *
- * @SWG\Definition(
- *      definition="CarsEvaluation",
- *      required={"evaluation_id", "user_id", "amount"},
- *      @SWG\Property(
- *          property="evaluation_id",
- *          description="evaluation_id",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
- *          property="amount",
- *          description="amount",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
- *          property="user_id",
- *          description="car_id",
- *          type="integer",
- *          format="int32"
- *      )
- * )
  */
 class CarsEvaluationBid extends Model
 {
