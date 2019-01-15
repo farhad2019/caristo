@@ -102,6 +102,60 @@
         </div>--}}
 
         <div class="car_detail_wrap" id="car_detail1">
+            <div class="car_detail clearfix tab_serach">
+                <h3>Quota/Country Details: </h3> <br>
+
+                <div>
+                    <span style="width: 45%">Car Limits</span>
+                    <span style="width: 15%">50</span>
+                    <span style="width: 15%">50</span>
+                    <span style="width: 15%">50</span>
+                    {{--<input type="text" name="showroom_name" placeholder="Car Limits"
+                           value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" readonly>--}}
+                </div>
+                <br>
+
+                <div>
+                    <span>Featured Car limit</span>
+                    <span style="width: 15%">50</span>
+                    <span style="width: 15%">50</span>
+                    <span style="width: 15%">50</span>
+                </div>
+                <br>
+
+                <div>
+                    <span>Country</span>
+                    <span style="width: 15%">Canada</span>
+                </div>
+                <br>
+
+                <div>
+                    <span>Currency</span>
+                    <span>USD</span>
+                </div>
+                <br>
+
+                {{--<div class="left" style="width: 100%;">
+
+                    <input type="text" name="showroom_name" placeholder="Featured Car limit"
+                            value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" readonly>
+                    <br><br>
+                    <input type="text" name="showroom_name" placeholder="Country"
+                           value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" readonly>
+                    <br><br>
+                    <input type="text" name="showroom_name" placeholder="Currency"
+                           value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" readonly>
+                    <br><br>
+
+                </div>--}}
+
+            </div>
+        </div>
+
+
+
+
+        <div class="car_detail_wrap" id="car_detail1">
             <div class="car_detail clearfix tab_serach"
                  style="margin-top: 0px; margin-left: 0px; padding-top: 0px; padding-left: 15px;">
                 <h3>Contact Person: </h3> <br>
