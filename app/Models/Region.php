@@ -45,6 +45,7 @@ class Region extends Model
 
     public $fillable = [
         'name',
+        'currency',
         'image'
     ];
 
@@ -82,6 +83,7 @@ class Region extends Model
     protected $visible = [
         'id',
         'name',
+        'currency',
         'flag',
         'is_my_region'
     ];
@@ -93,6 +95,7 @@ class Region extends Model
      */
     public static $rules = [
         'name' => 'required',
+        'currency' => 'required',
         'flag'   => 'required|image|mimes:jpg,jpeg,png'
     ];
 
@@ -103,6 +106,7 @@ class Region extends Model
      */
     public static $update_rules = [
         'name' => 'required',
+        'currency' => 'required'
     ];
 
     /**
