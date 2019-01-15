@@ -374,19 +374,19 @@ class MyCar extends Model
         'is_featured',
         'status',
         'status_text',
-//        'owner',
-//        'engineType',
-//        'carType',
-//        'carModel',
-//        'carRegions',
-//        'media',
+        'owner',
+        'engineType',
+        'carType',
+        'carModel',
+        'carRegions',
+        'media',
         'top_bids',
-//        'regionalSpecs',
-//        'myCarAttributes',
-//        'category',
-//        'limited_edition_specs_array',
-//        'reviews',
-//        'specification'
+        'regionalSpecs',
+        'myCarAttributes',
+        'category',
+        'limited_edition_specs_array',
+        'reviews',
+        'specification'
     ];
 
     /**
