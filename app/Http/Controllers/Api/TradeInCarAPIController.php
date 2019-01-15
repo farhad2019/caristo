@@ -60,6 +60,14 @@ class TradeInCarAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="type",
+     *          description="type, 10=tradeIn; 20=evaluate",
+     *          type="integer",
+     *          default=10,
+     *          required=true,
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
