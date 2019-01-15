@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 /**
@@ -57,7 +58,8 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property bool is_liked
  * @property bool is_favorite
  * @property bool is_viewed
- * @property string $ref_num
+ * @property int is_reviewed
+ * @property string ref_num
  * @property int liked_count
  * @property int favorite_count
  * @property mixed|null limited_edition_specs_array
@@ -203,16 +205,16 @@ class MyCar extends Model
     const SOLD = 30;
 
     public static $STATUS = [
-        self::ACTIVE   => 'Active',
+        self::ACTIVE => 'Active',
         self::INACTIVE => 'In Active',
-        self::SOLD     => 'Sold'
+        self::SOLD => 'Sold'
     ];
 
     public static $MEDIA_TYPES = [
-        'front'    => 'front',
-        'back'     => 'back',
-        'right'    => 'right',
-        'left'     => 'left',
+        'front' => 'front',
+        'back' => 'back',
+        'right' => 'right',
+        'left' => 'left',
         'interior' => 'interior'
     ];
 
@@ -233,20 +235,20 @@ class MyCar extends Model
     const RWD = 'RWD';
 
     public static $TRANSMISSION_TYPE_TEXT = [
-        self::MANUAL    => 'Manual',
+        self::MANUAL => 'Manual',
         self::AUTOMATIC => 'Automatic'
     ];
 
     public static $DRIVE_TRAIN = [
         self::FOURWD => '4WD',
-        self::AWD    => 'AWD',
-        self::FWD    => 'FWD',
-        self::RWD    => 'RWD',
+        self::AWD => 'AWD',
+        self::FWD => 'FWD',
+        self::RWD => 'RWD',
     ];
 
     public static $OWNER_TYPE_TEXT = [
         self::SHOWROOM => 'Vendor',
-        self::USER     => 'Client'
+        self::USER => 'Client'
     ];
 
     public $fillable = [
@@ -316,6 +318,7 @@ class MyCar extends Model
      * @var array
      */
     protected $appends = [
+        'is_reviewed',
         'transmission_type_text',
         'link',
         'status_text',
@@ -351,6 +354,7 @@ class MyCar extends Model
         'ref_num',
         'link',
 //        'bids',
+        'is_reviewed',
         'transmission_type_text',
         'owner_type_text',
 //        'carAttributes',
@@ -369,17 +373,17 @@ class MyCar extends Model
         'status',
         'status_text',
 //        'myCarFeatures',
-//        'owner',
-//        'engineType',
-//        'carType',
-//        'carModel',
-//        'carRegions',
-//        'media',
-//        'top_bids',
-//        'regionalSpecs',
-//        'myCarAttributes',
-//        'category',
-//        'limited_edition_specs_array',
+        'owner',
+        'engineType',
+        'carType',
+        'carModel',
+        'carRegions',
+        'media',
+        'top_bids',
+        'regionalSpecs',
+        'myCarAttributes',
+        'category',
+        'limited_edition_specs_array',
         'reviews',
     ];
 
@@ -389,14 +393,14 @@ class MyCar extends Model
      * @var array
      */
     public static $rules = [
-        'name'                      => 'required',
-        'email'                     => 'required|email',
-        'media.*'                   => 'sometimes|image|mimes:jpg,jpeg,png',
-        'country_code'              => 'required',
-        'phone'                     => 'required',
-        'model_id'                  => 'required|exists:car_models,id',
-        'engine_type_id'            => 'required|exists:engine_types,id',
-        'year'                      => 'required',
+        'name' => 'required',
+        'email' => 'required|email',
+        'media.*' => 'sometimes|image|mimes:jpg,jpeg,png',
+        'country_code' => 'required',
+        'phone' => 'required',
+        'model_id' => 'required|exists:car_models,id',
+        'engine_type_id' => 'required|exists:engine_types,id',
+        'year' => 'required',
         'regional_specification_id' => 'required|exists:regional_specifications,id'
     ];
 
@@ -406,14 +410,14 @@ class MyCar extends Model
      * @var array
      */
     public static $update_rules = [
-        'name'                      => 'required',
-        'email'                     => 'required|email',
-        'media.*'                   => 'sometimes|image|mimes:jpg,jpeg,png',
-        'country_code'              => 'required',
-        'phone'                     => 'required',
-        'model_id'                  => 'required|exists:car_models,id',
-        'engine_type_id'            => 'required|exists:engine_types,id',
-        'year'                      => 'required',
+        'name' => 'required',
+        'email' => 'required|email',
+        'media.*' => 'sometimes|image|mimes:jpg,jpeg,png',
+        'country_code' => 'required',
+        'phone' => 'required',
+        'model_id' => 'required|exists:car_models,id',
+        'engine_type_id' => 'required|exists:engine_types,id',
+        'year' => 'required',
         'regional_specification_id' => 'required|exists:regional_specifications,id'
     ];
 
@@ -423,12 +427,12 @@ class MyCar extends Model
      * @var array
      */
     public static $api_rules = [
-        'name'                      => 'required',
-        'email'                     => 'required|email',
-        'country_code'              => 'required',
-        'phone'                     => 'required',
-        'model_id'                  => 'required|exists:car_models,id',
-        'year'                      => 'required',
+        'name' => 'required',
+        'email' => 'required|email',
+        'country_code' => 'required',
+        'phone' => 'required',
+        'model_id' => 'required|exists:car_models,id',
+        'year' => 'required',
         'regional_specification_id' => 'required|exists:regional_specifications,id',
 //        'type_id'                   => 'required|exists:car_types,id',
 //        'engine_type_id'            => 'sometimes|exists:engine_types,id',
@@ -443,14 +447,14 @@ class MyCar extends Model
      * @var array
      */
     public static $api_updating_rules = [
-        'name'         => 'required',
-        'email'        => 'required|email',
+        'name' => 'required',
+        'email' => 'required|email',
         'country_code' => 'required',
-        'phone'        => 'required',
-        'type_id'      => 'required|exists:car_types,id',
-        'model_id'     => 'required|exists:car_models,id',
+        'phone' => 'required',
+        'type_id' => 'required|exists:car_types,id',
+        'model_id' => 'required|exists:car_models,id',
 //        'engine_type_id'    => 'required|exists:engine_types,id',
-        'year'         => 'required',
+        'year' => 'required',
 //        'transmission_type' => 'required|in:10,20'
     ];
 
@@ -740,7 +744,7 @@ class MyCar extends Model
 
             foreach ($yearLists as $key => $yearList) {
                 $depreciation[$key] = [
-                    'year'   => $yearList,
+                    'year' => $yearList,
                     'amount' => $this->amount - ($key * $depreciation_trend_amount)
                 ];
             }
@@ -772,5 +776,13 @@ class MyCar extends Model
     public function getFrontImageAttribute()
     {
         return !empty($this->media()->where('title', 'front')->first()) ? $this->media()->where('title', 'front')->first()->file_url : null;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getIsReviewedAttribute()
+    {
+        return ($this->reviews()->where('user_id', Auth::id())->count() > 0) ? 1 : 0;
     }
 }

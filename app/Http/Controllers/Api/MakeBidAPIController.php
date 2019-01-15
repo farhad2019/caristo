@@ -186,6 +186,13 @@ class MakeBidAPIController extends AppBaseController
      *          type="string",
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="rating",
+     *          description="Filter by rating",
+     *          required=false,
+     *          type="integer",
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
