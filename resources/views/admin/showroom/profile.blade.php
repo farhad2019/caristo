@@ -101,7 +101,55 @@
             <input type="file" name="image">
         </div>--}}
 
-        <div class="car_detail_wrap" id="car_detail1">
+
+        <div class="table-responsive car-dtl-table">
+            <div class="car_detail clearfix tab_serach">
+            <h3>Quota/Country Details: </h3> <br>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th></th>
+                    <th>Total</th>
+                    <th>Availed</th>
+                    <th>Remaining</th>
+                </tr>
+
+                <tr>
+                    <td><strong>Car Limits</strong></td>
+                    <td>{{$user->details->limit_for_cars}}</td>
+                    <td>{{ $user->cars->count() }}</td>
+                    <td>{{$user->details->limit_for_cars - $user->cars->count()}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Featured Car limit</strong></td>
+                    <td>{{$user->details->limit_for_featured_cars}}</td>
+                    <td>{{ $user->cars()->where('is_featured',1)->count()}}</td>
+                    <td>{{$user->details->limit_for_featured_cars - $user->cars()->where('is_featured',1)->count() }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Account Expiry Date</strong></td>
+                    <td colspan="3">{{date('d-m-Y',strtotime($user->details->expiry_date))}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Country</strong></td>
+                    <td colspan="3">{{@$user->details->regionDetail->name ?? 'N/A'}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Currency</strong></td>
+                    <td colspan="3">{{@$user->details->regionDetail->currency ?? 'N/A'}}</td>
+                </tr>
+
+                <tr>
+                    <td><strong>Account Type</strong></td>
+                    <td colspan="3">{{@$user->details->dealer_type_text ?? 'N/A'}}</td>
+                </tr>
+                </tbody>
+            </table>
+                </div>
+        </div>
+
+
+        {{--<div class="car_detail_wrap" id="car_detail1">
             <div class="car_detail clearfix tab_serach">
                 <h3>Quota/Country Details: </h3> <br>
 
@@ -146,7 +194,7 @@
                 <br>
 
             </div>
-        </div>
+        </div>--}}
 
 
 

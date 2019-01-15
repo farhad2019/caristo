@@ -70,8 +70,8 @@
         </div>
 
         <div class="col-sm-6">
-            <dt>{!! Form::label('nationality', 'Nationality:') !!}</dt>
-            <dd>{!! $user->details->nationality ? $user->details->nationality : 'N/A' !!}</dd>
+            <dt>{!! Form::label('region', 'Region:') !!}</dt>
+            <dd>{!! $user->details->regionDetail->name ? @$user->details->regionDetail->name : 'N/A' !!}</dd>
         </div>
 
         <div class="col-sm-6">
