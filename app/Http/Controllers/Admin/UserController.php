@@ -142,6 +142,7 @@ class UserController extends AppBaseController
         $data['region_id'] = isset($input['region_id']) ? $input['region_id'] : null;
         $data['limit_for_featured_cars'] = isset($input['limit_for_featured_cars']) ? $input['limit_for_featured_cars'] : null;
         $data['limit_for_cars'] = isset($input['limit_for_cars']) ? $input['limit_for_cars'] : null;
+        $data['expiry_date'] = isset($input['expiry_date']) ? $input['expiry_date'] : null;
 
         $this->userRepository->attachRole($user->id, Role::SHOWROOM_OWNER_ROLE);
         $userDetail = $this->userDetailRepository->create($data);
@@ -197,10 +198,12 @@ class UserController extends AppBaseController
         }
 
         $roles = $this->roleRepository->all()->where('id', '!=', '1')->pluck('display_name', 'id')->all();
+        $regions = $this->regionRepository->all()->pluck('name', 'id')->all();
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $user);
         return view('admin.users.edit')->with([
             'user'        => $user,
             'roles'       => $roles,
+            'regions'     => $regions,
             'DEALER_TYPE' => User::$DEALER_TYPE,
             'gender'      => UserDetail::$GENDER
         ]);
@@ -264,6 +267,7 @@ class UserController extends AppBaseController
         }
 
         $data['first_name'] = $data['name'];
+
         $user->details->update($data);
         unset($data['first_name']);
         $user = $this->userRepository->update($data, $id);
