@@ -54,8 +54,8 @@ class TradeInCarRepository extends BaseRepository
                 return $q->whereRaw(DB::raw('amount IS NOT NULL'));
             })
             ->when((!$hasBid), function ($q) {
-                return $q->whereRaw(DB::raw('amount IS NULL'))
-                    ->whereRaw(DB::raw('(bid_close_at > NOW()) > 0'));
+                return $q->whereRaw(DB::raw('amount IS NULL'));
+                //->whereRaw(DB::raw('(bid_close_at > NOW()) > 0'));
             })
             ->when((!empty(array_filter($search))), function ($q) use ($search) {
                 return $q->whereHas('tradeAgainst', function ($tradeAgainst) use ($search) {
@@ -93,7 +93,13 @@ class TradeInCarRepository extends BaseRepository
     public function saveRecord($request)
     {
         $input = $request->all();
-        $input['user_id'] = Auth::id();
+
+        if ($input['type'] == TradeInCar::TRADE_IN) {
+            $input['user_id'] = Auth::id();
+        } else {
+            $input['user_id'] = null;
+        }
+
         $input['amount'] = null;
 
         // current date + 1
