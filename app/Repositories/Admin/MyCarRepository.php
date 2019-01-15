@@ -175,7 +175,7 @@ class MyCarRepository extends BaseRepository
             }
             $input['bid_close_at'] = $expire_at;
 
-            $input['currency'] = Auth::user()->reregionDetail->currency;
+            $input['currency'] = @Auth::user()->regionDetail->currency ?? 'AED';
             $myCar = $this->create($input);
             $region = intval($request->region);
             if ($region) {

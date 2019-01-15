@@ -52,7 +52,7 @@ class TradeInCarRepository extends BaseRepository
         return $this->model
             ->when(($hasBid), function ($q) {
                 return $q->whereRaw(DB::raw('amount IS NOT NULL'))
-                    ->orWhereHas('evaluationDetails', function ($qq) {
+                    ->whereHas('evaluationDetails', function ($qq) {
                         return $qq->where('user_id', Auth::id());
                     });
             })
@@ -87,7 +87,13 @@ class TradeInCarRepository extends BaseRepository
             ->when(($status > 0), function ($q) use ($status) {
                 return $q->where('status', $status);
             })
-            ->whereRaw(DB::raw('(`owner_car_id` IN (' . implode(",", Auth::user()->cars()->pluck('id')->toArray()) . ') OR owner_car_id IS NULL)'))
+            ->when((!empty(Auth::user()->cars()->pluck('id')->toArray())), function ($q) use ($status) {
+                return $q->whereRaw(DB::raw('(`owner_car_id` IN (' . implode(",", Auth::user()->cars()->pluck('id')->toArray()) . ') OR owner_car_id IS NULL)'));
+            })
+            ->when((empty(Auth::user()->cars()->pluck('id')->toArray())), function ($q) use ($status) {
+                return $q->whereRaw(DB::raw('(`owner_car_id` IN (0) OR owner_car_id IS NULL)'));
+            })
+//            ->whereRaw(DB::raw('(`owner_car_id` IN (-1) OR owner_car_id IS NULL)'))
 //            ->whereIn('owner_car_id', array_merge(Auth::user()->cars()->pluck('id')->toArray(), [null]))
 //            ->orWhere(DB::raw('owner_car_id IS NULL'))
             ->orderBy('created_at', 'DESC')
