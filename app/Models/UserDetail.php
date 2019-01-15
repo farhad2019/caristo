@@ -52,7 +52,7 @@ class UserDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'first_name', 'last_name', 'dealer_type', 'country_code', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login', 'about', 'region_reminder', 'dob', 'profession', 'nationality', 'gender', 'dealer_type_text'
+        'user_id', 'first_name', 'last_name', 'dealer_type', 'country_code', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login', 'about', 'region_reminder', 'region_id', 'limit_for_cars', 'limit_for_featured_cars', 'expiry_date',  'dob', 'profession', 'nationality', 'gender', 'dealer_type_text'
     ];
 
     public static $rules = [];
@@ -120,6 +120,10 @@ class UserDetail extends Model
         'profession',
         'nationality',
         'gender',
+        'region_id',
+        'limit_for_cars',
+        'limit_for_featured_cars',
+        'expiry_date',
         'gender_label',
         'email_updates',
         'social_login',

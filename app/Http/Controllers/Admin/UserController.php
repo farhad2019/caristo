@@ -15,6 +15,7 @@ use App\Models\TradeInCar;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Repositories\Admin\CarInteractionRepository;
+use App\Repositories\Admin\RegionRepository;
 use App\Repositories\Admin\RoleRepository;
 use App\Repositories\Admin\UserdetailRepository;
 use App\Repositories\Admin\UserRepository;
@@ -50,10 +51,13 @@ class UserController extends AppBaseController
     /** @var  UserdetailRepository */
     private $userDetailRepository;
 
-    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, RoleRepository $roleRepo, UserShowroomRepository $showroomRepo, CarInteractionRepository $carInteractionRepo)
+    private $regionRepository;
+
+    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, RoleRepository $roleRepo, RegionRepository $regionRepository, UserShowroomRepository $showroomRepo, CarInteractionRepository $carInteractionRepo)
     {
         $this->userRepository = $userRepo;
         $this->roleRepository = $roleRepo;
+        $this->regionRepository = $regionRepository;
         $this->showroomRepository = $showroomRepo;
         $this->carInteractionRepository = $carInteractionRepo;
         $this->userDetailRepository = $userDetailRepo;
@@ -70,8 +74,10 @@ class UserController extends AppBaseController
      */
     public function index(Request $request, UserDataTable $userDataTable)
     {
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         $data = $request->all();
+
         $title = '';
         if ($data) {
             if (isset($data['type'])) {
@@ -89,7 +95,6 @@ class UserController extends AppBaseController
                     $title = 'User Comment News';
                 }
             }
-
             return $userDataTable->interactionList($data)->render('admin.users.index', ['title' => $title]);
         } else {
             return $userDataTable->render('admin.users.index', ['title' => $this->BreadCrumbName]);
@@ -106,8 +111,12 @@ class UserController extends AppBaseController
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         $roles = $this->roleRepository->all()->where('id', '!=', '1')->pluck('display_name', 'id')->all();
+        $regions = $this->regionRepository->all()->pluck('name', 'id')->all();
+        
+        
         return view('admin.users.create')->with([
             'roles'       => $roles,
+            'regions'     => $regions,
             'DEALER_TYPE' => User::$DEALER_TYPE
         ]);
     }
@@ -130,6 +139,9 @@ class UserController extends AppBaseController
         $data['first_name'] = $user->name;
         $data['dealer_type'] = isset($input['dealer_type']) ? $input['dealer_type'] : 10;
         $data['dealer_type_text'] = $input['dealer_type'] == 10 ? 'Official Dealer' : 'Market Dealer';
+        $data['region_id'] = isset($input['region_id']) ? $input['region_id'] : null;
+        $data['limit_for_featured_cars'] = isset($input['limit_for_featured_cars']) ? $input['limit_for_featured_cars'] : null;
+        $data['limit_for_cars'] = isset($input['limit_for_cars']) ? $input['limit_for_cars'] : null;
 
         $this->userRepository->attachRole($user->id, Role::SHOWROOM_OWNER_ROLE);
         $userDetail = $this->userDetailRepository->create($data);
