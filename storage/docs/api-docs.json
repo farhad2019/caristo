@@ -1772,6 +1772,56 @@
                 }
             }
         },
+        "/carsEvaluations": {
+            "post": {
+                "tags": [
+                    "CarsEvaluation"
+                ],
+                "summary": "Store a newly created CarsEvaluation in storage",
+                "description": "Store CarsEvaluation",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "User Auth Token{ Bearer ABC123 }",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer ABC123"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "CarsEvaluation that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/CarsEvaluation"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/CarsEvaluation"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/categories": {
             "get": {
                 "tags": [
@@ -2893,6 +2943,13 @@
                         "description": "Filter by regions, CSV 1,2,3",
                         "required": false,
                         "type": "string"
+                    },
+                    {
+                        "name": "rating",
+                        "in": "query",
+                        "description": "Filter by rating",
+                        "required": false,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -5681,6 +5738,19 @@
             "properties": {
                 "id": {
                     "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        },
+        "CarsEvaluation": {
+            "required": [
+                "car_id",
+                "amount"
+            ],
+            "properties": {
+                "car_id": {
+                    "description": "car_id",
                     "type": "integer",
                     "format": "int32"
                 }
