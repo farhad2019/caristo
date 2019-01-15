@@ -52,13 +52,15 @@
                 </a>
             </div>
             <div class="col-8 login_info">
+
                 @if(isset(Auth::user()->showroomDetails->logo_url))
                     <figure class="login_dp"
                             style="background-image: url({{ Auth::user()->showroomDetails->logo_url }});"></figure>{{--background-size: 40px;--}}
                 @endif
                 <h3 class="login_name">
                     <small>Welcome</small>
-                    {{ \Illuminate\Support\Facades\Auth::user()->name }}
+                    {{--{{ \Illuminate\Support\Facades\Auth::user()->name }}--}}
+                    {{Auth::user()->showroomDetails->name }}
                 </h3>
                 <div class="login_dropdown">
                     <a href="{!! url('/admin/logout') !!}"
@@ -89,6 +91,8 @@
 <script src="{{ url('public/js/showroom/bootstrap-notify.min.js') }}"></script>
 
 <script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
+<script src='http://afarkas.github.io/webshim/js-webshim/minified/polyfiller.js'></script>
+{{--<script src="{{ url('public/js/showroom/polyfiller.js') }}"></script>--}}
 <script src="{{ url('public/js/showroom/script_new.js') }}"></script>
 @stack('scripts')
 </body>
