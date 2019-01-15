@@ -96,7 +96,7 @@ class CreateMyCarRequest extends BaseFormRequest
                 'media'       => 'required',
                 'is_featured' => 'check_featured',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
-                'attribute.*' => 'attr'
+               /* 'attribute.*' => 'attr'*/
             ]);
 
         } else {
@@ -106,7 +106,7 @@ class CreateMyCarRequest extends BaseFormRequest
                 'media'       => 'required',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
                 'is_featured' => 'check_featured',
-                'attribute.*' => 'attr'
+                /*'attribute.*' => 'attr'*/
             ]);
 
         }
