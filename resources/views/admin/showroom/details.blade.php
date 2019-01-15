@@ -104,6 +104,7 @@
     </div>
 
     @if(empty($tradeInRequest->amount))
+        @if($tradeInRequest->bid_close_at > now())
         <div class="right">
             <div class="bid_widget">
                 <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">
@@ -128,7 +129,6 @@
                         <button class="play" id="pause"></button>
                     </div>
                 </div>
-
                 <h4>Place a Bid now</h4>
                 {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeInRequest->id], "id"=>"submitBit", 'method' => 'patch']) !!}
                 <input type="number" id="amount_bit" name="amount" placeholder="AED"
@@ -139,6 +139,8 @@
                 {!! Form::close() !!}
             </div>
         </div>
+
+        @endif
         {{--<div class="right" style="margin-top: 12px">
             <div class="bid_widget">
                 <h3 style="text-align: left; margin-bottom: 10px;">My Car: </h3>
