@@ -690,7 +690,7 @@
     @foreach($media_types as $key => $media_type)
         @php($count++)
         <div class="form-group col-sm-4">
-            {!! Form::label('media', ucwords($key).' Image:') !!}
+            {!! Form::label('media', ucwords($key).':') !!}
             {!! Form::file('media['.$key.']', ['class' => 'form-control']) !!}
             <br>
             @if(isset($myCar))
@@ -878,7 +878,7 @@
         $(document).ready(function () {
             var id = $('#category_id').val();
 
-            if(parseInt(id) == 25 || parseInt(id) == 26 || parseInt(id) == 27) {
+          /*  if(parseInt(id) == 25 || parseInt(id) == 26 || parseInt(id) == 27) {
 
                 $('.cartype').hide();
                 $('.chassis').hide();
@@ -906,7 +906,7 @@
                 $('.category2528').show();
             } else if (parseInt(id) === 26 || parseInt(id) === 27) {
                 $('.category2528').hide();
-            }
+            }*/
 
             $('#category_id').on('change', function () {
                 var cat_id = $(this).val();

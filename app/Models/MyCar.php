@@ -215,7 +215,8 @@ class MyCar extends Model
         'back' => 'back',
         'right' => 'right',
         'left' => 'left',
-        'interior' => 'interior'
+        'interior' => 'interior',
+        'registration card' => 'registration_card'
     ];
 
     const MANUAL = 10;
@@ -385,6 +386,7 @@ class MyCar extends Model
         'category',
         'limited_edition_specs_array',
         'reviews',
+        'specification'
     ];
 
     /**
