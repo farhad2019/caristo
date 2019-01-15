@@ -5745,8 +5745,7 @@
         },
         "CarsEvaluation": {
             "required": [
-                "car_id",
-                "amount"
+                "car_id"
             ],
             "properties": {
                 "car_id": {
