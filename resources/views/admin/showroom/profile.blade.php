@@ -107,47 +107,43 @@
 
                 <div>
                     <span style="width: 45%">Car Limits</span>
-                    <span style="width: 15%">50</span>
-                    <span style="width: 15%">50</span>
-                    <span style="width: 15%">50</span>
-                    {{--<input type="text" name="showroom_name" placeholder="Car Limits"
-                           value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" readonly>--}}
+                    <span style="width: 15%">{{$user->details->limit_for_cars}}</span>
+                    <span style="width: 15%">{{ $user->cars->count() }}</span>
+                    <span style="width: 15%">{{$user->details->limit_for_cars - $user->cars->count()}}</span>
                 </div>
                 <br>
 
                 <div>
                     <span>Featured Car limit</span>
-                    <span style="width: 15%">50</span>
-                    <span style="width: 15%">50</span>
-                    <span style="width: 15%">50</span>
+                    <span style="width: 15%">{{$user->details->limit_for_featured_cars}}</span>
+                    <span style="width: 15%">{{ $user->cars()->where('is_featured',1)->count()}}</span>
+                    <span style="width: 15%">{{$user->details->limit_for_featured_cars - $user->cars()->where('is_featured',1)->count() }}</span>
+                </div>
+                <br>
+
+                <div>
+                    <span>Account Expiry Date</span>
+                    <span style="width: 15%">{{date('d-m-Y',strtotime($user->details->expiry_date))}}</span>
                 </div>
                 <br>
 
                 <div>
                     <span>Country</span>
-                    <span style="width: 15%">Canada</span>
+                    <span style="width: 15%">{{$user->details->regionDetail->name}}</span>
                 </div>
                 <br>
 
                 <div>
                     <span>Currency</span>
-                    <span>USD</span>
+                    <span style="width: 15%">{{$user->details->regionDetail->currency}}</span>
                 </div>
                 <br>
 
-                {{--<div class="left" style="width: 100%;">
-
-                    <input type="text" name="showroom_name" placeholder="Featured Car limit"
-                            value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" readonly>
-                    <br><br>
-                    <input type="text" name="showroom_name" placeholder="Country"
-                           value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" readonly>
-                    <br><br>
-                    <input type="text" name="showroom_name" placeholder="Currency"
-                           value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" readonly>
-                    <br><br>
-
-                </div>--}}
+                <div>
+                    <span>Account Type</span>
+                    <span style="width: 15%">{{$user->details->dealer_type_text}}</span>
+                </div>
+                <br>
 
             </div>
         </div>
