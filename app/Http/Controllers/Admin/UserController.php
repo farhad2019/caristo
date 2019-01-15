@@ -313,7 +313,7 @@ class UserController extends AppBaseController
             Flash::error('User not found');
             return redirect(route('admin.users.index'));
         }
-
+        //dd($user->details->toArray());
         $this->BreadCrumbName = 'Profile';
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         if ($user->hasRole('showroom-owner')) {
