@@ -272,6 +272,7 @@ class MyCar extends Model
         'regional_specification_id',
         'owner_type',
         'average_mkp',
+        'currnecy',
         'amount',
         'kilometer',
         'bid_close_at',

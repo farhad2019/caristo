@@ -116,10 +116,6 @@ class MyCarController extends AppBaseController
      */
     public function create()
     {
-      /*  echo "<pre>";
-        print_r(Auth::user());
-        exit;*/
-
         if (Auth::user()->cars()->count() >= $this->carLimit) {
             Flash::error('Your cars have reached to the limit.(' . $this->carLimit . ')');
             return redirect(route('admin.myCars.index'));

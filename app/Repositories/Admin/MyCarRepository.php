@@ -116,6 +116,7 @@ class MyCarRepository extends BaseRepository
             $input['type_id'] = $request->type_id;
             $input['engine_type_id'] = $request->engine_type_id;
             $input['name'] = $request->name;
+            $input['currency'] = 'AED';
             $input['amount'] = $request->amount;
             $input['notes'] = $request->notes;
             $input['limited_edition_specs'] = json_encode($limited);
@@ -173,6 +174,8 @@ class MyCarRepository extends BaseRepository
                 $expire_at = $date;
             }
             $input['bid_close_at'] = $expire_at;
+
+            $input['currency'] = Auth::user()->reregionDetail->currency;
             $myCar = $this->create($input);
             $region = intval($request->region);
             if ($region) {
