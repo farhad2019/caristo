@@ -115,3 +115,5 @@ Route::resource('consultancyRequests', 'ConsultancyRequestController');
 Route::resource('personalShopperRequests', 'PersonalShopperRequestController');
 
 Route::resource('settings', 'SettingController');
+
+Route::resource('carsEvaluations', 'CarsEvaluationController');

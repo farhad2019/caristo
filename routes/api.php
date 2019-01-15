@@ -143,3 +143,5 @@ Route::resource('v1/consultancyRequests', 'ConsultancyRequestAPIController');
 Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIController');
 
 Route::resource('v1/settings', 'SettingAPIController');
+
+Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
