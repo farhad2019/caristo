@@ -105,40 +105,40 @@
 
     @if(empty($tradeInRequest->amount))
         @if($tradeInRequest->bid_close_at > now())
-        <div class="right">
-            <div class="bid_widget">
-                <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">
-                <h3>Bid Expires in</h3>
-                <div class="svg_container">
-                    <div class="circle">
-                        <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
-                            <g transform="translate(110,110)">
-                                <circle r="100" class="e-c-base"/>
-                                <g transform="rotate(-90)">
-                                    <circle r="100" class="e-c-progress"/>
-                                    <g id="e-pointer">
-                                        <circle cx="100" cy="0" r="8" class="e-c-pointer"/>
+            <div class="right">
+                <div class="bid_widget">
+                    <img src="{{ url('storage/app/showroom/bid-icon.svg') }}" alt="" width="80">
+                    <h3>Bid Expires in</h3>
+                    <div class="svg_container">
+                        <div class="circle">
+                            <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+                                <g transform="translate(110,110)">
+                                    <circle r="100" class="e-c-base"/>
+                                    <g transform="rotate(-90)">
+                                        <circle r="100" class="e-c-progress"/>
+                                        <g id="e-pointer">
+                                            <circle cx="100" cy="0" r="8" class="e-c-pointer"/>
+                                        </g>
                                     </g>
                                 </g>
-                            </g>
-                        </svg>
-                    </div> {{--$tradeInRequest->tradeAgainst->bid_close_at->diffForHumans()--}}
+                            </svg>
+                        </div> {{--$tradeInRequest->tradeAgainst->bid_close_at->diffForHumans()--}}
 
-                    <div class="controlls">
-                        <div class="display-remain-time" style="font-size: 18px;"></div>
-                        <button class="play" id="pause"></button>
+                        <div class="controlls">
+                            <div class="display-remain-time" style="font-size: 18px;"></div>
+                            <button class="play" id="pause"></button>
+                        </div>
                     </div>
+                    <h4>Place a Bid now</h4>
+                    {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeInRequest->id], "id"=>"submitBit", 'method' => 'patch']) !!}
+                    <input type="number" id="amount_bit" name="amount" placeholder="AED"
+                           value="{{ isset($tradeIn)? number_format($tradeInRequest->amount):'' }}" min="1">
+                    <button type="submit" class="submit" name="">submit</button>
+                    {!! Form::hidden('car_id', $tradeInRequest->tradeAgainst->id) !!}
+                    {!! Form::hidden('type', $tradeInRequest->type) !!}
+                    {!! Form::close() !!}
                 </div>
-                <h4>Place a Bid now</h4>
-                {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeInRequest->id], "id"=>"submitBit", 'method' => 'patch']) !!}
-                <input type="number" id="amount_bit" name="amount" placeholder="AED"
-                       value="{{ isset($tradeIn)? number_format($tradeInRequest->amount):'' }}"
-                       min="1">
-                <button type="submit" class="submit" name="">submit</button>
-                {!! Form::hidden('car_id', $tradeInRequest->tradeAgainst->id) !!}
-                {!! Form::close() !!}
             </div>
-        </div>
 
         @endif
         {{--<div class="right" style="margin-top: 12px">
@@ -184,20 +184,22 @@
             </div>
         </div>
     @endif
-    <div class="right" style="margin-top: 12px">
-        <div class="bid_widget">
-            <h3 style="text-align: left; margin-bottom: 10px;">My Car: </h3>
-            @if($tradeInRequest->myCar->media->count() > 0)
-                <img src="{{ $tradeInRequest->myCar->media[0]->file_url }}" alt="" width="230" height="150">
-            @else
-                <img src="{{ url('storage/app/public/dummy-img.jpg') }}" alt="" width="230" height="150">
-            @endif
-            <h2 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->brand->name }}</h2>
-            <h3 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->name }}</h3>
-            <h4 style="text-align: left; color: gray">{{ $tradeInRequest->myCar->year }}</h4>
-            <h2 style="text-align: left;">AED {{ number_format($tradeInRequest->myCar->amount) }}</h2>
+    @if($tradeInRequest->type == 10)
+        <div class="right" style="margin-top: 12px">
+            <div class="bid_widget">
+                <h3 style="text-align: left; margin-bottom: 10px;">My Car: </h3>
+                @if($tradeInRequest->myCar->media->count() > 0)
+                    <img src="{{ $tradeInRequest->myCar->media[0]->file_url }}" alt="" width="230" height="150">
+                @else
+                    <img src="{{ url('storage/app/public/dummy-img.jpg') }}" alt="" width="230" height="150">
+                @endif
+                <h2 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->brand->name }}</h2>
+                <h3 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->name }}</h3>
+                <h4 style="text-align: left; color: gray">{{ $tradeInRequest->myCar->year }}</h4>
+                <h2 style="text-align: left;">AED {{ number_format($tradeInRequest->myCar->amount) }}</h2>
+            </div>
         </div>
-    </div>
+    @endif
 </div>
 
 <script>
@@ -319,7 +321,6 @@
         ///// Number formating /////
 
     });
-
 
 
 </script>
