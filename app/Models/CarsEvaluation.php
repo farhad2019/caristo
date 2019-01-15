@@ -108,7 +108,7 @@ class CarsEvaluation extends Model
      */
     public function bids()
     {
-        return $this->belongsTo(CarsEvaluationBid::class, 'evaluation_id');
+        return $this->belongsTo(CarEvaluationBid::class, 'evaluation_id');
     }
 
     /**
