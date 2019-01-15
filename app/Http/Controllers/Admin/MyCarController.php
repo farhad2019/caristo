@@ -122,6 +122,7 @@ class MyCarController extends AppBaseController
         }
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
+
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
         $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
         $attributes = $this->attributeRepository->all();

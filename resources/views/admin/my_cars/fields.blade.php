@@ -31,7 +31,7 @@
 </div>
 
 <!-- Engine Type Field -->
-<div class="form-group col-sm-6 region">
+<div class="form-group col-sm-6 transmission_type">
     {!! Form::label('transmission_type', 'Transmission Type:') !!}
     {!! Form::select('transmission_type', $transmission_type, null, ['class' => 'form-control select2']) !!}
 </div>
@@ -43,13 +43,13 @@
 </div>
 
 <!-- Engine Type Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-6 cartype">
     {!! Form::label('type_id', 'Segments:') !!}
     {!! Form::select('type_id', $carTypes, null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Engine Type Field -->
-<div class="form-group col-sm-6 {{ $errors->has('email') ? ' has-error' : '' }}">
+<div class="form-group col-sm-6 chassis {{ $errors->has('chassis') ? ' has-error' : '' }}">
     {!! Form::label('chassis', 'Chassis:') !!}
     {!! Form::text('chassis', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Chassis', 'maxLength' => 17]) !!}
     @if ($errors->has('chassis'))
@@ -71,7 +71,7 @@
 </div>
 
 <!-- Amount Field -->
-<div class="form-group col-sm-6 region category2528 {{ $errors->has('kilometer') ? ' has-error' : '' }}" {{--id="mileage" style="display:none;"--}}>
+<div class="form-group col-sm-6 category2528 {{ $errors->has('kilometer') ? ' has-error' : '' }}" {{--id="mileage" style="display:none;"--}}>
     {!! Form::label('kilometers', 'Mileage(km):') !!}
     {!! Form::number('kilometer', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Mileage', 'maxLength' => 6]) !!}
     @if ($errors->has('kilometer'))
@@ -94,7 +94,7 @@
 </div>
 
 <!-- Average MKP Field -->
-<div class="form-group col-sm-6 region category2528 {{ $errors->has('average_mkp') ? ' has-error' : '' }}">
+<div class="form-group col-sm-6 category2528 {{ $errors->has('average_mkp') ? ' has-error' : '' }}">
     {!! Form::label('avg_mkp', 'Average MKP(AED):') !!}
     {!! Form::number('average_mkp', null, ['class' => 'form-control', 'placeholder' => 'Enter Average Market Price', 'pattern'=>"^[1-9]\d*$"]) !!}
 
@@ -167,7 +167,7 @@
 
     @foreach($attributes as $attribute)
         @if($attribute->type == 10)
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
                 {!! Form::text('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'placeholder' => 'Enter attribute '.$attribute->name, 'maxLength' => 55]) !!}
 
@@ -178,7 +178,7 @@
                 @endif
             </div>
         @elseif($attribute->type == 20)
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
                 {!! Form::number('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'step' =>0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
                 @if ($errors->has('attribute.'.$attribute->id))
@@ -192,7 +192,7 @@
                 @php($options[$item['id']] = $item['name'])
             @endforeach
             <!-- Regional Specification Field -->
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::select('attribute['.$attribute->id.']', $options, null, ['class' => 'form-control select2', ($attribute->type == 40)?'multiple':'']) !!}
 
@@ -204,7 +204,7 @@
             </div>
             @php($options = [])
         @else
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
                 {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
                 'multiple':'']) !!}
@@ -239,7 +239,7 @@
     @foreach($attributes as $attribute)
         @php($value = (in_array($attribute->id, $myCar->myCarAttributes->pluck('attr_id')->toArray())?($myCar->myCarAttributes[array_search($attribute->id, $myCar->myCarAttributes->pluck('attr_id')->toArray())]->value): null))
         @if($attribute->type == 10)
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::text('attribute['.$attribute->id.']', $value, ['class' => 'form-control', 'placeholder' => 'Enter attribute '.$attribute->name, 'maxLength' => 55]) !!}
 
@@ -250,7 +250,7 @@
                 @endif
             </div>
         @elseif($attribute->type == 20)
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::number('attribute['.$attribute->id.']', (int)$value, ['class' => 'form-control', 'step' =>0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
                 @if ($errors->has('attribute.'.$attribute->id))
@@ -264,7 +264,7 @@
                 @php($options[$item['id']] = $item['name'])
             @endforeach
             <!-- Regional Specification Field -->
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::select('attribute['.$attribute->id.']', $options, $value, ['class' => 'form-control select2']) !!}
                 @if ($errors->has('attribute.'.$attribute->id))
@@ -275,7 +275,7 @@
             </div>
             @php($options = [])
         @else
-            <div class="form-group col-sm-6 region {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
                 {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
                 'multiple':'']) !!}
@@ -877,7 +877,24 @@
     <script>
         $(document).ready(function () {
             var id = $('#category_id').val();
-            if (id == 28) {
+
+            if(parseInt(id) == 25 || parseInt(id) == 26 || parseInt(id) == 27) {
+
+                $('.cartype').hide();
+                $('.chassis').hide();
+                $('.Trim').hide();
+                $('.Accident').hide();
+                $('.transmission_type').hide();
+
+            } else {
+                $('.cartype').show();
+                $('.chassis').show();
+                $('.Trim').show();
+                $('.Accident').show();
+                $('.transmission_type').show();
+            }
+
+            if (parseInt(id) == 28) {
                 $('.regions').show();
                 $('.region').hide();
             } else {
@@ -886,15 +903,28 @@
             }
 
             if (parseInt(id) === 25 || parseInt(id) === 28) {
-                $('.category2528').hide();
-                $('.Accident').hide();
-            } else if (parseInt(id) === 26 || parseInt(id) === 27) {
                 $('.category2528').show();
-                $('.Accident').show();
+            } else if (parseInt(id) === 26 || parseInt(id) === 27) {
+                $('.category2528').hide();
             }
 
             $('#category_id').on('change', function () {
                 var cat_id = $(this).val();
+
+                if(id == 25 || id == 26 || id == 27) {
+                    $('.cartype').hide();
+                    $('.chassis').hide();
+                    $('.Trim').hide();
+                    $('.Accident').hide();
+                    $('.transmission_type').hide();
+
+                } else {
+                    $('.cartype').show();
+                    $('.chassis').show();
+                    $('.Trim').show();
+                    $('.Accident').show();
+                    $('.transmission_type').show();
+                }
 
                 if (cat_id == 28) {
                     $('.regions').show();
@@ -905,11 +935,9 @@
                 }
 
                 if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
-                    $('.category2528').hide();
-                    $('.Accident').hide();
-                } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
                     $('.category2528').show();
-                    $('.Accident').show();
+                } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
+                    $('.category2528').hide();
                 }
             });
         });
