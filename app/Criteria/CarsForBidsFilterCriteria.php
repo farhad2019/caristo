@@ -125,6 +125,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         });
 
         $model = $model->where('status', MyCar::ACTIVE);
+        $model = $model->orderBy('amount', 'DESC');
 
         return $model;
     }

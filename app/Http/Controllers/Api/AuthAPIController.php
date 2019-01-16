@@ -735,6 +735,7 @@ class AuthAPIController extends AppBaseController
                 $user = User::create($userData);
                 $userDetails['user_id'] = $user->id;
                 $userDetails['phone'] = $request->input('phone', null);
+                $userDetails['region_id'] = $request->region_id;
                 $userDetails['gender'] = $request->input('gender', 0);
                 UserDetail::create($userDetails);
 
