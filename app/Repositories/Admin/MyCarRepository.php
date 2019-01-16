@@ -175,7 +175,7 @@ class MyCarRepository extends BaseRepository
             }
             $input['bid_close_at'] = $expire_at;
 
-            $input['currency'] = @Auth::user()->regionDetail->currency ?? 'AED';
+            $input['currency'] = @Auth::user()->details->regionDetail->currency ?? 'AED';
             $myCar = $this->create($input);
             $region = intval($request->region);
             if ($region) {
@@ -245,7 +245,7 @@ class MyCarRepository extends BaseRepository
      */
     public function updateRecord($request, $myCar)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'kilometer', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'regions', 'price', 'description', 'status', 'is_featured']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'kilometer', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'currency', 'amount', 'regions', 'price', 'description', 'status', 'is_featured']);
         if ($request->category_id == MyCar::LIMITED_EDITION) {
             $limited = array(
                 'Dimensions_Weight'    => array(
@@ -313,6 +313,7 @@ class MyCarRepository extends BaseRepository
             $input['type_id'] = $request->type_id;
             $input['engine_type_id'] = $request->engine_type_id;
             $input['name'] = $request->name;
+            $input['currency'] = 'AED';
             $input['amount'] = $request->amount;
             $input['notes'] = $request->notes;
             $input['limited_edition_specs'] = json_encode($limited);
@@ -336,7 +337,10 @@ class MyCarRepository extends BaseRepository
                 }
             }
         } else {
+
             $input['limited_edition_specs'] = null;
+
+            $input['currency'] = @Auth::user()->details->regionDetail->currency ?? 'AED';
 
             $myCar = $this->update($input, $myCar->id);
 
