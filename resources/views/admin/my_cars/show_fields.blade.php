@@ -63,7 +63,7 @@
         @if($myCar->amount)
             <!-- Year Field -->
                 <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
-                <dd>{!! $myCar->amount .' AED' ?? 'N/A' !!}</dd>
+                <dd>{!! $myCar->amount ?? 'N/A' !!} {!! $myCar->currency ?? 'AED' !!}</dd>
 
         @endif
 

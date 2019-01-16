@@ -60,7 +60,7 @@
 </div>
 
 <!-- Engine Type Field -->
-<div class="form-group col-sm-6 {{ $errors->has('region') ? ' has-error' : '' }}">
+<div class="form-group col-sm-6 region {{ $errors->has('region') ? ' has-error' : '' }}">
     {!! Form::label('region', 'Region:') !!}
     {!! Form::select('region', $regions, null, ['class' => 'form-control select2']) !!}
     @if ($errors->has('region'))
@@ -83,7 +83,7 @@
 
 <!-- Amount Field -->
 <div class="form-group col-sm-6 {{ $errors->has('amount') ? ' has-error' : '' }}">
-    {!! Form::label('amount', 'Amount(AED):') !!}
+    {!! Form::label('amount', 'Amount('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):' ?? 'AED' .'):') !!}
     {!! Form::number('amount', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Amount', 'pattern'=>"^[1-9]\d*$"]) !!}
 
     @if ($errors->has('amount'))
@@ -95,7 +95,7 @@
 
 <!-- Average MKP Field -->
 <div class="form-group col-sm-6 category2528 {{ $errors->has('average_mkp') ? ' has-error' : '' }}">
-    {!! Form::label('avg_mkp', 'Average MKP(AED):') !!}
+    {!! Form::label('avg_mkp', 'Average MKP('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):' ?? 'AED' .'):') !!}
     {!! Form::number('average_mkp', null, ['class' => 'form-control', 'placeholder' => 'Enter Average Market Price', 'pattern'=>"^[1-9]\d*$"]) !!}
 
     @if ($errors->has('average_mkp'))
@@ -897,11 +897,13 @@
             if (parseInt(id) == 28) {
                 $('.regions').show();
                 $('.cartype').show();
+                $('.region').hide();
                 $('.non-luxury').hide();
             } else {
                 $('.regions').hide();
                 $('.cartype').hide();
                 $('.non-luxury').show();
+                $('.region').show();
             }
 
             if (parseInt(id) === 25) {
@@ -930,12 +932,14 @@
 
                 if (parseInt(cat_id) == 28) {
                     $('.regions').show();
+                    $('.region').hide();
                     $('.cartype').show();
                     $('.non-luxury').hide();
                 } else {
                     $('.regions').hide();
                     $('.cartype').hide();
                     $('.non-luxury').show();
+                    $('.region').show();
                 }
 
                 if (parseInt(cat_id) === 25) {
