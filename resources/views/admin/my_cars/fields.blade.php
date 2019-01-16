@@ -60,7 +60,7 @@
 </div>
 
 <!-- Engine Type Field -->
-<div class="form-group col-sm-6 region {{ $errors->has('region') ? ' has-error' : '' }}">
+<div class="form-group col-sm-6 {{ $errors->has('region') ? ' has-error' : '' }}">
     {!! Form::label('region', 'Region:') !!}
     {!! Form::select('region', $regions, null, ['class' => 'form-control select2']) !!}
     @if ($errors->has('region'))
@@ -167,7 +167,7 @@
 
     @foreach($attributes as $attribute)
         @if($attribute->type == 10)
-            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
                 {!! Form::text('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'placeholder' => 'Enter attribute '.$attribute->name, 'maxLength' => 55]) !!}
 
@@ -178,7 +178,7 @@
                 @endif
             </div>
         @elseif($attribute->type == 20)
-            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
                 {!! Form::number('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'step' =>0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
                 @if ($errors->has('attribute.'.$attribute->id))
@@ -192,7 +192,7 @@
                 @php($options[$item['id']] = $item['name'])
             @endforeach
             <!-- Regional Specification Field -->
-            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::select('attribute['.$attribute->id.']', $options, null, ['class' => 'form-control select2', ($attribute->type == 40)?'multiple':'']) !!}
 
@@ -204,7 +204,7 @@
             </div>
             @php($options = [])
         @else
-            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
                 {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
                 'multiple':'']) !!}
@@ -239,7 +239,7 @@
     @foreach($attributes as $attribute)
         @php($value = (in_array($attribute->id, $myCar->myCarAttributes->pluck('attr_id')->toArray())?($myCar->myCarAttributes[array_search($attribute->id, $myCar->myCarAttributes->pluck('attr_id')->toArray())]->value): null))
         @if($attribute->type == 10)
-            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::text('attribute['.$attribute->id.']', $value, ['class' => 'form-control', 'placeholder' => 'Enter attribute '.$attribute->name, 'maxLength' => 55]) !!}
 
@@ -250,7 +250,7 @@
                 @endif
             </div>
         @elseif($attribute->type == 20)
-            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::number('attribute['.$attribute->id.']', (int)$value, ['class' => 'form-control', 'step' =>0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
                 @if ($errors->has('attribute.'.$attribute->id))
@@ -264,7 +264,7 @@
                 @php($options[$item['id']] = $item['name'])
             @endforeach
             <!-- Regional Specification Field -->
-            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::select('attribute['.$attribute->id.']', $options, $value, ['class' => 'form-control select2']) !!}
                 @if ($errors->has('attribute.'.$attribute->id))
@@ -275,7 +275,7 @@
             </div>
             @php($options = [])
         @else
-            <div class="form-group col-sm-6 {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
                 {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
                 'multiple':'']) !!}
@@ -897,16 +897,16 @@
             if (parseInt(id) == 28) {
                 $('.regions').show();
                 $('.cartype').show();
-                $('.region').hide();
+                $('.non-luxury').hide();
             } else {
                 $('.regions').hide();
                 $('.cartype').hide();
-                $('.region').show();
+                $('.non-luxury').show();
             }
 
-            if (parseInt(id) === 25 || parseInt(id) === 28) {
+            if (parseInt(id) === 25) {
                 $('.category2528').show();
-            } else if (parseInt(id) === 26 || parseInt(id) === 27) {
+            } else if (parseInt(id) === 26 || parseInt(id) === 27 || parseInt(id) === 28) {
                 $('.category2528').hide();
             }
 
@@ -931,16 +931,16 @@
                 if (parseInt(cat_id) == 28) {
                     $('.regions').show();
                     $('.cartype').show();
-                    $('.region').hide();
+                    $('.non-luxury').hide();
                 } else {
                     $('.regions').hide();
                     $('.cartype').hide();
-                    $('.region').show();
+                    $('.non-luxury').show();
                 }
 
-                if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
+                if (parseInt(cat_id) === 25) {
                     $('.category2528').show();
-                } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
+                } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27 || parseInt(cat_id) === 28) {
                     $('.category2528').hide();
                 }
             });
