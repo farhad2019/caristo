@@ -107,11 +107,8 @@ class TradeInCarRepository extends BaseRepository
     public function saveRecord($request)
     {
         $input = $request->all();
-        if ($input['type'] == TradeInCar::TRADE_IN) {
-            $input['user_id'] = Auth::id();
-        } else {
-            $input['user_id'] = null;
-        }
+
+        $input['user_id'] = Auth::id();
 
         $input['amount'] = null;
 
