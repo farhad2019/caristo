@@ -1,4 +1,5 @@
 @if(!isset($user))
+
     <!-- Name Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('name', 'Name:') !!}
@@ -119,7 +120,7 @@
                     <!-- Phone Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('region_id', 'Region:') !!}
-                        {!! Form::select('region_id', $regions, $user->details->region_id, ['class' => 'form-control select2']) !!}
+                        {!! Form::select('region_id', $regions, isset($user->details->region_id)? $user->details->region_id : null, ['class' => 'form-control select2']) !!}
                     </div>
 
                     <!-- Add Car Limit Field -->

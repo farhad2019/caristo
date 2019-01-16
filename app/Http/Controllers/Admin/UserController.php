@@ -186,7 +186,7 @@ class UserController extends AppBaseController
      *
      * @param  int $id
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -320,7 +320,7 @@ class UserController extends AppBaseController
     }
 
     /**
-     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function profile()
     {
@@ -329,17 +329,20 @@ class UserController extends AppBaseController
             Flash::error('User not found');
             return redirect(route('admin.users.index'));
         }
-        //dd($user->details->toArray());
+
+        $regions = $this->regionRepository->all()->pluck('name', 'id')->all();
         $this->BreadCrumbName = 'Profile';
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         if ($user->hasRole('showroom-owner')) {
             return view('admin.showroom.profile')->with([
                 'user'   => $user,
+                'regions'   => $regions,
                 'gender' => UserDetail::$GENDER
             ]);
         }
         return view('admin.users.edit')->with([
             'user'   => $user,
+            'regions'   => $regions,
             'gender' => UserDetail::$GENDER
         ]);
     }
