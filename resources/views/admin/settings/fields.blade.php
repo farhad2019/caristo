@@ -1,11 +1,11 @@
-<div class="clearfix"></div>
+{{--<div class="clearfix"></div>
 <div class="box col-sm-12">
     <div class="box-header with-border">
 
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-    {{--<!-- Email Field -->
+    --}}{{--<!-- Email Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('email', 'Email:') !!}
         {!! Form::email('email', null, ['class' => 'form-control']) !!}
@@ -21,7 +21,7 @@
     <div class="form-group col-sm-6">
         {!! Form::label('locale', 'Default Language:*') !!}
         {!! Form::select('default_language', $locales->pluck('title','code'), null, ['class' => 'form-control select2']) !!}
-    </div>--}}
+    </div>--}}{{--
 
     <!-- Depreciation Trend Field -->
         <div class="form-group col-sm-6">
@@ -41,7 +41,7 @@
             {!! Form::number('limit_for_featured_cars', null, ['class' => 'form-control', 'placeholder' => 'Featured Cars Limit', 'min'=>1, 'max'=>999]) !!}
         </div>
 
-    {{--<!-- Playstore Field -->
+    --}}{{--<!-- Playstore Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('playstore', 'Play Store Link:') !!}
         {!! Form::text('playstore', null, ['class' => 'form-control']) !!}
@@ -57,9 +57,9 @@
     <div class="form-group col-sm-6">
         {!! Form::label('app_version', 'App Version:') !!}
         {!! Form::number('app_version', null, ['class' => 'form-control', 'step' => 0.1]) !!}
-    </div>--}}
+    </div>--}}{{--
 
-    {{--<div id="product-div">
+    --}}{{--<div id="product-div">
         @if($setting->social_links)
             @php($socaials = json_decode($setting->social_links))
             @foreach($socaials as $socaial)
@@ -102,7 +102,7 @@
                             class="fa fa-trash"></i></a>
             </div>
         </div>
-    </div>--}}
+    </div>--}}{{--
 
     {!! Form::hidden('logo', $setting->logo) !!}
     <!-- Logo Field -->
@@ -112,19 +112,19 @@
             {!! Form::file('logo') !!}
         </div>
 
-        {{--<!-- Force Update Field -->
+        --}}{{--<!-- Force Update Field -->
         <div class="form-group col-sm-3">
             {!! Form::label('force_update', 'Force Update:') !!}
             {!! Form::hidden('force_update', 0) !!}
             {!! Form::checkbox('force_update', 1, true, ['class'=> 'form-control', 'data-toggle'=>'toggle']) !!}
-        </div>--}}
+        </div>--}}{{--
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
 
     </div>
     <!-- box-footer -->
-</div>
+</div>--}}
 
 <div class="clearfix"></div>
 <div class="nav-tabs-custom col-sm-12">

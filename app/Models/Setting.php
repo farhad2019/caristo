@@ -195,11 +195,11 @@ class Setting extends Model
         'playstore' => 'required',
         'appstore' => 'required',
         'app_version' => 'required',
-        'force_update' => 'required',*/
+        'force_update' => 'required',
         'depreciation_trend' => 'required',
         'limit_for_cars' => 'required',
         'limit_for_featured_cars' => 'required',
-        'logo' => 'required',
+        'logo' => 'required',*/
         'ask_for_consultancy' => 'required',
         'personal_shopper' => 'required'
     ];

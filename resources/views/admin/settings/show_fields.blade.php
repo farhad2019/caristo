@@ -42,7 +42,7 @@
     </div>
     <!-- /.tab-content -->
 </div>
-<div class="clearfix"></div>
+{{--<div class="clearfix"></div>
 <div class="box">
     <div class="box-header with-border">
 
@@ -67,7 +67,7 @@
             <dt>{!! Form::label('logo', 'Logo:') !!}</dt>
             <dd><img src="{!! $setting->image_url !!}"></dd>
         </div>
-        {{--<div class="col-sm-6">
+        --}}{{--<div class="col-sm-6">
             <!-- Locale Field -->
             <dt>{!! Form::label('locale', 'App Default Language:') !!}</dt>
             <dd>{!! $setting->default_language !!}</dd>
@@ -95,14 +95,14 @@
                     @endforeach
                 </dd>
             @endif
-        </div>--}}
+        </div>--}}{{--
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
 
     </div>
     <!-- box-footer -->
-</div>
+</div>--}}
 {{--<div class="clearfix"></div>
 <div class="box">
     <div class="box-header with-border">

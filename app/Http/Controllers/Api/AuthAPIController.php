@@ -126,6 +126,7 @@ class AuthAPIController extends AppBaseController
             $userDetails['dob'] = $request->dob;
             $userDetails['profession'] = $request->profession;
             $userDetails['nationality'] = $request->nationality;
+            $userDetails['region_id'] = $request->region_id;
             $userDetails['gender'] = isset($request->gender) ? $request->gender : 0;
             $userDetails['address'] = isset($request->address) ? $request->address : null;
             $userDetails['image'] = isset($request->image) ? $request->image : null;
