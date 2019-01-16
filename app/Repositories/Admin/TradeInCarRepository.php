@@ -53,18 +53,18 @@ class TradeInCarRepository extends BaseRepository
         return $this->model
             ->when(($hasBid), function ($q) use ($cars) {
                 return $q->whereRaw(DB::raw('CASE
-    WHEN trade_in_cars.type = ' . TradeInCar::TRADE_IN . '  
-    THEN amount IS NOT NULL AND `owner_car_id` IN (' . $cars . ')
-    WHEN trade_in_cars.type = ' . TradeInCar::EVALUATE_CAR . '  
-    THEN `owner_car_id` IS NULL AND EXISTS 
-    (SELECT 
-      * 
-    FROM
-      `car_evaluation_bids` 
-    WHERE `trade_in_cars`.`id` = `car_evaluation_bids`.`evaluation_id` 
-      AND `user_id` = ' . Auth::id() . '  
-      AND `car_evaluation_bids`.`deleted_at` IS NULL) 
-  END'));
+                    WHEN trade_in_cars.type = ' . TradeInCar::TRADE_IN . '  
+                    THEN amount IS NOT NULL AND `owner_car_id` IN (' . $cars . ')
+                    WHEN trade_in_cars.type = ' . TradeInCar::EVALUATE_CAR . '  
+                    THEN `owner_car_id` IS NULL AND EXISTS 
+                    (SELECT 
+                      * 
+                    FROM
+                      `car_evaluation_bids` 
+                    WHERE `trade_in_cars`.`id` = `car_evaluation_bids`.`evaluation_id` 
+                      AND `user_id` = ' . Auth::id() . '  
+                      AND `car_evaluation_bids`.`deleted_at` IS NULL) 
+                  END'));
                 /*->whereRaw(DB::raw('amount IS NOT NULL'))
                 ->whereHas('evaluationDetails', function ($qq) {
                     return $qq->where('user_id', Auth::id());
@@ -72,18 +72,18 @@ class TradeInCarRepository extends BaseRepository
             })
             ->when((!$hasBid), function ($q) use ($cars) {
                 return $q->whereRaw(DB::raw('CASE
-    WHEN trade_in_cars.type = ' . TradeInCar::TRADE_IN . '  
-    THEN amount IS NULL AND `owner_car_id` IN (' . $cars . ')
-    WHEN trade_in_cars.type = ' . TradeInCar::EVALUATE_CAR . '  
-    THEN `owner_car_id` IS NULL AND NOT EXISTS 
-    (SELECT 
-      * 
-    FROM
-      `car_evaluation_bids` 
-    WHERE `trade_in_cars`.`id` = `car_evaluation_bids`.`evaluation_id` 
-      AND `user_id` = ' . Auth::id() . '  
-      AND `car_evaluation_bids`.`deleted_at` IS NULL) 
-  END'));
+                    WHEN trade_in_cars.type = ' . TradeInCar::TRADE_IN . '  
+                    THEN amount IS NULL AND `owner_car_id` IN (' . $cars . ')
+                    WHEN trade_in_cars.type = ' . TradeInCar::EVALUATE_CAR . '  
+                    THEN `owner_car_id` IS NULL AND NOT EXISTS 
+                    (SELECT 
+                      * 
+                    FROM
+                      `car_evaluation_bids` 
+                    WHERE `trade_in_cars`.`id` = `car_evaluation_bids`.`evaluation_id` 
+                      AND `user_id` = ' . Auth::id() . '  
+                      AND `car_evaluation_bids`.`deleted_at` IS NULL) 
+                  END'));
                 /*return $q->whereRaw(DB::raw('amount IS NULL'))
                     ->whereDoesntHave('evaluationDetails', function ($qq) {
                         return $qq->where('user_id', Auth::id());
@@ -114,6 +114,13 @@ class TradeInCarRepository extends BaseRepository
             ->when(($status > 0), function ($q) use ($status) {
                 return $q->where('status', $status);
             })
+//            ->whereHas('tradeAgainst', function ($tradeAgainst) {
+//                return $tradeAgainst->whereHas('owner', function ($owner) {
+//                    return $owner->whereHas('details', function ($details) {
+//                        return $details->where('region_id', Auth::user()->details->region_id);
+//                    });
+//                });
+//            })
             /*->when((!empty(Auth::user()->cars()->pluck('id')->toArray())), function ($q) use ($status) {
                 return $q->whereRaw(DB::raw('(`owner_car_id` IN (' . implode(",", Auth::user()->cars()->pluck('id')->toArray()) . ') OR owner_car_id IS NULL)'));
             })
