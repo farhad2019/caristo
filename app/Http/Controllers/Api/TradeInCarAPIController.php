@@ -153,16 +153,19 @@ class TradeInCarAPIController extends AppBaseController
             if ($tradeInCarRequest->count() > 0) {
                 return $this->sendResponse([], 'This car has already been traded!');
             }
+            $message = 'Car traded in request post successfully';
         }
+
         if ($request->type == TradeInCar::EVALUATE_CAR) {
             $evaluateCarRequest = $this->tradeInCarRepository->findWhere(['customer_car_id' => $request->customer_car_id, 'type' => $request->type]);
             if ($evaluateCarRequest->count() > 0) {
                 return $this->sendResponse([], 'This car has already been requested for evaluation!');
             }
+            $message = 'Car evaluation request post successfully';
         }
 
         $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
-        return $this->sendResponse($tradeInCar->toArray(), 'Car traded in successful');
+        return $this->sendResponse($tradeInCar->toArray(), $message);
     }
 
     /**
