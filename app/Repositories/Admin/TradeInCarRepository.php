@@ -49,19 +49,46 @@ class TradeInCarRepository extends BaseRepository
      */
     public function getTradeInCars($hasBid = false, $search = [], $status = 0)
     {
+        $cars = Auth::user()->cars->count() > 0 ? implode(",", Auth::user()->cars()->pluck('id')->toArray()) : 0;
         return $this->model
-            ->when(($hasBid), function ($q) {
-                return $q->whereRaw(DB::raw('amount IS NOT NULL'))
-                    ->whereHas('evaluationDetails', function ($qq) {
-                        return $qq->where('user_id', Auth::id());
-                    });
+            ->when(($hasBid), function ($q) use ($cars) {
+                return $q->whereRaw(DB::raw('CASE
+                    WHEN trade_in_cars.type = ' . TradeInCar::TRADE_IN . '  
+                    THEN amount IS NOT NULL AND `owner_car_id` IN (' . $cars . ')
+                    WHEN trade_in_cars.type = ' . TradeInCar::EVALUATE_CAR . '  
+                    THEN `owner_car_id` IS NULL AND EXISTS 
+                    (SELECT 
+                      * 
+                    FROM
+                      `car_evaluation_bids` 
+                    WHERE `trade_in_cars`.`id` = `car_evaluation_bids`.`evaluation_id` 
+                      AND `user_id` = ' . Auth::id() . '  
+                      AND `car_evaluation_bids`.`deleted_at` IS NULL) 
+                  END'));
+                /*->whereRaw(DB::raw('amount IS NOT NULL'))
+                ->whereHas('evaluationDetails', function ($qq) {
+                    return $qq->where('user_id', Auth::id());
+                });*/
             })
-            ->when((!$hasBid), function ($q) {
-                return $q->whereRaw(DB::raw('amount IS NULL'))
+            ->when((!$hasBid), function ($q) use ($cars) {
+                return $q->whereRaw(DB::raw('CASE
+                    WHEN trade_in_cars.type = ' . TradeInCar::TRADE_IN . '  
+                    THEN amount IS NULL AND `owner_car_id` IN (' . $cars . ')
+                    WHEN trade_in_cars.type = ' . TradeInCar::EVALUATE_CAR . '  
+                    THEN `owner_car_id` IS NULL AND NOT EXISTS 
+                    (SELECT 
+                      * 
+                    FROM
+                      `car_evaluation_bids` 
+                    WHERE `trade_in_cars`.`id` = `car_evaluation_bids`.`evaluation_id` 
+                      AND `user_id` = ' . Auth::id() . '  
+                      AND `car_evaluation_bids`.`deleted_at` IS NULL) 
+                  END'));
+                /*return $q->whereRaw(DB::raw('amount IS NULL'))
                     ->whereDoesntHave('evaluationDetails', function ($qq) {
                         return $qq->where('user_id', Auth::id());
                     });
-                //->whereRaw(DB::raw('(bid_close_at > NOW()) > 0'));
+                ->whereRaw(DB::raw('(bid_close_at > NOW()) > 0'));*/
             })
             ->when((!empty(array_filter($search))), function ($q) use ($search) {
                 return $q->whereHas('tradeAgainst', function ($tradeAgainst) use ($search) {
@@ -87,15 +114,22 @@ class TradeInCarRepository extends BaseRepository
             ->when(($status > 0), function ($q) use ($status) {
                 return $q->where('status', $status);
             })
-            ->when((!empty(Auth::user()->cars()->pluck('id')->toArray())), function ($q) use ($status) {
+//            ->whereHas('tradeAgainst', function ($tradeAgainst) {
+//                return $tradeAgainst->whereHas('owner', function ($owner) {
+//                    return $owner->whereHas('details', function ($details) {
+//                        return $details->where('region_id', Auth::user()->details->region_id);
+//                    });
+//                });
+//            })
+            /*->when((!empty(Auth::user()->cars()->pluck('id')->toArray())), function ($q) use ($status) {
                 return $q->whereRaw(DB::raw('(`owner_car_id` IN (' . implode(",", Auth::user()->cars()->pluck('id')->toArray()) . ') OR owner_car_id IS NULL)'));
             })
             ->when((empty(Auth::user()->cars()->pluck('id')->toArray())), function ($q) use ($status) {
                 return $q->whereRaw(DB::raw('(`owner_car_id` IN (0) OR owner_car_id IS NULL)'));
             })
-//            ->whereRaw(DB::raw('(`owner_car_id` IN (-1) OR owner_car_id IS NULL)'))
-//            ->whereIn('owner_car_id', array_merge(Auth::user()->cars()->pluck('id')->toArray(), [null]))
-//            ->orWhere(DB::raw('owner_car_id IS NULL'))
+            ->whereRaw(DB::raw('(`owner_car_id` IN (-1) OR owner_car_id IS NULL)'))
+            ->whereIn('owner_car_id', array_merge(Auth::user()->cars()->pluck('id')->toArray(), [null]))
+            ->orWhere(DB::raw('owner_car_id IS NULL'))*/
             ->orderBy('created_at', 'DESC')
             ->get();
     }
