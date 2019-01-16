@@ -1,7 +1,8 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    {{ $title ?? 'Users' }}
+    {{ $title ?? 'Users' }} <br>
+    <small>{{ $secondtitle ?? '' }}</small>
 @endsection
 
 @section('content')
