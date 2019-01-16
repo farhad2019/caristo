@@ -58,12 +58,12 @@ class BidsHistoryController extends AppBaseController
     {
         $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(true);
 
-        if (Auth::user()->hasRole('showroom-owner')) {
+//        if (Auth::user()->hasRole('showroom-owner')) {
             return view('admin.showroom.carsListing')
                 ->with([
                     'tradeInRequests' => $tradeInRequests
                 ]);
-        }
+//        }
 
         /*$this->carRepository->pushCriteria(new BidsHistoryForShowroomOwnerCriteria($request));
         $cars = $this->carRepository->all();

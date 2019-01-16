@@ -69,12 +69,12 @@ class TradeInCarController extends AppBaseController
         $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(false, $request->all());
 //        dd($tradeInRequests);
 //dd($tradeInRequests->getBindings(), $tradeInRequests->toSql());
-        if (Auth::user()->hasRole('showroom-owner')) {
+//        if (Auth::user()->hasRole('showroom-owner')) {
             return view('admin.showroom.carsListing')
                 ->with([
                     'tradeInRequests' => $tradeInRequests
                 ]);
-        }
+//        }
 //        $myCars = Auth::user()->cars()->whereHas('myTradeCars', function ($cars) {
 //            return $cars->whereRaw('amount IS NOT NULL');
 //        })->get();
