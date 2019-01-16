@@ -9,12 +9,15 @@ use App\Http\Requests\Admin\CreateUserRequest;
 use App\Http\Requests\Admin\UpdateShowroomProfileRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\CarInteraction;
+use App\Models\News;
 use App\Models\NewsInteraction;
 use App\Models\Role;
 use App\Models\TradeInCar;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Repositories\Admin\CarInteractionRepository;
+use App\Repositories\Admin\CarRepository;
+use App\Repositories\Admin\NewsRepository;
 use App\Repositories\Admin\RegionRepository;
 use App\Repositories\Admin\RoleRepository;
 use App\Repositories\Admin\UserdetailRepository;
@@ -52,8 +55,12 @@ class UserController extends AppBaseController
     private $userDetailRepository;
 
     private $regionRepository;
+    
+    private $newsRepository;
+    
+    private $carRepository;
 
-    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, RoleRepository $roleRepo, RegionRepository $regionRepository, UserShowroomRepository $showroomRepo, CarInteractionRepository $carInteractionRepo)
+    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, NewsRepository $newsRepository, RoleRepository $roleRepo, RegionRepository $regionRepository, UserShowroomRepository $showroomRepo, CarRepository $carRepository, CarInteractionRepository $carInteractionRepo)
     {
         $this->userRepository = $userRepo;
         $this->roleRepository = $roleRepo;
@@ -61,6 +68,8 @@ class UserController extends AppBaseController
         $this->showroomRepository = $showroomRepo;
         $this->carInteractionRepository = $carInteractionRepo;
         $this->userDetailRepository = $userDetailRepo;
+        $this->newsRepository = $newsRepository;
+        $this->carRepository = $carRepository;
         $this->ModelName = 'users';
         $this->BreadCrumbName = 'Users';
     }
@@ -95,7 +104,19 @@ class UserController extends AppBaseController
                     $title = 'User Comment News';
                 }
             }
-            return $userDataTable->interactionList($data)->render('admin.users.index', ['title' => $title]);
+
+            if(isset($data['news_id'])) {
+                $news = $this->newsRepository->findWithoutFail($data['news_id']);
+                $second_tile = "News : ".$news['headline'];
+            
+            } else if (isset($data['car_id'])) {
+                $car = $this->carRepository->findWithoutFail($data['car_id']);
+                $second_tile = "Car : ". $car['name'];
+            } else {
+                $second_tile = "";
+            }
+            
+            return $userDataTable->interactionList($data)->render('admin.users.index', ['title' => $title, 'secondtitle' => $second_tile]);
         } else {
             return $userDataTable->render('admin.users.index', ['title' => $this->BreadCrumbName]);
         }
