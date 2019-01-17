@@ -1,9 +1,13 @@
 <p class="ref_num">Reference Number:<span>{{ $tradeInRequest->tradeAgainst->ref_num }}</span></p>
 <div class="shadow"></div>
 <div class="car_slider_warap">
-    @foreach($tradeInRequest->tradeAgainst->media as $media)
-        <figure style="background-image: url({{ $media->file_url }});"></figure>
-    @endforeach
+    @if($tradeInRequest->tradeAgainst->media->count() > 0)
+        @foreach($tradeInRequest->tradeAgainst->media as $media)
+            <figure style="background-image: url({{ $media->file_url }});"></figure>
+        @endforeach
+    @else
+        <figure style="background-image: url({{ url('storage/app/public/dummy-img.jpg') }});"></figure>
+    @endif
     {{--<figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
     <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
     <figure style="background-image: url({{ url('storage/app/showroom/car-slide1.jpg') }});"></figure>
@@ -15,6 +19,13 @@
     <div class="left">
         <h2 class="car_model">{{ $tradeInRequest->tradeAgainst->year }} {{ $tradeInRequest->tradeAgainst->carModel->brand->name }} {{ $tradeInRequest->tradeAgainst->carModel->name }}</h2>
         <ul>
+            <li>
+                <span class="icon-icon-5"></span>
+                <p>
+                    <small>Make</small>
+                    {{ $tradeInRequest->tradeAgainst->carModel->brand->name }}
+                </p>
+            </li>
             <li>
                 <span class="icon-icon-5"></span>
                 <p>
@@ -50,13 +61,13 @@
                     {{ $tradeInRequest->tradeAgainst->regionalSpecs->name }}
                 </p>
             </li>
-            <li>
-                <span class="icon-icon-12"></span>
-                <p>
-                    <small>engine type</small>
-                    {{ $tradeInRequest->tradeAgainst->engineType->name?? '-' }}
-                </p>
-            </li>
+            {{--<li>--}}
+                {{--<span class="icon-icon-12"></span>--}}
+                {{--<p>--}}
+                    {{--<small>engine type</small>--}}
+                    {{--{{ $tradeInRequest->tradeAgainst->engineType->name?? '-' }}--}}
+                {{--</p>--}}
+            {{--</li>--}}
             @foreach($tradeInRequest->tradeAgainst->myCarAttributes as $attribute)
                 <li>
                     <span class="{{ $attribute->carAttribute->icon }}"></span>
@@ -102,8 +113,7 @@
             @endforeach--}}
         </ul>
     </div>
-
-    @if(empty($tradeInRequest->amount))
+    @if(empty($tradeInRequest->amount) && $tradeInRequest->evaluationDetails->count() == 0)
         @if($tradeInRequest->bid_close_at > now())
             <div class="right">
                 <div class="bid_widget">
@@ -175,7 +185,8 @@
                         </svg>
                     </div>
                     <div class="controlls">
-                        <div class="" style="font-size: 18px;">{{ number_format($tradeInRequest->amount) }}
+                        <div class=""
+                             style="font-size: 18px;">{{ ($tradeInRequest->type == \App\Models\TradeInCar::TRADE_IN ) ? number_format($tradeInRequest->amount) : number_format($tradeInRequest->evaluationDetails()->where('user_id', \Illuminate\Support\Facades\Auth::id())->first()->amount) }}
                             AED
                         </div>
                         <button class="play" id="pause"></button>

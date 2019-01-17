@@ -136,12 +136,12 @@ class TradeInCarController extends AppBaseController
             return redirect(route('admin.tradeInCars.index'));*/
         }
 
-        if (Auth::user()->hasRole('showroom-owner')) {
+//        if (Auth::user()->hasRole('showroom-owner')) {
             $this->tradeInCarRepository->update(['status' => 10], $id);
             return view('admin.showroom.details')->with([
                 'tradeInRequest' => $tradeInRequest
             ]);
-        }
+//        }
 //        return json_encode(['success' => $tradeInRequest]);
         /*BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $tradeInCar);
         return view('admin.trade_in_cars.show')->with('tradeInCar', $tradeInCar);*/

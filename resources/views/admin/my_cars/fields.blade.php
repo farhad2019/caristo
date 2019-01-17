@@ -878,8 +878,9 @@
         $(document).ready(function () {
             var id = $('#category_id').val();
 
-            if(parseInt(id) == 25 || parseInt(id) == 26 || parseInt(id) == 27) {
+            $('.region').hide();
 
+            if(parseInt(id) == 25 || parseInt(id) == 26 || parseInt(id) == 27) {
                 $('.cartype').hide();
                 $('.chassis').hide();
                 $('.Trim').hide();
@@ -897,13 +898,13 @@
             if (parseInt(id) == 28) {
                 $('.regions').show();
                 $('.cartype').show();
-                $('.region').hide();
+//                $('.region').hide();
                 $('.non-luxury').hide();
             } else {
                 $('.regions').hide();
                 $('.cartype').hide();
                 $('.non-luxury').show();
-                $('.region').show();
+//                $('.region').show();
             }
 
             if (parseInt(id) === 25) {
@@ -932,14 +933,14 @@
 
                 if (parseInt(cat_id) == 28) {
                     $('.regions').show();
-                    $('.region').hide();
+//                    $('.region').hide();
                     $('.cartype').show();
                     $('.non-luxury').hide();
                 } else {
                     $('.regions').hide();
                     $('.cartype').hide();
                     $('.non-luxury').show();
-                    $('.region').show();
+//                    $('.region').show();
                 }
 
                 if (parseInt(cat_id) === 25) {
