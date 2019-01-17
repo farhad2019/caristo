@@ -192,10 +192,10 @@ class TradeInCarRepository extends BaseRepository
 
             $notification = [
                 'sender_id'   => $tradeInCar->user_id,
-                'action_type' => Notification::NOTIFICATION_TYPE_NEW_BID,
+                'action_type' => Notification::NOTIFICATION_TYPE_TRADE_IN_NEW_BID,
                 'url'         => null,
                 'ref_id'      => $input['car_id'],
-                'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_NEW_BID]
+                'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_TRADE_IN_NEW_BID]
             ];
             dd($notification);
             $this->notificationRepository->notification($notification, $bid->cars->owner_id);

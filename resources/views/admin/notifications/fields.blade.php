@@ -1,13 +1,13 @@
-<!-- Sender Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('sender_id', 'Send To:') !!}
-    {!! Form::select('send_to[]', $users, isset($notification->users)?$notification->users:null, ['class' => 'form-control select2', 'multiple'=>'multiple']) !!}
-</div>
-
 <!-- Action Type Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('action_type', 'Action Type:') !!}
     {!! Form::select('action_type', ['android'=>'Android', 'IOS'=>'ios', 'both'=>'Both'], null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Sender Id Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('sender_id', 'Send To:') !!}
+    {!! Form::select('send_to[]', $users, isset($notification->users)?$notification->users:null, ['class' => 'form-control select2', 'multiple'=>'multiple', 'data-url' => route('api.users.index'), 'data-depends'=>'action_type']) !!}
 </div>
 
 <!-- Ref Id Field -->

@@ -9,6 +9,7 @@ use App\Models\TradeInCar;
 use App\Repositories\Admin\TradeInCarRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Mail;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Illuminate\Http\Response;
@@ -148,6 +149,7 @@ class TradeInCarAPIController extends AppBaseController
      */
     public function store(CreateTradeInCarAPIRequest $request)
     {
+        $message = '';
         if ($request->type == TradeInCar::TRADE_IN) {
             $tradeInCarRequest = $this->tradeInCarRepository->findWhere(['owner_car_id' => $request->owner_car_id, 'customer_car_id' => $request->customer_car_id]);
             if ($tradeInCarRequest->count() > 0) {
@@ -167,6 +169,21 @@ class TradeInCarAPIController extends AppBaseController
         }
 
         $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
+
+        if ($tradeInCar->owner_car_id) {
+            $user = $tradeInCar->myCar->owner;
+
+            $name = $user->name;
+            $email = $user->email;
+
+            Mail::send('email.notify', ['name' => $name],
+                function ($mail) use ($email, $name, $message) {
+                    $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrate App");
+                    $mail->to($email, $name);
+                    $mail->subject($message);
+                });
+        }
+
         return $this->sendResponse($tradeInCar->toArray(), $message);
     }
 

@@ -26,7 +26,8 @@ class NotificationObserver
 
         $extraPayload = [
             //'ref_id' => $clientCar->my_car->id
-            'ref_id' => $notificationUser->notification->ref_id
+            'ref_id' => $notificationUser->notification->ref_id,
+            'type' => $notificationUser->notification->action_type
 //            'ref_id' => $clientCar->owner_car_id
         ];
         /*$carData = $this->carRepository->findWithoutFail($notificationUser->notification->ref_id);
