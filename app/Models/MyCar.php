@@ -646,7 +646,7 @@ class MyCar extends Model
      */
     public function bids()
     {
-        return $this->hasMany(TradeInCar::class, 'customer_car_id')->without(['tradeAgainst', 'myCar']);
+        return $this->hasMany(TradeInCar::class, 'customer_car_id')->orderBy('updated_at', 'DESC')->without(['tradeAgainst', 'myCar']);
     }
 
     /**
@@ -655,8 +655,8 @@ class MyCar extends Model
     public function getTopBidsAttribute()
     {
         return $this->bids()
-            ->whereHas('evaluationDetails', function ($qwer) {
-                return $qwer->orderBy('amount', 'DESC')
+            ->whereHas('evaluationDetails', function ($evaluationDetails) {
+                return $evaluationDetails->orderBy('amount', 'DESC')
                     ->take(5);
             })->with('evaluationDetails')
             ->get()->makeVisible('evaluationDetails');
@@ -667,8 +667,9 @@ class MyCar extends Model
      */
     public function reviews()
     {
-        return $this->hasMany(Review::class, 'car_id');
+        return $this->hasMany(Review::class, 'car_id')->orderBy('created_at', 'DESC');
     }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

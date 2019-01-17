@@ -85,6 +85,7 @@ class TradeInCar extends Model
         'amount',
         'type',
         'status',
+        'updated_at',
         'notes'
     ];
 
@@ -184,6 +185,6 @@ class TradeInCar extends Model
      */
     public function evaluationDetails()
     {
-        return $this->hasMany(CarEvaluationBid::class, 'evaluation_id');
+        return $this->hasMany(CarEvaluationBid::class, 'evaluation_id')->orderBy('amount', 'DESC');
     }
 }

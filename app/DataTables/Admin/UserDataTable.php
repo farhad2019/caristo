@@ -42,10 +42,10 @@ class UserDataTable extends DataTable
         });
 
         $dataTable->editColumn('details.dealer_type_text', function (User $model) {
-            if ($model->details->dealer_type == 10) {
-                return "<span class='badge bg-" . Utils::getBoolCss(1, true) . "'> " . User::$DEALER_TYPE[$model->details->dealer_type] . "</span>";
-            } elseif ($model->details->dealer_type == 20) {
-                return "<span class='badge bg-" . Utils::getBoolCss(0, true) . "'> " . User::$DEALER_TYPE[$model->details->dealer_type] . "</span>";
+            if (@$model->details->dealer_type == 10) {
+                return "<span class='badge bg-" . Utils::getBoolCss(1, true) . "'> " . User::$DEALER_TYPE[@$model->details->dealer_type] . "</span>";
+            } elseif (@$model->details->dealer_type == 20) {
+                return "<span class='badge bg-" . Utils::getBoolCss(0, true) . "'> " . User::$DEALER_TYPE[@$model->details->dealer_type] . "</span>";
             } else {
                 return "-";
             }

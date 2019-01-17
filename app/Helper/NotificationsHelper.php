@@ -38,11 +38,12 @@ class NotificationsHelper
             $push->setMessage([
                 'data' => [
                     'title' => config('app.name'),
-                    'body'  => $msg,
+                    'body' => $msg,
                     'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
                     'sound' => 'default',
                     //'sound' => 'default',
-                    'ref'   => $extraPayLoadData['ref_id']
+                    'ref' => $extraPayLoadData['ref_id'],
+                    'type' => $extraPayLoadData['type']
                     /*'extra_payload'  => [
                         //'extra_payload' => $extraPayLoadData,
                         $extraPayLoadData,
@@ -126,24 +127,24 @@ class NotificationsHelper
             ])->setDevicesToken($iosDeviceToken)->send();*/
             $push = new PushNotification('fcm');
             $test = $push->setMessage([
-                'data'    => [
+                'data' => [
                     'title' => config('app.name'),
-                    'body'  => $msg,
+                    'body' => $msg,
                     'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
                     'sound' => 'default',
                     //'sound' => 'default',
-                    'ref'   => $extraPayLoadData['ref_id']
+                    'ref' => $extraPayLoadData['ref_id']
                     /*'extra_payload'  => [
                         'extra_payload' => $extraPayLoadData,
                         $extraPayLoadData,
                     ]*/
                 ], 'notification' => [
                     'title' => config('app.name'),
-                    'body'  => $msg,
+                    'body' => $msg,
                     'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
                     'sound' => 'default',
                     //'sound' => 'default',
-                    'ref'   => $extraPayLoadData['ref_id']
+                    'ref' => $extraPayLoadData['ref_id']
                     /*'extra_payload'  => [
                         'extra_payload' => $extraPayLoadData,
                         $extraPayLoadData,

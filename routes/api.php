@@ -66,6 +66,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/users', 'UserAPIController');
 
     Route::resource('v1/roles', 'RoleAPIController');
+
     Route::resource('v1/permissions', 'PermissionAPIController');
 
     Route::resource('v1/contactus', 'ContactUsAPIController');
@@ -77,6 +78,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/news', 'NewsAPIController');
 
     Route::resource('v1/comments', 'CommentAPIController');
+
     Route::resource('v1/newsInteractions', 'NewsInteractionAPIController');
 
     Route::post('v1/change-password', 'AuthAPIController@changePassword')->name('change-password');
@@ -106,7 +108,6 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/engineTypes', 'EngineTypeAPIController');
 
     Route::resource('v1/myCars', 'MyCarAPIController');
-
 
     Route::post('v1/users-regions', 'UserAPIController@addRegion');
 

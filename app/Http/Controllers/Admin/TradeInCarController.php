@@ -70,10 +70,10 @@ class TradeInCarController extends AppBaseController
 //        dd($tradeInRequests);
 //dd($tradeInRequests->getBindings(), $tradeInRequests->toSql());
 //        if (Auth::user()->hasRole('showroom-owner')) {
-            return view('admin.showroom.carsListing')
-                ->with([
-                    'tradeInRequests' => $tradeInRequests
-                ]);
+        return view('admin.showroom.carsListing')
+            ->with([
+                'tradeInRequests' => $tradeInRequests
+            ]);
 //        }
 //        $myCars = Auth::user()->cars()->whereHas('myTradeCars', function ($cars) {
 //            return $cars->whereRaw('amount IS NOT NULL');
@@ -137,10 +137,10 @@ class TradeInCarController extends AppBaseController
         }
 
 //        if (Auth::user()->hasRole('showroom-owner')) {
-            $this->tradeInCarRepository->update(['status' => 10], $id);
-            return view('admin.showroom.details')->with([
-                'tradeInRequest' => $tradeInRequest
-            ]);
+        $this->tradeInCarRepository->update(['status' => 10], $id);
+        return view('admin.showroom.details')->with([
+            'tradeInRequest' => $tradeInRequest
+        ]);
 //        }
 //        return json_encode(['success' => $tradeInRequest]);
         /*BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $tradeInCar);
@@ -186,23 +186,26 @@ class TradeInCarController extends AppBaseController
 
         if ($request->type == TradeInCar::TRADE_IN) {
             $tradeInCar = $this->tradeInCarRepository->updateRecord($request, $tradeInCar);
+            Flash::success('Bid on trade in request has been submitted successfully');
+            $notification_type = Notification::NOTIFICATION_TYPE_TRADE_IN_NEW_BID;
         } else {
-            $tradeInCar = $this->bidRepository->saveRecord($request, $tradeInCar);
+            $this->tradeInCarRepository->update(['updated_at' => Carbon::now()->format('Y-m-d H:i:s')], $id);
+            $this->bidRepository->saveRecord($request, $tradeInCar);
+            Flash::success('Bid on evaluation request has been submitted successfully');
+            $notification_type = Notification::NOTIFICATION_TYPE_EVALUATION_NEW_BID;
         }
 
         ################# NOTIFICATION ####################
-        /*$notification = [
+        $notification = [
             'sender_id' => Auth::id(),
-            'action_type' => Notification::NOTIFICATION_TYPE_NEW_BID,
+            'action_type' => $notification_type,
             'url' => null,
             'ref_id' => $tradeInCar->id,
-            'message' => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_NEW_BID]
+            'message' => Notification::$NOTIFICATION_MESSAGE[$notification_type]
         ];
 
-        $this->notificationRepository->notification($notification, $tradeInCar->tradeAgainst->owner_id);*/
+        $this->notificationRepository->notification($notification, $tradeInCar->tradeAgainst->owner_id);
 
-
-        Flash::success('Trade In Request successfully.');
         return redirect(route('admin.tradeInCars.index'));
     }
 
