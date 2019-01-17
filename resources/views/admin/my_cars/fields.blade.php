@@ -903,7 +903,7 @@
             } else {
                 $('.regions').hide();
                 $('.cartype').hide();
-                $('.non-luxury').show();
+             //   $('.non-luxury').show();
 //                $('.region').show();
             }
 
@@ -939,7 +939,7 @@
                 } else {
                     $('.regions').hide();
                     $('.cartype').hide();
-                    $('.non-luxury').show();
+                  //  $('.non-luxury').show();
 //                    $('.region').show();
                 }
 
