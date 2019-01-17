@@ -286,7 +286,7 @@ class MakeBidAPIController extends AppBaseController
             $specification = array();
             $specification[0] = array("value" => (string)$car['carModel']['name'], "attr_id" => 0, "attr_name" => "Model", "attr_icon" => null, "attr_option" => null);
             $specification[1] = array("value" => (string)$car['engineType']['name'], "attr_id" => 0, "attr_name" => "Engine Type", "attr_icon" => null, "attr_option" => null);
-            $specification[2] = array("value" => (string)$car['year'], "attr_id" => 0, "attr_name" => "Model Year", "attr_icon" => null, "attr_option" => null);
+            $specification[2] = array("value" => (string)$car['engineType']['name'], "attr_id" => 0, "attr_name" => "Model Year", "attr_icon" => null, "attr_option" => null);
             $specification[3] = $car['myCarAttributes'][$performance_key]->toArray();
             $specification[4] = array("value" => $car['regionalSpecs']['name'], "attr_id" => 0, "attr_name" => "Regional Specs", "attr_icon" => null, "attr_option" => null);
             $specification[5] = $car['myCarAttributes'][$acceleration_key]->toArray();
