@@ -19,9 +19,9 @@ class ConsultancyRequestDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        $dataTable->addColumn('car_name', function (ConsultancyRequest $model) {
+        /*$dataTable->addColumn('car_name', function (ConsultancyRequest $model) {
             return "<a href='" . route('admin.cars.show', ['id' => $model->car_id]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->car_name . "</span></a>";
-        });
+        });*/
 
         $dataTable->addColumn('phone', function (ConsultancyRequest $model) {
             return $model->country_code . "-" . $model->phone . "</span></a>";
@@ -39,7 +39,7 @@ class ConsultancyRequestDataTable extends DataTable
      */
     public function query(ConsultancyRequest $model)
     {
-        return $model->newQuery()->select('admin_queries.*', 'cars.name as car_name')->join('cars', "admin_queries.car_id", "=", "cars.id")->where(['admin_queries.type' => 10]);
+        return $model->newQuery()->select('admin_queries.*')->where(['admin_queries.type' => 10]);
     }
 
     /**
@@ -81,7 +81,7 @@ class ConsultancyRequestDataTable extends DataTable
             'name',
             'email',
             'phone',
-            'car_name'
+//            'car_name'
         ];
     }
 
