@@ -112,13 +112,18 @@ class MyCarController extends AppBaseController
     /**
      * Show the form for creating a new MyCar.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
         $user = Auth::user();
-        if ($user->cars()->count() >= $user->details->limit_for_cars) {
-            Flash::error('Your cars have reached to the limit.(' . $this->carLimit . ')');
+
+        if ($user->cars()->count() >= $user->details->limit_for_cars ) {
+            Flash::error('Your cars have reached to the limit.(' . $user->details->limit_for_cars . ')');
+            return redirect(route('admin.myCars.index'));
+        }
+        if ($user->details->expiry_date > now()->format('Y-m-d')) {
+            Flash::error('Your cars limit has been expired, contact admin');
             return redirect(route('admin.myCars.index'));
         }
         $brands = $this->brandRepository->all()->pluck('name', 'id');
@@ -212,6 +217,7 @@ class MyCarController extends AppBaseController
             '2028' => "2028",
             '2029' => "2029",
             '2030' => "2030"];
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.my_cars.create')->with([
             'categories' => $categories,
