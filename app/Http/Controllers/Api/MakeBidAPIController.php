@@ -283,10 +283,10 @@ class MakeBidAPIController extends AppBaseController
         $interior_key = array_search(3, array_column($car['myCarAttributes']->toArray(), 'attr_id'));
         $service_key = array_search(6, array_column($car['myCarAttributes']->toArray(), 'attr_id'));
 
-        if($car['category_id'] != 28) {
+        if ($car['category_id'] != 28) {
             $specification = array();
-            $specification[0] = array("value" => $car['carModel']['name'], "attr_id" => 0, "attr_name" => "Model", "attr_icon" => storage_path("media_files/model.png"), "attr_option" => null);
-            $specification[1] = array("value" => $car['engineType']['name'], "attr_id" => 0, "attr_name" => "Engine Type", "attr_icon" => null, "attr_option" => null);
+            $specification[0] = array("value" => $car['carModel']['name'], "attr_id" => 0, "attr_name" => "Model", "attr_icon" => url("storage/app/media_files/model.png"), "attr_option" => null);
+            $specification[1] = array("value" => $car['engineType']['name'], "attr_id" => 0, "attr_name" => "Engine Type", "attr_icon" => url("storage/app/media_files/enginetype.png"), "attr_option" => null);
             $specification[2] = array("value" => (string)$car['year'], "attr_id" => 0, "attr_name" => "Model Year", "attr_icon" => null, "attr_option" => null);
             $specification[3] = $car['myCarAttributes'][$performance_key]->toArray();
             $specification[4] = array("value" => $car['regionalSpecs']['name'], "attr_id" => 0, "attr_name" => "Regional Specs", "attr_icon" => null, "attr_option" => null);
