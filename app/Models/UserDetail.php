@@ -141,6 +141,9 @@ class UserDetail extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function regionDetail()
     {
         return $this->hasOne(Region::class,'id','region_id');

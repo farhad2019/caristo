@@ -348,6 +348,7 @@ class MyCar extends Model
         'country_code',
         'phone',
         'year',
+        'currency',
         'amount',
         'average_mkp',
         'chassis',

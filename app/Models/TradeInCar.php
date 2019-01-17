@@ -83,6 +83,7 @@ class TradeInCar extends Model
         'customer_car_id',
         'user_id',
         'amount',
+        'currency',
         'type',
         'status',
         'updated_at',

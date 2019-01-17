@@ -17,7 +17,7 @@
 
 <div class="car_detail clearfix">
     <div class="left">
-        <h2 class="car_model">{{ $tradeInRequest->tradeAgainst->year }} {{ $tradeInRequest->tradeAgainst->carModel->brand->name }} {{ $tradeInRequest->tradeAgainst->carModel->name }}</h2>
+        <h2 class="car_model">{{ @$tradeInRequest->tradeAgainst->year }} {{ @$tradeInRequest->tradeAgainst->carModel->brand->name }} {{ @$tradeInRequest->tradeAgainst->carModel->name }}</h2>
         <ul>
             <li>
                 <span class="icon-icon-5"></span>
@@ -62,11 +62,11 @@
                 </p>
             </li>
             {{--<li>--}}
-                {{--<span class="icon-icon-12"></span>--}}
-                {{--<p>--}}
-                    {{--<small>engine type</small>--}}
-                    {{--{{ $tradeInRequest->tradeAgainst->engineType->name?? '-' }}--}}
-                {{--</p>--}}
+            {{--<span class="icon-icon-12"></span>--}}
+            {{--<p>--}}
+            {{--<small>engine type</small>--}}
+            {{--{{ $tradeInRequest->tradeAgainst->engineType->name?? '-' }}--}}
+            {{--</p>--}}
             {{--</li>--}}
             @foreach($tradeInRequest->tradeAgainst->myCarAttributes as $attribute)
                 <li>
@@ -113,7 +113,7 @@
             @endforeach--}}
         </ul>
     </div>
-    @if(empty($tradeInRequest->amount) && $tradeInRequest->evaluationDetails->count() == 0)
+    @if(empty($tradeInRequest->amount) && $tradeInRequest->evaluationDetails()->where('user_id', \Illuminate\Support\Facades\Auth::id())->count() == 0)
         @if($tradeInRequest->bid_close_at > now())
             <div class="right">
                 <div class="bid_widget">
@@ -141,7 +141,8 @@
                     </div>
                     <h4>Place a Bid now</h4>
                     {!! Form::open(['route' => ['admin.tradeInCars.update', $tradeInRequest->id], "id"=>"submitBit", 'method' => 'patch']) !!}
-                    <input type="number" id="amount_bit" name="amount" placeholder="{{ \Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency }}"
+                    <input type="number" id="amount_bit" name="amount"
+                           placeholder="{{ @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency }}"
                            value="{{ isset($tradeIn)? number_format($tradeInRequest->amount):'' }}" min="1">
                     <button type="submit" class="submit" name="">submit</button>
                     {!! Form::hidden('car_id', $tradeInRequest->tradeAgainst->id) !!}
@@ -185,9 +186,7 @@
                         </svg>
                     </div>
                     <div class="controlls">
-                        <div class=""
-                             style="font-size: 18px;">{{ ($tradeInRequest->type == \App\Models\TradeInCar::TRADE_IN ) ? number_format($tradeInRequest->amount) : number_format($tradeInRequest->evaluationDetails()->where('user_id', \Illuminate\Support\Facades\Auth::id())->first()->amount) }}
-                            AED
+                        <div style="font-size: 18px;"> {!! ($tradeInRequest->type == \App\Models\TradeInCar::TRADE_IN ) ? number_format($tradeInRequest->amount) . '<br>'. $tradeInRequest->currency : number_format($tradeInRequest->evaluationDetails()->where('user_id', \Illuminate\Support\Facades\Auth::id())->first()->amount) . '<br>' . $tradeInRequest->evaluationDetails()->where('user_id', \Illuminate\Support\Facades\Auth::id())->first()->currency !!}
                         </div>
                         <button class="play" id="pause"></button>
                     </div>
@@ -207,7 +206,7 @@
                 <h2 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->brand->name }}</h2>
                 <h3 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->name }}</h3>
                 <h4 style="text-align: left; color: gray">{{ $tradeInRequest->myCar->year }}</h4>
-                <h2 style="text-align: left;">AED {{ number_format($tradeInRequest->myCar->amount) }}</h2>
+                <h2 style="text-align: left;">{{ number_format($tradeInRequest->myCar->currency) }} {{ number_format($tradeInRequest->myCar->amount) }}</h2>
             </div>
         </div>
     @endif

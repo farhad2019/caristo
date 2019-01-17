@@ -185,6 +185,7 @@ class TradeInCarRepository extends BaseRepository
     public function updateRecord($request, $tradeInCar)
     {
         $input = $request->only('amount');
+        $input['currency'] = Auth::user()->details->regionDetail->currency;
         $tradeInCar = $this->update($input, $tradeInCar->id);
 
         /*if ($tradeInCar) {

@@ -45,6 +45,7 @@ class CarEvaluationBidRepository extends BaseRepository
     public function saveRecord($request, $tradeInCar)
     {
         $input = $request->only('amount');
+        $input['currency'] = Auth::user()->details->regionDetail->currency;
         $input['evaluation_id'] = $tradeInCar->id;
         $input['user_id'] = Auth::id();
         $input['status'] = 10;

@@ -27,6 +27,7 @@ class CarEvaluationBid extends Model
         'evaluation_id',
         'user_id',
         'amount',
+        'currency',
         'status'
     ];
 
