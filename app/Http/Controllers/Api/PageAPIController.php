@@ -8,6 +8,7 @@ use App\Models\Page;
 use App\Repositories\Admin\PageRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\App;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
@@ -83,44 +84,6 @@ class PageAPIController extends AppBaseController
         return $this->sendResponse($pages->toArray(), 'Pages retrieved successfully');
     }
 
-    /**
-     * @param CreatePageAPIRequest $request
-     * @return Response
-     *
-     * @SWG\Post(
-     *      path="/pages",
-     *      summary="Store a newly created Page in storage",
-     *      tags={"Page"},
-     *      description="Store Page",
-     *      produces={"application/json"},
-     *      @SWG\Parameter(
-     *          name="body",
-     *          in="body",
-     *          description="Page that should be stored",
-     *          required=false,
-     *          @SWG\Schema(ref="#/definitions/Page")
-     *      ),
-     *      @SWG\Response(
-     *          response=200,
-     *          description="successful operation",
-     *          @SWG\Schema(
-     *              type="object",
-     *              @SWG\Property(
-     *                  property="success",
-     *                  type="boolean"
-     *              ),
-     *              @SWG\Property(
-     *                  property="data",
-     *                  ref="#/definitions/Page"
-     *              ),
-     *              @SWG\Property(
-     *                  property="message",
-     *                  type="string"
-     *              )
-     *          )
-     *      )
-     * )
-     */
     public function store(CreatePageAPIRequest $request)
     {
         $input = $request->all();
@@ -180,52 +143,6 @@ class PageAPIController extends AppBaseController
         return $this->sendResponse($page->toArray(), 'Page retrieved successfully');
     }
 
-    /**
-     * @param int $id
-     * @param UpdatePageAPIRequest $request
-     * @return Response
-     *
-     * @SWG\Put(
-     *      path="/pages/{id}",
-     *      summary="Update the specified Page in storage",
-     *      tags={"Page"},
-     *      description="Update Page",
-     *      produces={"application/json"},
-     *      @SWG\Parameter(
-     *          name="id",
-     *          description="id of Page",
-     *          type="integer",
-     *          required=true,
-     *          in="path"
-     *      ),
-     *      @SWG\Parameter(
-     *          name="body",
-     *          in="body",
-     *          description="Page that should be updated",
-     *          required=false,
-     *          @SWG\Schema(ref="#/definitions/Page")
-     *      ),
-     *      @SWG\Response(
-     *          response=200,
-     *          description="successful operation",
-     *          @SWG\Schema(
-     *              type="object",
-     *              @SWG\Property(
-     *                  property="success",
-     *                  type="boolean"
-     *              ),
-     *              @SWG\Property(
-     *                  property="data",
-     *                  ref="#/definitions/Page"
-     *              ),
-     *              @SWG\Property(
-     *                  property="message",
-     *                  type="string"
-     *              )
-     *          )
-     *      )
-     * )
-     */
     public function update($id, UpdatePageAPIRequest $request)
     {
         $input = $request->all();
@@ -242,44 +159,6 @@ class PageAPIController extends AppBaseController
         return $this->sendResponse($page->toArray(), 'Page updated successfully');
     }
 
-    /**
-     * @param int $id
-     * @return Response
-     *
-     * @SWG\Delete(
-     *      path="/pages/{id}",
-     *      summary="Remove the specified Page from storage",
-     *      tags={"Page"},
-     *      description="Delete Page",
-     *      produces={"application/json"},
-     *      @SWG\Parameter(
-     *          name="id",
-     *          description="id of Page",
-     *          type="integer",
-     *          required=true,
-     *          in="path"
-     *      ),
-     *      @SWG\Response(
-     *          response=200,
-     *          description="successful operation",
-     *          @SWG\Schema(
-     *              type="object",
-     *              @SWG\Property(
-     *                  property="success",
-     *                  type="boolean"
-     *              ),
-     *              @SWG\Property(
-     *                  property="data",
-     *                  type="string"
-     *              ),
-     *              @SWG\Property(
-     *                  property="message",
-     *                  type="string"
-     *              )
-     *          )
-     *      )
-     * )
-     */
     public function destroy($id)
     {
         /** @var Page $page */

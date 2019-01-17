@@ -124,6 +124,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/reviews', 'ReviewAPIController');
 });
 
+Route::resource('v1/pages', 'PageAPIController');
+
 Route::resource('v1/regions', 'RegionAPIController');
 
 Route::resource('v1/carBrands', 'CarBrandAPIController');
