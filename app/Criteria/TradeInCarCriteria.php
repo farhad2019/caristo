@@ -28,7 +28,9 @@ class TradeInCarCriteria implements CriteriaInterface
         });
 
         $model = $model->when($type == 20, function ($query) use ($type) {
-            return $query->where(['type' => $type]);
+            return $query->whereHas('evaluationDetails', function ($evaluationDetails){
+                return $evaluationDetails->orderBy('amount', 'DESC');
+            });
         });*/
         $model = $model->where(['user_id' => Auth::id(), 'type' => $type]);
         $model = $model->orderBy('created_at', 'desc');

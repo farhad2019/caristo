@@ -22,6 +22,13 @@
             <li>
                 <span class="icon-icon-5"></span>
                 <p>
+                    <small>Make</small>
+                    {{ $tradeInRequest->tradeAgainst->carModel->brand->name }}
+                </p>
+            </li>
+            <li>
+                <span class="icon-icon-5"></span>
+                <p>
                     <small>Model</small>
                     {{ $tradeInRequest->tradeAgainst->carModel->name }}
                 </p>

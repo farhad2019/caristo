@@ -158,7 +158,7 @@ class AuthAPIController extends AppBaseController
             $user->save();
 
             $credentials = [
-                'email'    => $request->email,
+                'email' => $request->email,
                 'password' => $request->password
             ];
 
@@ -434,8 +434,8 @@ class AuthAPIController extends AppBaseController
         $user = auth()->guard('api')->setToken($token)->user()->toArray();
         $user = array_merge($user, [
             'access_token' => $token,
-            'token_type'   => 'bearer',
-            'expires_in'   => auth()->guard('api')->factory()->getTTL() * 60
+            'token_type' => 'bearer',
+            'expires_in' => auth()->guard('api')->factory()->getTTL() * 60
         ]);
         return $this->sendResponse(['user' => $user], 'Logged in successfully');
     }
@@ -454,6 +454,13 @@ class AuthAPIController extends AppBaseController
      *          name="email",
      *          description="User email",
      *          type="string",
+     *          required=true,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="is_for_reset",
+     *          description="is this request for reset forget password code",
+     *          type="integer",
      *          required=true,
      *          in="query"
      *      ),
@@ -483,8 +490,11 @@ class AuthAPIController extends AppBaseController
         }
 
         $code = rand(1111, 9999);
-
-        $subject = "Forgot Password Verification Code";
+        if ($request->is_for_reset == 1) {
+            $subject = "Forgot Password Verification Code";
+        } else {
+            $subject = "Please verify your email address.";
+        }
         try {
             $email = $user->email;
             $name = $user->name;
@@ -579,8 +589,8 @@ class AuthAPIController extends AppBaseController
                 $token = JWTAuth::fromUser($user);
                 $user = array_merge($user->toArray(), [
                     'access_token' => $token,
-                    'token_type'   => 'bearer',
-                    'expires_in'   => auth()->guard('api')->factory()->getTTL() * 60
+                    'token_type' => 'bearer',
+                    'expires_in' => auth()->guard('api')->factory()->getTTL() * 60
                 ]);
                 return $this->sendResponse(['user' => $user], 'Logged in successfully');
             } else {
@@ -850,7 +860,7 @@ class AuthAPIController extends AppBaseController
         $user = \Auth::user();
 
         $credentials = [
-            'email'    => $user->email,
+            'email' => $user->email,
             'password' => $old_password
         ];
         if (!$token = auth()->guard('api')->attempt($credentials)) {

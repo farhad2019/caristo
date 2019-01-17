@@ -227,6 +227,13 @@
                         "description": "User email",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "is_for_reset",
+                        "in": "query",
+                        "description": "is this request for reset forget password code",
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {

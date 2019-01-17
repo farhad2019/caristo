@@ -656,7 +656,7 @@ class MyCar extends Model
     {
         return $this->bids()
             ->whereHas('evaluationDetails', function ($qwer) {
-                return $qwer->orderBy('amount', 'desc')
+                return $qwer->orderBy('amount', 'DESC')
                     ->take(5);
             })->with('evaluationDetails')
             ->get()->makeVisible('evaluationDetails');
