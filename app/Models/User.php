@@ -103,6 +103,7 @@ class User extends Authenticatable implements JWTSubject
     public static $rules = [
         'name'                  => 'required|max:20',
         'email'                 => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
+        'expiry_date'           => 'required|date_format:Y-m-d|after:today',
 //        'email'                 => 'required|email',
 //        'phone'                 => 'required|string|max:20',
 //        'roles'                 => 'required',
@@ -120,6 +121,7 @@ class User extends Authenticatable implements JWTSubject
         'phone'                 => 'phone|max:20',
         'roles'                 => 'sometimes|required',
         'image'                 => 'sometimes|required|image|mimes:jpg,jpeg,png|max:500',
+        'expiry_date'           => 'required|date_format:Y-m-d|after:today',
         'password'              => 'sometimes|nullable|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'sometimes|nullable|min:6',
     ];
