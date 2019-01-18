@@ -86,8 +86,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         \Validator::extend('check_featured_update', function ($attribute, $value, $parameters, $validator) use ($FeaturedLimit) {
-            if ($value == 1) {
-                $featured_car_count = Auth::user()->cars()->where('is_featured', 1)->where('id', '!=', Request::segment(3))->count();
+            $user = Auth::user();
+            if ($value == 1 && (!$user->hasRole('admin'))) {
+                $featured_car_count = $user->cars()->where('is_featured', 1)->where('id', '!=', Request::segment(3))->count();
                 return $featured_car_count < $FeaturedLimit;
             }
             return true;

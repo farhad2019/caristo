@@ -93,7 +93,7 @@
 <script src='https://cdn.rawgit.com/admsev/jquery-play-sound/master/jquery.playSound.js'></script>
 <script src='http://afarkas.github.io/webshim/js-webshim/minified/polyfiller.js'></script>
 {{--<script src="{{ url('public/js/showroom/polyfiller.js') }}"></script>--}}
-<script src="{{ url('public/js/showroom/script_new.js') }}"></script>
+<script src="{{ url('public/js/showroom/script.js') }}"></script>
 @stack('scripts')
 </body>
 </html>
