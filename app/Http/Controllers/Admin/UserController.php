@@ -253,8 +253,7 @@ class UserController extends AppBaseController
         $data = $request->all();
 
         if ($data['limit_for_cars'] < $user->cars()->count()) {
-            Flash::error('Your cars have reached to the limit.(' . $user->cars()->count() . ')');
-            return Redirect::back()->withErrors(['Car limit should be greater than '.$user->cars()->count()]);
+            return Redirect::back()->withErrors(['Car limit should be greater than user cars. ('.$user->cars()->count().')']);
         }
 
         unset($data['email']);
