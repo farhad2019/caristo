@@ -20,8 +20,8 @@
                             </form>
                         </div>
                         <div class="col-md-6 sort_parent">
-                            <label>Total Trade In Reqeusts:</label>
-                            <div class=""> {{ $tradeInRequests->count() }}</div>
+                            <label>Total Requests:</label>
+                            <div> {{ $tradeInRequests->count() }}</div>
                         </div>
                     </div>
                 </div>

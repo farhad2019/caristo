@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -662,6 +663,9 @@ class AuthAPIController extends AppBaseController
             $postData['password'] = bcrypt($request->password);
             try {
                 $data = $this->userRepository->getUserByEmail($request->email);
+                if (Hash::check($request->password, $data->password)) {
+                    return $this->sendErrorWithData("New password should not be same as old password", 403);
+                }
                 $user = $this->userRepository->update($postData, $data->id);
                 DB::table('password_resets')->where(['code' => $code, 'email' => $request->email])->delete();
 

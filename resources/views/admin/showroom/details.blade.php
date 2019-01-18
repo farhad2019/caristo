@@ -206,7 +206,7 @@
                 <h2 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->brand->name }}</h2>
                 <h3 style="text-align: left;">{{ $tradeInRequest->myCar->carModel->name }}</h3>
                 <h4 style="text-align: left; color: gray">{{ $tradeInRequest->myCar->year }}</h4>
-                <h2 style="text-align: left;">{{ number_format($tradeInRequest->myCar->currency) }} {{ number_format($tradeInRequest->myCar->amount) }}</h2>
+                <h2 style="text-align: left;">{{ $tradeInRequest->myCar->currency }} {{ number_format($tradeInRequest->myCar->amount) }}</h2>
             </div>
         </div>
     @endif
@@ -314,6 +314,8 @@
                     alert('limit exceed. 1 - 1000000');
                     return false;
                 }
+
+                $(".submit").attr("disabled", true);
                 return true
             });
         });
@@ -331,6 +333,4 @@
         ///// Number formating /////
 
     });
-
-
 </script>
