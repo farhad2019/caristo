@@ -103,11 +103,11 @@ class MyCarController extends AppBaseController
     {
         $user = Auth::user();
 
-        if ($user->cars()->count() >= $user->details->limit_for_cars ) {
+        if ($user->cars()->count() >= $user->details->limit_for_cars) {
             Flash::error('Your cars have reached to the limit.(' . $user->details->limit_for_cars . ')');
             return redirect(route('admin.myCars.index'));
         }
-        if ($user->details->expiry_date > now()->format('Y-m-d')) {
+        if ($user->details->expiry_date <= now()->format('Y-m-d')) {
             Flash::error('Your cars limit has been expired, contact admin');
             return redirect(route('admin.myCars.index'));
         }
@@ -202,6 +202,16 @@ class MyCarController extends AppBaseController
             '2028' => "2028",
             '2029' => "2029",
             '2030' => "2030"];
+        $years_classic = $years_pre_owned = $years_outlet_mall = [];
+
+        for ($a = 1901; $a <= now()->format('Y'); $a++) {
+            if ($a <= 2010)
+                $years_classic[$a] = $a;
+            if ($a >= 2010 && $a <= now()->format('Y'))
+                $years_pre_owned[$a] = $a;
+            if ($a >= 2015 && $a <= now()->format('Y'))
+                $years_outlet_mall[$a] = $a;
+        }
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         return view('admin.my_cars.create')->with([
@@ -216,6 +226,9 @@ class MyCarController extends AppBaseController
             'carModels' => $carModels,
             'regions' => $regions,
             'years' => $years,
+            'years_classic' => $years_classic,
+            'years_pre_owned' => $years_pre_owned,
+            'years_outlet_mall' => $years_outlet_mall,
             'brands' => $brands
         ]);
     }
@@ -226,6 +239,15 @@ class MyCarController extends AppBaseController
      */
     public function store(CreateMyCarRequest $request)
     {
+        $user = Auth::user();
+        if ($user->cars()->count() >= $user->details->limit_for_cars) {
+            Flash::error('Your cars have reached to the limit.(' . $user->details->limit_for_cars . ')');
+            return redirect(route('admin.myCars.index'));
+        }
+        if ($user->details->expiry_date <= now()->format('Y-m-d')) {
+            Flash::error('Your cars limit has been expired, contact admin');
+            return redirect(route('admin.myCars.index'));
+        }
         //$request->validate($validationArray, $validationMessages);
         $myCar = $this->myCarRepository->saveRecord($request);
 
@@ -273,7 +295,7 @@ class MyCarController extends AppBaseController
      *
      * @param  int $id
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -378,6 +400,16 @@ class MyCarController extends AppBaseController
             '2028' => "2028",
             '2029' => "2029",
             '2030' => "2030"];
+        $years_classic = $years_pre_owned = $years_outlet_mall = [];
+
+        for ($a = 1901; $a <= now()->format('Y'); $a++) {
+            if ($a <= 2010)
+                $years_classic[$a] = $a;
+            if ($a >= 2010 && $a <= now()->format('Y'))
+                $years_pre_owned[$a] = $a;
+            if ($a >= 2015 && $a <= now()->format('Y'))
+                $years_outlet_mall[$a] = $a;
+        }
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
         return view('admin.my_cars.edit')->with([
@@ -395,6 +427,9 @@ class MyCarController extends AppBaseController
             'brands' => $brands,
             'regions' => $regions,
             'years' => $years,
+            'years_classic' => $years_classic,
+            'years_pre_owned' => $years_pre_owned,
+            'years_outlet_mall' => $years_outlet_mall,
             'limited_edition_specs' => $limited_edition_specs,
         ]);
     }

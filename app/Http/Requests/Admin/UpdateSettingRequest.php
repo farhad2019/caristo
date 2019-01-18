@@ -17,6 +17,14 @@ class UpdateSettingRequest extends FormRequest
         return true;
     }
 
+    public function messages()
+    {
+        return [
+            'ask_for_consultancy.*' => 'Ask for consultancy field is required.',
+            'personal_shopper.*' => 'Personal shopper field is required.'
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

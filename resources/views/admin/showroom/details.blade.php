@@ -69,17 +69,19 @@
             {{--</p>--}}
             {{--</li>--}}
             @foreach($tradeInRequest->tradeAgainst->myCarAttributes as $attribute)
-                <li>
-                    <span class="{{ $attribute->carAttribute->icon }}"></span>
-                    <p>
-                        <small>{{ $attribute->carAttribute->name }}</small>
-                        @if($attribute->carAttribute->type == 30)
-                            {!! \App\Models\AttributeOption::find($attribute->value)['option'] !!}
-                        @elseif($attribute->carAttribute->type == 10 || $attribute->carAttribute->type == 20)
-                            {!! $attribute->value !!}
-                        @endif
-                    </p>
-                </li>
+                @if($attribute->carAttribute->name !== 'Trim')
+                    <li>
+                        <span class="{{ $attribute->carAttribute->icon }}"></span>
+                        <p>
+                            <small>{{ $attribute->carAttribute->name }}</small>
+                            @if($attribute->carAttribute->type == 30)
+                                {!! \App\Models\AttributeOption::find($attribute->value)['option'] !!}
+                            @elseif($attribute->carAttribute->type == 10 || $attribute->carAttribute->type == 20)
+                                {!! $attribute->value !!}
+                            @endif
+                        </p>
+                    </li>
+                @endif
             @endforeach
             {{--<li>
                 <span class="icon-icon-14"></span>
