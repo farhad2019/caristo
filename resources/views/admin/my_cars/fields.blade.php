@@ -83,7 +83,7 @@
 
 <!-- Amount Field -->
 <div class="form-group col-sm-6 {{ $errors->has('amount') ? ' has-error' : '' }}">
-    {!! Form::label('amount', 'Amount('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):' ?? 'AED' .'):') !!}
+    {!! Form::label('amount', 'Amount('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):' ?? 'AED' .'):*') !!}
     {!! Form::number('amount', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Amount', 'pattern'=>"^[1-9]\d*$"]) !!}
 
     @if ($errors->has('amount'))
@@ -328,7 +328,7 @@
 </div>
 
 <div class="form-group col-sm-6 regions {{ $errors->has('length') ? ' has-error' : '' }}">
-    {!! Form::label('length', 'Length:') !!}
+    {!! Form::label('length', 'Length:*') !!}
     {!! Form::number('length', isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']:null, ['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
 
     @if ($errors->has('length'))
@@ -339,7 +339,7 @@
 </div>
 
 <div class="form-group col-sm-6 regions {{ $errors->has('width') ? ' has-error' : '' }}">
-    {!! Form::label('width', 'Width:') !!}
+    {!! Form::label('width', 'Width:*') !!}
     {!! Form::number('width',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WIDTH']:null, ['class' => 'form-control', 'placeholder' => 'Width in MM']) !!}
     @if ($errors->has('width'))
         <span class="help-block" style="color: red;">
@@ -349,7 +349,7 @@
 </div>
 
 <div class="form-group col-sm-6 regions {{ $errors->has('height') ? ' has-error' : '' }}">
-    {!! Form::label('height', 'Height:') !!}
+    {!! Form::label('height', 'Height:*') !!}
     {!! Form::number('height',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['HEIGHT']:null, ['class' => 'form-control', 'placeholder' => 'Height in MM']) !!}
     @if ($errors->has('height'))
         <span class="help-block" style="color: red;">
@@ -359,7 +359,7 @@
 </div>
 
 <div class="form-group col-sm-6 regions {{ $errors->has('weight_dist') ? ' has-error' : '' }}">
-    {!! Form::label('weight_dist', 'WEIGHT DISTRIBUTION:') !!}
+    {!! Form::label('weight_dist', 'WEIGHT DISTRIBUTION:*') !!}
     {!! Form::number('weight_dist',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT DISTRIBUTION']:null, ['class' => 'form-control', 'placeholder' => 'WEIGHT DISTRIBUTION']) !!}
     @if ($errors->has('weight_dist'))
         <span class="help-block" style="color: red;">
@@ -369,7 +369,7 @@
 </div>
 
 <div class="form-group col-sm-6 regions" {{ $errors->has('trunk') ? ' has-error' : '' }}>
-    {!! Form::label('trunk', 'Trunk:') !!}
+    {!! Form::label('trunk', 'Trunk:*') !!}
     {!! Form::number('trunk',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['TRUNK']:null, ['class' => 'form-control', 'placeholder' => 'Trunk in Length']) !!}
     @if ($errors->has('trunk'))
         <span class="help-block" style="color: red;">
@@ -379,7 +379,7 @@
 </div>
 
 <div class="form-group col-sm-6 regions {{ $errors->has('weight') ? ' has-error' : '' }}">
-    {!! Form::label('WEIGHT', 'WEIGHT:') !!}
+    {!! Form::label('WEIGHT', 'WEIGHT:*') !!}
     {!! Form::number('weight',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT']:null, ['class' => 'form-control', 'placeholder' => 'Weight in KG']) !!}
     @if ($errors->has('weight'))
         <span class="help-block" style="color: red;">
@@ -393,7 +393,7 @@
     <h3>Seating Capacity</h3>
     <hr>
     <div class="form-group col-sm-6 regions {{ $errors->has('seats') ? ' has-error' : '' }}">
-        {!! Form::label('seats', 'MAX.NO OF SEATS:') !!}
+        {!! Form::label('seats', 'MAX.NO OF SEATS:*') !!}
         {!! Form::number('seats', isset($limited_edition_specs)? $limited_edition_specs['Seating_Capacity']['MAX.NO OF SEATS']:null, ['class' => 'form-control', 'placeholder' => 'MAX.NO OF SEATS']) !!}
         @if ($errors->has('seats'))
             <span class="help-block" style="color: red;">
@@ -423,7 +423,7 @@
     <h3>Engine</h3>
     <hr>
     <div class="form-group col-sm-6 regions {{ $errors->has('displacement') ? ' has-error' : '' }}">
-        {!! Form::label('DISPLACEMENT', 'DISPLACEMENT:') !!}
+        {!! Form::label('DISPLACEMENT', 'DISPLACEMENT:*') !!}
         {!! Form::number('displacement',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['DISPLACEMENT']:null, ['class' => 'form-control', 'placeholder' => 'Displacement is CC']) !!}
         @if ($errors->has('displacement'))
             <span class="help-block" style="color: red;">
@@ -432,7 +432,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6 regions {{ $errors->has('cylinders') ? ' has-error' : '' }}">
-        {!! Form::label('cylinders', 'NO. OF  cylinders:') !!}
+        {!! Form::label('cylinders', 'NO. OF  cylinders:*') !!}
         {!! Form::number('cylinders',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['NO. OF CYLINDER']:null, ['class' => 'form-control', 'placeholder' => 'NO. OF  cylinders']) !!}
         @if ($errors->has('cylinders'))
             <span class="help-block" style="color: red;">
@@ -447,7 +447,7 @@
     <h3>Performance</h3>
     <hr>
     <div class="form-group col-sm-6 regions {{ $errors->has('max_speed') ? ' has-error' : '' }}">
-        {!! Form::label('SPEED', 'MAX SPEED:') !!}
+        {!! Form::label('SPEED', 'MAX SPEED:*') !!}
         {!! Form::number('max_speed',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['MAX SPEED']:null, ['class' => 'form-control', 'placeholder' => 'Max speed in KM/H']) !!}
         @if ($errors->has('max_speed'))
             <span class="help-block" style="color: red;">
@@ -456,7 +456,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6 regions {{ $errors->has('acceleration') ? ' has-error' : '' }}">
-        {!! Form::label('ACCELERATION', 'ACCELERATION') !!}
+        {!! Form::label('ACCELERATION', 'ACCELERATION:*') !!}
         {!! Form::number('acceleration',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['ACCELERATION 0-100']:null, ['class' => 'form-control', 'placeholder' => 'ACCELERATION 0-100 Sec']) !!}
         @if ($errors->has('acceleration'))
             <span class="help-block" style="color: red;">
@@ -465,7 +465,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6 regions {{ $errors->has('hp_rpm') ? ' has-error' : '' }}">
-        {!! Form::label('RPM', 'HP / RPM') !!}
+        {!! Form::label('RPM', 'HP / RPM:*') !!}
         {!! Form::number('hp_rpm',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['HP / RPM']:null, ['class' => 'form-control', 'placeholder' => 'HP / RPM']) !!}
         @if ($errors->has('hp_rpm'))
             <span class="help-block" style="color: red;">
@@ -474,7 +474,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6 regions {{ $errors->has('torque') ? ' has-error' : '' }}">
-        {!! Form::label('TORQUE', 'TORQUE') !!}
+        {!! Form::label('TORQUE', 'TORQUE:*') !!}
         {!! Form::number('torque',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['TORQUE']:null, ['class' => 'form-control', 'placeholder' => 'TORQUE']) !!}
         @if ($errors->has('torque'))
             <span class="help-block" style="color: red;">
@@ -489,7 +489,7 @@
     <h3>Transmission</h3>
     <hr>
     <div class="form-group col-sm-6 regions  {{ $errors->has('gearbox') ? ' has-error' : '' }}">
-        {!! Form::label('GEARBOX', 'GEARBOX:') !!}
+        {!! Form::label('GEARBOX', 'GEARBOX:*') !!}
         {!! Form::number('gearbox',  isset($limited_edition_specs)? $limited_edition_specs['Transmission ']['GEARBOX']:null, ['class' => 'form-control', 'placeholder' => 'GEARBOX']) !!}
         @if ($errors->has('gearbox'))
             <span class="help-block" style="color: red;">
@@ -504,7 +504,7 @@
     <h3>Brakes</h3>
     <hr>
     <div class="form-group col-sm-6 regions  {{ $errors->has('brakes') ? ' has-error' : '' }}">
-        {!! Form::label('Brakes_System', 'Brakes System:') !!}
+        {!! Form::label('Brakes_System', 'Brakes System:*') !!}
         {!! Form::text('brakes',  isset($limited_edition_specs)? $limited_edition_specs['Brakes']['BRAKES SYSTEM']:null, ['class' => 'form-control', 'placeholder' => 'Brakes  System', 'maxLength' => 55]) !!}
         @if ($errors->has('brakes'))
             <span class="help-block" style="color: red;">
@@ -519,7 +519,7 @@
     <h3>Suspension</h3>
     <hr>
     <div class="form-group col-sm-6 regions  {{ $errors->has('suspension') ? ' has-error' : '' }}">
-        {!! Form::label('Suspension', 'Suspension:') !!}
+        {!! Form::label('Suspension', 'Suspension:*') !!}
         {!! Form::text('suspension',  isset($limited_edition_specs)? $limited_edition_specs['Suspension']['SUSPENSION']:null, ['class' => 'form-control', 'placeholder' => 'Suspension', 'maxLength' => 55]) !!}
         @if ($errors->has('suspension'))
             <span class="help-block" style="color: red;">
@@ -534,7 +534,7 @@
     <h3>Wheels & Tyres</h3>
     <hr>
     <div class="form-group col-sm-6 regions  {{ $errors->has('front_tyre') ? ' has-error' : '' }}">
-        {!! Form::label('FRONT_TYRE', 'Front tyre:') !!}
+        {!! Form::label('FRONT_TYRE', 'Front tyre:*') !!}
         {!! Form::text('front_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['FRONT TYRE']:null, ['class' => 'form-control', 'placeholder' => 'FRONT TYRE', 'maxLength' => 55]) !!}
 
         @if ($errors->has('front_tyre'))
@@ -545,7 +545,7 @@
     </div>
 
     <div class="form-group col-sm-6 regions  {{ $errors->has('back_tyre') ? ' has-error' : '' }}">
-        {!! Form::label('Back_TYRE', 'Back tyre:') !!}
+        {!! Form::label('Back_TYRE', 'Back tyre:*') !!}
         {!! Form::text('back_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['BACK TYRE']:null, ['class' => 'form-control', 'placeholder' => 'Back TYRE', 'maxLength' => 55]) !!}
 
         @if ($errors->has('back_tyre'))
@@ -560,7 +560,7 @@
     <h3>Fuel</h3>
     <hr>
     <div class="form-group col-sm-6 regions  {{ $errors->has('consumption') ? ' has-error' : '' }}">
-        {!! Form::label('FUEL_CONSUMPTION', 'FUEL CONSUMPTION:') !!}
+        {!! Form::label('FUEL_CONSUMPTION', 'FUEL CONSUMPTION:*') !!}
         {!! Form::number('consumption',  isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']:null, ['class' => 'form-control', 'placeholder' => 'FUEL CONSUMPTION L/100KM']) !!}
         @if ($errors->has('consumption'))
             <span class="help-block" style="color: red;">
@@ -575,7 +575,7 @@
     <h3>Emission</h3>
     <hr>
     <div class="form-group col-sm-6 regions  {{ $errors->has('emission') ? ' has-error' : '' }}">
-        {!! Form::label('Emission', 'Emission:') !!}
+        {!! Form::label('Emission', 'Emission:*') !!}
         {!! Form::text('emission',  isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']:null, ['class' => 'form-control', 'placeholder' => 'Emission in gmCO2/KM', 'maxLength' => 55]) !!}
         @if ($errors->has('emission'))
             <span class="help-block" style="color: red;">
@@ -590,7 +590,7 @@
     <h3>Warranty & Maintenance</h3>
     <hr>
     <div class="form-group col-sm-6 regions  {{ $errors->has('warranty') ? ' has-error' : '' }}">
-        {!! Form::label('WARRANTY', 'WARRANTY:') !!}
+        {!! Form::label('WARRANTY', 'WARRANTY:*') !!}
         {!! Form::number('warranty',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['WARRANTY']:null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
         @if ($errors->has('warranty'))
             <span class="help-block" style="color: red;">
@@ -599,7 +599,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6 regions  {{ $errors->has('maintenance') ? ' has-error' : '' }}">
-        {!! Form::label('MAINTENANCE_PROGRAM ', 'MAINTENANCE PROGRAM :') !!}
+        {!! Form::label('MAINTENANCE_PROGRAM ', 'MAINTENANCE PROGRAM :*') !!}
         {!! Form::number('maintenance',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['MAINTENANCE PROGRAM ']:null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
         @if ($errors->has('maintenance'))
             <span class="help-block" style="color: red;">
@@ -615,7 +615,7 @@
     <h3>Production Life Cycle</h3>
     <hr>
     <div class="form-group col-sm-6 regions {{ $errors->has('from') ? ' has-error' : '' }}">
-        {!! Form::label('Lifecycle', 'Start Year:') !!}
+        {!! Form::label('Lifecycle', 'Start Year:*') !!}
         {{--{!! Form::number('from', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
         {!! Form::select('from', $years, @$explodeLifeCycle[0], ['class' => 'form-control select2']) !!}
         @if ($errors->has('from'))
@@ -625,7 +625,7 @@
         @endif
     </div>
     <div class="form-group col-sm-6 regions {{ $errors->has('to') ? ' has-error' : '' }}">
-        {!! Form::label('Lifecycle', 'End Year:') !!}
+        {!! Form::label('Lifecycle', 'End Year:*') !!}
         {{--{!! Form::number('to', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
         {!! Form::select('to', $years, @$explodeLifeCycle[1], ['class' => 'form-control select2']) !!}
         @if ($errors->has('to'))
@@ -639,7 +639,7 @@
 
 <div class="form-group col-sm-12 regions {{ $errors->has('depreciation_trend') ? ' has-error' : '' }}">
     <div class="form-group col-sm-6 regions">
-        {!! Form::label('Depreciation_Trend', 'Depreciation Trend (%):') !!}
+        {!! Form::label('Depreciation_Trend', 'Depreciation Trend (%):*') !!}
         {!! Form::number('depreciation_trend',  null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min'=>1, 'max'=>99]) !!}
         @if ($errors->has('depreciation_trend'))
             <span class="help-block" style="color: red;">
