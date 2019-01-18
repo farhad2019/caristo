@@ -291,7 +291,7 @@ class MyCar extends Model
      * @var array
      */
     protected $casts = [
-
+            'amount' => 'integer' //on request of IOS developers
     ];
 
     /**
