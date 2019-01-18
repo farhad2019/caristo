@@ -2,13 +2,13 @@
 
     <!-- Name Field -->
     <div class="form-group col-sm-6">
-        {!! Form::label('name', 'Name:') !!}
+        {!! Form::label('name', 'Name:*') !!}
         {!! Form::text('name', null, ['class' => 'form-control','maxlength'=>"20", 'size'=>"20"]) !!}
     </div>
 
     <!-- Email Field -->
     <div class="form-group col-sm-6">
-        {!! Form::label('email', 'Email:') !!}
+        {!! Form::label('email', 'Email:*') !!}
         {!! Form::email('email', null, ['class' => 'form-control']) !!}
     </div>
 
@@ -46,7 +46,7 @@
 
     <!-- Expiry Field -->
     <div class="form-group col-sm-6">
-        {!! Form::label('expiry_date', 'Date Of Expiry:') !!}
+        {!! Form::label('expiry_date', 'Date Of Expiry:*') !!}
         {!! Form::date('expiry_date', null, ['class' => 'form-control']) !!}
     </div>
 
@@ -54,13 +54,13 @@
 <div class="clearfix"></div>
     <!-- Password Field -->
     <div class="form-group col-sm-6">
-        {!! Form::label('password', 'Password:') !!}
+        {!! Form::label('password', 'Password:*') !!}
         {!! Form::password('password', ['class' => 'form-control']) !!}
     </div>
 
     <!-- Password Field -->
     <div class="form-group col-sm-6">
-        {!! Form::label('password_confirmation', 'Confirm Password:') !!}
+        {!! Form::label('password_confirmation', 'Confirm Password:*') !!}
         {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
     </div>
 
@@ -83,13 +83,13 @@
                 <div class="tab-pane active clearfix" id="tab_1">
                     <!-- Name Field -->
                     <div class="form-group col-sm-12">
-                        {!! Form::label('name', 'Name:') !!}
+                        {!! Form::label('name', 'Name:*') !!}
                         {!! Form::text('name', $user->details->first_name?? null, ['class' => 'form-control','maxlength'=>"20", 'size'=>"20"]) !!}
                     </div>
 
                     <!-- Phone Field -->
                     <div class="form-group col-sm-6">
-                        {!! Form::label('profession', 'Profession:') !!}
+                        {!! Form::label('profession', 'Profession:*') !!}
                         {!! Form::text('profession', $user->details->profession, ['class' => 'form-control', 'maxLength'=> 15]) !!}
                     </div>
 
@@ -101,19 +101,19 @@
                 @if(!$user->hasRole('showroom-owner'))
                     <!-- Email Field -->
                         <div class="form-group col-sm-6">
-                            {!! Form::label('email', 'Email:') !!}
+                            {!! Form::label('email', 'Email:*') !!}
                             {!! Form::email('email', null, ['class' => 'form-control', 'readonly']) !!}
                         </div>
                 @endif
                 <!-- Country Code Field -->
                     <div class="form-group col-sm-3">
-                        {!! Form::label('country_code', 'Country Code:') !!}
+                        {!! Form::label('country_code', 'Country Code:*') !!}
                         {!! Form::text('country_code', $user->details->country_code?? null, ['class' => 'form-control']) !!}
                     </div>
 
                     <!-- Phone Field -->
                     <div class="form-group col-sm-3">
-                        {!! Form::label('phone', 'Phone:') !!}
+                        {!! Form::label('phone', 'Phone:*') !!}
                         {!! Form::number('phone', $user->details->phone, ['class' => 'form-control', 'min'=> 1]) !!}
                     </div>
 
@@ -137,13 +137,13 @@
 
                     <!-- Expiry Field -->
                     <div class="form-group col-sm-6">
-                        {!! Form::label('expiry_date', 'Date Of Expiry:') !!}
+                        {!! Form::label('expiry_date', 'Date Of Expiry:*') !!}
                         {!! Form::date('expiry_date', $user->details->expiry_date, ['class' => 'form-control']) !!}
                     </div>
 
                     <!-- Phone Field -->
                     <div class="form-group col-sm-6">
-                        {!! Form::label('dob', 'Date Of Birth:') !!}
+                        {!! Form::label('dob', 'Date Of Birth:*') !!}
                         {!! Form::date('dob', $user->details->dob, ['class' => 'form-control']) !!}
                     </div>
 
@@ -177,13 +177,13 @@
                         <div class="clearfix"></div>
                         <!-- Password Field -->
                         <div class="form-group col-sm-6">
-                            {!! Form::label('password', 'Password:') !!}
+                            {!! Form::label('password', 'Password:*') !!}
                             {!! Form::password('password', ['class' => 'form-control']) !!}
                         </div>
 
                         <!-- Password Field -->
                         <div class="form-group col-sm-6">
-                            {!! Form::label('password_confirmation', 'Confirm Password:') !!}
+                            {!! Form::label('password_confirmation', 'Confirm Password:*') !!}
                             {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                         </div>
 
@@ -216,13 +216,13 @@
                     <div class="tab-pane clearfix" id="tab_2">
                         <!-- Name Field -->
                         <div class="form-group col-sm-12">
-                            {!! Form::label('name', 'Showroom Name:') !!}
+                            {!! Form::label('name', 'Showroom Name:*') !!}
                             {!! Form::text('showroom[name]', $user->showroomDetails->name?? null, ['class' => 'form-control']) !!}
                         </div>
 
                         <!-- Address Field -->
                         <div class="form-group col-sm-6">
-                            {!! Form::label('address', 'Showroom Address:') !!}
+                            {!! Form::label('address', 'Showroom Address:*') !!}
                             {!! Form::textarea('showroom[address]', $user->showroomDetails->address?? null, ['class' => 'form-control', 'style' => 'resize:none', 'rows' => 2]) !!}
                         </div>
 
@@ -234,7 +234,7 @@
 
                         <!-- Phone Field -->
                         <div class="form-group col-sm-6">
-                            {!! Form::label('phone', 'Showroom Phone:') !!}
+                            {!! Form::label('phone', 'Showroom Phone:*') !!}
                             {!! Form::number('showroom[phone]', $user->showroomDetails->phone?? null, ['class' => 'form-control','min'=>1]) !!}
                         </div>
 
@@ -246,20 +246,20 @@
 
                     <!-- Email Field -->
                         <div class="form-group col-sm-6">
-                            {!! Form::label('email', 'Email:') !!}
+                            {!! Form::label('email', 'Email:*') !!}
                             {!! Form::email('email', null, ['class' => 'form-control', 'readonly']) !!}
                         </div>
 
                         <div class="clearfix"></div>
                         <!-- Password Field -->
                         <div class="form-group col-sm-6">
-                            {!! Form::label('password', 'Password:') !!}
+                            {!! Form::label('password', 'Password:*') !!}
                             {!! Form::password('password', ['class' => 'form-control']) !!}
                         </div>
 
                         <!-- Password Field -->
                         <div class="form-group col-sm-6">
-                            {!! Form::label('password_confirmation', 'Confirm Password:') !!}
+                            {!! Form::label('password_confirmation', 'Confirm Password:*') !!}
                             {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                         </div>
 
