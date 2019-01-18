@@ -19,6 +19,11 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="col-md-12">
+                            <!-- depreciation_trend Field -->
+                            <dt>{!! Form::label('depreciation_trend', 'Depreciation Trend:') !!}</dt>
+                            <dd>{!! $setting->depreciation_trend !!}% / Year </dd>
+                        </div>
+                        <div class="col-md-12">
                             <!-- Title Field -->
                             <dt> {!! Form::label('ask_for_consultancy', 'Ask For Consultancy:') !!} </dt>
                             <dd style="word-break: break-all">{!! $setting->ask_for_consultancy !!}</dd>

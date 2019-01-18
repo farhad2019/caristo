@@ -1,9 +1,9 @@
 @push('css')
-    <style>
-        .regions {
-            display: none;
-        }
-    </style>
+<style>
+    .regions {
+        display: none;
+    }
+</style>
 @endpush
 
 <!-- Category Field -->
@@ -83,8 +83,8 @@
 
 <!-- Amount Field -->
 <div class="form-group col-sm-6 {{ $errors->has('amount') ? ' has-error' : '' }}">
-    {!! Form::label('amount', 'Amount('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):' ?? 'AED' .'):*') !!}
-    {!! Form::number('amount', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Amount', 'pattern'=>"^[1-9]\d*$"]) !!}
+    {!! Form::label('amount', 'Amount('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):*' ?? 'AED' .'):*') !!}
+    {!! Form::number('amount', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Amount', 'pattern'=>"^[1-9]\d*$", "min" => 1, "max"=> 99999999]) !!}
 
     @if ($errors->has('amount'))
         <span class="help-block" style="color: red;">
@@ -95,8 +95,8 @@
 
 <!-- Average MKP Field -->
 <div class="form-group col-sm-6 category2528 {{ $errors->has('average_mkp') ? ' has-error' : '' }}">
-    {!! Form::label('avg_mkp', 'Average MKP('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):' ?? 'AED' .'):') !!}
-    {!! Form::number('average_mkp', null, ['class' => 'form-control', 'placeholder' => 'Enter Average Market Price', 'pattern'=>"^[1-9]\d*$"]) !!}
+    {!! Form::label('avg_mkp', 'Average MKP('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):*' ?? 'AED' .'):') !!}
+    {!! Form::number('average_mkp', null, ['class' => 'form-control', 'placeholder' => 'Enter Average Market Price', 'pattern'=>"^[1-9]\d*$", "min" => 1, "max"=> 99999999]) !!}
 
     @if ($errors->has('average_mkp'))
         <span class="help-block" style="color: red;">
@@ -637,17 +637,19 @@
     <hr>
 </div>
 
-<div class="form-group col-sm-12 regions {{ $errors->has('depreciation_trend') ? ' has-error' : '' }}">
-    <div class="form-group col-sm-6 regions">
-        {!! Form::label('Depreciation_Trend', 'Depreciation Trend (%):*') !!}
-        {!! Form::number('depreciation_trend',  null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min'=>1, 'max'=>99]) !!}
-        @if ($errors->has('depreciation_trend'))
-            <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first('depreciation_trend') }}</strong>
-                </span>
-        @endif
-    </div>
-</div>
+{!! Form::hidden('depreciation_trend', \App\Models\Setting::first()->depreciation_trend) !!}
+
+{{--<div class="form-group col-sm-12 regions {{ $errors->has('depreciation_trend') ? ' has-error' : '' }}">--}}
+    {{--<div class="form-group col-sm-6 regions">--}}
+        {{--{!! Form::label('Depreciation_Trend', 'Depreciation Trend (%):*') !!}--}}
+        {{--{!! Form::number('depreciation_trend',  null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min'=>1, 'max'=>99]) !!}--}}
+        {{--@if ($errors->has('depreciation_trend'))--}}
+            {{--<span class="help-block" style="color: red;">--}}
+                    {{--<strong>{{ $errors->first('depreciation_trend') }}</strong>--}}
+                {{--</span>--}}
+        {{--@endif--}}
+    {{--</div>--}}
+{{--</div>--}}
 <!-- End of Limited Editions Field -->
 
 <!-- Multiple Regions Selection Field -->
@@ -874,13 +876,49 @@
     <a href="{!! route('admin.myCars.index') !!}" class="btn btn-default">Cancel</a>
 </div>
 @push('scripts')
-    <script>
-        $(document).ready(function () {
-            var id = $('#category_id').val();
+<script>
+    $(document).ready(function () {
+        var id = $('#category_id').val();
 
-            $('.region').hide();
+        $('.region').hide();
 
-            if(parseInt(id) == 25 || parseInt(id) == 26 || parseInt(id) == 27) {
+        if (parseInt(id) == 25 || parseInt(id) == 26 || parseInt(id) == 27) {
+            $('.cartype').hide();
+            $('.chassis').hide();
+            $('.Trim').hide();
+            $('.Accident').hide();
+            $('.transmission_type').hide();
+
+        } else {
+            $('.cartype').show();
+            $('.chassis').show();
+            $('.Trim').show();
+            $('.Accident').show();
+            $('.transmission_type').show();
+        }
+
+        if (parseInt(id) == 28) {
+            $('.regions').show();
+            $('.cartype').show();
+//                $('.region').hide();
+            $('.non-luxury').hide();
+        } else {
+            $('.regions').hide();
+            $('.cartype').hide();
+            //   $('.non-luxury').show();
+//                $('.region').show();
+        }
+
+        if (parseInt(id) === 25) {
+            $('.category2528').show();
+        } else if (parseInt(id) === 26 || parseInt(id) === 27 || parseInt(id) === 28) {
+            $('.category2528').hide();
+        }
+
+        $('#category_id').on('change', function () {
+            var cat_id = $(this).val();
+
+            if (id == 25 || id == 26 || id == 27) {
                 $('.cartype').hide();
                 $('.chassis').hide();
                 $('.Trim').hide();
@@ -895,60 +933,24 @@
                 $('.transmission_type').show();
             }
 
-            if (parseInt(id) == 28) {
+            if (parseInt(cat_id) == 28) {
                 $('.regions').show();
+//                    $('.region').hide();
                 $('.cartype').show();
-//                $('.region').hide();
                 $('.non-luxury').hide();
             } else {
                 $('.regions').hide();
                 $('.cartype').hide();
-             //   $('.non-luxury').show();
-//                $('.region').show();
+                //  $('.non-luxury').show();
+//                    $('.region').show();
             }
 
-            if (parseInt(id) === 25) {
+            if (parseInt(cat_id) === 25) {
                 $('.category2528').show();
-            } else if (parseInt(id) === 26 || parseInt(id) === 27 || parseInt(id) === 28) {
+            } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27 || parseInt(cat_id) === 28) {
                 $('.category2528').hide();
             }
-
-            $('#category_id').on('change', function () {
-                var cat_id = $(this).val();
-
-                if(id == 25 || id == 26 || id == 27) {
-                    $('.cartype').hide();
-                    $('.chassis').hide();
-                    $('.Trim').hide();
-                    $('.Accident').hide();
-                    $('.transmission_type').hide();
-
-                } else {
-                    $('.cartype').show();
-                    $('.chassis').show();
-                    $('.Trim').show();
-                    $('.Accident').show();
-                    $('.transmission_type').show();
-                }
-
-                if (parseInt(cat_id) == 28) {
-                    $('.regions').show();
-//                    $('.region').hide();
-                    $('.cartype').show();
-                    $('.non-luxury').hide();
-                } else {
-                    $('.regions').hide();
-                    $('.cartype').hide();
-                  //  $('.non-luxury').show();
-//                    $('.region').show();
-                }
-
-                if (parseInt(cat_id) === 25) {
-                    $('.category2528').show();
-                } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27 || parseInt(cat_id) === 28) {
-                    $('.category2528').hide();
-                }
-            });
         });
-    </script>
+    });
+</script>
 @endpush

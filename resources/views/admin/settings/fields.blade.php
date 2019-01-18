@@ -149,6 +149,12 @@
                     <div class="box-body">
                         <!-- Custom Tabs -->
                         <div class="col-md-12">
+                            <!-- Depreciation Trend Field -->
+                            <div class="form-group col-sm-6">
+                                {!! Form::label('depreciation_trend', 'Depreciation Trend (%/Year):*') !!}
+                                {!! Form::number('depreciation_trend', null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min'=>1, 'max'=>99]) !!}
+                            </div>
+                            <div class="col-sm-12 clearfix"></div>
                         {{--<!-- Title Field -->
                         <div class="form-group col-sm-12">
                             {!! Form::label('title', 'App Title:*') !!}
@@ -166,7 +172,6 @@
                                 {!! Form::label('personal_shopper', 'Content For Personal Shopper:') !!}
                                 {!! Form::textarea('personal_shopper['.$locale->code.']', $setting->translate($locale->code)['ask_for_consultancy'], ['class' => 'form-control', 'style'=>'direction:'.$locale->direction]) !!}
                             </div>
-
                             {{--<!-- Street Field -->
                             <div class="form-group col-sm-6">
                                 {!! Form::label('address', 'Street Address:') !!}

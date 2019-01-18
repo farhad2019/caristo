@@ -83,7 +83,7 @@ class CreateMyCarRequest extends BaseFormRequest
                 'warranty'           => 'required',
                 'maintenance'        => 'required',
                 'to'                 => 'required|greater_than_field:from',
-                'depreciation_trend' => 'required',
+//                'depreciation_trend' => 'required',
                 'price'              => 'required',
                 'price.*'            => 'numeric',
                 'media'              => 'required',

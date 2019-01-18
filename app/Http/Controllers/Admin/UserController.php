@@ -242,7 +242,6 @@ class UserController extends AppBaseController
      */
     public function update($id, UpdateUserRequest $request)
     {
-
         $user = $this->userRepository->findWithoutFail($id);
 
         if (empty($user)) {
@@ -251,7 +250,6 @@ class UserController extends AppBaseController
         }
 
         $data = $request->all();
-
         if ($data['limit_for_cars'] < $user->cars()->count()) {
             return Redirect::back()->withErrors(['Car limit should be greater than user cars. ('.$user->cars()->count().')']);
         }
@@ -417,5 +415,4 @@ class UserController extends AppBaseController
         }
 
     }
-
 }

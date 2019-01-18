@@ -79,7 +79,7 @@ class User extends Authenticatable implements JWTSubject
 
     public static $DEALER_TYPE = [
         self::OFFICIAL_DEALER => 'Official Dealer',
-        self::MARKET_DEALER   => 'Market Dealer'
+        self::MARKET_DEALER => 'Market Dealer'
     ];
 
     /**
@@ -101,51 +101,51 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     public static $rules = [
-        'name'                  => 'required|max:20',
-        'email'                 => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-        'expiry_date'           => 'required|date_format:Y-m-d|after:today',
-        'limit_for_cars'        => 'required',
+        'name' => 'required|max:20',
+        'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
+        'expiry_date' => 'required|date_format:Y-m-d|after:today',
+        'limit_for_cars' => 'required',
         'limit_for_featured_cars' => 'required',
 //        'email'                 => 'required|email',
 //        'phone'                 => 'required|string|max:20',
 //        'roles'                 => 'required',
-        'dealer_type'           => 'required|in:10,20',
-        'password'              => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
+        'dealer_type' => 'required|in:10,20',
+        'password' => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'min:6'
     ];
 
     public static $updateRules = [
-        'name'                  => 'required|max:20',
-        'email'                 => 'required|email',
-        'profession'            => 'required',
-        'dob'                   => 'required|date_format:Y-m-d|before:today',
-        'country_code'          => 'required|max:5',
-        'phone'                 => 'phone|max:20',
-        'roles'                 => 'sometimes|required',
-        'image'                 => 'sometimes|required|image|mimes:jpg,jpeg,png|max:500',
-        'expiry_date'           => 'required|date_format:Y-m-d|after:today',
-        'limit_for_cars'        => 'required',
+        'name' => 'required|max:20',
+        'email' => 'sometimes|required|email',
+        'profession' => 'required',
+        'dob' => 'required|date_format:Y-m-d|before:today',
+        'country_code' => 'required|max:5',
+        'phone' => 'phone|max:20',
+        'roles' => 'sometimes|required',
+        'image' => 'sometimes|required|image|mimes:jpg,jpeg,png|max:500',
+        'expiry_date' => 'required|date_format:Y-m-d|after:today',
+        'limit_for_cars' => 'required|gt:limit_for_featured_cars',
         'limit_for_featured_cars' => 'required',
-        'password'              => 'sometimes|nullable|min:6|required_with:password_confirmation|same:password_confirmation',
+        'password' => 'sometimes|nullable|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'sometimes|nullable|min:6',
     ];
 
     public static $updateShowroomProfileRules = [
-        'name'                  => 'required|max:30',
-        'profession'            => 'required',
-        'dob'                   => 'required|date_format:Y-m-d|before:today',
+        'name' => 'required|max:30',
+        'profession' => 'required',
+        'dob' => 'required|date_format:Y-m-d|before:today',
 //        'email'                 => 'required|email',
-        'phone'                 => 'required|phone|max:25',
-        'password'              => 'sometimes|nullable|min:6|required_with:password_confirmation|same:password_confirmation',
+        'phone' => 'required|phone|max:25',
+        'password' => 'sometimes|nullable|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'sometimes|nullable|min:6',
-        'address'               => 'sometimes|nullable|max:70',
+        'address' => 'sometimes|nullable|max:70',
 //        'about'                 => 'sometimes|nullable|max:70',
-        'showroom_name'         => 'required|max:30',
-        'showroom_email'        => 'required|email',
-        'showroom_phone'        => 'required|phone|max:25',
-        'showroom_media'        => 'image|mimes:jpg,jpeg,png',
-        'showroom_address'      => 'sometimes|nullable|max:70',
-        'showroom_about'        => 'sometimes|nullable|max:70',
+        'showroom_name' => 'required|max:30',
+        'showroom_email' => 'required|email',
+        'showroom_phone' => 'required|phone|max:25',
+        'showroom_media' => 'image|mimes:jpg,jpeg,png',
+        'showroom_address' => 'sometimes|nullable|max:70',
+        'showroom_about' => 'sometimes|nullable|max:70',
 
     ];
 
@@ -165,7 +165,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $casts = [
-        'name'  => 'string',
+        'name' => 'string',
         'email' => 'string',
     ];
 

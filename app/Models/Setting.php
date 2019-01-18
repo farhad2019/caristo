@@ -196,10 +196,10 @@ class Setting extends Model
         'appstore' => 'required',
         'app_version' => 'required',
         'force_update' => 'required',
-        'depreciation_trend' => 'required',
         'limit_for_cars' => 'required',
         'limit_for_featured_cars' => 'required',
         'logo' => 'required',*/
+        'depreciation_trend' => 'required',
         'ask_for_consultancy' => 'required',
         'personal_shopper' => 'required'
     ];

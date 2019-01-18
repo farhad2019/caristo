@@ -6,11 +6,8 @@ use App\Helper\BreadcrumbsRegister;
 use App\DataTables\Admin\MyCarDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateMyCarRequest;
-use App\Http\Requests\Admin\UpdateMyCarRequest;
 use App\Models\CarRegion;
 use App\Models\MyCar;
-use App\Models\RegionalSpecification;
-use App\Models\Setting;
 use App\Models\TradeInCar;
 use App\Repositories\Admin\CarAttributeRepository;
 use App\Repositories\Admin\CarBrandRepository;
@@ -23,8 +20,6 @@ use App\Repositories\Admin\MyCarRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\RegionalSpecificationRepository;
 use App\Repositories\Admin\RegionRepository;
-use App\Repositories\Admin\SettingRepository;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -68,15 +63,7 @@ class MyCarController extends AppBaseController
     /** @var  RegionRepository */
     private $regionRepository;
 
-    /** @var  SettingRepository */
-    private $settingRepository;
-
-    /**
-     * @var int
-     */
-    private $carLimit;
-
-    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo, RegionRepository $regionRepo, SettingRepository $settingRepo)
+    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo, RegionRepository $regionRepo)
     {
         $this->myCarRepository = $myCarRepo;
         $this->categoryRepository = $categoryRepo;
@@ -88,8 +75,6 @@ class MyCarController extends AppBaseController
         $this->modelRepository = $modelRepo;
         $this->featureRepository = $featureRepo;
         $this->regionRepository = $regionRepo;
-        $this->settingRepository = $settingRepo;
-        $this->carLimit = $this->settingRepository->first()->limit_for_cars;
         $this->ModelName = 'myCars';
         $this->BreadCrumbName = 'MyCar';
     }
@@ -475,7 +460,7 @@ class MyCarController extends AppBaseController
                     'warranty' => 'required',
                     'maintenance' => 'required',
                     'to' => 'required|greater_than_field:from',
-                    'depreciation_trend' => 'required',
+//                    'depreciation_trend' => 'required',
                     'price' => 'required',
                     'price.*' => 'numeric',
                     'media.*' => 'image|mimes:jpg,jpeg,png|max:500'

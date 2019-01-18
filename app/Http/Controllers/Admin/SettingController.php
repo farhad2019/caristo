@@ -12,6 +12,7 @@ use App\Models\SettingTranslation;
 use App\Repositories\Admin\LanguageRepository;
 use App\Repositories\Admin\SettingRepository;
 use App\Repositories\Admin\SettingTranslationRepository;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\AppBaseController;
 use Laracasts\Flash\Flash;
