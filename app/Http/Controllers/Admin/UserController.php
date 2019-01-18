@@ -26,7 +26,9 @@ use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\UserShowroomRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -240,6 +242,7 @@ class UserController extends AppBaseController
      */
     public function update($id, UpdateUserRequest $request)
     {
+
         $user = $this->userRepository->findWithoutFail($id);
 
         if (empty($user)) {
@@ -248,6 +251,11 @@ class UserController extends AppBaseController
         }
 
         $data = $request->all();
+
+        if ($data['limit_for_cars'] < $user->cars()->count()) {
+            Flash::error('Your cars have reached to the limit.(' . $user->cars()->count() . ')');
+            return Redirect::back()->withErrors(['Car limit should be greater than '.$user->cars()->count()]);
+        }
 
         unset($data['email']);
         if ($request->has('password') && $request->get('password', null) === null) {
