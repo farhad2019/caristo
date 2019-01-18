@@ -20,13 +20,13 @@
 
 <!-- Model Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('model_id', 'Model:') !!}
+    {!! Form::label('model_id', 'Model:*') !!}
     {!! Form::select('model_id', $carModels, null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand']) !!}
 </div>
 
 <!-- Year Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('year', 'Year:') !!}
+    {!! Form::label('year', 'Year:*') !!}
     {!! Form::select('year', $years, date('Y'), ['class' => 'form-control select2']) !!}
 </div>
 
@@ -38,7 +38,7 @@
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('engine_type_id', 'Engine Type:') !!}
+    {!! Form::label('engine_type_id', 'Engine Type:*') !!}
     {!! Form::select('engine_type_id', $engineType, null, ['class' => 'form-control select2']) !!}
 </div>
 
@@ -107,7 +107,7 @@
 
 <!-- Name Field -->
 <div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error' : '' }}">
-    {!! Form::label('name', 'Car Name:') !!}
+    {!! Form::label('name', 'Car Name:*') !!}
     {!! Form::text('name', null, ['class' => 'form-control', 'maxLength' => 55]) !!}
 
     @if ($errors->has('name'))
@@ -138,7 +138,7 @@
 
 <!-- Regional Specification Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('regional_specific1ation_id', 'Regional Specification:') !!}
+    {!! Form::label('regional_specific1ation_id', 'Regional Specification:*') !!}
     {!! Form::select('regional_specification_id', $regional_specs, null, ['class' => 'form-control select2']) !!}
 </div>
 
@@ -168,7 +168,7 @@
     @foreach($attributes as $attribute)
         @if($attribute->type == 10)
             <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
-                {!! Form::label('phone', $attribute->name.':') !!}
+                {!! Form::label('phone', $attribute->name.':*') !!}
                 {!! Form::text('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'placeholder' => 'Enter attribute '.$attribute->name, 'maxLength' => 55]) !!}
 
                 @if ($errors->has('attribute.'.$attribute->id))
