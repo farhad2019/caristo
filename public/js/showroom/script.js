@@ -119,30 +119,4 @@ $(document).ready(function () {
             }
         }
     });
-
-    setInterval(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            type: "GET",
-            url: "tradealert",
-            dataType: 'JSON',
-            success: function (data) {
-                if (data > old_count) {
-                    $.playSound('http://localhost/CaristoCratApp/storage/app/public/notification.mp3');
-                }
-                if (data > 0) {
-                    $(".badge").html('');
-                    $(".badge").html(data);
-                    old_count = data;
-                } else {
-                    $(".badge").html('');
-                }
-            }
-        });
-    }, 5000);
 });

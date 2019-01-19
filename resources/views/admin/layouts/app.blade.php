@@ -181,7 +181,8 @@
 
         <!-- Main Footer -->
         <footer class="main-footer" style="max-height: 100px;text-align: center">
-            <strong>Copyright © {{ date('Y')  }} <a href="https://www.ingic.com" target="_blank">INGIC</a>.</strong> All rights
+            <strong>Copyright © {{ date('Y')  }} <a href="https://www.ingic.com" target="_blank">INGIC</a>.</strong> All
+            rights
             reserved.
         </footer>
         <!-- Modal2 -->
@@ -341,116 +342,9 @@
     }
 
     $(document).ready(function () {
-
-        setTimeout(function() {
+        setTimeout(function () {
             $('.alert').fadeOut('fast');
         }, 5000);
-
-        refreshData();
-        var old_count;
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            type: "POST",
-           url: '{{ url('admin/alert/') }}',
-            success: function (data) {
-                old_count = data;
-                if (data) {
-                    if (data > 0) {
-                        $(".alert-msg").html(data);
-                    }
-                }
-            }
-        });
-
-        setInterval(function () {
-            refreshData();
-            var msg;
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                type: "POST",
-                url: '{{ url('admin/alert/') }}',
-                success: function (data) {
-                    if (data > old_count) {
-                        $.playSound('http://localhost/CaristoCratApp/storage/app/public/notification.mp3');
-                        if (data != 0) {
-                            msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + data + '</span>';
-                            $(".alert-msg").html(msg);
-                            old_count = data;
-                        }
-                    }
-                }
-            });
-        }, 5000);
-
-        function refreshData() {
-            var token = $('meta[name="csrf-token"]').attr('content');
-            $.ajax({
-                type: 'POST',
-              url: '{{ url('admin/notification/') }}',
-//                url: 'notification',
-                dataType: 'JSON',
-                data: {
-                    _token: token
-                },
-                success: function (data) {
-                    var arr = [];
-                    var html;
-                    var count = 0;
-                    // var path = window.location.protocol + "//" + window.location.hostname + "/CaristoCratApp/admin/" + 'news/';
-                    var path = '{{ url('admin/news/') }}' + '/';
-
-                    $.each(data, function (index, item) {
-                        if (item.status === 20) {
-                            count++;
-                            html = '<li><a class="unread" data-id="' + item.id + '" href="' + path + item.news_id + '"><p>' + item.userwithtrash.name + '</p><i class="fa fa-ticket text-aqua"></i>' + item.comment_text + '</a></li>';
-                        } else {
-                            html = '<li><a class="" href="' + path + item.news_id + '"><i class="fa fa-ticket text-aqua"></i> ' + item.comment_text + ' <small class="pull-right"> </a></li>';
-                        }
-
-                        arr.push(html);
-                    });
-
-                    $(".notifications-menu .dropdown-menu li.header span").html(count);
-                    if (count != 0) {
-                        var msg = '<i class="fa fa-bell-o"></i><span class="label label-success">' + count + '</span>';
-                        $(".alert-msg").html(msg);
-                    }
-
-                    $(".notifications-menu .dropdown-menu li").find('ul.menu').html(arr);
-                }
-                ,
-                error: function () {
-                }
-            });
-        }
-
-        $('body').on('click', 'li a.unread', function () {
-            var id = $(this).data("id");
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-
-               url: "{{ url('admin/unread/') }}/" + id,
-                method: 'GET'
-            }).done(function (response) {
-
-            });
-        });
     });
 </script>
 </body>
