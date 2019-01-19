@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Repositories\Admin\UdeviceRepository;
 use App\Repositories\Admin\UserdetailRepository;
 use App\Repositories\Admin\UserRepository;
+use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
@@ -434,5 +435,15 @@ class UserAPIController extends AppBaseController
         $this->userDeviceRepository->updatePushNotification(Auth::id(), $request->push_notification);
 
         return $this->sendResponse(['push_notification' => (int)$request->push_notification], 'User updated successfully');
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function getUserByDeviceType(Request $request)
+    {
+        $users = $this->userRepository->getUserByDeviceType($request->depends);
+        return $this->sendResponse($users->pluck('name', 'id')->toArray(), "User's region saved successfully");
     }
 }

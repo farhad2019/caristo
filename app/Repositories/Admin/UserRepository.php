@@ -122,4 +122,17 @@ class UserRepository extends BaseRepository
         }
         return $ret->get()->toArray();
     }
+
+    /**
+     * @param $deviceType
+     * @return mixed
+     */
+    public function getUserByDeviceType($deviceType)
+    {
+        return $this->model->whereHas('devices', function ($devices) use ($deviceType) {
+            return $devices->when(($deviceType != 'both'), function ($query) use ($deviceType) {
+                return $query->where(['device_type' => $deviceType]);
+            });
+        })->get();
+    }
 }

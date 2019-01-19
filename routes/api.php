@@ -55,6 +55,9 @@ Route::get('v1/forget-password', 'AuthAPIController@getForgetPasswordCode')->nam
 Route::post('v1/verify-reset-code', 'AuthAPIController@verifyCode')->name('verify-code');
 Route::post('v1/reset-password', 'AuthAPIController@updatePassword')->name('reset-password');
 
+
+Route::get('v1/getUserByDeviceType', 'UserAPIController@getUserByDeviceType')->name('getUserByDeviceType');
+
 ## Token Required to below APIs
 
 Route::middleware('auth:api')->group(function () {
