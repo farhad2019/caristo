@@ -128,6 +128,7 @@ class TradeInCar extends Model
         'id',
         'myCar',
         'amount',
+        'currency',
         'notes',
         'type',
 //        'evaluationDetails',

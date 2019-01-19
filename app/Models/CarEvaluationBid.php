@@ -61,6 +61,7 @@ class CarEvaluationBid extends Model
      */
     protected $visible = [
         'user',
+        'currency',
         'amount'
     ];
 

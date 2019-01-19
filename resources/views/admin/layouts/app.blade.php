@@ -344,7 +344,7 @@
 
         setTimeout(function() {
             $('.alert').fadeOut('fast');
-        }, 3000);
+        }, 5000);
 
         refreshData();
         var old_count;

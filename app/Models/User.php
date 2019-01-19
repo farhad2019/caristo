@@ -123,9 +123,9 @@ class User extends Authenticatable implements JWTSubject
         'phone' => 'phone|max:20',
         'roles' => 'sometimes|required',
         'image' => 'sometimes|required|image|mimes:jpg,jpeg,png|max:500',
-        'expiry_date' => 'required|date_format:Y-m-d|after:today',
-        'limit_for_cars' => 'required|gt:limit_for_featured_cars',
-        'limit_for_featured_cars' => 'required',
+//        'expiry_date' => 'required|date_format:Y-m-d|after:today',
+//        'limit_for_cars' => 'required|gt:limit_for_featured_cars',
+//        'limit_for_featured_cars' => 'required',
         'password' => 'sometimes|nullable|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'sometimes|nullable|min:6',
     ];
