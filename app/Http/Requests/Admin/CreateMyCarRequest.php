@@ -32,7 +32,7 @@ class CreateMyCarRequest extends BaseFormRequest
         $validationMessages = [];
         $validationMessages = array_merge($validationMessages, [
             'amount.required' => 'The amount field is required.',
-            'media.required' => 'The media is required.',
+            'media.required' => 'At least one media is required.',
             'media.*.mimes' => 'The media must be a file of type: jpg, jpeg, png.',
             'media.*' => 'The media may not be greater than 500 kilobytes.',
             'price.required' => 'The price must be filled.',

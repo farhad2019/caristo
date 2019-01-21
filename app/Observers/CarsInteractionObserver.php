@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\CarInteraction;
+use App\Models\Category;
 use App\Models\MyCar;
 
 /**
@@ -16,13 +17,23 @@ class CarsInteractionObserver
      */
     public function created(CarInteraction $model)
     {
-        $cars = MyCar::where('id', $model->car_id)->first();
-        //        $cars = $model->cars;
+        if ($model->type == CarInteraction::TYPE_CLICK_CATEGORY) {
+            $category = Category::where('id', $model->car_id)->first();
 
-        $prop = $this->getProp($model->type);
-        if ($prop) {
-            $cars->$prop += 1;
-            $cars->save();
+            $prop = $this->getProp($model->type);
+            if ($prop) {
+                $category->$prop += 1;
+                $category->save();
+            }
+        } else {
+            $cars = MyCar::where('id', $model->car_id)->first();
+            //$cars = $model->cars;
+
+            $prop = $this->getProp($model->type);
+            if ($prop) {
+                $cars->$prop += 1;
+                $cars->save();
+            }
         }
     }
 
@@ -31,12 +42,22 @@ class CarsInteractionObserver
      */
     public function deleted(CarInteraction $model)
     {
-        $cars = MyCar::where('id', $model->car_id)->first();
+        if ($model->type == CarInteraction::TYPE_CLICK_CATEGORY) {
+            $category = Category::where('id', $model->car_id)->first();
 //        $cars = $model->cars;
-        $prop = $this->getProp($model->type);
-        if ($prop) {
-            $cars->$prop -= 1;
-            $cars->save();
+            $prop = $this->getProp($model->type);
+            if ($prop) {
+                $category->$prop -= 1;
+                $category->save();
+            }
+        } else {
+            $cars = MyCar::where('id', $model->car_id)->first();
+//        $cars = $model->cars;
+            $prop = $this->getProp($model->type);
+            if ($prop) {
+                $cars->$prop -= 1;
+                $cars->save();
+            }
         }
     }
 
@@ -48,21 +69,30 @@ class CarsInteractionObserver
     {
         $prop = false;
         switch ($type) {
-            case CarInteraction::TYPE_VIEW:
-                {
-                    $prop = "views_count";
-                    break;
-                }
-            case CarInteraction::TYPE_LIKE:
-                {
-                    $prop = "like_count";
-                    break;
-                }
-            case CarInteraction::TYPE_FAVORITE:
-                {
-                    $prop = "favorite_count";
-                    break;
-                }
+            case CarInteraction::TYPE_VIEW: {
+                $prop = "views_count";
+                break;
+            }
+            case CarInteraction::TYPE_LIKE: {
+                $prop = "like_count";
+                break;
+            }
+            case CarInteraction::TYPE_FAVORITE: {
+                $prop = "favorite_count";
+                break;
+            }
+            case CarInteraction::TYPE_CLICK_CATEGORY : {
+                $prop = "views_count";
+                break;
+            }
+            case CarInteraction::TYPE_CLICK_PHONE : {
+                $prop = "call_clicks";
+                break;
+            }
+            case CarInteraction::TYPE_CLICK_MYSHOPPER : {
+                $prop = "personal_shopper_clicks";
+                break;
+            }
         }
         return $prop;
     }

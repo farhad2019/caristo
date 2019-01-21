@@ -282,6 +282,8 @@ class MyCar extends Model
         'limited_edition_specs',
         'depreciation_trend',
         'life_cycle',
+        'call_clicks',
+        'personal_shopper_clicks',
         'status'
     ];
 
@@ -365,6 +367,8 @@ class MyCar extends Model
         'is_viewed',
         'views_count',
         'favorite_count',
+        'call_clicks',
+        'personal_shopper_clicks',
         'like_count',
         'is_favorite',
         'bid_close_at',

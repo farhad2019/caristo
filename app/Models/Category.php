@@ -105,7 +105,7 @@ class Category extends Model
      */
     protected $appends = [
         'unread_count',
-        'clicks_count',
+//        'clicks_count',
 //        'type_text'
     ];
 
@@ -128,7 +128,7 @@ class Category extends Model
 //        'parentCategory',
         'media',
         'childCategory',
-        'clicks_count',
+        'views_count',
 //        'deleted_at'
         'unread_count'
     ];

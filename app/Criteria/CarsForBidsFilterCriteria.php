@@ -121,7 +121,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
 
         $rating = $this->request->get('rating', -1);
         $model = $model->when(($rating > 0), function ($query) use ($rating) {
-            return $query->where('average_rating', $rating);
+            return $query->where('average_rating', '<', $rating);
         });
 
         $model = $model->where('status', MyCar::ACTIVE);

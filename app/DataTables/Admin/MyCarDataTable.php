@@ -81,7 +81,15 @@ class MyCarDataTable extends DataTable
             return "<span class='badge badge-success'> <i class='fa fa-heart'></i> " . @$model->favorite_count . "</span>";
         });
 
-        $dataTable->rawColumns(['action', 'image', 'views_count', 'favorite_count', 'is_featured', 'status']);
+        $dataTable->editColumn('call_clicks', function (MyCar $model) {
+            return "<span class='badge badge-success'> <i class='fa fa-phone'></i> " . @$model->call_clicks . "</span>";
+        });
+
+        $dataTable->editColumn('personal_shopper_clicks', function (MyCar $model) {
+            return "<span class='badge badge-success'> <i class='fa fa-cart-arrow-down'></i> " . @$model->personal_shopper_clicks . "</span>";
+        });
+
+        $dataTable->rawColumns(['action', 'image', 'views_count', 'favorite_count', 'call_clicks', 'personal_shopper_clicks', 'is_featured', 'status']);
 
         return $dataTable->addColumn('action', 'admin.my_cars.datatables_actions');
     }
@@ -127,8 +135,8 @@ class MyCarDataTable extends DataTable
             ->minifiedAjax()
             ->addAction(['width' => '80px', 'printable' => false])
             ->parameters([
-                'dom'     => 'Bfrtip',
-                'order'   => [[0, 'desc']],
+                'dom' => 'Bfrtip',
+                'order' => [[0, 'desc']],
                 'buttons' => $buttons,
             ]);
     }
@@ -147,7 +155,7 @@ class MyCarDataTable extends DataTable
 //                'orderable'  => false,
 //                'searchable' => false,
 //            ],
-            'category.translations.name'       => [
+            'category.translations.name' => [
                 'title' => 'Category',
             ],
             'name',
@@ -156,15 +164,21 @@ class MyCarDataTable extends DataTable
 //            ],
 //            'year',
             'amount',
-            'is_featured'                      => [
+            'is_featured' => [
                 'title' => 'Featured'
             ],
             'status',
-            'views_count'                      => [
+            'views_count' => [
                 'title' => 'User Views'
             ],
-            'favorite_count'                   => [
+            'favorite_count' => [
                 'title' => 'User Favorites'
+            ],
+            'call_clicks' => [
+                'title' => 'Clicks On Call'
+            ],
+            'personal_shopper_clicks' => [
+                'title' => 'Clicks on Per.Shopper'
             ]
         ];
     }

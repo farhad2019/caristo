@@ -48,7 +48,7 @@
         <div class="row">
             <div class="col-4 my-auto">
                 <a href="{{ route('admin.dashboard') }}" title="" class="logo">
-                    <img src="{{ url('storage/app/showroom/logo.svg') }}" alt="">
+                    <img src="{{ url('storage/app/showroom/logo.jpeg') }}" alt="">
                 </a>
             </div>
             <div class="col-8 login_info">

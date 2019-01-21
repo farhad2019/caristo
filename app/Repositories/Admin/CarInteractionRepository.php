@@ -3,6 +3,8 @@
 namespace App\Repositories\Admin;
 
 use App\Models\CarInteraction;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -39,12 +41,12 @@ class CarInteractionRepository extends BaseRepository
     {
         $data = [
             'car_id'  => $data['car_id'],
-            'user_id' => \Auth::id(),
+            'user_id' => Auth::id(),
             'type'    => $data['type'],
         ];
         $record = $this->findWhere($data)->first();
         if ($record) {
-            if ($data['type'] == CarInteraction::TYPE_VIEW) {
+            if ($data['type'] == CarInteraction::TYPE_VIEW || $data['type'] == CarInteraction::TYPE_CLICK_CATEGORY || $data['type'] == CarInteraction::TYPE_CLICK_PHONE || $data['type'] == CarInteraction::TYPE_CLICK_MYSHOPPER) {
                 return true;
             }
             return $record->delete();
@@ -57,7 +59,7 @@ class CarInteractionRepository extends BaseRepository
     {
         return $this->updateOrCreate([
             'car_id'  => $data['car_id'],
-            'user_id' => \Auth::id(),
+            'user_id' => Auth::id(),
             'type'    => $data['type'],
         ], [
             'deleted_at' => DB::raw('NOW()')

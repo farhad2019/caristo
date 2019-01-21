@@ -10,9 +10,9 @@ use App\Http\Requests\Admin\UpdateNotificationRequest;
 use App\Repositories\Admin\NotificationRepository;
 use App\Repositories\Admin\UserRepository;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
-use Response;
 
 class NotificationController extends AppBaseController
 {
@@ -75,12 +75,12 @@ class NotificationController extends AppBaseController
         $notification = $this->notificationRepository->create($input);
         $notification->users()->attach($input['send_to']);
 
-        if (isset($input['push'])) {
-            #TODO: Sent Push Notification
-
-            $data['status'] = 1;
-            $this->notificationRepository->update($data, $notification->id);
-        }
+//        if (isset($input['push'])) {
+//            #TODO: Sent Push Notification
+//
+//            $data['status'] = 1;
+//            $this->notificationRepository->update($data, $notification->id);
+//        }
         Flash::success('Notification saved successfully.');
 
         return redirect(route('admin.notifications.index'));

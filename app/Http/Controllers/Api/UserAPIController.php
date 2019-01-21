@@ -444,6 +444,6 @@ class UserAPIController extends AppBaseController
     public function getUserByDeviceType(Request $request)
     {
         $users = $this->userRepository->getUserByDeviceType($request->depends);
-        return $this->sendResponse($users->pluck('name', 'id')->toArray(), "User's region saved successfully");
+        return $this->sendResponse($users->toArray(), "User's region saved successfully");
     }
 }

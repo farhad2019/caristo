@@ -127,7 +127,7 @@ class CarInteraction extends Model
      */
     public static $api_rules = [
 //        'user_id' => 'required',
-        'car_id' => 'required|exists:cars,id',
+        'car_id' => 'required',
         'type'   => 'required'
     ];
 

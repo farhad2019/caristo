@@ -5,15 +5,9 @@
 </div>
 
 <!-- Sender Id Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('sender_id', 'Send To:') !!}
     {!! Form::select('send_to[]', $users, isset($notification->users)?$notification->users:null, ['class' => 'form-control select2', 'multiple'=>'multiple', 'data-url' => route('api.getUserByDeviceType'), 'data-depends'=>'action_type']) !!}
-</div>
-
-<!-- Ref Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('ref_id', 'Ref Id:') !!}
-    {!! Form::number('ref_id', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Message Field -->
@@ -24,7 +18,7 @@
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+    {{--{!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}--}}
     {!! Form::submit('Save & Sent', ['class' => 'btn btn-primary', 'name'=>'push']) !!}
     <a href="{!! route('admin.notifications.index') !!}" class="btn btn-default">Cancel</a>
 </div>

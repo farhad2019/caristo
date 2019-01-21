@@ -701,11 +701,16 @@
 @endif
 
 <div class="clearfix"></div>
-<div class="">
+<div class="col-sm-12">
+    @if ($errors->has('media'))
+        <span class="help-block" style="color: red;">
+            <strong>{{ $errors->first('media') }}</strong>
+        </span>
+    @endif
     @php($count = 0)
     @foreach($media_types as $key => $media_type)
         @php($count++)
-        <div class="form-group col-sm-4">
+        <div class="form-group col-sm-4 {{ $errors->has('media.'.$key) ? ' has-error' : '' }}">
             {!! Form::label('media', ucwords($key).':') !!}
             {!! Form::file('media['.$key.']', ['class' => 'form-control']) !!}
             <br>
@@ -725,6 +730,11 @@
             @endif
             @if(($count%3) == 0)
                 <div class="col-sm-12 clearfix"><br></div>
+            @endif
+            @if ($errors->has('media.'.$key))
+                <span class="help-block" style="color: red;">
+                        <strong>{{ $errors->first('media.'.$key) }}</strong>
+                    </span>
             @endif
         </div>
     @endforeach
