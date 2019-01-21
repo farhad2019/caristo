@@ -55,6 +55,14 @@ class CarDataTable extends DataTable
             return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_FAVORITE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . @$model->favorite_count . "</span></a>";
         });
 
+        $dataTable->editColumn('call_clicks', function (MyCar $model) {
+            return "<span class='badge badge-success'> <i class='fa fa-phone'></i> " . @$model->call_clicks . "</span>";
+        });
+
+        $dataTable->editColumn('personal_shopper_clicks', function (MyCar $model) {
+            return "<span class='badge badge-success'> <i class='fa fa-cart-arrow-down'></i> " . @$model->personal_shopper_clicks . "</span>";
+        });
+
         /*$dataTable->editColumn('like_count', function (MyCar $model) {
             return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_LIKE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-thumbs-up'></i> " . $model->liked_count . "</span></a>";
         });*/
@@ -64,7 +72,7 @@ class CarDataTable extends DataTable
             return "<span class='badge bg-" . Utils::getBoolCss($owner_type, true) . "'> <i class='fa fa-" . ($owner_type ? "users" : "user") . "'></i> " . (($model->owner_type == 10) ? 'Vendor' : 'Client') . "</span>";
         });
 
-        $dataTable->rawColumns(['action', 'views_count', 'favorite_count', 'like_count', 'owner_type', 'image']);
+        $dataTable->rawColumns(['action', 'views_count', 'favorite_count', 'like_count', 'call_clicks', 'personal_shopper_clicks', 'owner_type', 'image']);
 
         return $dataTable->addColumn('action', 'admin.cars.datatables_actions');
     }
@@ -164,6 +172,12 @@ class CarDataTable extends DataTable
             ],
             'favorite_count'                   => [
                 'title' => 'User Favorites'
+            ],
+            'call_clicks'                      => [
+                'title' => 'Clicks On Call'
+            ],
+            'personal_shopper_clicks'          => [
+                'title' => 'Clicks on Per.Shopper'
             ],
             /* 'like_count'                       => [
                  'orderable'  => false,
