@@ -32,7 +32,7 @@
 
 <div class="form-group col-sm-6">
     {!! Form::label('name', 'Media*:') !!}
-    {!! Form::file('media', ['class' => 'form-control']) !!}
+    {!! Form::file('media', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
 
     @if(isset($banksRate) && count($banksRate->media)>0)
         <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >

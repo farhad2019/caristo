@@ -25,7 +25,7 @@
 <!-- Slug Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('media[]', 'Media:') !!}
-    {!! Form::file('media', ['class' => 'form-control']) !!}
+    {!! Form::file('media', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
     @if(isset($category) && count($category->media)>0)
         @foreach($category->media as $media)
             <a class='showGallery' data-id='{{ $media->id }}' data-toggle='modal' data-target='#imageGallery'>

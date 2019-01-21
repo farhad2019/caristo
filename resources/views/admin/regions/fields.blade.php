@@ -8,7 +8,7 @@
 <!-- Flag Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('flag', 'Flag:') !!}
-    {!! Form::file('flag', ['class' => 'form-control']) !!}
+    {!! Form::file('flag', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
 
 @if(isset($region))
     <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >

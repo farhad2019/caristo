@@ -39,7 +39,7 @@ class ConsultancyRequestDataTable extends DataTable
      */
     public function query(ConsultancyRequest $model)
     {
-        return $model->newQuery()->select('admin_queries.*')->where(['admin_queries.type' => 10]);
+        return $model->newQuery()->select('admin_queries.*')->where(['admin_queries.type' => 10])->orderBy('created_at', 'DESC');
     }
 
     /**

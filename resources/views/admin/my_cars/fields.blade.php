@@ -706,13 +706,14 @@
         <span class="help-block" style="color: red;">
             <strong>{{ $errors->first('media') }}</strong>
         </span>
-    @endif
+    @endif</div>
+<div>
     @php($count = 0)
     @foreach($media_types as $key => $media_type)
         @php($count++)
         <div class="form-group col-sm-4 {{ $errors->has('media.'.$key) ? ' has-error' : '' }}">
             {!! Form::label('media', ucwords($key).':') !!}
-            {!! Form::file('media['.$key.']', ['class' => 'form-control']) !!}
+            {!! Form::file('media['.$key.']', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
             <br>
             @if(isset($myCar))
                 @if($myCar->media()->where('title', $key)->count() > 0)
@@ -728,15 +729,15 @@
                     </div>
                 @endif
             @endif
-            @if(($count%3) == 0)
-                <div class="col-sm-12 clearfix"><br></div>
-            @endif
             @if ($errors->has('media.'.$key))
                 <span class="help-block" style="color: red;">
                         <strong>{{ $errors->first('media.'.$key) }}</strong>
                     </span>
             @endif
         </div>
+            @if(($count%3) == 0)
+                <div class="col-sm-12 clearfix"><br></div>
+            @endif
     @endforeach
 
     {{--<!-- Media Field -->

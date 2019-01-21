@@ -121,7 +121,7 @@
                         {!! Form::label('region_id', 'Region:') !!}
                         {!! Form::select('region_id', $regions, isset($user->details->region_id)? $user->details->region_id : null, ['class' => 'form-control select2']) !!}
                     </div>
-                @if(!$user->hasRole('admin'))
+                @if($user->hasRole('showroom-owner'))
                     <!-- Add Car Limit Field -->
                         <div class="form-group col-sm-6">
                             {!! Form::label('limit_for_cars', 'Add Car Limit:*') !!}
@@ -190,7 +190,7 @@
                         <!-- Image Field -->
                         <div class="form-group col-sm-3">
                             {!! Form::label('image', 'Image:') !!}
-                            {!! Form::file('image', ['class' => 'form-control']) !!}
+                            {!! Form::file('image', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
 
                             @if($user->details)
                                 {{--<img src="{{ $user->details->image_url }}" width="80">--}}
@@ -267,7 +267,7 @@
                         <div class="form-group col-sm-3">
                             {!! Form::label('image', 'Image:') !!} <br>
                             <img src="{{ $user->showroomDetails->logo_url }}"><br><br>
-                            {!! Form::file('showroom_media', ['class' => 'form-control']) !!}
+                            {!! Form::file('showroom_media', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
                         </div>
                         <div class="clearfix"></div>
 

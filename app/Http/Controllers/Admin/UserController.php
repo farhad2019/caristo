@@ -250,7 +250,7 @@ class UserController extends AppBaseController
         }
 
         $data = $request->all();
-        if (!$user->hasRole('admin')){
+        if ($user->hasRole('showroom-owner')){
             if ($data['limit_for_cars'] < $user->cars()->count()) {
                 return Redirect::back()->withErrors(['Car limit should be greater than user cars. ('.$user->cars()->count().')']);
             }

@@ -114,15 +114,17 @@
                                     @if(isset(Auth::user()->showroomDetails->logo_url))
                                         <img src="{!! Auth::user()->showroomDetails->logo_url !!}"
                                              class="user-image"/>
-                                    @endif
-
-                                @else
-                                    <img src="{!! Auth::user()->details->image_url !!}"
-                                         class="user-image" alt="User Image"/>
-                            @endif
-                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">{!! Auth::user()->name !!}</span>
+                                @endif
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                    <span class="hidden-xs">{!! Auth::user()->showroomDetails->name !!}</span>
                             </a>
+                            @else
+                                <img src="{!! Auth::user()->details->image_url !!}"
+                                     class="user-image" alt="User Image"/>
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs">{!! Auth::user()->name !!}</span>
+                                </a>
+                            @endif
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
@@ -131,17 +133,18 @@
                                             <img src="{!! Auth::user()->showroomDetails->logo_url !!}"
                                                  class="user-image"/>
                                         @endif
-
+                                        <p>
+                                            {!! Auth::user()->showroomDetails->name !!}
+                                            <small>Member since {!! Auth::user()->created_at->format('M. Y') !!}</small>
+                                        </p>
                                     @else
                                         <img src="{!! Auth::user()->details->image_url !!}"
                                              class="img-circle" alt="User Image"/>
+                                        <p>
+                                            {!! Auth::user()->name !!}
+                                            <small>Member since {!! Auth::user()->created_at->format('M. Y') !!}</small>
+                                        </p>
                                     @endif
-
-
-                                    <p>
-                                        {!! Auth::user()->name !!}
-                                        <small>Member since {!! Auth::user()->created_at->format('M. Y') !!}</small>
-                                    </p>
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">

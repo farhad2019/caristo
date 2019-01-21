@@ -38,7 +38,7 @@ class PersonalShopperRequestDataTable extends DataTable
      */
     public function query(PersonalShopperRequest $model)
     {
-        return $model->newQuery()->select('admin_queries.*', 'cars.name as car_name')->join('cars', "admin_queries.car_id", "=", "cars.id")->where(['admin_queries.type' => 20]);
+        return $model->newQuery()->select('admin_queries.*', 'cars.name as car_name')->join('cars', "admin_queries.car_id", "=", "cars.id")->where(['admin_queries.type' => 20])->orderBy('created_at', 'DESC');
     }
 
     /**

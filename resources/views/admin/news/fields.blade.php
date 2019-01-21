@@ -31,7 +31,7 @@
 <!-- Source Image Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('source_image', 'Source Image:') !!}
-    {!! Form::file('source_image', ['class' => 'form-control']) !!}
+    {!! Form::file('source_image', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
 
     @if(isset($news))
         @if($news->source_image)
@@ -51,7 +51,7 @@
 <div class="form-group col-sm-6">
     <div id="image">
         {!! Form::label('image', 'Image:') !!}
-        {!! Form::file('image[]',  ['class' => 'form-control', 'multiple']) !!}
+        {!! Form::file('image[]',  ['class' => 'form-control', 'multiple', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
         <br>
         @if(isset($news) && count($news->media) > 0)
             @if($news->media[0]->media_type == \App\Models\News::TYPE_IMAGE)

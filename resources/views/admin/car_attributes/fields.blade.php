@@ -13,7 +13,7 @@
 <!-- Icon Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('icon', 'Icon:') !!}
-    {!! Form::file('icon', ['class' => 'form-control']) !!}
+    {!! Form::file('icon', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
     <br>
     @if(isset($carAttribute))
         @if($carAttribute->media->count() > 0)

@@ -9,7 +9,7 @@
         <!-- Image Field -->
             <div class="form-group col-sm-6 fileUpload">
                 {!! Form::label('image', 'Media:') !!}
-                {!! Form::file('media') !!}
+                {!! Form::file('media', ['class' => 'form-group', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
                 <div class="help-block" id="module-hep">
                     * Click to delete image
                 </div>
