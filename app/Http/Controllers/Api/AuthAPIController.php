@@ -188,7 +188,7 @@ class AuthAPIController extends AppBaseController
 
             Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
                 function ($mail) use ($email, $name, $subject) {
-                    $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrate App");
+                    $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrat App");
                     $mail->to($email, $name);
                     $mail->subject($subject);
                 });
@@ -272,7 +272,7 @@ class AuthAPIController extends AppBaseController
 
                 Mail::send('email.verify', ['name' => $name, 'verification_code' => $verification_code],
                     function ($mail) use ($email, $name, $subject) {
-                        $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrate App");
+                        $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrat App");
                         $mail->to($email, $name);
                         $mail->subject($subject);
                     });

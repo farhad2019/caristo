@@ -174,10 +174,10 @@ class CarDataTable extends DataTable
                 'title' => 'User Favorites'
             ],
             'call_clicks'                      => [
-                'title' => 'Clicks On Call'
+                'title' => 'Call Clicks'
             ],
             'personal_shopper_clicks'          => [
-                'title' => 'Clicks on Per.Shopper'
+                'title' => 'Per.Shopper Clicks'
             ],
             /* 'like_count'                       => [
                  'orderable'  => false,

@@ -8,7 +8,7 @@
 <div>
     Hi {{ $name }},
     <br>
-    Thank you for creating an account with CaristoCrate.
+    Thank you for creating an account with CaristoCrat.
     <br>
     Your verification code : {{$verification_code}}
     <br/>

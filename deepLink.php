@@ -30,7 +30,7 @@
 <form action="<?= $_SERVER['REQUEST_URI'] ?>" target="_blank">
     <input type="hidden" name="type" value="<?= $_GET['type'] ?>">
     <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
-    <input type="submit" value="Open CaristoCrate App"/>
+    <input type="submit" value="Open CaristoCrat App"/>
 </form>
 
 </body>

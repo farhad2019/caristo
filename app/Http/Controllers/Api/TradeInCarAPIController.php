@@ -170,19 +170,19 @@ class TradeInCarAPIController extends AppBaseController
 
         $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
 
-//        if ($tradeInCar->owner_car_id) {
-//            $user = $tradeInCar->myCar->owner;
-//
-//            $name = $user->name;
-//            $email = $user->email;
-//
-//            Mail::send('email.notify', ['name' => $name],
-//                function ($mail) use ($email, $name, $message) {
-//                    $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrate App");
-//                    $mail->to($email, $name);
-//                    $mail->subject($message);
-//                });
-//        }
+        if ($tradeInCar->owner_car_id) {
+            $user = $tradeInCar->myCar->owner;
+
+            $name = $user->name;
+            $email = $user->email;
+
+            Mail::send('email.notify', ['name' => $name],
+                function ($mail) use ($email, $name, $message) {
+                    $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrat App");
+                    $mail->to($email, $name);
+                    $mail->subject($message);
+                });
+        }
 
         return $this->sendResponse($tradeInCar->toArray(), $message);
     }

@@ -238,7 +238,7 @@ class UserController extends AppBaseController
      * @param  int $id
      * @param UpdateUserRequest $request
      *
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, UpdateUserRequest $request)
     {
@@ -253,6 +253,8 @@ class UserController extends AppBaseController
         if ($user->hasRole('showroom-owner')){
             if ($data['limit_for_cars'] < $user->cars()->count()) {
                 return Redirect::back()->withErrors(['Car limit should be greater than user cars. ('.$user->cars()->count().')']);
+            }if ($data['limit_for_featured_cars'] < $user->cars()->where('is_featured', 1)->count()) {
+                return Redirect::back()->withErrors(['Featured car limit should be greater than user featured cars. ('.$user->cars()->where('is_featured', 1)->count().')']);
             }
         }
 

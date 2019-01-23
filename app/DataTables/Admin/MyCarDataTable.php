@@ -149,8 +149,10 @@ class MyCarDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            'id',
-            'created_at',
+//            'id',
+            'created_at' => [
+                'title' => 'Added On',
+            ],
 //            'image'                            => [
 //                'orderable'  => false,
 //                'searchable' => false,
@@ -175,10 +177,10 @@ class MyCarDataTable extends DataTable
                 'title' => 'User Favorites'
             ],
             'call_clicks' => [
-                'title' => 'Clicks On Call'
+                'title' => 'Call Clicks'
             ],
             'personal_shopper_clicks' => [
-                'title' => 'Clicks on Per.Shopper'
+                'title' => 'Per.Shopper Clicks'
             ]
         ];
     }

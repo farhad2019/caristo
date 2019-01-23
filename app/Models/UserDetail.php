@@ -154,7 +154,7 @@ class UserDetail extends Model
      */
     public function getImageUrlAttribute()
     {
-        return ($this->image && file_exists(storage_path('app/' . $this->image))) ? route('api.resize', ['img' => $this->image]) : route('api.resize', ['img' => 'public/user.png', 'w=50', 'h=50']);
+        return ($this->image && file_exists(storage_path('app/' . $this->image))) ? route('api.resize', ['img' => $this->image]) : route('api.resize', ['img' => 'public/user.png', 'w=150', 'h=150']);
     }
 
     /**

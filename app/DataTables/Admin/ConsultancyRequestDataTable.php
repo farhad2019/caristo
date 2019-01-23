@@ -23,11 +23,18 @@ class ConsultancyRequestDataTable extends DataTable
             return "<a href='" . route('admin.cars.show', ['id' => $model->car_id]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->car_name . "</span></a>";
         });*/
 
-        $dataTable->addColumn('phone', function (ConsultancyRequest $model) {
-            return $model->country_code . "-" . $model->phone . "</span></a>";
+        $dataTable->editColumn('name', function (ConsultancyRequest $model) {
+            return $model->name;
         });
 
-        $dataTable->rawColumns(['car_name', 'phone', 'action']);
+        $dataTable->editColumn('email', function (ConsultancyRequest $model) {
+            return $model->email;
+        });
+
+        $dataTable->addColumn('phone', function (ConsultancyRequest $model) {
+            return $model->country_code . "-" . $model->phone;
+        });
+
         return $dataTable->addColumn('action', 'admin.consultancy_requests.datatables_actions');
     }
 
@@ -39,7 +46,7 @@ class ConsultancyRequestDataTable extends DataTable
      */
     public function query(ConsultancyRequest $model)
     {
-        return $model->newQuery()->select('admin_queries.*')->where(['admin_queries.type' => 10])->orderBy('created_at', 'DESC');
+        return $model->newQuery()->select('admin_queries.*')->where(['admin_queries.type' => 10]);
     }
 
     /**
@@ -78,6 +85,7 @@ class ConsultancyRequestDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            'id',
             'name',
             'email',
             'phone',

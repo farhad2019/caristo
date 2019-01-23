@@ -29,7 +29,7 @@ class CarTypeDataTable extends DataTable
         });
 
         $dataTable->editColumn('type_translations.name', function (CarType $model) {
-            return ($model->parentCategory) ? "<span class='label label-success' style='word-break: break-all'>" . $model->parentCategory->name . "</span>" : "<span class='label label-default' style='word-break: break-all'>None</span>";
+            return ($model->parentType) ? "<span class='label label-success' style='word-break: break-all'>" . $model->parentType->name . "</span>" : "<span class='label label-default' style='word-break: break-all'>None</span>";
         });
 
         $dataTable->rawColumns(['type_translations.name', 'image', 'action']);

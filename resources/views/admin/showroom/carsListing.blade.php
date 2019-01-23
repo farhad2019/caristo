@@ -145,13 +145,6 @@
                                 </p>
                             </li>
                             <li>
-                                <span class="icon-cleaner"></span>
-                                <p>
-                                    <small>Trim</small>
-                                    -
-                                </p>
-                            </li>
-                            <li>
                                 <span class="icon-icon-14"></span>
                                 <p>
                                     <small>Warranty remaining</small>

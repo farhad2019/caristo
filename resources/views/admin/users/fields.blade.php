@@ -3,13 +3,13 @@
     <!-- Name Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('name', 'Name:*') !!}
-        {!! Form::text('name', null, ['class' => 'form-control','maxlength'=>"20", 'size'=>"20"]) !!}
+        {!! Form::text('name', null, ['class' => 'form-control', 'maxlength'=>"20", 'required']) !!}
     </div>
 
     <!-- Email Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('email', 'Email:*') !!}
-        {!! Form::email('email', null, ['class' => 'form-control']) !!}
+        {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
     </div>
 
     @if (strpos(Request::url(), 'users') !== false)
@@ -35,32 +35,32 @@
     <!-- Add Car Limit Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('limit_for_cars', 'Add Car Limit:*') !!}
-        {!! Form::number('limit_for_cars', null, ['class' => 'form-control', 'placeholder' => 'Add Car Limit', 'min'=>1, 'max'=>999]) !!}
+        {!! Form::number('limit_for_cars', null, ['class' => 'form-control', 'placeholder' => 'Add Car Limit', 'min'=>1, 'max'=>999, 'required']) !!}
     </div>
 
     <!-- Featured Cars Limit Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('limit_for_featured_cars', 'Featured Cars Limit:*') !!}
-        {!! Form::number('limit_for_featured_cars', null, ['class' => 'form-control', 'placeholder' => 'Featured Cars Limit', 'min'=>1, 'max'=>999]) !!}
+        {!! Form::number('limit_for_featured_cars', null, ['class' => 'form-control', 'placeholder' => 'Featured Cars Limit', 'min'=>1, 'max'=>999, 'required']) !!}
     </div>
 
     <!-- Expiry Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('expiry_date', 'Date Of Expiry:*') !!}
-        {!! Form::date('expiry_date', null, ['class' => 'form-control']) !!}
+        {!! Form::date('expiry_date', null, ['class' => 'form-control', 'required']) !!}
     </div>
 
     <div class="clearfix"></div>
     <!-- Password Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('password', 'Password:*') !!}
-        {!! Form::password('password', ['class' => 'form-control']) !!}
+        {!! Form::password('password', ['class' => 'form-control', 'required']) !!}
     </div>
 
     <!-- Password Field -->
     <div class="form-group col-sm-6">
         {!! Form::label('password_confirmation', 'Confirm Password:*') !!}
-        {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
+        {!! Form::password('password_confirmation', ['class' => 'form-control', 'required']) !!}
     </div>
 
     <!-- Submit Field -->
@@ -125,19 +125,19 @@
                     <!-- Add Car Limit Field -->
                         <div class="form-group col-sm-6">
                             {!! Form::label('limit_for_cars', 'Add Car Limit:*') !!}
-                            {!! Form::number('limit_for_cars', $user->details->limit_for_cars, ['class' => 'form-control', 'placeholder' => 'Add Car Limit', 'min'=>1, 'max'=>999]) !!}
+                            {!! Form::number('limit_for_cars', $user->details->limit_for_cars, ['class' => 'form-control', 'placeholder' => 'Add Car Limit', 'min'=>1, 'max'=>999, 'required']) !!}
                         </div>
 
                         <!-- Featured Cars Limit Field -->
                         <div class="form-group col-sm-6">
                             {!! Form::label('limit_for_featured_cars', 'Featured Cars Limit:*') !!}
-                            {!! Form::number('limit_for_featured_cars', $user->details->limit_for_featured_cars, ['class' => 'form-control', 'placeholder' => 'Featured Cars Limit', 'min'=>1, 'max'=>999]) !!}
+                            {!! Form::number('limit_for_featured_cars', $user->details->limit_for_featured_cars, ['class' => 'form-control', 'placeholder' => 'Featured Cars Limit', 'min'=>1, 'max'=>999, 'required']) !!}
                         </div>
 
                         <!-- Expiry Field -->
                         <div class="form-group col-sm-6">
                             {!! Form::label('expiry_date', 'Date Of Expiry:*') !!}
-                            {!! Form::date('expiry_date', $user->details->expiry_date, ['class' => 'form-control']) !!}
+                            {!! Form::date('expiry_date', $user->details->expiry_date, ['class' => 'form-control', 'required']) !!}
                         </div>
                 @endif
                 <!-- Phone Field -->
