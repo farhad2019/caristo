@@ -334,6 +334,7 @@ class MyCar extends Model
         'is_favorite',
         'limited_edition_specs_array',
         'depreciation_trend_value',
+        'review_count',
         'ref_num'
     ];
 
@@ -348,6 +349,7 @@ class MyCar extends Model
         'email',
         'average_rating',
         'country_code',
+        'version',
         'phone',
         'year',
         'currency',
@@ -358,11 +360,10 @@ class MyCar extends Model
         'notes',
         'ref_num',
         'link',
-//        'bids',
         'is_reviewed',
         'transmission_type_text',
         'owner_type_text',
-//        'carAttributes',
+        'review_count',
         'is_liked',
         'is_viewed',
         'views_count',
@@ -374,9 +375,11 @@ class MyCar extends Model
         'bid_close_at',
         'depreciation_trend_value',
         'life_cycle',
+        'created_at',
+//        'bids',
 //        'carFeatures',
 //        'myCarFeatures',
-        'created_at',
+//        'carAttributes',
         'is_featured',
         'status',
         'status_text',
@@ -815,5 +818,13 @@ class MyCar extends Model
     public function getIsReviewedAttribute()
     {
         return ($this->reviews()->where('user_id', Auth::id())->count() > 0) ? 1 : 0;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getReviewCountAttribute()
+    {
+        return $this->reviews()->count();
     }
 }
