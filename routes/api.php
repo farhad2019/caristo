@@ -100,8 +100,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('v1/news_interactions', 'NewsInteractionAPIController');
 
-    Route::resource('v1/walkThroughs', 'WalkThroughAPIController');
-
     Route::resource('v1/carAttributes', 'CarAttributeAPIController');
 
     Route::resource('v1/carFeatures', 'CarFeatureAPIController');
@@ -126,6 +124,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('v1/reviews', 'ReviewAPIController');
 });
+
+Route::resource('v1/walkThroughs', 'WalkThroughAPIController');
 
 Route::resource('v1/pages', 'PageAPIController');
 

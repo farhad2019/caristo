@@ -7,7 +7,7 @@
 <!-- Slug Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('slug', 'Slug:') !!}
-    {!! Form::text('slug', null, ['class' => 'form-control']) !!}
+    {!! Form::text('slug', null, ['class' => 'form-control', isset($category)?'readonly':'']) !!}
 </div>
 
 <!-- Slug Field -->
@@ -28,9 +28,15 @@
     {!! Form::file('media', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
     @if(isset($category) && count($category->media)>0)
         @foreach($category->media as $media)
-            <a class='showGallery' data-id='{{ $media->id }}' data-toggle='modal' data-target='#imageGallery'>
-                <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
-            </a>
+            <div style="position: relative; display: inline; padding-right: 10px">
+                <a class="showGallerySingle" data-id="{{$media->id}}" data-toggle="modal"
+                   data-target="#imageGallerySingle" style="cursor: pointer;">
+                    <img src="{{ $media->file_url }}"  alt="{{$media->title}}" width="150">
+                </a>
+                <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
+                      style="position: absolute; right: 10px; z-index: 100; cursor: pointer">&times;
+                        </span>
+            </div>
         @endforeach
     @endif
 </div>

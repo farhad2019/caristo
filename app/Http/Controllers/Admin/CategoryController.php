@@ -47,7 +47,7 @@ class CategoryController extends AppBaseController
     /**
      * Show the form for creating a new Category.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -76,7 +76,7 @@ class CategoryController extends AppBaseController
      *
      * @param  int $id
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
@@ -95,7 +95,7 @@ class CategoryController extends AppBaseController
      *
      * @param  int $id
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -129,6 +129,16 @@ class CategoryController extends AppBaseController
         if (empty($category)) {
             Flash::error('Category not found');
             return redirect(route('admin.categories.index'));
+        }
+
+        if ($category->media->count() == 0) {
+            $validatedData = $request->validate([
+                'media' => 'required|image|mimes:jpg,jpeg,png|max:500',
+            ], [
+                'media.required' => 'The media is required.',
+                'media.mimes'    => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.max'      => 'The media may not be greater than 500 kilobytes.',
+            ]);
         }
 
         $this->categoryRepository->updateRecord($category, $request);

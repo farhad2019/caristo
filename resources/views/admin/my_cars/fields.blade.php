@@ -724,7 +724,7 @@
                             <img src="{{ $media->file_url }}" width="120">
                         </a>
                         <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                              style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
+                                     style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
                         </span>
                     </div>
                 @endif
@@ -905,6 +905,9 @@
     $(document).ready(function () {
         var id = $('#category_id').val();
 
+        $('.years_pre_owned').hide();
+        $('.years_outlet_mall').hide();
+        $('.years_classic').hide();
         $('.region').hide();
         $('.category2528').hide();
 
