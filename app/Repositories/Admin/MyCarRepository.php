@@ -320,7 +320,7 @@ class MyCarRepository extends BaseRepository
 //            $from = date('Y', strtotime($request->from));
 //            $to = date('Y', strtotime($request->to));
             $input['life_cycle'] = $request->from . '-' . $request->to;
-            $input['depreciation_trend'] = $request->depreciation_trend;
+            $input['depreciation_trend'] = 15;//$request->depreciation_trend;
             $myCar = $this->update($input, $myCar->id);
 //            $input['region'] = $request->regions;
             $region = intval($request->regions);

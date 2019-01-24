@@ -670,7 +670,7 @@ class MyCar extends Model
      */
     public function DepreciationTrend()
     {
-        return $this->hasMany(DepreciationTrend::class, 'car_id');
+        return $this->hasMany(DepreciationTrend::class, 'car_id')->orderBy('year', 'ASC');
     }
 
     /**

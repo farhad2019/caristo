@@ -70,14 +70,14 @@
 
 <!-- Car Type Field -->
 <div class="form-group col-sm-6 cartype">
-    {!! Form::label('type_id', 'Segments:') !!}
-    {!! Form::select('type', $carTypes, null, ['class' => 'form-control select2']) !!}
+    {!! Form::label('type', 'Segments:') !!}
+    {!! Form::select('type', $carTypes, isset($myCar)? @$myCar->carType->parent_id:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Car Type Field -->
 <div class="form-group col-sm-6 cartype">
     {!! Form::label('type_id', 'Sub Segments:') !!}
-    {!! Form::select('type_id', [], null, ['class' => 'form-control select2', 'data-url' => url('api/v1/carTypes'), 'data-depends'=>'type']) !!}
+    {!! Form::select('type_id', $carTypesChildren, isset($myCar)? @$myCar->type_id:null, ['class' => 'form-control select2', 'data-url' => url('api/v1/carTypes'), 'data-depends'=>'type']) !!}
 </div>
 
 <!-- Engine Type Field -->

@@ -16,6 +16,7 @@ use App\Repositories\Admin\CarFeatureRepository;
 use App\Repositories\Admin\CarModelRepository;
 use App\Repositories\Admin\CarTypeRepository;
 use App\Repositories\Admin\CategoryRepository;
+use App\Repositories\Admin\DepreciationTrendRepository;
 use App\Repositories\Admin\EngineTypeRepository;
 use App\Repositories\Admin\MyCarRepository;
 use App\Http\Controllers\AppBaseController;
@@ -64,7 +65,10 @@ class MyCarController extends AppBaseController
     /** @var  RegionRepository */
     private $regionRepository;
 
-    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo, RegionRepository $regionRepo)
+    /** @var  DepreciationTrendRepository */
+    private $trendRepository;
+
+    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo, RegionRepository $regionRepo, DepreciationTrendRepository $trendRepo)
     {
         $this->myCarRepository = $myCarRepo;
         $this->categoryRepository = $categoryRepo;
@@ -76,6 +80,7 @@ class MyCarController extends AppBaseController
         $this->modelRepository = $modelRepo;
         $this->featureRepository = $featureRepo;
         $this->regionRepository = $regionRepo;
+        $this->trendRepository = $trendRepo;
         $this->ModelName = 'myCars';
         $this->BreadCrumbName = 'MyCar';
     }
@@ -122,6 +127,7 @@ class MyCarController extends AppBaseController
         $attributes = $this->attributeRepository->all();
         $features = $this->featureRepository->all();
         $carTypes = $this->carTypeRepository->findWhere(['parent_id' => 0])->pluck('name', 'id');
+        $carTypesChildren = $this->carTypeRepository->findWhereNotIn('parent_id', [0])->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
         for ($a = 0; $a < 5; $a++) {
@@ -231,6 +237,7 @@ class MyCarController extends AppBaseController
             'transmission_type'        => MyCar::$TRANSMISSION_TYPE_TEXT,
             'media_types'              => MyCar::$MEDIA_TYPES,
             'carTypes'                 => $carTypes,
+            'carTypesChildren'         => $carTypesChildren,
             'carModels'                => $carModels,
             'regions'                  => $regions,
             'depreciation_trend_years' => $depreciation_trend_years,
@@ -306,9 +313,9 @@ class MyCarController extends AppBaseController
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
         return view('admin.my_cars.show')->with([
-            'myCar'              => $myCar,
-            'attributes'         => $attributes,
-            'features'           => $features
+            'myCar'      => $myCar,
+            'attributes' => $attributes,
+            'features'   => $features
         ]);
     }
 
@@ -338,7 +345,8 @@ class MyCarController extends AppBaseController
         $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
         $attributes = $this->attributeRepository->all();
         $features = $this->featureRepository->all();
-        $carTypes = $this->carTypeRepository->getRootTypes()->pluck('name', 'id');
+        $carTypes = $this->carTypeRepository->findWhere(['parent_id' => 0])->pluck('name', 'id');
+        $carTypesChildren = $this->carTypeRepository->findWhereNotIn('parent_id', [0])->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
         $years = ['1950' => "1950",
@@ -450,6 +458,7 @@ class MyCarController extends AppBaseController
             'transmission_type'        => MyCar::$TRANSMISSION_TYPE_TEXT,
             'status'                   => MyCar::$STATUS,
             'media_types'              => MyCar::$MEDIA_TYPES,
+            'carTypesChildren'         => $carTypesChildren,
             'carTypes'                 => $carTypes,
             'carModels'                => $carModels,
             'brands'                   => $brands,
@@ -761,14 +770,12 @@ class MyCarController extends AppBaseController
             ]);
         }*/
 
-
         if ($request->category_id != $myCar->category_id) {
             CarRegion::where('car_id', $id)->delete();
         }
         $myCar = $this->myCarRepository->updateRecord($request, $myCar);
 
         if ($request->category_id != MyCar::LIMITED_EDITION) {
-
             if (!empty(array_filter($request->attribute))) {
                 $carAttributes = [];
                 foreach ($request->attribute as $key => $item) {
@@ -790,6 +797,15 @@ class MyCarController extends AppBaseController
                 $myCar->myCarFeatures()->delete();
                 $myCar->carFeatures()->sync($carFeatures, false);
             }*/
+        } else {
+            $amount = $request->amount;
+            foreach ($request->depreciation_trend as $key => $value) {
+                $amount = $amount - (($amount * $value) / 100);
+                $this->trendRepository->updateOrCreate(['car_id' => $myCar->id, 'year' => $key], [
+                    'percentage' => $value,
+                    'amount'     => $amount
+                ]);
+            }
         }
 
         Flash::success('Car updated successfully . ');
