@@ -82,8 +82,8 @@ class CarBrand extends Model
      * @var array
      */
     public static $rules = [
-        'name'    => 'required|max:50',
-        'media'   => 'required|image|mimes:jpg,jpeg,png'
+        'name'  => 'required|max:50',
+        'media' => 'required|image|mimes:jpg,jpeg,png'
     ];
 
     /**
@@ -126,5 +126,13 @@ class CarBrand extends Model
     public function carModels()
     {
         return $this->hasMany(CarModel::class, 'brand_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'user_brands', 'brand_id', 'user_id');
     }
 }

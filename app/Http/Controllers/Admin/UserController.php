@@ -15,6 +15,7 @@ use App\Models\Role;
 use App\Models\TradeInCar;
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Repositories\Admin\CarBrandRepository;
 use App\Repositories\Admin\CarInteractionRepository;
 use App\Repositories\Admin\CarRepository;
 use App\Repositories\Admin\NewsRepository;
@@ -56,13 +57,39 @@ class UserController extends AppBaseController
     /** @var  UserdetailRepository */
     private $userDetailRepository;
 
+    /**
+     * @var RegionRepository
+     */
     private $regionRepository;
-    
+
+    /**
+     * @var NewsRepository
+     */
     private $newsRepository;
-    
+
+    /**
+     * @var CarRepository
+     */
     private $carRepository;
 
-    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, NewsRepository $newsRepository, RoleRepository $roleRepo, RegionRepository $regionRepository, UserShowroomRepository $showroomRepo, CarRepository $carRepository, CarInteractionRepository $carInteractionRepo)
+    /**
+     * @var CarBrandRepository
+     */
+    private $brandRepository;
+
+    /**
+     * UserController constructor.
+     * @param UserRepository $userRepo
+     * @param UserdetailRepository $userDetailRepo
+     * @param NewsRepository $newsRepository
+     * @param RoleRepository $roleRepo
+     * @param RegionRepository $regionRepository
+     * @param UserShowroomRepository $showroomRepo
+     * @param CarRepository $carRepository
+     * @param CarInteractionRepository $carInteractionRepo
+     * @param CarBrandRepository $brandRepo
+     */
+    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, NewsRepository $newsRepository, RoleRepository $roleRepo, RegionRepository $regionRepository, UserShowroomRepository $showroomRepo, CarRepository $carRepository, CarInteractionRepository $carInteractionRepo, CarBrandRepository $brandRepo)
     {
         $this->userRepository = $userRepo;
         $this->roleRepository = $roleRepo;
@@ -72,6 +99,7 @@ class UserController extends AppBaseController
         $this->userDetailRepository = $userDetailRepo;
         $this->newsRepository = $newsRepository;
         $this->carRepository = $carRepository;
+        $this->brandRepository = $brandRepo;
         $this->ModelName = 'users';
         $this->BreadCrumbName = 'Users';
     }
@@ -107,17 +135,17 @@ class UserController extends AppBaseController
                 }
             }
 
-            if(isset($data['news_id'])) {
+            if (isset($data['news_id'])) {
                 $news = $this->newsRepository->findWithoutFail($data['news_id']);
-                $second_tile = "News : ".$news['headline'];
-            
+                $second_tile = "News : " . $news['headline'];
+
             } else if (isset($data['car_id'])) {
                 $car = $this->carRepository->findWithoutFail($data['car_id']);
-                $second_tile = "Car : ". $car['name'];
+                $second_tile = "Car : " . $car['name'];
             } else {
                 $second_tile = "";
             }
-            
+
             return $userDataTable->interactionList($data)->render('admin.users.index', ['title' => $title, 'secondtitle' => $second_tile]);
         } else {
             return $userDataTable->render('admin.users.index', ['title' => $this->BreadCrumbName]);
@@ -128,18 +156,19 @@ class UserController extends AppBaseController
     /**
      * Show the form for creating a new User.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         $roles = $this->roleRepository->all()->where('id', '!=', '1')->pluck('display_name', 'id')->all();
         $regions = $this->regionRepository->all()->pluck('name', 'id')->all();
-        
-        
+        $brands = $this->brandRepository->all()->pluck('name', 'id')->all();
+
         return view('admin.users.create')->with([
             'roles'       => $roles,
             'regions'     => $regions,
+            'brands'      => $brands,
             'DEALER_TYPE' => User::$DEALER_TYPE
         ]);
     }
@@ -168,6 +197,7 @@ class UserController extends AppBaseController
         $data['expiry_date'] = isset($input['expiry_date']) ? $input['expiry_date'] : null;
 
         $this->userRepository->attachRole($user->id, Role::SHOWROOM_OWNER_ROLE);
+        $user->brands()->attach($input['brand_ids']);
         $userDetail = $this->userDetailRepository->create($data);
 
         $showroomDeatails['user_id'] = $user->id;
@@ -222,11 +252,14 @@ class UserController extends AppBaseController
 
         $roles = $this->roleRepository->all()->where('id', '!=', '1')->pluck('display_name', 'id')->all();
         $regions = $this->regionRepository->all()->pluck('name', 'id')->all();
+        $brands = $this->brandRepository->all()->pluck('name', 'id')->all();
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $user);
         return view('admin.users.edit')->with([
             'user'        => $user,
             'roles'       => $roles,
             'regions'     => $regions,
+            'brands'      => $brands,
             'DEALER_TYPE' => User::$DEALER_TYPE,
             'gender'      => UserDetail::$GENDER
         ]);
@@ -250,12 +283,15 @@ class UserController extends AppBaseController
         }
 
         $data = $request->all();
-        if ($user->hasRole('showroom-owner')){
+        if ($user->hasRole('showroom-owner')) {
             if ($data['limit_for_cars'] < $user->cars()->count()) {
-                return Redirect::back()->withErrors(['Car limit should be greater than user cars. ('.$user->cars()->count().')']);
-            }if ($data['limit_for_featured_cars'] < $user->cars()->where('is_featured', 1)->count()) {
-                return Redirect::back()->withErrors(['Featured car limit should be greater than user featured cars. ('.$user->cars()->where('is_featured', 1)->count().')']);
+                return Redirect::back()->withErrors(['Car limit should be greater than user cars. (' . $user->cars()->count() . ')']);
             }
+            if ($data['limit_for_featured_cars'] < $user->cars()->where('is_featured', 1)->count()) {
+                return Redirect::back()->withErrors(['Featured car limit should be greater than user featured cars. (' . $user->cars()->where('is_featured', 1)->count() . ')']);
+            }
+
+            $user->brands()->sync($data['brand_ids']);
         }
 
         unset($data['email']);
@@ -365,15 +401,15 @@ class UserController extends AppBaseController
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         if ($user->hasRole('showroom-owner')) {
             return view('admin.showroom.profile')->with([
-                'user'   => $user,
-                'regions'   => $regions,
-                'gender' => UserDetail::$GENDER
+                'user'    => $user,
+                'regions' => $regions,
+                'gender'  => UserDetail::$GENDER
             ]);
         }
         return view('admin.users.edit')->with([
-            'user'   => $user,
-            'regions'   => $regions,
-            'gender' => UserDetail::$GENDER
+            'user'    => $user,
+            'regions' => $regions,
+            'gender'  => UserDetail::$GENDER
         ]);
     }
 

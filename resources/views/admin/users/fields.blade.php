@@ -19,10 +19,16 @@
             {!! Form::select('roles[]', $roles, null, ['class' => 'form-control select2', 'multiple'=>'multiple']) !!}
         </div>--}}
 
-        <!-- Roles Field -->
+        <!-- Dealer Type Field -->
         <div class="form-group col-sm-6">
-            {!! Form::label('roles', 'Dealer Type:') !!}
+            {!! Form::label('dealer_type', 'Dealer Type:') !!}
             {!! Form::select('dealer_type', $DEALER_TYPE, null, ['class' => 'form-control select2']) !!}
+        </div>
+
+        <!-- Brands Field -->
+        <div class="form-group col-sm-6">
+            {!! Form::label('brand_ids', 'Brands:') !!}
+            {!! Form::select('brand_ids[]', $brands, null, ['class' => 'form-control select2', 'multiple']) !!}
         </div>
     @endif
 
@@ -122,6 +128,12 @@
                         {!! Form::select('region_id', $regions, isset($user->details->region_id)? $user->details->region_id : null, ['class' => 'form-control select2']) !!}
                     </div>
                 @if($user->hasRole('showroom-owner'))
+                    <!-- Brands Field -->
+                        <div class="form-group col-sm-6">
+                            {!! Form::label('brand_ids', 'Brands:') !!}
+                            {!! Form::select('brand_ids[]', $brands, $user->brands, ['class' => 'form-control select2', 'multiple']) !!}
+                        </div>
+
                     <!-- Add Car Limit Field -->
                         <div class="form-group col-sm-6">
                             {!! Form::label('limit_for_cars', 'Add Car Limit:*') !!}

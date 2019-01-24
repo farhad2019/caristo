@@ -109,6 +109,7 @@ class User extends Authenticatable implements JWTSubject
 //        'email'                 => 'required|email',
 //        'phone'                 => 'required|string|max:20',
 //        'roles'                 => 'required',
+        'brand_ids'               => 'required',
         'dealer_type'             => 'required|in:10,20',
         'password'                => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation'   => 'min:6'
@@ -121,6 +122,7 @@ class User extends Authenticatable implements JWTSubject
         'dob'                     => 'required|date_format:Y-m-d|before:today',
         'country_code'            => 'required|max:5',
         'phone'                   => 'phone|max:20',
+        'brand_ids'               => 'required',
         'roles'                   => 'sometimes|required',
         'image'                   => 'sometimes|required|image|mimes:jpg,jpeg,png|max:500',
         'expiry_date'             => 'sometimes|required|date_format:Y-m-d|after:today',
@@ -222,6 +224,14 @@ class User extends Authenticatable implements JWTSubject
     public function roles()
     {
         return $this->belongsToMany('App\Models\Role');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function brands()
+    {
+        return $this->belongsToMany(CarBrand::class, 'user_brands', 'user_id', 'brand_id');
     }
 
     /**

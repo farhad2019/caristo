@@ -68,6 +68,9 @@ class Role extends EntrustRole
         $this->restoreB();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function user()
     {
         return $this->belongsToMany('App\Models\User');
