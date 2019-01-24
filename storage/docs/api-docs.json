@@ -2957,6 +2957,13 @@
                         "description": "Filter by rating",
                         "required": false,
                         "type": "integer"
+                    },
+                    {
+                        "name": "is_for_review",
+                        "in": "query",
+                        "description": "is for review",
+                        "required": false,
+                        "type": "integer"
                     }
                 ],
                 "responses": {

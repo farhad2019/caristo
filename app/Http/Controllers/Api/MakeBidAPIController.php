@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Criteria\CarsFilterCriteria;
 use App\Criteria\CarsForBidsFilterCriteria;
 use App\Http\Requests\Api\CreateMakeBidAPIRequest;
 use App\Http\Requests\Api\UpdateMakeBidAPIRequest;
 use App\Models\MakeBid;
-use App\Models\User;
 use App\Repositories\Admin\MakeBidRepository;
 use App\Repositories\Admin\MyCarRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
-use Illuminate\Support\Facades\Storage;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Illuminate\Http\Response;
@@ -82,7 +79,7 @@ class MakeBidAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="dealer",
      *          description="Dealer 10=official;20=market",
      *          type="integer",
@@ -190,6 +187,13 @@ class MakeBidAPIController extends AppBaseController
      *      @SWG\Parameter(
      *          name="rating",
      *          description="Filter by rating",
+     *          required=false,
+     *          type="integer",
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
+     *          name="is_for_review",
+     *          description="is for review",
      *          required=false,
      *          type="integer",
      *          in="query"

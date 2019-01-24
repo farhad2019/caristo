@@ -124,8 +124,16 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             return $query->where('average_rating', '<', $rating);
         });
 
+        $is_for_review = $this->request->get('is_for_review', 0);
+        $model = $model->when(($is_for_review > 0), function ($query) {
+            return $query->orderBy('bid_close_at', 'DESC');
+        });
+        $model = $model->when(($is_for_review == 0), function ($query) {
+            return $query->orderBy('amount', 'DESC');
+        });
+
         $model = $model->where('status', MyCar::ACTIVE);
-        $model = $model->orderBy('amount', 'DESC');
+        //$model = $model->orderBy('amount', 'DESC');
 
         return $model;
     }
