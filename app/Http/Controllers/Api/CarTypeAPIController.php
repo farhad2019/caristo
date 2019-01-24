@@ -22,6 +22,10 @@ class CarTypeAPIController extends AppBaseController
     /** @var  CarTypeRepository */
     private $carTypeRepository;
 
+    /**
+     * CarTypeAPIController constructor.
+     * @param CarTypeRepository $carTypeRepo
+     */
     public function __construct(CarTypeRepository $carTypeRepo)
     {
         $this->carTypeRepository = $carTypeRepo;

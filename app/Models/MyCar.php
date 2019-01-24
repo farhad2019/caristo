@@ -658,24 +658,19 @@ class MyCar extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getTopBidsAttribute()
-    {
-        return $this->bids()
-            ->whereHas('evaluationDetails', function ($evaluationDetails) {
-                return $evaluationDetails->orderBy('amount', 'DESC')
-                    ->take(5);
-            })->with('evaluationDetails')
-            ->get()->makeVisible('evaluationDetails');
-    }
-
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function reviews()
     {
         return $this->hasMany(Review::class, 'car_id')->orderBy('created_at', 'DESC');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function DepreciationTrend()
+    {
+        return $this->hasMany(DepreciationTrend::class, 'car_id');
     }
 
     /**
@@ -709,6 +704,19 @@ class MyCar extends Model
 //    {
 //        return $this->likes()->count();
 //    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getTopBidsAttribute()
+    {
+        return $this->bids()
+            ->whereHas('evaluationDetails', function ($evaluationDetails) {
+                return $evaluationDetails->orderBy('amount', 'DESC')
+                    ->take(5);
+            })->with('evaluationDetails')
+            ->get()->makeVisible('evaluationDetails');
+    }
 
     /**
      * @return bool

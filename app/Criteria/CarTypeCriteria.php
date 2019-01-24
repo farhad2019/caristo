@@ -31,9 +31,14 @@ class CarTypeCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
         $parent_id = $this->request->get('parent_id', -1);
+        $depends = $this->request->get('depends', -1);
 
         if ($parent_id >= 0) {
             $model = $model->where('parent_id', $parent_id);
+        }
+
+        if ($depends >= 0) {
+            $model = $model->where('parent_id', $depends);
         }
 
         $model = $model->orderBy('created_at', 'ASC');

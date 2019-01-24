@@ -242,9 +242,9 @@
             @endif
             <dt>{!! Form::label('depreciation_trend', 'Depreciation Trend:') !!}</dt>
             <dd>
-                @foreach($myCar->depreciation_trend_value as $label => $value)
+                @foreach($myCar->DepreciationTrend as $label => $value)
                     <ul>
-                        <li>{!! $value['year'] !!} : {!! number_format($value['amount'], 2) !!}</li>
+                        <li>{!! $value->year !!} : {!! number_format($value->amount, 2) !!} ({!! $value->percentage !!}%)</li>
                     </ul>
                 @endforeach
             </dd>

@@ -125,6 +125,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/reviews', 'ReviewAPIController');
 });
 
+Route::resource('v1/carTypes', 'CarTypeAPIController');
+
 Route::resource('v1/walkThroughs', 'WalkThroughAPIController');
 
 Route::resource('v1/pages', 'PageAPIController');

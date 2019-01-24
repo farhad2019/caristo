@@ -6,6 +6,18 @@
 </style>
 @endpush
 
+<!-- Name Field -->
+<div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error' : '' }}">
+    {!! Form::label('name', 'Car Title:*') !!}
+    {!! Form::text('name', null, ['class' => 'form-control', 'maxLength' => 55]) !!}
+
+    @if ($errors->has('name'))
+        <span class="help-block" style="color: red;">
+            <strong>{{ $errors->first('name') }}</strong>
+        </span>
+    @endif
+</div>
+
 <!-- Category Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('category_id', 'Category:') !!}
@@ -25,19 +37,19 @@
 </div>
 
 <!-- Year Field -->
-<div class="form-group col-sm-6 years_classic">
+<div class="form-group col-sm-6 years_classic" style="display: none">
     {!! Form::label('year', 'Year:*') !!}
     {!! Form::select('year', $years_classic, null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Year Field -->
-<div class="form-group col-sm-6 years_pre_owned">
+<div class="form-group col-sm-6 years_pre_owned" style="display: none">
     {!! Form::label('year', 'Year:*') !!}
     {!! Form::select('year', $years_pre_owned, null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Year Field -->
-<div class="form-group col-sm-6 years_outlet_mall">
+<div class="form-group col-sm-6 years_outlet_mall" style="display: none">
     {!! Form::label('year', 'Year:*') !!}
     {!! Form::select('year', $years_outlet_mall, null, ['class' => 'form-control select2']) !!}
 </div>
@@ -54,10 +66,18 @@
     {!! Form::select('engine_type_id', $engineType, null, ['class' => 'form-control select2']) !!}
 </div>
 
-<!-- Engine Type Field -->
+<div class="col-sm-12 clearfix"></div>
+
+<!-- Car Type Field -->
 <div class="form-group col-sm-6 cartype">
     {!! Form::label('type_id', 'Segments:') !!}
-    {!! Form::select('type_id', $carTypes, null, ['class' => 'form-control select2']) !!}
+    {!! Form::select('type', $carTypes, null, ['class' => 'form-control select2']) !!}
+</div>
+
+<!-- Car Type Field -->
+<div class="form-group col-sm-6 cartype">
+    {!! Form::label('type_id', 'Sub Segments:') !!}
+    {!! Form::select('type_id', [], null, ['class' => 'form-control select2', 'data-url' => url('api/v1/carTypes'), 'data-depends'=>'type']) !!}
 </div>
 
 <!-- Engine Type Field -->
@@ -117,18 +137,6 @@
     @endif
 </div>
 
-<!-- Name Field -->
-<div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error' : '' }}">
-    {!! Form::label('name', 'Car Name:*') !!}
-    {!! Form::text('name', null, ['class' => 'form-control', 'maxLength' => 55]) !!}
-
-    @if ($errors->has('name'))
-        <span class="help-block" style="color: red;">
-            <strong>{{ $errors->first('name') }}</strong>
-        </span>
-    @endif
-</div>
-
 {{--@php($user = \Illuminate\Support\Facades\Auth::user())--}}
 <!-- Email Field -->
 {{--<div class="form-group col-sm-6 region">
@@ -155,28 +163,7 @@
 </div>
 
 @if(!isset($myCar))
-
-    {{--<div class="clearfix"></div>
-
-    <div class="form-group col-sm-12 region">
-        {!! Form::label('features', 'Car Features:') !!}
-        <div class="col-sm-12">
-            @foreach($features as $feature)
-                <div class="form-group col-sm-3 region clearfix">
-                    <div class="col-sm-2">
-                        {!! Form::hidden('feature['.$feature->id.']', false) !!}
-                        {!! Form::checkbox('feature['.$feature->id.']', 1, null) !!}
-                    </div>
-                    <div class="col-sm-10">
-                        {!! Form::label('status', $feature->name.':', ['style' => 'word-break: break-all; width: 50%;']) !!}
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>--}}
-
     <div class="clearfix"></div>
-
     @foreach($attributes as $attribute)
         @if($attribute->type == 10)
             <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
@@ -229,23 +216,6 @@
         @endif
     @endforeach
 @else
-    {{--<div class="clearfix"></div>
-    <div class="form-group col-sm-12 region">
-        {!! Form::label('features', 'Car Features:') !!}
-        <div class="col-sm-12">
-            @foreach($features as $feature)
-                <div class="form-group col-sm-3">
-                    <div class="col-sm-2">
-                        {!! Form::hidden('feature['.$feature->id.']', false) !!}
-                        {!! Form::checkbox('feature['.$feature->id.']', 1, (in_array($feature->id, $myCar->carFeatures->pluck('id')->toArray())?? false)) !!}
-                    </div>
-                    <div class="col-sm-10">
-                        {!! Form::label('status', $feature->name.':') !!}
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>--}}
     <div class="clearfix"></div>
 
     @foreach($attributes as $attribute)
@@ -300,38 +270,6 @@
 
         @endif
     @endforeach
-    {{--@foreach($myCar->myCarAttributes as $attribute)
-        @if($attribute->toArray()['attr_option'] !== null)
-        @endif
-        @if($attribute->type == 10)
-            <div class="form-group col-sm-6">
-                {!! Form::label('phone', $attribute->name.':') !!}
-                {!! Form::text('attribute['.$attribute->id.']', $attribute->value, ['class' => 'form-control']) !!}
-            </div>
-        @elseif($attribute->type == 20)
-            <div class="form-group col-sm-6">
-                {!! Form::label('phone', $attribute->name.':') !!}
-                {!! Form::number('attribute['.$attribute->id.']', $attribute->value, ['class' => 'form-control', 'step' =>0.1]) !!}
-            </div>
-        @elseif($attribute->type == 30 || $attribute->type == 40)
-            @foreach($attribute->option_array as $item)
-                @php($options[$item['id']] = $item['name'])
-            @endforeach
-            <!-- Regional Specification Field -->
-            <div class="form-group col-sm-6">
-                {!! Form::label($attribute->name, $attribute->name.':') !!}
-                {!! Form::select('attribute['.$attribute->id.']', $options, $attribute->value, ['class' => 'form-control select2', ($attribute->type == 40)?
-                'multiple':'']) !!}
-            </div>
-            @php($options = [])
-        @else
-            <div class="form-group col-sm-6">
-                {!! Form::label('phone', $attribute->name.':') !!}
-                {!! Form::file('attribute['.$attribute->id.']', ['class' => 'form-control', ($attribute->type == 60)?
-                'multiple':'']) !!}
-            </div>
-        @endif
-    @endforeach--}}
 @endif
 <div>
     <!-- Limited Edition Fields -->
@@ -340,7 +278,7 @@
         <hr>
     </div>
 
-    <div class="form-group col-sm-6 regions {{ $errors->has('length') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-4 regions {{ $errors->has('length') ? ' has-error' : '' }}">
         {!! Form::label('length', 'Length:*') !!}
         {!! Form::number('length', isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']:null, ['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
 
@@ -351,7 +289,7 @@
         @endif
     </div>
 
-    <div class="form-group col-sm-6 regions {{ $errors->has('width') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-4 regions {{ $errors->has('width') ? ' has-error' : '' }}">
         {!! Form::label('width', 'Width:*') !!}
         {!! Form::number('width',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WIDTH']:null, ['class' => 'form-control', 'placeholder' => 'Width in MM']) !!}
         @if ($errors->has('width'))
@@ -361,7 +299,7 @@
         @endif
     </div>
 
-    <div class="form-group col-sm-6 regions {{ $errors->has('height') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-4 regions {{ $errors->has('height') ? ' has-error' : '' }}">
         {!! Form::label('height', 'Height:*') !!}
         {!! Form::number('height',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['HEIGHT']:null, ['class' => 'form-control', 'placeholder' => 'Height in MM']) !!}
         @if ($errors->has('height'))
@@ -371,7 +309,7 @@
         @endif
     </div>
 
-    <div class="form-group col-sm-6 regions {{ $errors->has('weight_dist') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-4 regions {{ $errors->has('weight_dist') ? ' has-error' : '' }}">
         {!! Form::label('weight_dist', 'WEIGHT DISTRIBUTION:*') !!}
         {!! Form::number('weight_dist',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT DISTRIBUTION']:null, ['class' => 'form-control', 'placeholder' => 'WEIGHT DISTRIBUTION']) !!}
         @if ($errors->has('weight_dist'))
@@ -381,7 +319,7 @@
         @endif
     </div>
 
-    <div class="form-group col-sm-6 regions" {{ $errors->has('trunk') ? ' has-error' : '' }}>
+    <div class="form-group col-sm-4 regions" {{ $errors->has('trunk') ? ' has-error' : '' }}>
         {!! Form::label('trunk', 'Trunk:*') !!}
         {!! Form::number('trunk',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['TRUNK']:null, ['class' => 'form-control', 'placeholder' => 'Trunk in Length']) !!}
         @if ($errors->has('trunk'))
@@ -391,7 +329,7 @@
         @endif
     </div>
 
-    <div class="form-group col-sm-6 regions {{ $errors->has('weight') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-4 regions {{ $errors->has('weight') ? ' has-error' : '' }}">
         {!! Form::label('WEIGHT', 'WEIGHT:*') !!}
         {!! Form::number('weight',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT']:null, ['class' => 'form-control', 'placeholder' => 'Weight in KG']) !!}
         @if ($errors->has('weight'))
@@ -401,11 +339,11 @@
         @endif
     </div>
 
-    <div class="form-group col-sm-12 regions">
+    <div class="form-group col-sm-6 regions">
         <hr>
         <h3>Seating Capacity</h3>
         <hr>
-        <div class="form-group col-sm-6 regions {{ $errors->has('seats') ? ' has-error' : '' }}">
+        <div class="form-group col-sm-12 regions {{ $errors->has('seats') ? ' has-error' : '' }}">
             {!! Form::label('seats', 'MAX.NO OF SEATS:*') !!}
             {!! Form::number('seats', isset($limited_edition_specs)? $limited_edition_specs['Seating_Capacity']['MAX.NO OF SEATS']:null, ['class' => 'form-control', 'placeholder' => 'MAX.NO OF SEATS']) !!}
             @if ($errors->has('seats'))
@@ -416,11 +354,11 @@
         </div>
     </div>
 
-    <div class="form-group col-sm-12 regions">
+    <div class="form-group col-sm-6 regions">
         <hr>
         <h3>Drive Train</h3>
         <hr>
-        <div class="form-group col-sm-6 regions {{ $errors->has('drive_train') ? ' has-error' : '' }}">
+        <div class="form-group col-sm-12 regions {{ $errors->has('drive_train') ? ' has-error' : '' }}">
             {!! Form::label('drive_train', 'Drive Train:') !!}
             {!! Form::select('drive_train', \App\Models\MyCar::$DRIVE_TRAIN,  isset($limited_edition_specs['DRIVE_TRAIN']['drive_train'])? $limited_edition_specs['DRIVE_TRAIN']['drive_train']:null, ['class' => 'form-control select2']) !!}
             @if ($errors->has('drive_train'))
@@ -512,11 +450,11 @@
         </div>
     </div>
 
-    <div class="form-group col-sm-12 regions">
+    <div class="form-group col-sm-6 regions">
         <hr>
         <h3>Brakes</h3>
         <hr>
-        <div class="form-group col-sm-6 regions  {{ $errors->has('brakes') ? ' has-error' : '' }}">
+        <div class="form-group col-sm-12 regions  {{ $errors->has('brakes') ? ' has-error' : '' }}">
             {!! Form::label('Brakes_System', 'Brakes System:*') !!}
             {!! Form::text('brakes',  isset($limited_edition_specs)? $limited_edition_specs['Brakes']['BRAKES SYSTEM']:null, ['class' => 'form-control', 'placeholder' => 'Brakes  System', 'maxLength' => 55]) !!}
             @if ($errors->has('brakes'))
@@ -527,11 +465,11 @@
         </div>
     </div>
 
-    <div class="form-group col-sm-12 regions  {{ $errors->has('email') ? ' has-error' : '' }}">
+    <div class="form-group col-sm-6 regions  {{ $errors->has('email') ? ' has-error' : '' }}">
         <hr>
         <h3>Suspension</h3>
         <hr>
-        <div class="form-group col-sm-6 regions  {{ $errors->has('suspension') ? ' has-error' : '' }}">
+        <div class="form-group col-sm-12 regions  {{ $errors->has('suspension') ? ' has-error' : '' }}">
             {!! Form::label('Suspension', 'Suspension:*') !!}
             {!! Form::text('suspension',  isset($limited_edition_specs)? $limited_edition_specs['Suspension']['SUSPENSION']:null, ['class' => 'form-control', 'placeholder' => 'Suspension', 'maxLength' => 55]) !!}
             @if ($errors->has('suspension'))
@@ -568,11 +506,11 @@
             @endif</div>
     </div>
 
-    <div class="form-group col-sm-12 regions">
+    <div class="form-group col-sm-6 regions">
         <hr>
         <h3>Fuel</h3>
         <hr>
-        <div class="form-group col-sm-6 regions  {{ $errors->has('consumption') ? ' has-error' : '' }}">
+        <div class="form-group col-sm-12 regions  {{ $errors->has('consumption') ? ' has-error' : '' }}">
             {!! Form::label('FUEL_CONSUMPTION', 'FUEL CONSUMPTION:*') !!}
             {!! Form::number('consumption',  isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']:null, ['class' => 'form-control', 'placeholder' => 'FUEL CONSUMPTION L/100KM']) !!}
             @if ($errors->has('consumption'))
@@ -583,11 +521,11 @@
         </div>
     </div>
 
-    <div class="form-group col-sm-12 regions">
+    <div class="form-group col-sm-6 regions">
         <hr>
         <h3>Emission</h3>
         <hr>
-        <div class="form-group col-sm-6 regions  {{ $errors->has('emission') ? ' has-error' : '' }}">
+        <div class="form-group col-sm-12 regions  {{ $errors->has('emission') ? ' has-error' : '' }}">
             {!! Form::label('Emission', 'Emission:*') !!}
             {!! Form::text('emission',  isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']:null, ['class' => 'form-control', 'placeholder' => 'Emission in gmCO2/KM', 'maxLength' => 55]) !!}
             @if ($errors->has('emission'))
@@ -649,20 +587,17 @@
         </div>
         <hr>
     </div>
-
-{!! Form::hidden('depreciation_trend', \App\Models\Setting::first()->depreciation_trend) !!}
-
-{{--<div class="form-group col-sm-12 regions {{ $errors->has('depreciation_trend') ? ' has-error' : '' }}">--}}
-{{--<div class="form-group col-sm-6 regions">--}}
-{{--{!! Form::label('Depreciation_Trend', 'Depreciation Trend (%):*') !!}--}}
-{{--{!! Form::number('depreciation_trend',  null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min'=>1, 'max'=>99]) !!}--}}
-{{--@if ($errors->has('depreciation_trend'))--}}
-{{--<span class="help-block" style="color: red;">--}}
-{{--<strong>{{ $errors->first('depreciation_trend') }}</strong>--}}
-{{--</span>--}}
-{{--@endif--}}
-{{--</div>--}}
-{{--</div>--}}
+{{--<div class="form-group col-sm-12 regions {{ $errors->has('depreciation_trend') ? ' has-error' : '' }}">
+<div class="form-group col-sm-6 regions">
+{!! Form::label('Depreciation_Trend', 'Depreciation Trend (%):*') !!}
+{!! Form::number('depreciation_trend',  null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min'=>1, 'max'=>99]) !!}
+@if ($errors->has('depreciation_trend'))
+<span class="help-block" style="color: red;">
+<strong>{{ $errors->first('depreciation_trend') }}</strong>
+</span>
+@endif
+</div>
+</div>--}}
 <!-- End of Limited Editions Field -->
 </div>
 
@@ -689,24 +624,38 @@
                 {!! Form::label('regions','Price in '.$region, null, ['class' => 'form-control']) !!}
                 {!! Form::hidden('regions[]',$key, null, ['class' => 'form-control']) !!}
                 {!! Form::number('price[]', null, ['class' => 'form-control', 'placeholder' => 'Enter Region Price', 'pattern'=>"^[1-9]\d*$"]) !!}
-
                 @if ($errors->has('price'))
                     <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first('price') }}</strong>
-                </span>
+                        <strong>{{ $errors->first('price') }}</strong>
+                    </span>
                 @endif
             </div>
         </div>
     @endforeach
 @endif
 
+<div class="col-sm-12 clearfix"></div>
+@foreach($depreciation_trend_years as $key => $depreciation_trend_year)
+    <div class="regions" style="display: none">
+        <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend['.$key.']') ? 'has-error' : '' }}">
+            {!! Form::label('depreciation_trend','Year ('.$key.')', null, ['class' => 'form-control']) !!}
+            {!! Form::number('depreciation_trend['.$key.']', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:'', ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99, 'required' => 'required']) !!}
+            @if ($errors->has('depreciation_trend['.$key.']'))
+                <span class="help-block" style="color: red;">
+                    <strong>{{ $errors->first('depreciation_trend['.$key.']') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+@endforeach
 <div class="clearfix"></div>
 <div class="col-sm-12">
     @if ($errors->has('media'))
         <span class="help-block" style="color: red;">
             <strong>{{ $errors->first('media') }}</strong>
         </span>
-    @endif</div>
+    @endif
+</div>
 <div>
     @php($count = 0)
     @foreach($media_types as $key => $media_type)
@@ -724,7 +673,7 @@
                             <img src="{{ $media->file_url }}" width="120">
                         </a>
                         <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                                     style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
+                              style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
                         </span>
                     </div>
                 @endif
@@ -735,141 +684,16 @@
                     </span>
             @endif
         </div>
-            @if(($count%3) == 0)
-                <div class="col-sm-12 clearfix"><br></div>
-            @endif
+        @if(($count%3) == 0)
+            <div class="col-sm-12 clearfix"><br></div>
+        @endif
     @endforeach
-
-    {{--<!-- Media Field -->
-        <div class="form-group col-sm-4 {{ $errors->has('media') ? ' has-error' : '' }}">
-            {!! Form::label('media', 'Front Image:') !!}
-            {!! Form::file('media[front]', ['class' => 'form-control']) !!}
-
-            @if ($errors->has('media'))
-                <span class="help-block" style="color: red;">
-                        <strong>{{ $errors->first('media') }}</strong>
-                    </span>
-            @endif
-            <br>
-            @if(isset($myCar))
-                @if($myCar->media->count() > 0)
-                    @php($media = $myCar->media[0])
-                    <div style="position: relative; display: inline; padding-right: 10px">
-                        <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal"
-                           data-target="#imageGallery">
-                            <img src="{{ $myCar->front_image }}" width="120">
-                        </a>
-                        <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                              style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
-                    </span>
-                    </div>
-                @endif
-            @endif
-        </div>
-
-        <!-- Media Field -->
-        <div class="form-group col-sm-4">
-            {!! Form::label('media', 'Back Image:') !!}
-            {!! Form::file('media[back]', ['class' => 'form-control']) !!}
-            <br>
-            @if(isset($myCar))
-                @if($myCar->media->count() > 0)
-                    @if(isset( $myCar->media[1]))
-                        @php($media = $myCar->media[1])
-                        <div style="position: relative; display: inline; padding-right: 10px">
-                            <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal"
-                               data-target="#imageGallery">
-                                <img src="{{ $media->file_url }}" width="120">
-                            </a>
-                            <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                                  style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
-                    </span>
-                        </div>
-                    @endif
-                @endif
-            @endif
-        </div>
-
-        <!-- Media Field -->
-        <div class="form-group col-sm-4">
-            {!! Form::label('media', 'Right Image:') !!}
-            {!! Form::file('media[right]', ['class' => 'form-control']) !!}
-            <br>
-            @if(isset($myCar))
-                @if($myCar->media->count() > 0)
-                    @if(isset( $myCar->media[2]))
-                        @php($media = $myCar->media[2])
-                        <div style="position: relative; display: inline; padding-right: 10px">
-                            <a class="showGallery" data-id="{{$media->id}}" data-toggle="modal"
-                               data-target="#imageGallery">
-                                <img src="{{ $media->file_url }}" width="120">
-                            </a>
-                            <span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"
-                                  style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;
-                            </span>
-                        </div>
-                    @endif
-                @endif
-            @endif
-        </div>--}}
-
 </div>
-
-{{--<div class="">--}}
-{{--<!-- Media Field -->--}}
-{{--<div class="form-group col-sm-4">--}}
-{{--{!! Form::label('media', 'Left Image:') !!}--}}
-{{--{!! Form::file('media[left]', ['class' => 'form-control']) !!}--}}
-{{--<br>--}}
-{{--@if(isset($myCar))--}}
-{{--@if($myCar->media->count() > 0)--}}
-{{--@if(isset( $myCar->media[3]))--}}
-{{--@php($media = $myCar->media[3])--}}
-{{--<div style="position: relative; display: inline; padding-right: 10px">--}}
-{{--<a class="showGallery" data-id="{{$media->id}}" data-toggle="modal"--}}
-{{--data-target="#imageGallery">--}}
-{{--<img src="{{ $media->file_url }}" width="120">--}}
-{{--</a>--}}
-{{--<span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"--}}
-{{--style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;--}}
-{{--</span>--}}
-{{--</div>--}}
-{{--@endif--}}
-{{--@endif--}}
-{{--@endif--}}
-{{--</div>--}}
-
-{{--<!-- Media Field -->--}}
-{{--<div class="form-group col-sm-4">--}}
-{{--{!! Form::label('media', 'Interior Image:') !!}--}}
-{{--{!! Form::file('media[interior]', ['class' => 'form-control']) !!}--}}
-{{--<br>--}}
-{{--@if(isset($myCar))--}}
-{{--@if($myCar->media->count() > 0)--}}
-{{--@if(isset( $myCar->media[4]))--}}
-{{--@php($media = $myCar->media[4])--}}
-{{--<div style="position: relative; display: inline; padding-right: 10px">--}}
-{{--<a class="showGallery" data-id="{{$media->id}}" data-toggle="modal"--}}
-{{--data-target="#imageGallery">--}}
-{{--<img src="{{ $media->file_url }}" width="120">--}}
-{{--</a>--}}
-{{--<span class="btn-sm btn-danger delete_media" data-id="{{$media->id}}"--}}
-{{--style="position: absolute; right: 15px; z-index: 100; cursor: hand">&times;--}}
-{{--</span>--}}
-{{--</div>--}}
-{{--@endif--}}
-{{--@endif--}}
-{{--@endif--}}
-{{--</div>--}}
-{{--</div>--}}
 
 <!-- is_featured Field -->
 <div class="form-group col-sm-2  {{ $errors->has('is_featured') ? ' has-error' : '' }}">
     {!! Form::label('is_featured', 'Is Featured:') !!}
     {!! Form::select('is_featured', App\Helper\Utils::$BOOLS, null, ['class' => 'form-control']) !!}
-
-    {{--{!! Form::hidden('is_featured', 0, false) !!} <br>
-    {!! Form::checkbox('is_featured', 1, @$myCar->is_featured, ['class'=> 'form-control', 'data-toggle'=>'toggle']) !!}--}}
     @if ($errors->has('is_featured'))
         <span class="help-block" style="color: red;">
             <strong>{{ $errors->first('is_featured') }}</strong>
@@ -878,6 +702,7 @@
 </div>
 
 @if(isset($myCar))
+
     <!-- Status Field -->
     <div class="form-group col-sm-2 clearfix">
         {!! Form::label('status', 'Status:') !!}
@@ -936,7 +761,7 @@
 
         } else {
             $('.cartype').show();
-            $('.chassis').show();
+            $('.chassis').hide();
             $('.Trim').show();
             $('.Accident').show();
             $('.transmission_type').show();
