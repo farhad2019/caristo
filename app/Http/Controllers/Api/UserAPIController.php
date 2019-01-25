@@ -6,6 +6,7 @@ use App\Http\Requests\API\CreateUserApiRequest;
 use App\Http\Requests\API\UpdateUserApiRequest;
 use App\Http\Requests\Api\UpdateUserDeviceRequest;
 use App\Models\User;
+use App\Repositories\Admin\CarBrandRepository;
 use App\Repositories\Admin\UdeviceRepository;
 use App\Repositories\Admin\UserdetailRepository;
 use App\Repositories\Admin\UserRepository;
@@ -32,11 +33,15 @@ class UserAPIController extends AppBaseController
     /** @var  UdeviceRepository */
     private $userDeviceRepository;
 
-    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, UdeviceRepository $userDeviceRepo)
+    /** @var  CarBrandRepository */
+    private $brandRepository;
+
+    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, UdeviceRepository $userDeviceRepo, CarBrandRepository $brandRepo)
     {
         $this->userRepository = $userRepo;
         $this->userDetailRepository = $userDetailRepo;
         $this->userDeviceRepository = $userDeviceRepo;
+        $this->brandRepository = $brandRepo;
     }
 
     /**
@@ -444,6 +449,16 @@ class UserAPIController extends AppBaseController
     public function getUserByDeviceType(Request $request)
     {
         $users = $this->userRepository->getUserByDeviceType($request->depends);
-        return $this->sendResponse($users->toArray(), "User's region saved successfully");
+        return $this->sendResponse($users->toArray(), "User's region fetched successfully");
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function brandUsers(Request $request)
+    {
+        $brands = $this->brandRepository->find($request->depends);
+        return $this->sendResponse($brands->users->toArray(), 'dealers fetched successfully');
     }
 }

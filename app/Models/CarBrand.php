@@ -131,7 +131,7 @@ class CarBrand extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function user()
+    public function users()
     {
         return $this->belongsToMany(User::class, 'user_brands', 'brand_id', 'user_id');
     }

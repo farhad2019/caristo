@@ -244,7 +244,9 @@
             <dd>
                 @foreach($myCar->DepreciationTrend as $label => $value)
                     <ul>
-                        <li>{!! $value->year !!} : {!! number_format($value->amount, 2) !!} ({!! $value->percentage !!}%)</li>
+                        <li>{!! $value->year !!} : {!! number_format($value->amount, 2) !!} ({!! $value->percentage !!}
+                            %)
+                        </li>
                     </ul>
                 @endforeach
             </dd>
@@ -326,6 +328,42 @@
     </div>
 @endif
 
+@if($myCar->category_id == \App\Models\MyCar::LIMITED_EDITION)
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Official Dealer</h3>
+            <div class="box-tools pull-right">
+                <!-- Collapse Button -->
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            @foreach($myCar->dealers as $dealer)
+                <div class="col-sm-4">
+                    <dt>{!! Form::label('owner_type', 'Showroom:') !!}</dt>
+                    <dd><img src="{{ $dealer->showroomDetails->logo_url }}" width="50"> {!! $dealer->showroomDetails->name !!}</dd>
+                </div>
+                <div class="col-sm-4">
+                    <dt>{!! Form::label('owner_type', 'Address:') !!}</dt>
+                    <dd>{!! $dealer->showroomDetails->name !!}</dd>
+                </div>
+                <div class="col-sm-4">
+                    <dt>{!! Form::label('owner_type', 'Contact#:') !!}</dt>
+                    <dd>{!! $dealer->showroomDetails->phone !!}</dd>
+                </div>
+                <div class="col-sm-12 clearfix"><hr></div>
+            @endforeach
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer clearfix"></div>
+        <!-- box-footer -->
+    </div>
+@endif
+
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title">Car Images</h3>
@@ -347,7 +385,8 @@
                 <div class="col-sm-4">
                     <dt>{!! Form::label('engine_type_id', ucwords($media->title).' :') !!}</dt>
                     <dd>
-                        <a class="showGallery" data-id="{{$myCar->id}}" data-source="{{ $count }}" data-toggle="modal" data-target="#imageGallery">
+                        <a class="showGallery" data-id="{{$myCar->id}}" data-source="{{ $count }}" data-toggle="modal"
+                           data-target="#imageGallery">
                             <img src="{{ $media->file_url }}" width="120" height="70" style="margin-right: 2%">
                         </a>
                     </dd>

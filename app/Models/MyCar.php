@@ -558,6 +558,14 @@ class MyCar extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function dealers()
+    {
+        return $this->belongsToMany(User::class, 'car_dealers', 'car_id', 'user_id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
 //    public function bids()

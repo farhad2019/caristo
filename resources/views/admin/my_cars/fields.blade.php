@@ -271,6 +271,31 @@
         @endif
     @endforeach
 @endif
+
+
+<!-- Luxury new car Field -->
+
+<!-- to be tested for luxury attr dynamic -->
+{{--@foreach($limited_attr as $key => $value)
+    <div class="form-group col-sm-12 regions">
+        <h3>{!! $key !!}</h3>
+        <hr>
+    </div>
+    @foreach($value as $item)
+        <div class="form-group col-sm-4 regions {{ $errors->has($item) ? ' has-error' : '' }}">
+            {!! Form::label($item, $item.':*') !!}
+            --}}{{--            {!! Form::checkbox($item, 0, false,['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}--}}{{--
+            {!! Form::number($item, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']:null, ['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
+
+            @if ($errors->has($item))
+                <span class="help-block" style="color: red;">
+                    <strong>{{ $errors->first($item) }}</strong>
+                </span>
+            @endif
+        </div>
+    @endforeach
+@endforeach--}}
+
 <div>
     <!-- Limited Edition Fields -->
     <div class="form-group col-sm-12 regions">
@@ -280,6 +305,7 @@
 
     <div class="form-group col-sm-4 regions {{ $errors->has('length') ? ' has-error' : '' }}">
         {!! Form::label('length', 'Length:*') !!}
+{{--        {!! Form::checkbox('length', 0, false,['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}--}}
         {!! Form::number('length', isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']:null, ['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
 
         @if ($errors->has('length'))
@@ -600,6 +626,18 @@
 </div>--}}
 <!-- End of Limited Editions Field -->
 </div>
+<!-- Dealers Field -->
+<div class="clearfix"></div>
+<!-- Dealers Field -->
+<div class="form-group col-sm-12 {{ $errors->has('dealers') ? ' has-error' : '' }}">
+    {!! Form::label('dealers', 'Dealers:') !!}
+    {!! Form::select('dealers[]', $users, null, ['class' => 'form-control select2', 'multiple', 'data-url' => route('api.brandUsers'), 'data-depends'=>'brand']) !!}
+    @if ($errors->has('dealers'))
+        <span class="help-block" style="color: red;">
+            <strong>{{ $errors->first('dealers') }}</strong>
+        </span>
+    @endif
+</div>
 
 <!-- Multiple Regions Selection Field -->
 @if(isset($myCar))
@@ -648,6 +686,7 @@
         </div>
     </div>
 @endforeach
+
 <div class="clearfix"></div>
 <div class="col-sm-12">
     @if ($errors->has('media'))
@@ -709,14 +748,15 @@
         {!! Form::select('status', $status, $myCar->status, ['class' => 'form-control', ($myCar->status == 30)? 'disabled' : '']) !!}
     </div>
 @endif
+
 <!-- Year Field -->
 <div class="form-group col-sm-12 clearfix  {{ $errors->has('notes') ? ' has-error' : '' }}">
     {!! Form::label('notes', 'Description:') !!}
     {!! Form::textarea('notes', null, ['class' => 'form-control', 'placeholder' => 'Enter Description']) !!}
     @if ($errors->has('notes'))
         <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first('notes') }}</strong>
-                </span>
+            <strong>{{ $errors->first('notes') }}</strong>
+        </span>
     @endif
 </div>
 

@@ -154,3 +154,5 @@ Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIControll
 Route::resource('v1/settings', 'SettingAPIController');
 
 Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
+
+Route::get('v1/brandUsers', 'UserAPIController@brandUsers')->name('brandUsers');

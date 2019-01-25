@@ -243,11 +243,6 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-
-
-    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
@@ -299,11 +294,17 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasManyThrough(MyCar::class, CarInteraction::class, 'user_id', 'id', 'id', 'car_id')->where(['car_interactions.type' => CarInteraction::TYPE_FAVORITE]);
     }
 
+    /**
+     * @return $this
+     */
     public function likeCars()
     {
         return $this->hasManyThrough(MyCar::class, CarInteraction::class, 'user_id', 'id', 'id', 'car_id')->where(['car_interactions.type' => CarInteraction::TYPE_LIKE]);
     }
 
+    /**
+     * @return $this
+     */
     public function viewCars()
     {
         return $this->hasManyThrough(MyCar::class, CarInteraction::class, 'user_id', 'id', 'id', 'car_id')->where(['car_interactions.type' => CarInteraction::TYPE_VIEW]);
@@ -375,6 +376,30 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function news()
+    {
+        return $this->hasMany(News::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function dealers()
+    {
+        return $this->belongsToMany(MyCar::class, 'user_brands', 'user_id', 'car_id');
+    }
+
+    /**
      * @return int
      */
     public function getPushNotificationAttribute()
@@ -382,44 +407,51 @@ class User extends Authenticatable implements JWTSubject
         return $this->devices->first()->push_notification ?? 0;
     }
 
+    /**
+     * @return int
+     */
     public function getCarsCountAttribute()
     {
         return $this->cars()->count();
     }
 
+    /**
+     * @return int
+     */
     public function getFavoriteCountAttribute()
     {
         return $this->favoriteCars()->count();
     }
 
+    /**
+     * @return int
+     */
     public function getLikeCountAttribute()
     {
         return $this->likeCars()->count();
     }
 
+    /**
+     * @return int
+     */
     public function getViewCountAttribute()
     {
         return $this->viewCars()->count();
     }
 
-    public function comments()
-    {
-        return $this->hasMany(Comment::class, 'user_id');
-    }
-
-    public function news()
-    {
-        return $this->hasMany(News::class, 'user_id');
-    }
-
+    /**
+     * @return mixed
+     */
     public function commentswithtrash()
     {
         return $this->hasMany(Comment::class, 'user_id')->withTrashed();
     }
 
+    /**
+     * @return mixed
+     */
     public function detailswithtrash()
     {
         return $this->hasOne(UserDetail::class)->withTrashed();
     }
-
 }

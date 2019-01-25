@@ -22,6 +22,7 @@ use App\Repositories\Admin\MyCarRepository;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Admin\RegionalSpecificationRepository;
 use App\Repositories\Admin\RegionRepository;
+use App\Repositories\Admin\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -68,7 +69,10 @@ class MyCarController extends AppBaseController
     /** @var  DepreciationTrendRepository */
     private $trendRepository;
 
-    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo, RegionRepository $regionRepo, DepreciationTrendRepository $trendRepo)
+    /** @var  UserRepository */
+    private $userRepository;
+
+    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo, RegionRepository $regionRepo, DepreciationTrendRepository $trendRepo, UserRepository $userRepo)
     {
         $this->myCarRepository = $myCarRepo;
         $this->categoryRepository = $categoryRepo;
@@ -81,6 +85,7 @@ class MyCarController extends AppBaseController
         $this->featureRepository = $featureRepo;
         $this->regionRepository = $regionRepo;
         $this->trendRepository = $trendRepo;
+        $this->userRepository = $userRepo;
         $this->ModelName = 'myCars';
         $this->BreadCrumbName = 'MyCar';
     }
@@ -121,6 +126,7 @@ class MyCarController extends AppBaseController
         }
         $depreciation_trend_years = [];
         $brands = $this->brandRepository->all()->pluck('name', 'id');
+        $users = $this->userRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
         $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
@@ -130,6 +136,55 @@ class MyCarController extends AppBaseController
         $carTypesChildren = $this->carTypeRepository->findWhereNotIn('parent_id', [0])->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
+        $limited_attr = [
+            'Dimensions Weight'    => [
+                'LENGTH',
+                'WIDTH',
+                'HEIGHT',
+                'WEIGHT DISTRIBUTION',
+                'TRUNK',
+                'WEIGHT'
+            ],
+            'Seating Capacity'     => [
+                'MAX.NO OF SEATS'
+            ],
+            'DRIVE_TRAIN'          => [
+                'drive_train'
+            ],
+            'Engine'               => [
+                'DISPLACEMENT',
+                'NO. OF CYLINDER'
+            ],
+            'Performance'          => [
+                'MAX SPEED',
+                'ACCELERATION 0-100',
+                'HP / RPM',
+                'TORQUE'
+            ],
+            'Transmission'         => [
+                'GEARBOX'
+            ],
+            'Brakes'               => [
+                'BRAKES SYSTEM'
+            ],
+            'Suspension'           => [
+                'SUSPENSION'
+            ],
+            'Wheels Tyres'         => [
+                'FRONT TYRE', 'BACK TYRE'
+            ],
+            'Fuel'                 => [
+                'FUEL CONSUMPTION'
+            ],
+            'Emission'             => [
+                'EMISSION'
+            ],
+            'Warranty Maintenance' => [
+                'WARRANTY',
+                'MAINTENANCE PROGRAM'
+            ]
+        ];
+
         for ($a = 0; $a < 5; $a++) {
             $year_list = now()->format('Y') + $a;
             $depreciation_trend_years[$year_list] = $year_list;
@@ -233,6 +288,7 @@ class MyCarController extends AppBaseController
             'regional_specs'           => $regional_specs,
             'engineType'               => $engineType,
             'attributes'               => $attributes,
+            'limited_attr'             => $limited_attr,
             'features'                 => $features,
             'transmission_type'        => MyCar::$TRANSMISSION_TYPE_TEXT,
             'media_types'              => MyCar::$MEDIA_TYPES,
@@ -245,6 +301,7 @@ class MyCarController extends AppBaseController
             'years_classic'            => $years_classic,
             'years_pre_owned'          => $years_pre_owned,
             'years_outlet_mall'        => $years_outlet_mall,
+            'users'                    => $users,
             'brands'                   => $brands
         ]);
     }
@@ -286,6 +343,8 @@ class MyCarController extends AppBaseController
                     'amount'     => $amount
                 ]);
             }
+
+            $myCar->dealers()->attach($request->dealers);
         }
 
         Flash::success('Car saved successfully . ');
@@ -349,6 +408,7 @@ class MyCarController extends AppBaseController
         $carTypesChildren = $this->carTypeRepository->findWhereNotIn('parent_id', [0])->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
+        $users = $this->userRepository->all()->pluck('name', 'id');
         $years = ['1950' => "1950",
                   '1951' => "1951",
                   '1952' => "1952",
@@ -462,6 +522,7 @@ class MyCarController extends AppBaseController
             'carTypes'                 => $carTypes,
             'carModels'                => $carModels,
             'brands'                   => $brands,
+            'users'                   => $users,
             'regions'                  => $regions,
             'depreciation_trend_years' => $depreciation_trend_years,
             'years'                    => $years,
@@ -806,6 +867,8 @@ class MyCarController extends AppBaseController
                     'amount'     => $amount
                 ]);
             }
+            $myCar->dealers()->sync($request->dealers);
+
         }
 
         Flash::success('Car updated successfully . ');
