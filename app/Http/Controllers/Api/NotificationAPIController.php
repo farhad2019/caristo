@@ -100,11 +100,7 @@ class NotificationAPIController extends AppBaseController
         $this->notificationRepository->pushCriteria(new LimitOffsetCriteria($request));
 //        $this->notificationRepository->pushCriteria(new NotificationCriteria($request));
 
-        $notifications = Auth::user()->notificationMaster()->where('notification_users.deleted_at', null)->get();
-
-//        var_dump($notifications->toSql());
-//        exit();
-//        $notifications = $this->notificationRepository->all();
+        $notifications = Auth::user()->notificationMaster()->where('notification_users.deleted_at', null)->orderBy('created_at', 'DESC')->get();
 
         $extraData = [];
         if (!empty($notifications)) {

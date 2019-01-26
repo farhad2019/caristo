@@ -52,7 +52,7 @@ class BidsHistoryController extends AppBaseController
      * Display a listing of the BidsHistory.
      *
      * @param BidsHistoryDataTable $bidsHistoryDataTable
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(BidsHistoryDataTable $bidsHistoryDataTable)
     {

@@ -192,6 +192,13 @@ class MakeBidAPIController extends AppBaseController
      *          in="query"
      *      ),
      *      @SWG\Parameter(
+     *          name="version",
+     *          description="version",
+     *          required=false,
+     *          type="string",
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
      *          name="is_for_review",
      *          description="is for review",
      *          required=false,

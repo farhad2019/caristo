@@ -75,14 +75,10 @@ class TradeInCarRepository extends BaseRepository
                     WHEN trade_in_cars.type = ' . TradeInCar::TRADE_IN . '  
                     THEN amount IS NULL AND `owner_car_id` IN (' . $cars . ')
                     WHEN trade_in_cars.type = ' . TradeInCar::EVALUATE_CAR . '  
-                    THEN `owner_car_id` IS NULL AND NOT EXISTS 
-                    (SELECT 
-                      * 
-                    FROM
-                      `car_evaluation_bids` 
+                    THEN `owner_car_id` IS NULL AND trade_in_cars.created_at > "'. Auth::user()->created_at .'" AND NOT EXISTS 
+                    (SELECT * FROM `car_evaluation_bids` 
                     WHERE `trade_in_cars`.`id` = `car_evaluation_bids`.`evaluation_id` 
-                      AND `user_id` = ' . Auth::id() . '  
-                      AND `car_evaluation_bids`.`deleted_at` IS NULL) 
+                      AND `user_id` = ' . Auth::id() . ' AND `car_evaluation_bids`.`deleted_at` IS NULL) 
                   END'));
                 /*return $q->whereRaw(DB::raw('amount IS NULL'))
                     ->whereDoesntHave('evaluationDetails', function ($qq) {
@@ -141,9 +137,7 @@ class TradeInCarRepository extends BaseRepository
     public function saveRecord($request)
     {
         $input = $request->all();
-
         $input['user_id'] = Auth::id();
-
         $input['amount'] = null;
 
         // current date + 1
@@ -171,9 +165,7 @@ class TradeInCarRepository extends BaseRepository
             $expire_at = $date;
         }
         $input['bid_close_at'] = $expire_at;
-
         $tradeInCar = $this->create($input);
-
         return $tradeInCar;
     }
 

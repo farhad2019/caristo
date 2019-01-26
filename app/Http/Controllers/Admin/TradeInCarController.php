@@ -57,7 +57,7 @@ class TradeInCarController extends AppBaseController
      *
      * @param Request $request
      * @param TradeInCarDataTable $tradeInCarDataTable
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     /*public function index(TradeInCarDataTable $tradeInCarDataTable)
     {
@@ -67,9 +67,9 @@ class TradeInCarController extends AppBaseController
     public function index(Request $request, TradeInCarDataTable $tradeInCarDataTable)
     {
         $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(false, $request->all());
-//        dd($tradeInRequests);
-//dd($tradeInRequests->getBindings(), $tradeInRequests->toSql());
-//        if (Auth::user()->hasRole('showroom-owner')) {
+        /*dd($tradeInRequests);
+        dd($tradeInRequests->getBindings(), $tradeInRequests->toSql());
+        if (Auth::user()->hasRole('showroom-owner')) {*/
         return view('admin.showroom.carsListing')
             ->with([
                 'tradeInRequests' => $tradeInRequests
@@ -85,8 +85,8 @@ class TradeInCarController extends AppBaseController
 ////            'bid' => $bid
 //            ]);
 //        }
-        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        return $tradeInCarDataTable->render('admin.trade_in_cars.index');
+//        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
+//        return $tradeInCarDataTable->render('admin.trade_in_cars.index');
     }
 
     /**
