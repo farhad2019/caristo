@@ -167,7 +167,7 @@ class CarDataTable extends DataTable
                 'searchable' => false,
                 'exportable' => false
             ],
-            'views_count'                      => [
+            /*'views_count'                      => [
                 'title' => 'User Views'
             ],
             'favorite_count'                   => [
@@ -178,7 +178,7 @@ class CarDataTable extends DataTable
             ],
             'personal_shopper_clicks'          => [
                 'title' => 'Per.Shopper Clicks'
-            ],
+            ],*/
             /* 'like_count'                       => [
                  'orderable'  => false,
                  'searchable' => false,
