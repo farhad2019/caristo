@@ -281,15 +281,24 @@
         <h3>{!! $key !!}</h3>
         <hr>
     </div>
-    @foreach($value as $item)
-        <div class="form-group col-sm-4 regions {{ $errors->has($item) ? ' has-error' : '' }}">
-            {!! Form::label($item, $item.':*') !!}
-            --}}{{--            {!! Form::checkbox($item, 0, false,['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}--}}{{--
-            {!! Form::number($item, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']:null, ['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
+    @foreach($value as $item => $unit)
+        @php($title=str_replace(" ", "_", strtoupper($item)))
+        <div class="form-group col-sm-4 regions {{ $errors->has($title) ? ' has-error' : '' }}">
+            {!! Form::label($item, strtoupper($item).':*') !!}
+            --}}{{--{!! Form::checkbox($item, 0, false,['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}--}}{{--
+            @if(is_array($unit))
+                {!! Form::select($title, $unit, null, ['class' => 'form-control select2']) !!}
+            @else
+                @if(strlen($unit) == 0)
+                    {!! Form::text($title, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']:null, ['class' => 'form-control', 'placeholder' => strtoupper($item).' '.$unit]) !!}
+                @else
+                    {!! Form::number($title, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']:null, ['class' => 'form-control', 'placeholder' => strtoupper($item).' '.$unit]) !!}
+                @endif
+            @endif
 
-            @if ($errors->has($item))
+            @if ($errors->has(strtoupper($item)))
                 <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first($item) }}</strong>
+                    <strong>{{ $errors->first(strtoupper($item)) }}</strong>
                 </span>
             @endif
         </div>
@@ -305,7 +314,7 @@
 
     <div class="form-group col-sm-4 regions {{ $errors->has('length') ? ' has-error' : '' }}">
         {!! Form::label('length', 'Length:*') !!}
-{{--        {!! Form::checkbox('length', 0, false,['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}--}}
+        {{--        {!! Form::checkbox('length', 0, false,['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}--}}
         {!! Form::number('length', isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']:null, ['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
 
         @if ($errors->has('length'))

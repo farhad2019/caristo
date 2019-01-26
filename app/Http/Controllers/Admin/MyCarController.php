@@ -138,50 +138,56 @@ class MyCarController extends AppBaseController
         $regions = $this->regionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
         $limited_attr = [
             'Dimensions Weight'    => [
-                'LENGTH',
-                'WIDTH',
-                'HEIGHT',
-                'WEIGHT DISTRIBUTION',
-                'TRUNK',
-                'WEIGHT'
+                'LENGTH'              => 'in MM',
+                'WIDTH'               => 'in MM',
+                'HEIGHT'              => 'in MM',
+                'WEIGHT DISTRIBUTION' => 'in ',
+                'TRUNK'               => 'in L',
+                'WEIGHT'              => 'in KG'
             ],
             'Seating Capacity'     => [
-                'MAX.NO OF SEATS'
+                'MAX.NO OF SEATS' => 'in Number'
             ],
-            'DRIVE_TRAIN'          => [
-                'drive_train'
+            'DRIVE TRAIN'          => [
+                'DRIVE TRAIN' => [
+                    '4WD' => '4WD',
+                    'AWD' => 'AWD',
+                    'FWD' => 'FWD',
+                    'RWD' => 'RWD',
+                ]
             ],
             'Engine'               => [
-                'DISPLACEMENT',
-                'NO. OF CYLINDER'
+                'DISPLACEMENT'    => 'in CC',
+                'NO. OF CYLINDER' => 'in Number',
             ],
             'Performance'          => [
-                'MAX SPEED',
-                'ACCELERATION 0-100',
-                'HP / RPM',
-                'TORQUE'
+                'MAX SPEED'    => 'in KM/H',
+                'ACCELERATION' => 'in SEC',
+                'HP / RPM'     => 'in Number / Number',
+                'TORQUE'       => 'in NM',
             ],
             'Transmission'         => [
-                'GEARBOX'
+                'GEARBOX' => ''
             ],
             'Brakes'               => [
-                'BRAKES SYSTEM'
+                'BRAKES SYSTEM' => ''
             ],
             'Suspension'           => [
-                'SUSPENSION'
+                'SUSPENSION' => ''
             ],
             'Wheels Tyres'         => [
-                'FRONT TYRE', 'BACK TYRE'
+                'FRONT TYRE' => '',
+                'BACK TYRE'  => ''
             ],
             'Fuel'                 => [
-                'FUEL CONSUMPTION'
+                'FUEL CONSUMPTION' => 'in L/100M'
             ],
             'Emission'             => [
-                'EMISSION'
+                'EMISSION' => 'in gmCO2/KM'
             ],
             'Warranty Maintenance' => [
-                'WARRANTY',
-                'MAINTENANCE PROGRAM'
+                'WARRANTY'            => 'in YEARS/KM',
+                'MAINTENANCE PROGRAM' => 'in YEARS/KM'
             ]
         ];
 
@@ -522,7 +528,7 @@ class MyCarController extends AppBaseController
             'carTypes'                 => $carTypes,
             'carModels'                => $carModels,
             'brands'                   => $brands,
-            'users'                   => $users,
+            'users'                    => $users,
             'regions'                  => $regions,
             'depreciation_trend_years' => $depreciation_trend_years,
             'years'                    => $years,
