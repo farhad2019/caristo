@@ -311,6 +311,7 @@ class MyCar extends Model
         'carRegions',
         'category',
         'reviews',
+        'dealers',
         'engineType'
 //        'myCarFeatures',
 //        'bids',
@@ -395,6 +396,7 @@ class MyCar extends Model
         'category',
         'limited_edition_specs_array',
         'reviews',
+        'dealers',
         'specification'
     ];
 
