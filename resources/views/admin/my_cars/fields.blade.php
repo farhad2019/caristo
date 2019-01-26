@@ -635,18 +635,20 @@
 </div>--}}
 <!-- End of Limited Editions Field -->
 </div>
-<!-- Dealers Field -->
-<div class="clearfix"></div>
-<!-- Dealers Field -->
-<div class="form-group col-sm-12 {{ $errors->has('dealers') ? ' has-error' : '' }}">
-    {!! Form::label('dealers', 'Dealers:') !!}
-    {!! Form::select('dealers[]', $users, null, ['class' => 'form-control select2', 'multiple', 'data-url' => route('api.brandUsers'), 'data-depends'=>'brand']) !!}
-    @if ($errors->has('dealers'))
-        <span class="help-block" style="color: red;">
+@if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
+    <!-- Dealers Field -->
+    <div class="clearfix"></div>
+    <!-- Dealers Field -->
+    <div class="form-group col-sm-12 {{ $errors->has('dealers') ? ' has-error' : '' }}">
+        {!! Form::label('dealers', 'Dealers:') !!}
+        {!! Form::select('dealers[]', $users, null, ['class' => 'form-control select2', 'multiple', 'data-url' => route('api.brandUsers'), 'data-depends'=>'brand']) !!}
+        @if ($errors->has('dealers'))
+            <span class="help-block" style="color: red;">
             <strong>{{ $errors->first('dealers') }}</strong>
         </span>
-    @endif
-</div>
+        @endif
+    </div>
+@endif
 
 <!-- Multiple Regions Selection Field -->
 @if(isset($myCar))
