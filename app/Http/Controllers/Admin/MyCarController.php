@@ -573,6 +573,7 @@ class MyCarController extends AppBaseController
 //                'regional_specification_id' => 'required',
 //                'email'                     => 'required|email',
                     'amount'       => 'required',
+                    'dealers'      => 'required|array|between:1,2',
                     'name'         => 'required',
 //                    'chassis' => 'required',
                     'is_featured'  => 'check_featured_update',
