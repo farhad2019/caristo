@@ -211,11 +211,11 @@ class MyCar extends Model
     ];
 
     public static $MEDIA_TYPES = [
-        'front'             => 'front',
-        'back'              => 'back',
-        'right'             => 'right',
-        'left'              => 'left',
-        'interior'          => 'interior',
+        'front'    => 'front',
+        'back'     => 'back',
+        'right'    => 'right',
+        'left'     => 'left',
+        'interior' => 'interior',
 //        'registration card' => 'registration_card'
     ];
 
@@ -775,7 +775,13 @@ class MyCar extends Model
                 $count = 0;
                 foreach ($items as $name => $item) {
                     $specs[$key][$count]['name'] = $name;
-                    $specs[$key][$count]['value'] = $item;
+                    if (isset($item['value'])) {
+                        $specs[$key][$count]['value'] = $item['value'];
+                        $specs[$key][$count]['is_highlight'] = $item['is_highlight'];
+                    } else {
+                        $specs[$key][$count]['value'] = $item;
+                    }
+
                     $count++;
                 }
             }
