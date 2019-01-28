@@ -51,51 +51,120 @@ class MyCarRepository extends BaseRepository
         if ($request->category_id == MyCar::LIMITED_EDITION) {
             $limited = array(
                 'Dimensions_Weight'    => array(
-                    'LENGTH'              => $request->length,
-                    'WIDTH'               => $request->width,
-                    'HEIGHT'              => $request->height,
-                    'WEIGHT DISTRIBUTION' => $request->weight_dist,
-                    'TRUNK'               => $request->trunk,
-                    'WEIGHT'              => $request->weight,
+                    'LENGTH'              => [
+                        'value'        => $request->length,
+                        'is_highlight' => $request->highlight_length ?? 0
+                    ],
+                    'WIDTH'               => [
+                        'value'        => $request->width,
+                        'is_highlight' => $request->highlight_width ?? 0
+                    ],
+                    'HEIGHT'              => [
+                        'value'        => $request->height,
+                        'is_highlight' => $request->highlight_height ?? 0
+                    ],
+                    'WEIGHT DISTRIBUTION' => [
+                        'value'        => $request->weight_dist,
+                        'is_highlight' => $request->highlight_weight_dist ?? 0
+                    ],
+                    'TRUNK'               => [
+                        'value'        => $request->trunk,
+                        'is_highlight' => $request->highlight_trunk ?? 0
+                    ],
+                    'WEIGHT'              => [
+                        'value'        => $request->weight,
+                        'is_highlight' => $request->highlight_weight ?? 0
+                    ],
                 ),
                 'Seating_Capacity'     => array(
-                    'MAX.NO OF SEATS' => $request->seats,
+                    'MAX.NO OF SEATS' => [
+                        'value'        => $request->seats,
+                        'is_highlight' => $request->highlight_seats ?? 0
+                    ],
                 ),
                 'DRIVE_TRAIN'          => array(
-                    'drive_train' => $request->drive_train,
+                    'drive_train' => [
+                        'value'        => $request->drive_train,
+                        'is_highlight' => $request->highlight_drive_train ?? 0
+                    ],
                 ),
                 'Engine'               => array(
-                    'DISPLACEMENT'    => $request->displacement,
-                    'NO. OF CYLINDER' => $request->cylinders,
+                    'DISPLACEMENT'    => [
+                        'value'        => $request->displacement,
+                        'is_highlight' => $request->highlight_displacement ?? 0
+                    ],
+                    'NO. OF CYLINDER' => [
+                        'value'        => $request->cylinders,
+                        'is_highlight' => $request->highlight_cylinders ?? 0
+                    ],
                 ),
                 'Performance'          => array(
-                    'MAX SPEED'          => $request->max_speed,
-                    'ACCELERATION 0-100' => $request->acceleration,
-                    'HP / RPM'           => $request->hp_rpm,
-                    'TORQUE'             => $request->torque,
+                    'MAX SPEED'          => [
+                        'value'        => $request->max_speed,
+                        'is_highlight' => $request->highlight_max_speed ?? 0
+                    ],
+                    'ACCELERATION 0-100' => [
+                        'value'        => $request->acceleration,
+                        'is_highlight' => $request->highlight_acceleration ?? 0
+                    ],
+                    'HP / RPM'           => [
+                        'value'        => $request->hp_rpm,
+                        'is_highlight' => $request->highlight_hp_rpm ?? 0
+                    ],
+                    'TORQUE'             => [
+                        'value'        => $request->torque,
+                        'is_highlight' => $request->highlight_torque ?? 0
+                    ],
                 ),
                 'Transmission '        => array(
-                    'GEARBOX' => $request->gearbox,
+                    'GEARBOX' => [
+                        'value'        => $request->gearbox,
+                        'is_highlight' => $request->highlight_gearbox ?? 0
+                    ],
                 ),
                 'Brakes'               => array(
-                    'BRAKES SYSTEM' => $request->brakes,
+                    'BRAKES SYSTEM' => [
+                        'value'        => $request->brakes,
+                        'is_highlight' => $request->highlight_brakes ?? 0
+                    ],
                 ),
                 'Suspension'           => array(
-                    'SUSPENSION' => $request->suspension,
+                    'SUSPENSION' => [
+                        'value'        => $request->suspension,
+                        'is_highlight' => $request->highlight_suspension ?? 0
+                    ],
                 ),
                 'Wheels_Tyres'         => array(
-                    'FRONT TYRE' => $request->front_tyre,
-                    'BACK TYRE'  => $request->back_tyre,
+                    'FRONT TYRE' => [
+                        'value'        => $request->front_tyre,
+                        'is_highlight' => $request->highlight_front_tyre ?? 0
+                    ],
+                    'BACK TYRE'  => [
+                        'value'        => $request->back_tyre,
+                        'is_highlight' => $request->highlight_back_tyre ?? 0
+                    ],
                 ),
                 'Fuel'                 => array(
-                    'FUEL CONSUMPTION' => $request->consumption,
+                    'FUEL CONSUMPTION' => [
+                        'value'        => $request->consumption,
+                        'is_highlight' => $request->highlight_consumption ?? 0
+                    ],
                 ),
                 'Emission'             => array(
-                    'EMISSION' => $request->emission,
+                    'EMISSION' => [
+                        'value'        => $request->emission,
+                        'is_highlight' => $request->highlight_emission ?? 0
+                    ],
                 ),
                 'Warranty_Maintenance' => array(
-                    'WARRANTY'             => $request->warranty,
-                    'MAINTENANCE PROGRAM ' => $request->maintenance,
+                    'WARRANTY'             => [
+                        'value'        => $request->warranty,
+                        'is_highlight' => $request->highlight_warranty ?? 0
+                    ],
+                    'MAINTENANCE PROGRAM ' => [
+                        'value'        => $request->maintenance,
+                        'is_highlight' => $request->highlight_maintenance ?? 0
+                    ],
                 ),
 //                'Lifecycle'            => array(
 //                    'LIFECYCLE' => $request->lifecycle,
@@ -249,51 +318,120 @@ class MyCarRepository extends BaseRepository
         if ($request->category_id == MyCar::LIMITED_EDITION) {
             $limited = array(
                 'Dimensions_Weight'    => array(
-                    'LENGTH'              => $request->length,
-                    'WIDTH'               => $request->width,
-                    'HEIGHT'              => $request->height,
-                    'WEIGHT DISTRIBUTION' => $request->weight_dist,
-                    'TRUNK'               => $request->trunk,
-                    'WEIGHT'              => $request->weight,
+                    'LENGTH'              => [
+                        'value'        => $request->length,
+                        'is_highlight' => $request->highlight_length ?? 0
+                    ],
+                    'WIDTH'               => [
+                        'value'        => $request->width,
+                        'is_highlight' => $request->highlight_width ?? 0
+                    ],
+                    'HEIGHT'              => [
+                        'value'        => $request->height,
+                        'is_highlight' => $request->highlight_height ?? 0
+                    ],
+                    'WEIGHT DISTRIBUTION' => [
+                        'value'        => $request->weight_dist,
+                        'is_highlight' => $request->highlight_weight_dist ?? 0
+                    ],
+                    'TRUNK'               => [
+                        'value'        => $request->trunk,
+                        'is_highlight' => $request->highlight_trunk ?? 0
+                    ],
+                    'WEIGHT'              => [
+                        'value'        => $request->weight,
+                        'is_highlight' => $request->highlight_weight ?? 0
+                    ],
                 ),
                 'Seating_Capacity'     => array(
-                    'MAX.NO OF SEATS' => $request->seats,
+                    'MAX.NO OF SEATS' => [
+                        'value'        => $request->seats,
+                        'is_highlight' => $request->highlight_seats ?? 0
+                    ],
                 ),
                 'DRIVE_TRAIN'          => array(
-                    'drive_train' => $request->drive_train,
+                    'drive_train' => [
+                        'value'        => $request->drive_train,
+                        'is_highlight' => $request->highlight_drive_train ?? 0
+                    ],
                 ),
                 'Engine'               => array(
-                    'DISPLACEMENT'    => $request->displacement,
-                    'NO. OF CYLINDER' => $request->cylinders,
+                    'DISPLACEMENT'    => [
+                        'value'        => $request->displacement,
+                        'is_highlight' => $request->highlight_displacement ?? 0
+                    ],
+                    'NO. OF CYLINDER' => [
+                        'value'        => $request->cylinders,
+                        'is_highlight' => $request->highlight_cylinders ?? 0
+                    ],
                 ),
                 'Performance'          => array(
-                    'MAX SPEED'          => $request->max_speed,
-                    'ACCELERATION 0-100' => $request->acceleration,
-                    'HP / RPM'           => $request->hp_rpm,
-                    'TORQUE'             => $request->torque,
+                    'MAX SPEED'          => [
+                        'value'        => $request->max_speed,
+                        'is_highlight' => $request->highlight_max_speed ?? 0
+                    ],
+                    'ACCELERATION 0-100' => [
+                        'value'        => $request->acceleration,
+                        'is_highlight' => $request->highlight_acceleration ?? 0
+                    ],
+                    'HP / RPM'           => [
+                        'value'        => $request->hp_rpm,
+                        'is_highlight' => $request->highlight_hp_rpm ?? 0
+                    ],
+                    'TORQUE'             => [
+                        'value'        => $request->torque,
+                        'is_highlight' => $request->highlight_torque ?? 0
+                    ],
                 ),
                 'Transmission '        => array(
-                    'GEARBOX' => $request->gearbox,
+                    'GEARBOX' => [
+                        'value'        => $request->gearbox,
+                        'is_highlight' => $request->highlight_gearbox ?? 0
+                    ],
                 ),
                 'Brakes'               => array(
-                    'BRAKES SYSTEM' => $request->brakes,
+                    'BRAKES SYSTEM' => [
+                        'value'        => $request->brakes,
+                        'is_highlight' => $request->highlight_brakes ?? 0
+                    ],
                 ),
                 'Suspension'           => array(
-                    'SUSPENSION' => $request->suspension,
+                    'SUSPENSION' => [
+                        'value'        => $request->suspension,
+                        'is_highlight' => $request->highlight_suspension ?? 0
+                    ],
                 ),
                 'Wheels_Tyres'         => array(
-                    'FRONT TYRE' => $request->front_tyre,
-                    'BACK TYRE'  => $request->back_tyre,
+                    'FRONT TYRE' => [
+                        'value'        => $request->front_tyre,
+                        'is_highlight' => $request->highlight_front_tyre ?? 0
+                    ],
+                    'BACK TYRE'  => [
+                        'value'        => $request->back_tyre,
+                        'is_highlight' => $request->highlight_back_tyre ?? 0
+                    ],
                 ),
                 'Fuel'                 => array(
-                    'FUEL CONSUMPTION' => $request->consumption,
+                    'FUEL CONSUMPTION' => [
+                        'value'        => $request->consumption,
+                        'is_highlight' => $request->highlight_consumption ?? 0
+                    ],
                 ),
                 'Emission'             => array(
-                    'EMISSION' => $request->emission,
+                    'EMISSION' => [
+                        'value'        => $request->emission,
+                        'is_highlight' => $request->highlight_emission ?? 0
+                    ],
                 ),
                 'Warranty_Maintenance' => array(
-                    'WARRANTY'             => $request->warranty,
-                    'MAINTENANCE PROGRAM ' => $request->maintenance,
+                    'WARRANTY'             => [
+                        'value'        => $request->warranty,
+                        'is_highlight' => $request->highlight_warranty ?? 0
+                    ],
+                    'MAINTENANCE PROGRAM ' => [
+                        'value'        => $request->maintenance,
+                        'is_highlight' => $request->highlight_maintenance ?? 0
+                    ],
                 ),
 //                'Lifecycle'            => array(
 //                    'LIFECYCLE' => $request->lifecycle,

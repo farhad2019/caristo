@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Criteria\TradeInCarCriteria;
 use App\Http\Requests\Api\CreateTradeInCarAPIRequest;
 use App\Http\Requests\Api\UpdateTradeInCarAPIRequest;
+use App\Models\MyCar;
 use App\Models\TradeInCar;
 use App\Repositories\Admin\TradeInCarRepository;
 use Illuminate\Http\Request;
@@ -169,18 +170,33 @@ class TradeInCarAPIController extends AppBaseController
 //        }
 
         $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
-
+        $subject  = 'New Trade In Request';
         if ($tradeInCar->owner_car_id) {
+            if ($tradeInCar->myCar->category_id == MyCar::LIMITED_EDITION) {
+                foreach ($tradeInCar->myCar->dealers as $dealer) {
+                    $name = $dealer->name;
+                    $email = $dealer->email;
+
+                    Mail::send('email.notify', ['name' => $name],
+                        function ($mail) use ($email, $name, $subject) {
+                            $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrat App");
+                            $mail->to($email, $name);
+                            $mail->subject($subject);
+                        });
+                }
+                return $this->sendResponse($tradeInCar->toArray(), $message);
+            }
+
             $user = $tradeInCar->myCar->owner;
 
             $name = $user->name;
             $email = $user->email;
 
             Mail::send('email.notify', ['name' => $name],
-                function ($mail) use ($email, $name, $message) {
+                function ($mail) use ($email, $name, $subject) {
                     $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrat App");
                     $mail->to($email, $name);
-                    $mail->subject($message);
+                    $mail->subject($subject);
                 });
         }
 

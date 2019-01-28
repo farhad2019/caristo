@@ -230,7 +230,7 @@
                     <dd>
                         @foreach($values as $label => $value)
                             <ul>
-                                <li>{!! $label !!} : {!! $value !!}</li>
+                                <li>{!! $label !!} : {!! $value['value'] !!}</li>
                             </ul>
                         @endforeach
                     </dd>

@@ -10,7 +10,7 @@
     <br>
     You just receive a new trade in request on your car.
     <br>
-    Click here to check : {{ route('admin.tradeInCars.index') }}
+    Click here to check : <a href="{{ url('admin/tradeInCars') }}"> Caristo Carat APP</a>
     <br/>
 </div>
 

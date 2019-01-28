@@ -403,7 +403,7 @@ class MyCarController extends AppBaseController
         if (!empty($myCar->limited_edition_specs)) {
             $limited_edition_specs = json_decode($myCar->limited_edition_specs, true);
         }
-
+//        dd($limited_edition_specs);
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');

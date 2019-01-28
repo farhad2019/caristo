@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Admin;
 
+use App\Models\MyCar;
 use App\Models\TradeInCar;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -32,6 +33,8 @@ class TradeInCarRepository extends BaseRepository
         'amount',
         'notes'
     ];
+
+    protected $myCarRepo;
 
     /**
      * Configure the Model
@@ -75,7 +78,7 @@ class TradeInCarRepository extends BaseRepository
                     WHEN trade_in_cars.type = ' . TradeInCar::TRADE_IN . '  
                     THEN amount IS NULL AND `owner_car_id` IN (' . $cars . ')
                     WHEN trade_in_cars.type = ' . TradeInCar::EVALUATE_CAR . '  
-                    THEN `owner_car_id` IS NULL AND trade_in_cars.created_at > "'. Auth::user()->created_at .'" AND NOT EXISTS 
+                    THEN `owner_car_id` IS NULL AND trade_in_cars.created_at > "' . Auth::user()->created_at . '" AND NOT EXISTS 
                     (SELECT * FROM `car_evaluation_bids` 
                     WHERE `trade_in_cars`.`id` = `car_evaluation_bids`.`evaluation_id` 
                       AND `user_id` = ' . Auth::id() . ' AND `car_evaluation_bids`.`deleted_at` IS NULL) 
@@ -137,6 +140,45 @@ class TradeInCarRepository extends BaseRepository
     public function saveRecord($request)
     {
         $input = $request->all();
+        if ($input['type'] == TradeInCar::TRADE_IN) {
+            $this->myCarRepo = App::make(MyCarRepository::class);
+            $owner_car_id = $this->myCarRepo->find($input['owner_car_id']);
+            if ($owner_car_id->category_id == MyCar::LIMITED_EDITION) {
+                foreach ($owner_car_id->dealers as $dealer) {
+                    $input['user_id'] = $dealer->id;
+                    $input['amount'] = null;
+
+                    // current date + 1
+                    $date = Carbon::now()->addDay();
+
+                    // day name in string
+                    $day = $date->format('l');
+
+                    //matches is this day is weekend
+                    if (in_array($day, TradeInCar::WEEK_END)) {
+
+                        // add 1 more day
+                        $expire_at = $date->addDay();
+
+                        // day name in string
+                        $expire_at_day = $expire_at->format('l');
+
+                        //matches is this day is weekend
+                        if (in_array($expire_at_day, TradeInCar::WEEK_END)) {
+
+                            // add 1 more day
+                            $expire_at = $date->addDay();
+                        }
+                    } else {
+                        $expire_at = $date;
+                    }
+                    $input['bid_close_at'] = $expire_at;
+                    $tradeInCar = $this->create($input);
+                }
+                return $tradeInCar;
+            }
+        }
+
         $input['user_id'] = Auth::id();
         $input['amount'] = null;
 
@@ -166,6 +208,7 @@ class TradeInCarRepository extends BaseRepository
         }
         $input['bid_close_at'] = $expire_at;
         $tradeInCar = $this->create($input);
+
         return $tradeInCar;
     }
 
