@@ -216,7 +216,7 @@ class MyCar extends Model
         'right'             => 'right',
         'left'              => 'left',
         'interior'          => 'interior',
-        'registration card' => 'registration_card'
+//        'registration card' => 'registration_card'
     ];
 
     const MANUAL = 10;

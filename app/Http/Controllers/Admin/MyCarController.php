@@ -115,8 +115,8 @@ class MyCarController extends AppBaseController
         $user = Auth::user();
 
         if (!$user->hasRole('admin')) {
-            if ($user->cars()->count() >= $user->details->limit_for_cars) {
-                Flash::error('Your cars have reached to the limit.(' . $user->details->limit_for_cars . ')');
+            if ($user->cars()->where('status', MyCar::ACTIVE)->count() >= $user->details->limit_for_cars) {
+                Flash::error('Your active cars have reached to the limit(' . $user->details->limit_for_cars . ').');
                 return redirect(route('admin.myCars.index'));
             }
             if ($user->details->expiry_date <= now()->format('Y-m-d')) {
@@ -320,8 +320,8 @@ class MyCarController extends AppBaseController
     {
         $user = Auth::user();
         if (!$user->hasRole('admin')) {
-            if ($user->cars()->count() >= $user->details->limit_for_cars) {
-                Flash::error('Your cars have reached to the limit.(' . $user->details->limit_for_cars . ')');
+            if ($user->cars()->where('status', MyCar::ACTIVE)->count() >= $user->details->limit_for_cars) {
+                Flash::error('Your active cars have reached to the limit(' . $user->details->limit_for_cars . ').');
                 return redirect(route('admin.myCars.index'));
             }
             if ($user->details->expiry_date <= now()->format('Y-m-d')) {
@@ -628,7 +628,7 @@ class MyCarController extends AppBaseController
 //                'year'        => 'required',
 //                'chassis' => 'required',
                 'amount'      => 'required',
-                'average_mkp' => 'required',
+//                'average_mkp' => 'required',
                 'kilometer'   => 'required',
                 'name'        => 'required',
                 'is_featured' => 'check_featured_update',
@@ -648,7 +648,7 @@ class MyCarController extends AppBaseController
 //                'year.required'        => 'The year field is required.',
 //                'chassis.required' => 'The chassis field is required.',
                 'amount.required'      => 'The Amount field is required.',
-                'average_mkp.required' => 'The average MKP field is required.',
+//                'average_mkp.required' => 'The average MKP field is required.',
                 'kilometer.required'   => 'The mileage field is required.',
                 'name.required'        => 'The car name field is required.',
                 'media.required'       => 'The media is required.',

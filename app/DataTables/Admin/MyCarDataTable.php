@@ -136,7 +136,7 @@ class MyCarDataTable extends DataTable
             ->addAction(['width' => '80px', 'printable' => false])
             ->parameters([
                 'dom' => 'Bfrtip',
-                'order' => [[0, 'desc']],
+                'order' => [[4, 'desc'],[0, 'desc']],
                 'buttons' => $buttons,
             ]);
     }

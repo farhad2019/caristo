@@ -126,7 +126,7 @@
 </div>
 
 <!-- Average MKP Field -->
-<div class="form-group col-sm-6 category2528 {{ $errors->has('average_mkp') ? ' has-error' : '' }}">
+{{--<div class="form-group col-sm-6 category2528 {{ $errors->has('average_mkp') ? ' has-error' : '' }}">
     {!! Form::label('avg_mkp', 'Average MKP('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):*' ?? 'AED' .'):') !!}
     {!! Form::number('average_mkp', null, ['class' => 'form-control', 'placeholder' => 'Enter Average Market Price', 'pattern'=>"^[1-9]\d*$", "min" => 1, "max"=> 99999999]) !!}
 
@@ -135,7 +135,7 @@
             <strong>{{ $errors->first('average_mkp') }}</strong>
         </span>
     @endif
-</div>
+</div>--}}
 
 {{--@php($user = \Illuminate\Support\Facades\Auth::user())--}}
 <!-- Email Field -->

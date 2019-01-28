@@ -11,7 +11,6 @@ use GuzzleHttp\Psr7\Request;
  */
 class CreateMyCarRequest extends BaseFormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -40,7 +39,7 @@ class CreateMyCarRequest extends BaseFormRequest
             'name.required'        => 'The name field is required.',
             'year.required'        => 'The year field is required.',
             'kilometer.required'   => 'The mileage field is required.',
-            'average_mkp.required' => 'The Average MK field is required.',
+//            'average_mkp.required' => 'The Average MK field is required.',
 
         ]);
 
@@ -51,12 +50,11 @@ class CreateMyCarRequest extends BaseFormRequest
     public function rules()
     {
         $validationArray = [
-//            'category_id' => 'required',
+            /*'category_id' => 'required',
+            'chassis'     => 'required',*/
             'amount' => 'required',
-            'name'   => 'required',
-            /*'chassis'     => 'required',*/
+            'name'   => 'required'
         ];
-
 
         if ($this->input('category_id') == MyCar::LIMITED_EDITION) {
             $validationArray = array_merge($validationArray, [
@@ -96,7 +94,7 @@ class CreateMyCarRequest extends BaseFormRequest
         } elseif ($this->input('category_id') == MyCar::APPROVED_PRE_OWNED || $this->input('category_id') == MyCar::CLASSIC_CARS) {
             $validationArray = array_merge($validationArray, [
                 'kilometer'   => 'required',
-                'average_mkp' => 'required',
+//                'average_mkp' => 'required',
                 'media'       => 'required',
                 'is_featured' => 'check_featured',
                 'media.*'     => 'image|mimes:jpg,jpeg,png|max:500',
