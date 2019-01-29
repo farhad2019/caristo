@@ -5,11 +5,11 @@
     }
 </style>
 @endpush
-
+{{--{{ dd($errors) }}--}}
 <!-- Name Field -->
 <div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error' : '' }}">
     {!! Form::label('name', 'Car Title:*') !!}
-    {!! Form::text('name', null, ['class' => 'form-control', 'maxLength' => 55]) !!}
+    {!! Form::text('name', null, ['class' => 'form-control', 'maxLength' => 55, 'required']) !!}
 
     @if ($errors->has('name'))
         <span class="help-block" style="color: red;">
@@ -707,7 +707,7 @@
     <div class="regions" style="display: none">
         <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend['.$key.']') ? 'has-error' : '' }}">
             {!! Form::label('depreciation_trend','Year ('.$key.')', null, ['class' => 'form-control']) !!}
-            {!! Form::number('depreciation_trend['.$key.']', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:'', ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99, 'required' => 'required']) !!}
+            {!! Form::number('depreciation_trend['.$key.']', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:'', ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
             @if ($errors->has('depreciation_trend['.$key.']'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('depreciation_trend['.$key.']') }}</strong>

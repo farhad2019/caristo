@@ -32,6 +32,10 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css">
     <!-- Bootstrap Toggle Switch -->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="{{ url('public/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+
     {{--@yield('css')--}}
 
     <style>
@@ -295,13 +299,15 @@
 <!-- AdminLTE App -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/js/adminlte.min.js"></script>
 
-
 <script src="https://adminlte.io/themes/AdminLTE/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <!-- SweetAlert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!-- Bootstrap WYSIHTML5 -->
+<script src="{{ url('public/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
 
 <!-- SweetAlert -->
 <script src="{{ url('public/vendor/live_url/jquery.liveurl.js') }}"></script>
@@ -314,6 +320,11 @@
 {{--<script src="{{ url('public/js/admin/custom_new.js') }}"></script>--}}
 
 <script>
+    $(function () {
+        //bootstrap WYSIHTML5 - text editor
+        $('.textarea').wysihtml5();
+    });
+
     function confirmCancel(id) {
         swal({
             title: "Are you sure?",
