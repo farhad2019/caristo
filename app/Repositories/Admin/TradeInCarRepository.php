@@ -57,7 +57,7 @@ class TradeInCarRepository extends BaseRepository
             ->when(($hasBid), function ($q) use ($cars) {
                 return $q->whereRaw(DB::raw('CASE
                     WHEN trade_in_cars.type = ' . TradeInCar::TRADE_IN . '  
-                    THEN amount IS NOT NULL AND `owner_car_id` IN (' . $cars . ') OR user_id = '. Auth::id() .'
+                    THEN amount IS NOT NULL AND (`owner_car_id` IN (' . $cars . ') OR user_id = '. Auth::id() .')
                     WHEN trade_in_cars.type = ' . TradeInCar::EVALUATE_CAR . '  
                     THEN `owner_car_id` IS NULL AND EXISTS 
                     (SELECT 
@@ -76,7 +76,7 @@ class TradeInCarRepository extends BaseRepository
             ->when((!$hasBid), function ($q) use ($cars) {
                 return $q->whereRaw(DB::raw('CASE
                     WHEN trade_in_cars.type = ' . TradeInCar::TRADE_IN . '  
-                    THEN amount IS NULL AND `owner_car_id` IN (' . $cars . ') OR user_id = '. Auth::id() .'
+                    THEN amount IS NULL AND (`owner_car_id` IN (' . $cars . ') OR user_id = '. Auth::id() .')
                     WHEN trade_in_cars.type = ' . TradeInCar::EVALUATE_CAR . '  
                     THEN `owner_car_id` IS NULL AND trade_in_cars.created_at > "' . Auth::user()->created_at . '" AND NOT EXISTS 
                     (SELECT * FROM `car_evaluation_bids` 
