@@ -113,6 +113,13 @@
                     </p>
                 </li>
             @endforeach--}}
+            <li>
+                <span class="icon-icon-16"></span>
+                <p>
+                    <small>Additional Notes</small>
+                    {{ $tradeInRequest->tradeAgainst->notes }}
+                </p>
+            </li>
         </ul>
     </div>
     @if(empty($tradeInRequest->amount) && $tradeInRequest->evaluationDetails()->where('user_id', \Illuminate\Support\Facades\Auth::id())->count() == 0)

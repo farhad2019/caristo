@@ -172,6 +172,13 @@
                                     -
                                 </p>
                             </li>
+                            <li>
+                                <span class="icon-icon-17"></span>
+                                <p>
+                                    <small>Additional Notes?</small>
+                                    -
+                                </p>
+                            </li>
                         </ul>
                     </div>
                 </div>
