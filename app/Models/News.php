@@ -71,7 +71,7 @@ class News extends Model
     use SoftDeletes, Translatable;
 
     public $table = 'news';
-    public $translatedAttributes = ['headline', 'description', 'source', 'related_car'];
+    public $translatedAttributes = ['headline', 'description', 'source'];
     protected $dates = ['deleted_at'];
 
     const TYPE_IMAGE = 10;
@@ -208,7 +208,7 @@ class News extends Model
     ];
 
     /**
-     * @return $this
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function views()
     {
@@ -216,7 +216,7 @@ class News extends Model
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function likes()
     {
@@ -224,7 +224,7 @@ class News extends Model
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function favorites()
     {
