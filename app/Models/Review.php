@@ -160,11 +160,12 @@ class Review extends Model
     }
 
     /**
-     * @return User
+     * @return array
      */
     public function getUserDetailsAttribute()
     {
         return [
+            'user_id' => $this->reviewBy->id,
             'user_name' => $this->reviewBy->name,
             'image_url' => $this->reviewBy->details->image_url,
         ];

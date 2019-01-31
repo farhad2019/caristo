@@ -51,6 +51,7 @@ class ReviewDetail extends Model
      * @var array
      */
     protected $appends = [
+        'aspect_id',
         'aspect_title'
     ];
 
@@ -60,6 +61,7 @@ class ReviewDetail extends Model
      * @var array
      */
     protected $visible = [
+        'aspect_id',
         'aspect_title',
         'rating'
     ];
@@ -119,5 +121,13 @@ class ReviewDetail extends Model
     public function getAspectTitleAttribute()
     {
         return $this->aspect->title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAspectIdAttribute()
+    {
+        return $this->aspect->id;
     }
 }

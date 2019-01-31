@@ -7,5 +7,5 @@ return [
         'product'     => 30,
         'user'        => 40,
     ],
-    'laravel-echo-server' => true,
+    'laravel-echo-server' => false,
 ];

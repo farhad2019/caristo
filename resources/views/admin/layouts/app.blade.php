@@ -61,6 +61,15 @@
         }
 
     </style>
+
+    @if(config('constants.laravel-echo-server'))
+        <script>
+            window.Laravel =
+                    {!! json_encode([ 'csrfToken' => csrf_token(), ])!!}
+            var module = {};
+        </script>
+    @endif
+
     @stack('css')
 </head>
 
@@ -361,5 +370,31 @@
         }, 5000);
     });
 </script>
+@if(config('constants.laravel-echo-server'))
+    <script type="text/javascript" src="{{asset('public/js/echo/echo.js')}}"></script>
+    <script type="text/javascript" src="http://localhost:6001/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript">
+        window.Echo = new Echo({
+            broadcaster: 'socket.io',
+            host: window.location.hostname + ':6001',
+            auth: {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        });
+        window.Echo.channel('test-event')
+            .listen('ExampleEvent', (e) => {
+                //console.log(e);
+            });
+
+        window.Echo.private('job-{{Auth::user()->id}}')
+            .listen('ExampleEvent', (e) => {
+                console.log('sadsadsad sa dsa dsd sadsadsa');
+                console.log(e);
+            });
+    </script>
+@endif
 </body>
 </html>
