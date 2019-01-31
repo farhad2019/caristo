@@ -712,12 +712,13 @@
         </div>
     @endforeach
 @endif
+
 <div class="col-sm-12 clearfix"></div>
 @foreach($depreciation_trend_years as $key => $depreciation_trend_year)
     <div class="regions" style="display: none">
         <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend.'.$key) ? 'has-error' : '' }}">
             {!! Form::label('depreciation_trend','Year ('.$key.')', null, ['class' => 'form-control']) !!}
-            {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:old('depreciation_trend['.$key.']'), ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
+            {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:null), ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
             @if ($errors->has('depreciation_trend.'.$key))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('depreciation_trend.'.$key) }}</strong>
