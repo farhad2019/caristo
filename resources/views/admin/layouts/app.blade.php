@@ -367,7 +367,7 @@
     $(document).ready(function () {
         setTimeout(function () {
             $('.alert').fadeOut('fast');
-        }, 5000);
+        }, 10000);
     });
 </script>
 @if(config('constants.laravel-echo-server'))

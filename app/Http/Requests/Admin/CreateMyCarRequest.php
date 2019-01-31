@@ -30,15 +30,19 @@ class CreateMyCarRequest extends BaseFormRequest
     {
         $validationMessages = [];
         $validationMessages = array_merge($validationMessages, [
-            'amount.required'      => 'The amount field is required.',
-            'media.required'       => 'At least one media is required.',
-            'media.*.mimes'        => 'The media must be a file of type: jpg, jpeg, png.',
-            'media.*'              => 'The media may not be greater than 500 kilobytes.',
-            'price.required'       => 'The price must be filled.',
-            'price.*'              => 'The all price must be filled.',
-            'name.required'        => 'The name field is required.',
-            'year.required'        => 'The year field is required.',
-            'kilometer.required'   => 'The mileage field is required.',
+            'amount.required'             => 'The amount field is required.',
+            'media.required'              => 'At least one media is required.',
+            'media.*.mimes'               => 'The media must be a file of type: jpg, jpeg, png.',
+            'media.*'                     => 'The media may not be greater than 500 kilobytes.',
+            'price.required'              => 'The price must be filled.',
+            'price.*'                     => 'The price must be filled.',
+            'name.required'               => 'The name field is required.',
+            'year.required'               => 'The year field is required.',
+            'kilometer.required'          => 'The mileage field is required.',
+            'depreciation_trend.required' => 'Depreciation Trend value is required',
+            'dealers.required'            => 'Dealers is required',
+            'dealers.between'             => 'Please Select 2 dealers',
+//            'depreciation_trend.*.max'    => 'Depreciation Trend value must be between 1-99',
 //            'average_mkp.required' => 'The Average MK field is required.',
 
         ]);
@@ -58,37 +62,37 @@ class CreateMyCarRequest extends BaseFormRequest
 
         if ($this->input('category_id') == MyCar::LIMITED_EDITION) {
             $validationArray = array_merge($validationArray, [
-                'is_featured'  => 'check_featured',
-                'length'       => 'required',
-                'width'        => 'required',
-                'height'       => 'required',
-                'weight_dist'  => 'required',
-                'trunk'        => 'required',
-                'weight'       => 'required',
-                'seats'        => 'required',
-                'drive_train'  => 'required',
-                'displacement' => 'required',
-                'cylinders'    => 'required',
-                'max_speed'    => 'required',
-                'acceleration' => 'required',
-                'hp_rpm'       => 'required',
-                'torque'       => 'required',
-                'gearbox'      => 'required',
-                'brakes'       => 'required',
-                'suspension'   => 'required',
-                'front_tyre'   => 'required',
-                'back_tyre'    => 'required',
-                'consumption'  => 'required',
-                'emission'     => 'required',
-                'warranty'     => 'required',
-                'maintenance'  => 'required',
-                'to'           => 'required|greater_than_field:from',
-//                'depreciation_trend' => 'required',
-                'price'        => 'required',
-                'price.*'      => 'numeric',
-                'dealers'      => 'required|array|between:1,2',
-                'media'        => 'required',
-                'media.*'      => 'image|mimes:jpg,jpeg,png|max:500'
+                'is_featured'          => 'check_featured',
+                'length'               => 'required',
+                'width'                => 'required',
+                'height'               => 'required',
+                'weight_dist'          => 'required',
+                'trunk'                => 'required',
+                'weight'               => 'required',
+                'seats'                => 'required',
+                'drive_train'          => 'required',
+                'displacement'         => 'required',
+                'cylinders'            => 'required',
+                'max_speed'            => 'required',
+                'acceleration'         => 'required',
+                'hp_rpm'               => 'required',
+                'torque'               => 'required',
+                'gearbox'              => 'required',
+                'brakes'               => 'required',
+                'suspension'           => 'required',
+                'front_tyre'           => 'required',
+                'back_tyre'            => 'required',
+                'consumption'          => 'required',
+                'emission'             => 'required',
+                'warranty'             => 'required',
+                'maintenance'          => 'required',
+                'to'                   => 'required|greater_than_field:from',
+                'depreciation_trend.*' => 'required',
+                'price'                => 'required',
+                'price.*'              => 'numeric',
+                'dealers'              => 'required|array|between:2,2',
+                'media'                => 'required',
+                'media.*'              => 'image|mimes:jpg,jpeg,png|max:500'
             ]);
 
         } elseif ($this->input('category_id') == MyCar::APPROVED_PRE_OWNED || $this->input('category_id') == MyCar::CLASSIC_CARS) {
@@ -120,7 +124,6 @@ class CreateMyCarRequest extends BaseFormRequest
                 'attribute.5' => 'attr',
                 'attribute.6' => 'attr'
             ]);
-
         }
         return $validationArray;
 //        return MyCar::$rules;

@@ -5,11 +5,13 @@
     }
 </style>
 @endpush
-{{--{{ dd($errors) }}--}}
+@if($errors->has('msg'))
+    @include('adminlte-templates::common.errors')
+@endif
 <!-- Name Field -->
 <div class="form-group col-sm-6 {{ $errors->has('name') ? ' has-error' : '' }}">
     {!! Form::label('name', 'Car Title:*') !!}
-    {!! Form::text('name', null, ['class' => 'form-control', 'maxLength' => 55, 'required']) !!}
+    {!! Form::text('name', isset($myCar)?$myCar->name:null, ['class' => 'form-control', 'maxLength' => 55, 'required']) !!}
 
     @if ($errors->has('name'))
         <span class="help-block" style="color: red;">
@@ -21,7 +23,7 @@
 <!-- Category Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('category_id', 'Category:') !!}
-    {!! Form::select('category_id', $categories, null, ['class' => 'form-control select2']) !!}
+    {!! Form::select('category_id', $categories, isset($myCar)?$myCar->category_id:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Brand Field -->
@@ -33,37 +35,37 @@
 <!-- Model Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('model_id', 'Model:*') !!}
-    {!! Form::select('model_id', $carModels, null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand']) !!}
+    {!! Form::select('model_id', $carModels, isset($myCar)?$myCar->model_id:null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand']) !!}
 </div>
 
 <!-- Year Field -->
 <div class="form-group col-sm-6 years_classic" style="display: none">
     {!! Form::label('year', 'Year:*') !!}
-    {!! Form::select('year', $years_classic, null, ['class' => 'form-control select2']) !!}
+    {!! Form::select('year', $years_classic, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Year Field -->
 <div class="form-group col-sm-6 years_pre_owned" style="display: none">
     {!! Form::label('year', 'Year:*') !!}
-    {!! Form::select('year', $years_pre_owned, null, ['class' => 'form-control select2']) !!}
+    {!! Form::select('year', $years_pre_owned, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Year Field -->
 <div class="form-group col-sm-6 years_outlet_mall" style="display: none">
     {!! Form::label('year', 'Year:*') !!}
-    {!! Form::select('year', $years_outlet_mall, null, ['class' => 'form-control select2']) !!}
+    {!! Form::select('year', $years_outlet_mall, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6 transmission_type">
     {!! Form::label('transmission_type', 'Transmission Type:') !!}
-    {!! Form::select('transmission_type', $transmission_type, null, ['class' => 'form-control select2']) !!}
+    {!! Form::select('transmission_type', $transmission_type, isset($myCar)?$myCar->transmission_type:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('engine_type_id', 'Engine Type:*') !!}
-    {!! Form::select('engine_type_id', $engineType, null, ['class' => 'form-control select2']) !!}
+    {!! Form::select('engine_type_id', $engineType, isset($myCar)?$myCar->engine_type_id:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <div class="col-sm-12 clearfix"></div>
@@ -105,7 +107,7 @@
 <!-- Amount Field -->
 <div class="form-group col-sm-6 category2528 {{ $errors->has('kilometer') ? ' has-error' : '' }}" {{--id="mileage" style="display:none;"--}}>
     {!! Form::label('kilometers', 'Mileage(km):') !!}
-    {!! Form::number('kilometer', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Mileage', 'maxLength' => 6]) !!}
+    {!! Form::number('kilometer', isset($myCar)?$myCar->kilometer:null, ['class' => 'form-control', 'placeholder' => 'Enter Car Mileage', 'maxLength' => 6]) !!}
     @if ($errors->has('kilometer'))
         <span class="help-block" style="color: red;">
             <strong>{{ $errors->first('kilometer') }}</strong>
@@ -116,7 +118,7 @@
 <!-- Amount Field -->
 <div class="form-group col-sm-6 {{ $errors->has('amount') ? ' has-error' : '' }}">
     {!! Form::label('amount', 'Amount('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):*' ?? 'AED' .'):*') !!}
-    {!! Form::number('amount', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Amount', 'pattern'=>"^[1-9]\d*$", "min" => 1, "max"=> 99999999]) !!}
+    {!! Form::number('amount', isset($myCar)?$myCar->amount:null, ['class' => 'form-control', 'placeholder' => 'Enter Car Amount', 'pattern'=>"^[1-9]\d*$", "min" => 1, "max"=> 99999999]) !!}
 
     @if ($errors->has('amount'))
         <span class="help-block" style="color: red;">
@@ -343,7 +345,7 @@
                 </span>
         @endif
     </div>
-
+    <div class="col-sm-12 clearfix"></div>
     <div class="form-group col-sm-4 regions {{ $errors->has('weight_dist') ? ' has-error' : '' }}">
         {!! Form::checkbox('highlight_weight_dist', 1, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT DISTRIBUTION']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
         {!! Form::label('weight_dist', 'WEIGHT DISTRIBUTION:*') !!}
@@ -376,6 +378,7 @@
                 </span>
         @endif
     </div>
+    <div class="col-sm-12 clearfix"></div>
 
     <div class="form-group col-sm-6 regions">
         <hr>
@@ -409,6 +412,7 @@
         </div>
     </div>
 
+    <div class="col-sm-12 clearfix"></div>
     <div class="form-group col-sm-12 regions">
         <hr>
         <h3>Engine</h3>
@@ -435,6 +439,7 @@
         </div>
     </div>
 
+    <div class="col-sm-12 clearfix"></div>
     <div class="form-group col-sm-12 regions">
         <hr>
         <h3>Performance</h3>
@@ -481,6 +486,7 @@
         </div>
     </div>
 
+    <div class="col-sm-12 clearfix"></div>
     <div class="form-group col-sm-12 regions">
         <hr>
         <h3>Transmission</h3>
@@ -497,6 +503,7 @@
         </div>
     </div>
 
+    <div class="col-sm-12 clearfix"></div>
     <div class="form-group col-sm-6 regions">
         <hr>
         <h3>Brakes</h3>
@@ -529,6 +536,7 @@
         </div>
     </div>
 
+    <div class="col-sm-12 clearfix"></div>
     <div class="form-group col-sm-12 regions">
         <hr>
         <h3>Wheels & Tyres</h3>
@@ -557,6 +565,7 @@
             @endif</div>
     </div>
 
+    <div class="col-sm-12 clearfix"></div>
     <div class="form-group col-sm-6 regions">
         <hr>
         <h3>Fuel</h3>
@@ -589,6 +598,7 @@
         </div>
     </div>
 
+    <div class="col-sm-12 clearfix"></div>
     <div class="form-group col-sm-12 regions">
         <hr>
         <h3>Warranty & Maintenance</h3>
@@ -615,6 +625,7 @@
         </div>
     </div>
 
+    <div class="col-sm-12 clearfix"></div>
     <div class="form-group col-sm-12 regions">
         <?php $explodeLifeCycle = explode('-', @$myCar->life_cycle); ?>
         <hr>
@@ -688,29 +699,28 @@
 @else
     @foreach($regions as $key => $region)
         <div class="regions" style="display: none">
-            <div class="form-group col-sm-6  {{ $errors->has('price') ? ' has-error' : '' }}">
-                {!! Form::label('regions','Price in '.$region, null, ['class' => 'form-control']) !!}
+            <div class="form-group col-sm-6  {{ $errors->has('price.'.$key) ? ' has-error' : '' }}">
+                {!! Form::label('regions','Price in '.$region.'*', null, ['class' => 'form-control']) !!}
                 {!! Form::hidden('regions[]',$key, null, ['class' => 'form-control']) !!}
                 {!! Form::number('price[]', null, ['class' => 'form-control', 'placeholder' => 'Enter Region Price', 'pattern'=>"^[1-9]\d*$"]) !!}
-                @if ($errors->has('price'))
+                @if ($errors->has('price.'.$key))
                     <span class="help-block" style="color: red;">
-                        <strong>{{ $errors->first('price') }}</strong>
+                        <strong>{{ $errors->first('price.'.$key) }}</strong>
                     </span>
                 @endif
             </div>
         </div>
     @endforeach
 @endif
-
 <div class="col-sm-12 clearfix"></div>
 @foreach($depreciation_trend_years as $key => $depreciation_trend_year)
     <div class="regions" style="display: none">
-        <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend['.$key.']') ? 'has-error' : '' }}">
+        <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend.'.$key) ? 'has-error' : '' }}">
             {!! Form::label('depreciation_trend','Year ('.$key.')', null, ['class' => 'form-control']) !!}
-            {!! Form::number('depreciation_trend['.$key.']', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:'', ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
-            @if ($errors->has('depreciation_trend['.$key.']'))
+            {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:old('depreciation_trend['.$key.']'), ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
+            @if ($errors->has('depreciation_trend.'.$key))
                 <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first('depreciation_trend['.$key.']') }}</strong>
+                    <strong>{{ $errors->first('depreciation_trend.'.$key) }}</strong>
                 </span>
             @endif
         </div>

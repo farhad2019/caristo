@@ -198,8 +198,8 @@ class Setting extends Model
         'force_update' => 'required',
         'limit_for_cars' => 'required',
         'limit_for_featured_cars' => 'required',
-        'logo' => 'required',*/
-        'depreciation_trend' => 'required|max:99',
+        'logo' => 'required',
+        'depreciation_trend' => 'required|max:99',*/
         'ask_for_consultancy.*' => 'required',
         'personal_shopper.*' => 'required'
     ];

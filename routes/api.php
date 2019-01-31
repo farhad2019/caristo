@@ -76,10 +76,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('v1/notifications', 'NotificationAPIController');
 
-    Route::resource('v1/categories', 'CategoryAPIController');
-
-    Route::resource('v1/news', 'NewsAPIController');
-
     Route::resource('v1/comments', 'CommentAPIController');
 
     Route::resource('v1/newsInteractions', 'NewsInteractionAPIController');
@@ -90,9 +86,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('v1/favorite-news', 'AuthAPIController@favoriteNewsIndex');
 
-    Route::resource('v1/pages', 'PageAPIController');
-
-    Route::resource('v1/news', 'NewsAPIController');
+//    Route::resource('v1/news', 'NewsAPIController');
 
     Route::resource('v1/comments', 'CommentAPIController');
 
@@ -112,8 +106,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('v1/users-regions', 'UserAPIController@addRegion');
 
-    Route::resource('v1/makeBids', 'MakeBidAPIController');
-
     Route::resource('v1/carInteractions', 'CarInteractionAPIController');
 
     Route::resource('v1/reportRequests', 'ReportRequestAPIController');
@@ -125,17 +117,9 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/reviews', 'ReviewAPIController');
 });
 
-Route::resource('v1/carTypes', 'CarTypeAPIController');
-
 Route::resource('v1/walkThroughs', 'WalkThroughAPIController');
 
 Route::resource('v1/pages', 'PageAPIController');
-
-Route::resource('v1/regions', 'RegionAPIController');
-
-Route::resource('v1/carBrands', 'CarBrandAPIController');
-
-Route::resource('v1/carModels', 'CarModelAPIController');
 
 Route::resource('v1/languages', 'LanguageAPIController');
 
@@ -156,3 +140,17 @@ Route::resource('v1/settings', 'SettingAPIController');
 Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
 
 Route::get('v1/brandUsers', 'UserAPIController@brandUsers')->name('brandUsers');
+
+Route::resource('v1/categories', 'CategoryAPIController');
+
+Route::resource('v1/news', 'NewsAPIController');
+
+Route::resource('v1/makeBids', 'MakeBidAPIController');
+
+Route::resource('v1/carTypes', 'CarTypeAPIController');
+
+Route::resource('v1/carBrands', 'CarBrandAPIController');
+
+Route::resource('v1/carModels', 'CarModelAPIController');
+
+Route::resource('v1/regions', 'RegionAPIController');

@@ -349,7 +349,7 @@
                 </div>
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Address:') !!}</dt>
-                    <dd>{!! $dealer->showroomDetails->name !!}</dd>
+                    <dd>{!! $dealer->showroomDetails->address !!}</dd>
                 </div>
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Contact#:') !!}</dt>

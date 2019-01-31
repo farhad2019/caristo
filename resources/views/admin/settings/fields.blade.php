@@ -150,10 +150,10 @@
                         <!-- Custom Tabs -->
                         <div class="col-md-12">
                             <!-- Depreciation Trend Field -->
-                            <div class="form-group col-sm-6">
+                            {{--<div class="form-group col-sm-6">
                                 {!! Form::label('depreciation_trend', 'Depreciation Trend (%/Year):*') !!}
                                 {!! Form::number('depreciation_trend', null, ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min'=>1, 'max'=>99]) !!}
-                            </div>
+                            </div>--}}
                             <div class="col-sm-12 clearfix"></div>
                         {{--<!-- Title Field -->
                         <div class="form-group col-sm-12">

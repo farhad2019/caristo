@@ -26,6 +26,7 @@ use App\Repositories\Admin\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Laracasts\Flash\Flash;
 
 class MyCarController extends AppBaseController
@@ -545,10 +546,16 @@ class MyCarController extends AppBaseController
      * @param  int $id
      * @param Request $request
      *
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update($id, Request $request)
     {
+        $user = Auth::user();
+        if (!$user->hasRole('admin') && $request->status == MyCar::ACTIVE) {
+            if ($user->cars()->where('status', MyCar::ACTIVE)->count() >= $user->details->limit_for_cars) {
+                return Redirect::back()->withErrors(['msg' => 'Your active cars have reached to the limit(' . $user->details->limit_for_cars . ').']);
+            }
+        }
         $myCar = $this->myCarRepository->findWithoutFail($id);
 
         if (empty($myCar)) {
@@ -572,50 +579,53 @@ class MyCarController extends AppBaseController
 //                'year'                      => 'required',
 //                'regional_specification_id' => 'required',
 //                'email'                     => 'required|email',
-                    'amount'       => 'required',
-                    'dealers'      => 'required|array|between:1,2',
-                    'name'         => 'required',
+                    'amount'               => 'required',
+                    'dealers'              => 'required|array|between:2,2',
+                    'name'                 => 'required',
 //                    'chassis' => 'required',
-                    'is_featured'  => 'check_featured_update',
-                    'length'       => 'required',
-                    'width'        => 'required',
-                    'height'       => 'required',
-                    'weight_dist'  => 'required',
-                    'trunk'        => 'required',
-                    'weight'       => 'required',
-                    'seats'        => 'required',
-                    'drive_train'  => 'required',
-                    'displacement' => 'required',
-                    'cylinders'    => 'required',
-                    'max_speed'    => 'required',
-                    'acceleration' => 'required',
-                    'hp_rpm'       => 'required',
-                    'torque'       => 'required',
-                    'gearbox'      => 'required',
-                    'brakes'       => 'required',
-                    'suspension'   => 'required',
-                    'front_tyre'   => 'required',
-                    'back_tyre'    => 'required',
-                    'consumption'  => 'required',
-                    'emission'     => 'required',
-                    'warranty'     => 'required',
-                    'maintenance'  => 'required',
-                    'to'           => 'required|greater_than_field:from',
-//                    'depreciation_trend' => 'required',
-                    'price'        => 'required',
-                    'price.*'      => 'numeric',
-                    'media.*'      => 'image|mimes:jpg,jpeg,png|max:500'
+                    'is_featured'          => 'check_featured_update',
+                    'length'               => 'required',
+                    'width'                => 'required',
+                    'height'               => 'required',
+                    'weight_dist'          => 'required',
+                    'trunk'                => 'required',
+                    'weight'               => 'required',
+                    'seats'                => 'required',
+                    'drive_train'          => 'required',
+                    'displacement'         => 'required',
+                    'cylinders'            => 'required',
+                    'max_speed'            => 'required',
+                    'acceleration'         => 'required',
+                    'hp_rpm'               => 'required',
+                    'torque'               => 'required',
+                    'gearbox'              => 'required',
+                    'brakes'               => 'required',
+                    'suspension'           => 'required',
+                    'front_tyre'           => 'required',
+                    'back_tyre'            => 'required',
+                    'consumption'          => 'required',
+                    'emission'             => 'required',
+                    'warranty'             => 'required',
+                    'maintenance'          => 'required',
+                    'to'                   => 'required|greater_than_field:from',
+                    'depreciation_trend'   => 'required',
+                    'depreciation_trend.*' => 'max:99',
+                    'price'                => 'required',
+                    'price.*'              => 'numeric',
+                    'media.*'              => 'image|mimes:jpg,jpeg,png|max:500'
                 ]), [
                 /*'category_id.required' => 'The category field is required.',
                 'model_id.required'    => 'The model field is required.',
                 'year.required'        => 'The year field is required.',*/
-                'amount.required' => 'The amount field is required.',
-                'price.required'  => 'The price must be filled.',
-                'price.*'         => 'The all price must be filled.',
-                'name.required'   => 'The name field is required.',
-                'media.required'  => 'The media is required.',
-                'media.*.mimes'   => 'The media must be a file of type: jpg, jpeg, png.',
-                'media.*'         => 'The media may not be greater than 500 kilobytes.'
+                'amount.required'  => 'The amount field is required.',
+                'price.required'   => 'The price must be filled.',
+                'price.*'          => 'The all price must be filled.',
+                'name.required'    => 'The name field is required.',
+                'dealers.required' => 'Dealers is required',
+                'dealers.between'  => 'Please Select 2 dealers',
+                'media.required'   => 'The media is required.',
+                'media.*.mimes'    => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.*'          => 'The media may not be greater than 500 kilobytes.'
             ]);
         } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
             $validatedData = $request->validate(array_merge(array_filter($imageValidation), [
@@ -648,13 +658,13 @@ class MyCarController extends AppBaseController
 //                'email.required'             => 'The amount field is required.',
 //                'year.required'        => 'The year field is required.',
 //                'chassis.required' => 'The chassis field is required.',
-                'amount.required'      => 'The Amount field is required.',
+                'amount.required'    => 'The Amount field is required.',
 //                'average_mkp.required' => 'The average MKP field is required.',
-                'kilometer.required'   => 'The mileage field is required.',
-                'name.required'        => 'The car name field is required.',
-                'media.required'       => 'The media is required.',
-                'media.*.mimes'        => 'The media must be a file of type: jpg, jpeg, png.',
-                'media.*'              => 'The media may not be greater than 500 kilobytes.',
+                'kilometer.required' => 'The mileage field is required.',
+                'name.required'      => 'The car name field is required.',
+                'media.required'     => 'The media is required.',
+                'media.*.mimes'      => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.*'            => 'The media may not be greater than 500 kilobytes.',
             ]);
         } else {
             $validatedData = $request->validate(array_merge(array_filter($imageValidation), [

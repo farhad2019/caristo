@@ -132,7 +132,7 @@
             <!-- Property Title Field -->
             <div class="col-sm-6">
                 <dt>{!! Form::label('gender', 'Showroom Email:') !!}</dt>
-                <dd>{!! $user->details->email? $user->details->email : 'N/A'!!}</dd>
+                <dd>{!! $user->email? $user->email : 'N/A'!!}</dd>
             </div>
 
             <!-- Property Title Field -->
