@@ -40,6 +40,7 @@ class CreateMyCarRequest extends BaseFormRequest
             'year.required'               => 'The year field is required.',
             'kilometer.required'          => 'The mileage field is required.',
             'depreciation_trend.required' => 'Depreciation Trend value is required',
+            'depreciation_trend.*.required' => 'Depreciation Trend value is required',
             'dealers.required'            => 'Dealers is required',
             'dealers.between'             => 'Please Select 2 dealers',
 //            'depreciation_trend.*.max'    => 'Depreciation Trend value must be between 1-99',
