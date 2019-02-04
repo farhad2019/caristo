@@ -20,6 +20,10 @@
             <dt>{!! Form::label('model_id', 'Model :') !!}</dt>
             <dd>{!! isset($myCar->carModel->name) ? $myCar->carModel->brand->name.' '.$myCar->carModel->name : 'N/A' !!}</dd>
 
+            <!-- Version Field -->
+            <dt>{!! Form::label('version', 'Version:') !!}</dt>
+            <dd>{!! isset($myCar->version)? $myCar->version : 'N/A' !!}</dd>
+
             <!-- Year Field -->
             <dt>{!! Form::label('year', 'Year:') !!}</dt>
             <dd>{!! $myCar->year?? 'N/A' !!}</dd>
@@ -46,10 +50,6 @@
             <!-- Type Id Field -->
                 <dt>{!! Form::label('category_id', 'Category :') !!}</dt>
                 <dd>{!! isset($myCar->category_id) ? $myCar->category->name : 'N/A' !!}</dd>
-
-                <!-- Version Field -->
-                <dt>{!! Form::label('version', 'Version:') !!}</dt>
-                <dd>{!! isset($myCar->version)? $myCar->version : 'N/A' !!}</dd>
 
                 <!-- Type Id Field -->
                 <dt>{!! Form::label('type_id', 'Segments:') !!}</dt>
