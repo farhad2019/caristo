@@ -73,6 +73,9 @@ class ContactUs extends Model
     public $table = 'admin_queries';
     protected $dates = ['deleted_at'];
 
+    const CONSULTANCY = 10;
+    const PERSONAL_SHOPPER = 20;
+
     public $fillable = [
         'type',
         'car_id',
@@ -81,6 +84,7 @@ class ContactUs extends Model
         'name',
         'email',
         'country_code',
+        'message',
         'phone'
     ];
 

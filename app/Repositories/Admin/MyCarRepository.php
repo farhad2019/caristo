@@ -478,7 +478,7 @@ class MyCarRepository extends BaseRepository
                 $regions['car_id'] = $myCar->id;
                 CarRegion::create($regions);
             }
-
+//            $myCar->carRegions->updateExistingPivot();
 
            /* $input['region'] = $request->regions;
             $region = intval($request->regions);

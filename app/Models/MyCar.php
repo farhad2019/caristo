@@ -543,7 +543,7 @@ class MyCar extends Model
      */
     public function carType()
     {
-        return $this->belongsTo(CarType::class, 'type_id');
+        return $this->belongsTo(CarType::class, 'type_id')->withTrashed();
     }
 
     /**
@@ -551,7 +551,7 @@ class MyCar extends Model
      */
     public function engineType()
     {
-        return $this->belongsTo(EngineType::class, 'engine_type_id');
+        return $this->belongsTo(EngineType::class, 'engine_type_id')->withTrashed();
     }
 
     /**
@@ -559,7 +559,7 @@ class MyCar extends Model
      */
     public function regionalSpecs()
     {
-        return $this->belongsTo(RegionalSpecification::class, 'regional_specification_id');
+        return $this->belongsTo(RegionalSpecification::class, 'regional_specification_id')->withTrashed();
     }
 
     /**
@@ -589,22 +589,6 @@ class MyCar extends Model
  //            ->take(5)
  //            ->get();
      }*/
-
-    /**
-     * @return mixed
-     */
-    public function getTransmissionTypeTextAttribute()
-    {
-        return ($this->transmission_type) ? self::$TRANSMISSION_TYPE_TEXT[$this->transmission_type] : null;
-    }
-
-    /**
-     * @return mixed|null
-     */
-    public function getOwnerTypeTextAttribute()
-    {
-        return ($this->owner_type) ? self::$OWNER_TYPE_TEXT[$this->owner_type] : null;
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -717,6 +701,22 @@ class MyCar extends Model
 //    {
 //        return $this->likes()->count();
 //    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransmissionTypeTextAttribute()
+    {
+        return ($this->transmission_type) ? self::$TRANSMISSION_TYPE_TEXT[$this->transmission_type] : null;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getOwnerTypeTextAttribute()
+    {
+        return ($this->owner_type) ? self::$OWNER_TYPE_TEXT[$this->owner_type] : null;
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Collection

@@ -79,6 +79,10 @@
                     {{ App\Helper\Utils::getBoolText($myCar->is_featured) }}
                 </span>
             </dd>
+
+            <!-- Regional Specification Field -->
+            <dt>{!! Form::label('status', 'Regional Specification:') !!}</dt>
+            <dd>{!! $myCar->regionalSpecs->name ? $myCar->regionalSpecs->name : 'N/A' !!} </dd>
         </div>
     </div>
     <!-- /.box-body -->

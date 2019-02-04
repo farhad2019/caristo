@@ -55,7 +55,7 @@ class WalkThroughDataTable extends DataTable
     public function html()
     {
         $buttons = [];
-        if (\Entrust::can('walk_throughs.create') || \Entrust::hasRole('super-admin')) {
+        if (\Entrust::can('walkThroughs.create') || \Entrust::hasRole('super-admin')) {
             $buttons = ['create'];
         }
         $buttons = array_merge($buttons, [

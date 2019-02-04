@@ -113,7 +113,12 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
 
         $car_type = $this->request->get('car_type', -1);
         $model = $model->when(($car_type > 0), function ($query) use ($car_type) {
-            return $query->whereIn('type_id', explode(',', $car_type));
+            return $query->whereHas('carType', function ($carType) use ($car_type){
+                return $carType->whereHas('parentType', function ($parentType) use ($car_type) {
+                    return $parentType->whereIn('id', explode(',', $car_type));
+                });
+            });
+//            return $query->whereIn('type_id', explode(',', $car_type));
         });
 
         $max_year = (int)$this->request->get('max_year', -1);
@@ -152,14 +157,8 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         });
 
         $is_for_review = $this->request->get('is_for_review', 0);
-       /* $model = $model->when(($is_for_review > 0), function ($query) {
-            return $query->orderBy('bid_close_at', 'DESC');
-        });*/
-
-        $model = $model->when(($is_for_review > 0), function ($query) use ($is_for_review) {
-            return $query->whereHas('reviews', function ($review)  {
-                return $review->orderby('id', 'DESC');
-            });
+        $model = $model->when(($is_for_review > 0), function ($query) {
+            return $query->orderBy('bid_close_at', 'ASC');
         });
 
         $model = $model->when(($is_for_review == 0), function ($query) {

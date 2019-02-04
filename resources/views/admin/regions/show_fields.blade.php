@@ -4,7 +4,7 @@
 
 <!-- Name Field -->
 <dt>{!! Form::label('name', 'Flag:') !!}</dt>
-<dd><img src="{!! $region->media[0]->file_url !!}" width="45"></dd>
+<dd><img src="{!! $region->media[0]->file_url !!}" width="100"></dd>
 
 <!-- Created At Field -->
 <dt>{!! Form::label('created_at', 'Created At:') !!}</dt>

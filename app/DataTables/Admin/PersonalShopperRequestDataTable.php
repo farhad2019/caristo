@@ -2,6 +2,7 @@
 
 namespace App\DataTables\Admin;
 
+use App\Models\ContactUs;
 use App\Models\PersonalShopperRequest;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
@@ -46,7 +47,7 @@ class PersonalShopperRequestDataTable extends DataTable
      */
     public function query(PersonalShopperRequest $model)
     {
-        return $model->newQuery()->select('admin_queries.*', 'cars.name as car_name')->leftJoin('cars', "admin_queries.car_id", "=", "cars.id")->where(['admin_queries.type' => 20]);
+        return $model->newQuery()->select('admin_queries.*', 'cars.name as car_name')->leftJoin('cars', "admin_queries.car_id", "=", "cars.id")->where(['admin_queries.type' => ContactUs::PERSONAL_SHOPPER]);
     }
 
     /**
@@ -89,7 +90,9 @@ class PersonalShopperRequestDataTable extends DataTable
             'name',
             'email',
             'phone',
-            'message',
+            'message' => [
+                'title' => 'Description'
+            ],
             'car_name'
         ];
     }

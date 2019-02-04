@@ -4,6 +4,7 @@ namespace App\DataTables\Admin;
 
 use App\Models\Car;
 use App\Models\ConsultancyRequest;
+use App\Models\ContactUs;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
@@ -51,7 +52,7 @@ class ConsultancyRequestDataTable extends DataTable
      */
     public function query(ConsultancyRequest $model)
     {
-        return $model->newQuery()->select('admin_queries.*')->where(['admin_queries.type' => 10]);
+        return $model->newQuery()->select('admin_queries.*')->where(['admin_queries.type' => ContactUs::CONSULTANCY]);
     }
 
     /**
@@ -94,7 +95,9 @@ class ConsultancyRequestDataTable extends DataTable
             'name',
             'email',
             'phone',
-            'message',
+            'message' => [
+                'title' => 'Description'
+            ],
 //            'car_name'
         ];
     }

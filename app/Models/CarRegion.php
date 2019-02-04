@@ -106,11 +106,19 @@ class CarRegion extends Model
         return $this->belongsTo(MyCar::class);
     }
 
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+//     */
+//    public function region()
+//    {
+//        return $this->belongsTo(Region::class);
+//    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function region()
     {
-        return $this->belongsTo(Region::class);
+        return $this->belongsTo(Region::class)->withTrashed();
     }
 }

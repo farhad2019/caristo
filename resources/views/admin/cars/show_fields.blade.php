@@ -79,6 +79,10 @@
                     {{ App\Helper\Utils::getBoolText($myCar->is_featured) }}
                 </span>
             </dd>
+
+            <!-- Regional Specification Field -->
+            <dt>{!! Form::label('status', 'Regional Specification:') !!}</dt>
+            <dd>{!! $myCar->regionalSpecs->name ? $myCar->regionalSpecs->name : 'N/A' !!} </dd>
         </div>
     </div>
     <!-- /.box-body -->
@@ -353,7 +357,7 @@
                 </div>
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Address:') !!}</dt>
-                    <dd>{!! $dealer->showroomDetails->address !!}</dd>
+                    <dd>{!! $dealer->details->address !!}</dd>
                 </div>
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Contact#:') !!}</dt>
