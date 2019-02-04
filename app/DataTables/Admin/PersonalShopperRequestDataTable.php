@@ -18,14 +18,22 @@ class PersonalShopperRequestDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
         $dataTable->addColumn('car_name', function (PersonalShopperRequest $model) {
-            return "<a href='" . route('admin.cars.show', ['id' => $model->car_id]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->car_name . "</span></a>";
+            if ($model->car_id) {
+                return "<a href='" . route('admin.cars.show', ['id' => $model->car_id]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->car_name . "</span></a>";
+            } else {
+                return '-';
+            }
         });
 
         $dataTable->addColumn('phone', function (PersonalShopperRequest $model) {
-            return $model->country_code . "-" . $model->phone . "</span></a>";
+            return $model->country_code . "-" . $model->phone;
         });
 
-        $dataTable->rawColumns(['car_name', 'phone', 'action']);
+        $dataTable->addColumn('message', function (PersonalShopperRequest $model) {
+            return '<span style="word-break: break-all">' . $model->message . '</span>';
+        });
+
+        $dataTable->rawColumns(['message', 'car_name', 'phone', 'action']);
 
         return $dataTable->addColumn('action', 'admin.personal_shopper_requests.datatables_actions');
     }
@@ -38,7 +46,7 @@ class PersonalShopperRequestDataTable extends DataTable
      */
     public function query(PersonalShopperRequest $model)
     {
-        return $model->newQuery()->select('admin_queries.*', 'cars.name as car_name')->join('cars', "admin_queries.car_id", "=", "cars.id")->where(['admin_queries.type' => 20]);
+        return $model->newQuery()->select('admin_queries.*', 'cars.name as car_name')->leftJoin('cars', "admin_queries.car_id", "=", "cars.id")->where(['admin_queries.type' => 20]);
     }
 
     /**
@@ -81,6 +89,7 @@ class PersonalShopperRequestDataTable extends DataTable
             'name',
             'email',
             'phone',
+            'message',
             'car_name'
         ];
     }

@@ -132,7 +132,7 @@ class BanksRate extends Model
         'title'    => 'required',
         'phone_no' => 'required|phone',
         'address'  => 'required',
-        'rate'     => 'required',
+        'rate'     => 'required|max:99',
         'type'     => 'required',
         'media'    => 'required|image|mimes:jpg,jpeg,png'
 
@@ -147,7 +147,7 @@ class BanksRate extends Model
         'title'    => 'required',
         'phone_no' => 'required|phone',
         'address'  => 'required',
-        'rate'     => 'required',
+        'rate'     => 'required|max:99',
         'type'     => 'required',
     ];
 

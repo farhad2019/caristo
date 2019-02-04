@@ -608,8 +608,7 @@ class MyCarController extends AppBaseController
                     'warranty'             => 'required',
                     'maintenance'          => 'required',
                     'to'                   => 'required|greater_than_field:from',
-                    'depreciation_trend'   => 'required',
-                    'depreciation_trend.*' => 'max:99',
+                    'depreciation_trend.*' => 'required',
                     'price'                => 'required',
                     'price.*'              => 'numeric',
                     'media.*'              => 'image|mimes:jpg,jpeg,png|max:500'
@@ -617,15 +616,17 @@ class MyCarController extends AppBaseController
                 /*'category_id.required' => 'The category field is required.',
                 'model_id.required'    => 'The model field is required.',
                 'year.required'        => 'The year field is required.',*/
-                'amount.required'  => 'The amount field is required.',
-                'price.required'   => 'The price must be filled.',
-                'price.*'          => 'The all price must be filled.',
-                'name.required'    => 'The name field is required.',
-                'dealers.required' => 'Dealers is required',
-                'dealers.between'  => 'Please Select 2 dealers',
-                'media.required'   => 'The media is required.',
-                'media.*.mimes'    => 'The media must be a file of type: jpg, jpeg, png.',
-                'media.*'          => 'The media may not be greater than 500 kilobytes.'
+                'amount.required'               => 'The amount field is required.',
+                'price.required'                => 'The price must be filled.',
+                'price.*'                       => 'The all price must be filled.',
+                'name.required'                 => 'The name field is required.',
+                'dealers.required'              => 'Dealers is required',
+                'dealers.between'               => 'Please Select 2 dealers',
+                'media.required'                => 'The media is required.',
+                'depreciation_trend.required'   => 'Depreciation Trend value is required',
+                'depreciation_trend.*.required' => 'Depreciation Trend value is required',
+                'media.*.mimes'                 => 'The media must be a file of type: jpg, jpeg, png.',
+                'media.*'                       => 'The media may not be greater than 500 kilobytes.'
             ]);
         } elseif ($request->category_id == MyCar::APPROVED_PRE_OWNED || $request->category_id == MyCar::CLASSIC_CARS) {
             $validatedData = $request->validate(array_merge(array_filter($imageValidation), [

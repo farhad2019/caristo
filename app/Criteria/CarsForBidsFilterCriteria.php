@@ -11,22 +11,40 @@ use Illuminate\Support\Facades\DB;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
+/**
+ * Class CarsForBidsFilterCriteria
+ * @package App\Criteria
+ */
 class CarsForBidsFilterCriteria implements CriteriaInterface
 {
+    /**
+     * @var Request
+     */
     protected $request;
 
+    /**
+     * CarsForBidsFilterCriteria constructor.
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
+    /**
+     * @param $model
+     * @param RepositoryInterface $repository
+     * @return mixed
+     */
     public function apply($model, RepositoryInterface $repository)
     {
+
         $model = $model->where('owner_type', User::SHOWROOM_OWNER);
 
         $user_id = Auth::id();
 
         $favorite = $this->request->get('favorite', -1);
+
         $model = $model->when(($favorite > 0), function ($query) use ($user_id) {
             return $query->whereHas('favorites', function ($favorites) use ($user_id) {
                 return $favorites->where('user_id', $user_id);
@@ -130,15 +148,22 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
 
         $rating = $this->request->get('rating', -1);
         $model = $model->when(($rating > 0), function ($query) use ($rating) {
-            return $query->where('average_rating', '<', $rating);
+            return $query->where('average_rating', '>=', $rating);
         });
 
         $is_for_review = $this->request->get('is_for_review', 0);
-        $model = $model->when(($is_for_review > 0), function ($query) {
+       /* $model = $model->when(($is_for_review > 0), function ($query) {
             return $query->orderBy('bid_close_at', 'DESC');
+        });*/
+
+        $model = $model->when(($is_for_review > 0), function ($query) use ($is_for_review) {
+            return $query->whereHas('reviews', function ($review)  {
+                return $review->orderby('id', 'DESC');
+            });
         });
+
         $model = $model->when(($is_for_review == 0), function ($query) {
-            return $query->orderBy('amount', 'DESC');
+            return $query->orderBy('created_at', 'DESC');
         });
 
         $model = $model->where('status', MyCar::ACTIVE);

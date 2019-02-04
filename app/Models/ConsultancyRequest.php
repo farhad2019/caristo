@@ -86,15 +86,13 @@ class ConsultancyRequest extends Model
     use SoftDeletes;
 
     public $table = 'admin_queries';
-    
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'car_id',
         'name',
         'email',
+        'message',
         'country_code',
         'phone'
     ];

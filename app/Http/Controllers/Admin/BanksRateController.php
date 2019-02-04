@@ -27,6 +27,11 @@ class BanksRateController extends AppBaseController
     /** @var  ContactUsRepository */
     private $contactUsRepository;
 
+    /**
+     * BanksRateController constructor.
+     * @param BanksRateRepository $banksRateRepo
+     * @param ContactUsRepository $contactUsRepository
+     */
     public function __construct(BanksRateRepository $banksRateRepo, ContactUsRepository $contactUsRepository)
     {
         $this->banksRateRepository = $banksRateRepo;
@@ -81,7 +86,7 @@ class BanksRateController extends AppBaseController
      *
      * @param  int $id
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
@@ -92,10 +97,12 @@ class BanksRateController extends AppBaseController
             return redirect(route('admin.banksRates.index'));
         }
 
-        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $banksRate);
-
         $getBankRequest = $this->contactUsRepository->getUserRequest($id);
-        return view('admin.banks_rates.show')->with(['banksRate' => $banksRate, 'getBankRequest' => $getBankRequest]);
+        BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $banksRate);
+        return view('admin.banks_rates.show')->with([
+            'banksRate'      => $banksRate,
+            'getBankRequest' => $getBankRequest
+        ]);
     }
 
     /**

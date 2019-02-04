@@ -1,25 +1,25 @@
 <!-- Title Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('title', 'Title:') !!}
-    {!! Form::text('title', null, ['class' => 'form-control','maxlength'=>50]) !!}
+    {!! Form::text('title', null, ['class' => 'form-control', 'maxlength' => 50, 'required']) !!}
 </div>
 
 <!-- Phone No Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('phone_no', 'Phone No:') !!}
-    {!! Form::text('phone_no', null, ['class' => 'form-control','maxlength'=>15]) !!}
+    {!! Form::text('phone_no', null, ['class' => 'form-control', 'maxlength' => 15, 'required']) !!}
 </div>
 
 <!-- Address Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('address', 'Address:') !!}
-    {!! Form::text('address', null, ['class' => 'form-control','maxlength'=>50]) !!}
+    {!! Form::text('address', null, ['class' => 'form-control', 'maxlength' => 50, 'required']) !!}
 </div>
 
 <!-- Rate Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('rate', 'Rate:') !!}
-    {!! Form::number('rate', null, ['class' => 'form-control','maxlength'=>3]) !!}
+    {!! Form::number('rate', null, ['class' => 'form-control', 'min' => 1, 'max' => 99, 'required']) !!}
 </div>
 
 <!-- Type Field -->
@@ -32,12 +32,13 @@
 
 <div class="form-group col-sm-6">
     {!! Form::label('name', 'Media*:') !!}
-    {!! Form::file('media', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg']) !!}
+    {!! Form::file('media', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg', 'required']) !!}
 
     @if(isset($banksRate) && count($banksRate->media)>0)
-        <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;" >
+        <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
             <a class='showGallery' data-id='{{ $banksRate->media[0]->id }}' data-toggle='modal'>
-                <img src="{{$banksRate->media()->orderby('created_at', 'desc')->first()->fileUrl}}" style="width: 125px;">
+                <img src="{{$banksRate->media()->orderby('created_at', 'desc')->first()->fileUrl}}"
+                     style="width: 125px;">
             </a>
         </div>
     @endif

@@ -128,13 +128,19 @@
                         {!! Form::select('region_id', $regions, isset($user->details->region_id)? $user->details->region_id : null, ['class' => 'form-control select2']) !!}
                     </div>
                 @if($user->hasRole('showroom-owner'))
-                    <!-- Brands Field -->
+                    <!-- Dealer Type Field -->
+                        <div class="form-group col-sm-6">
+                            {!! Form::label('dealer_type', 'Dealer Type:') !!}
+                            {!! Form::select('dealer_type', $DEALER_TYPE, $user->details->dealer_type, ['class' => 'form-control select2']) !!}
+                        </div>
+
+                        <!-- Brands Field -->
                         <div class="form-group col-sm-6">
                             {!! Form::label('brand_ids', 'Brands:') !!}
                             {!! Form::select('brand_ids[]', $brands, $user->brands, ['class' => 'form-control select2', 'multiple']) !!}
                         </div>
 
-                    <!-- Add Car Limit Field -->
+                        <!-- Add Car Limit Field -->
                         <div class="form-group col-sm-6">
                             {!! Form::label('limit_for_cars', 'Add Car Limit:*') !!}
                             {!! Form::number('limit_for_cars', $user->details->limit_for_cars, ['class' => 'form-control', 'placeholder' => 'Add Car Limit', 'min'=>1, 'max'=>999, 'required']) !!}

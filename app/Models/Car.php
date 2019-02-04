@@ -146,6 +146,7 @@ class Car extends Model
         'amount',
         'name',
         'email',
+        'version',
         'country_code',
         'phone',
         'owner_type',

@@ -47,6 +47,10 @@
                 <dt>{!! Form::label('category_id', 'Category :') !!}</dt>
                 <dd>{!! isset($myCar->category_id) ? $myCar->category->name : 'N/A' !!}</dd>
 
+                <!-- Version Field -->
+                <dt>{!! Form::label('version', 'Version:') !!}</dt>
+                <dd>{!! isset($myCar->version)? $myCar->version : 'N/A' !!}</dd>
+
                 <!-- Type Id Field -->
                 <dt>{!! Form::label('type_id', 'Segments:') !!}</dt>
                 <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : 'N/A' !!}</dd>
@@ -63,7 +67,7 @@
         @if($myCar->amount)
             <!-- Year Field -->
                 <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
-                <dd>{!! $myCar->amount .' AED' ?? 'N/A' !!}</dd>
+                <dd>{!! $myCar->amount ? number_format($myCar->amount) : 'N/A' !!} {!! $myCar->currency ?? 'AED' !!}</dd>
 
         @endif
 
@@ -230,7 +234,7 @@
                     <dd>
                         @foreach($values as $label => $value)
                             <ul>
-                                <li>{!! $label !!} : {!! $value !!}</li>
+                                <li>{!! $label !!} : {!! $value['value'] !!}</li>
                             </ul>
                         @endforeach
                     </dd>
@@ -242,9 +246,11 @@
             @endif
             <dt>{!! Form::label('depreciation_trend', 'Depreciation Trend:') !!}</dt>
             <dd>
-                @foreach($myCar->depreciation_trend_value as $label => $value)
+                @foreach($myCar->DepreciationTrend as $label => $value)
                     <ul>
-                        <li>{!! $value['year'] !!} : {!! number_format($value['amount'], 2) !!}</li>
+                        <li>{!! $value->year !!} : {!! number_format($value->amount, 2) !!} ({!! $value->percentage !!}
+                            %)
+                        </li>
                     </ul>
                 @endforeach
             </dd>
@@ -326,6 +332,42 @@
     </div>
 @endif
 
+@if($myCar->category_id == \App\Models\MyCar::LIMITED_EDITION)
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Official Dealer</h3>
+            <div class="box-tools pull-right">
+                <!-- Collapse Button -->
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            @foreach($myCar->dealers as $dealer)
+                <div class="col-sm-4">
+                    <dt>{!! Form::label('owner_type', 'Showroom:') !!}</dt>
+                    <dd><img src="{{ $dealer->showroomDetails->logo_url }}" width="50"> {!! $dealer->showroomDetails->name !!}</dd>
+                </div>
+                <div class="col-sm-4">
+                    <dt>{!! Form::label('owner_type', 'Address:') !!}</dt>
+                    <dd>{!! $dealer->showroomDetails->address !!}</dd>
+                </div>
+                <div class="col-sm-4">
+                    <dt>{!! Form::label('owner_type', 'Contact#:') !!}</dt>
+                    <dd>{!! $dealer->showroomDetails->phone !!}</dd>
+                </div>
+                <div class="col-sm-12 clearfix"><hr></div>
+            @endforeach
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer clearfix"></div>
+        <!-- box-footer -->
+    </div>
+@endif
+
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title">Car Images</h3>
@@ -347,7 +389,8 @@
                 <div class="col-sm-4">
                     <dt>{!! Form::label('engine_type_id', ucwords($media->title).' :') !!}</dt>
                     <dd>
-                        <a class="showGallery" data-id="{{$myCar->id}}" data-source="{{ $count }}" data-toggle="modal" data-target="#imageGallery">
+                        <a class="showGallery" data-id="{{$myCar->id}}" data-source="{{ $count }}" data-toggle="modal"
+                           data-target="#imageGallery">
                             <img src="{{ $media->file_url }}" width="120" height="70" style="margin-right: 2%">
                         </a>
                     </dd>

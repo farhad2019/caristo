@@ -95,6 +95,7 @@ class PersonalShopperRequest extends Model
         'car_id',
         'name',
         'email',
+        'message',
         'country_code',
         'phone'
     ];

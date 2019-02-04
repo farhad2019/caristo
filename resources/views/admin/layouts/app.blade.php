@@ -377,12 +377,7 @@
     <script type="text/javascript">
         window.Echo = new Echo({
             broadcaster: 'socket.io',
-            host: window.location.hostname + ':6001',
-            auth: {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
+            host: window.location.hostname + ':6001'
         });
         window.Echo.channel('test-event')
             .listen('ExampleEvent', (e) => {
@@ -391,7 +386,7 @@
 
         window.Echo.private('job-{{Auth::user()->id}}')
             .listen('ExampleEvent', (e) => {
-                console.log('sadsadsad sa dsa dsd sadsadsa');
+                console.log('sadsa dsad sa dsa dsd sads adsa');
                 console.log(e);
             });
     </script>

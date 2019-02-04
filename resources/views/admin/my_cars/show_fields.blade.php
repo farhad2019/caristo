@@ -47,6 +47,10 @@
                 <dt>{!! Form::label('category_id', 'Category :') !!}</dt>
                 <dd>{!! isset($myCar->category_id) ? $myCar->category->name : 'N/A' !!}</dd>
 
+                <!-- Version Field -->
+                <dt>{!! Form::label('version', 'Version:') !!}</dt>
+                <dd>{!! isset($myCar->version)? $myCar->version : 'N/A' !!}</dd>
+
                 <!-- Type Id Field -->
                 <dt>{!! Form::label('type_id', 'Segments:') !!}</dt>
                 <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : 'N/A' !!}</dd>
@@ -63,7 +67,7 @@
         @if($myCar->amount)
             <!-- Year Field -->
                 <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
-                <dd>{!! $myCar->amount ?? 'N/A' !!} {!! $myCar->currency ?? 'AED' !!}</dd>
+                <dd>{!! $myCar->amount ? number_format($myCar->amount) : 'N/A' !!} {!! $myCar->currency ?? 'AED' !!}</dd>
 
         @endif
 

@@ -1,6 +1,6 @@
 <!-- Name Field -->
 <dt>{!! Form::label('name', 'Name:') !!}</dt>
-<dd>{!! $region->name !!}</dd>
+<dd>{!! $region->name !!} ({!! $region->currency !!})</dd>
 
 <!-- Name Field -->
 <dt>{!! Form::label('name', 'Flag:') !!}</dt>

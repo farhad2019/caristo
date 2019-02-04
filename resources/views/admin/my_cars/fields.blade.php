@@ -56,6 +56,12 @@
     {!! Form::select('year', $years_outlet_mall, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
 
+<!---- Version ----->
+<div class="form-group col-sm-6">
+    {!! Form::label('version', 'Version:*') !!}
+    {!! Form::text('version', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Version', 'maxLength' => 17]) !!}
+</div>
+
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6 transmission_type">
     {!! Form::label('transmission_type', 'Transmission Type:') !!}

@@ -41,6 +41,13 @@
                 </p>
             </li>
             <li>
+                <span class="icon-icon-6"></span>
+                <p>
+                    <small>version</small>
+                    {{ $tradeInRequest->tradeAgainst->version }}
+                </p>
+            </li>
+            <li>
                 <span class="icon-icon-7"></span>
                 <p>
                     <small>KM</small>

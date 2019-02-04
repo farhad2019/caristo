@@ -26,6 +26,11 @@ class MakeBidAPIController extends AppBaseController
     /** @var  MyCarRepository */
     private $carRepository;
 
+    /**
+     * MakeBidAPIController constructor.
+     * @param MakeBidRepository $makeBidRepo
+     * @param MyCarRepository $carRepo
+     */
     public function __construct(MakeBidRepository $makeBidRepo, MyCarRepository $carRepo)
     {
         $this->makeBidRepository = $makeBidRepo;
@@ -229,6 +234,7 @@ class MakeBidAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+
         $this->carRepository->pushCriteria(new RequestCriteria($request));
         $this->carRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->carRepository->pushCriteria(new CarsForBidsFilterCriteria($request));

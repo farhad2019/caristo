@@ -72,6 +72,7 @@ class Category extends Model
     public $fillable = [
         'name',
         'slug',
+        'type',
         'user_id',
         'parent_id'
     ];
@@ -146,7 +147,7 @@ class Category extends Model
     public static $rules = [
         'name'  => 'required',
         'media' => 'required|image|mimes:jpg,jpeg,png',
-        'slug'  => 'required',
+//        'slug'  => 'required',
     ];
 
     /**
@@ -157,7 +158,7 @@ class Category extends Model
     public static $update_rules = [
         'name'  => 'required',
         'media' => 'sometimes|image|mimes:jpg,jpeg,png',
-        'slug'  => 'required',
+//        'slug'  => 'required',
     ];
 
     /**

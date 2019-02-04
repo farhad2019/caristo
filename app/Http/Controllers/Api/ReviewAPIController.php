@@ -27,6 +27,11 @@ class ReviewAPIController extends AppBaseController
     /** @var  ReviewDetailRepository */
     private $reviewDetailRepository;
 
+    /**
+     * ReviewAPIController constructor.
+     * @param ReviewRepository $reviewRepo
+     * @param ReviewDetailRepository $reviewDetailRepo
+     */
     public function __construct(ReviewRepository $reviewRepo, ReviewDetailRepository $reviewDetailRepo)
     {
         $this->reviewRepository = $reviewRepo;

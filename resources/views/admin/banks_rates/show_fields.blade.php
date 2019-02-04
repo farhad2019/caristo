@@ -17,7 +17,8 @@
 <dt>{!! Form::label('image', 'Image:') !!}</dt>
 <dd>
     <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
-        <a class="showGallerySingle" data-id="{{ $banksRate->media[0]->id }}" data-toggle="modal" data-target="#imageGallerySingle">
+        <a class="showGallerySingle" data-id="{{ $banksRate->media[0]->id }}" data-toggle="modal"
+           data-target="#imageGallerySingle">
             <img src="{{$banksRate->media()->orderby('created_at', 'desc')->first()->fileUrl}}"
                  style="width: 125px;">
         </a>
@@ -55,7 +56,6 @@
             </thead>
             <tbody>
 
-
             <?php $i = 1;
             foreach ($getBankRequest as $bankRequest){?>
             <tr>
@@ -65,10 +65,17 @@
                 </td>
                 <td class="abc">{{ $bankRequest['email']}}</td>
                 <td class="abc">{{ $bankRequest['country_code']}} {{ $bankRequest['phone']}}</td>
+
                 {{--<td  class="abc">{!! $bankRequest['userDetail']['details']['first_name'] .' '.$bankRequest['userDetail']['details']['last_name'] !!}</td>--}}
-                <td class="abc"><a href="{{URL::to('/')}}/admin/cars/{{$bankRequest['carDetail']['id']}}">
-                        {!! ($bankRequest->carDetail->year .' '.$bankRequest->carDetail->carModel->name .' '.$bankRequest->carDetail->carModel->brand->name) !!} </a>
-                </td>
+                @if($bankRequest->carDetail->deleted_at == null)
+                    <td class="abc"><a href="{{URL::to('/')}}/admin/cars/{{$bankRequest['carDetail']['id']}}">
+                            {!! ($bankRequest->carDetail->year .' '.$bankRequest->carDetail->carModel->name .' '.$bankRequest->carDetail->carModel->brand->name) !!} </a>
+                    </td>
+                @else
+                    <td class="abc"><a href="javascript:void(0)">
+                            {!! ($bankRequest->carDetail->year .' '.$bankRequest->carDetail->carModel->name .' '.$bankRequest->carDetail->carModel->brand->name) !!} </a>
+                    </td>
+                @endif
                 <td class="abc">{!! $bankRequest->created_at->timezone(session('timezone')) !!} </td>
             </tr>
             <?php $i = $i + 1;} ?>

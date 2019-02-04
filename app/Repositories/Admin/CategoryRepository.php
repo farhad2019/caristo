@@ -62,7 +62,7 @@ class CategoryRepository extends BaseRepository
     public function getCarCategories()
     {
         return ((Auth::user()->hasRole('showroom-owner')) ? $this->model->where('type', Category::LUX_MARKET)->where('slug', '!=', 'luxury-new-cars')->whereNotIn('parent_id', [0])->get() : $this->model->where('type', Category::LUX_MARKET)->where('slug', 'luxury-new-cars')->whereNotIn('parent_id', [0])->get());
-       // return $this->model->where('type', Category::LUX_MARKET)->whereNotIn('parent_id', [0])->get();
+        // return $this->model->where('type', Category::LUX_MARKET)->whereNotIn('parent_id', [0])->get();
     }
 
     /**
@@ -73,6 +73,9 @@ class CategoryRepository extends BaseRepository
     {
         $input = $request->all();
         $input['user_id'] = \Auth::id();
+        $input['slug'] = str_replace(' ', '-', strtolower($input['name']));
+        $input['type'] = ($input['parent_id'] == 0)? 0 : $this->model->find($input['parent_id'])->type;
+
         $data = $this->create($input);
         // Media Data
         if ($request->hasFile('media')) {
@@ -99,6 +102,7 @@ class CategoryRepository extends BaseRepository
     {
         $input = $request->all();
         $input['user_id'] = \Auth::id();
+        $input['type'] = ($input['parent_id'] == 0)? 0 : $this->model->find($input['parent_id'])->type;
 
         $data = $this->update($input, $category->id);
         // Media Data

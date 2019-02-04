@@ -35,6 +35,11 @@ class ConsultancyRequestDataTable extends DataTable
             return $model->country_code . "-" . $model->phone;
         });
 
+        $dataTable->addColumn('message', function (ConsultancyRequest $model) {
+            return '<span style="word-break: break-all">' . $model->message . '</span>';
+        });
+
+        $dataTable->rawColumns(['message', 'action']);
         return $dataTable->addColumn('action', 'admin.consultancy_requests.datatables_actions');
     }
 
@@ -89,6 +94,7 @@ class ConsultancyRequestDataTable extends DataTable
             'name',
             'email',
             'phone',
+            'message',
 //            'car_name'
         ];
     }

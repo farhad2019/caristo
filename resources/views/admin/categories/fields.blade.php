@@ -4,11 +4,11 @@
     {!! Form::text('name', null, ['class' => 'form-control', 'autofocus']) !!}
 </div>
 
-<!-- Slug Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('slug', 'Slug:') !!}
-    {!! Form::text('slug', null, ['class' => 'form-control', isset($category)?'readonly':'']) !!}
-</div>
+{{--<!-- Slug Field -->--}}
+{{--<div class="form-group col-sm-6">--}}
+    {{--{!! Form::label('slug', 'Slug:') !!}--}}
+    {{--{!! Form::text('slug', null, ['class' => 'form-control', isset($category)?'readonly':'']) !!}--}}
+{{--</div>--}}
 
 <!-- Slug Field -->
 <div class="form-group col-sm-6">

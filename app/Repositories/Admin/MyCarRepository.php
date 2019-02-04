@@ -181,6 +181,7 @@ class MyCarRepository extends BaseRepository
             $input['chassis'] = $request->chassis;
             $input['year'] = $request->year;
             $input['price'] = $request->price;
+            $input['version'] = $request->version;
             $input['regional_specification_id'] = $request->regional_specification_id;
             $input['type_id'] = $request->type_id;
             $input['engine_type_id'] = $request->engine_type_id;
@@ -209,7 +210,7 @@ class MyCarRepository extends BaseRepository
                 }
             }
         } else {
-            $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometer', 'price', 'description', 'is_featured']);
+            $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'version', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometer', 'price', 'description', 'is_featured']);
             $input['owner_id'] = $user->id;
             if (Auth::user()->hasRole(['showroom-owner', 'Administrators'])) {
                 $user_type = User::SHOWROOM_OWNER;
@@ -282,7 +283,7 @@ class MyCarRepository extends BaseRepository
      */
     public function updateApiRecord($request, $myCar)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'kilometer', 'status']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'engine_type_id', 'name', 'version', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'kilometer', 'status']);
 
         $myCar = $this->update($input, $myCar->id);
 
@@ -314,7 +315,7 @@ class MyCarRepository extends BaseRepository
      */
     public function updateRecord($request, $myCar)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'name', 'email', 'country_code', 'phone', 'kilometer', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'currency', 'amount', 'regions', 'price', 'description', 'status', 'is_featured']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'version', 'name', 'email', 'country_code', 'phone', 'kilometer', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'currency', 'amount', 'regions', 'price', 'description', 'status', 'is_featured']);
         if ($request->category_id == MyCar::LIMITED_EDITION) {
             $limited = array(
                 'Dimensions_Weight'    => array(
@@ -446,6 +447,7 @@ class MyCarRepository extends BaseRepository
 
             $input['model_id'] = $request->model_id;
             $input['year'] = $request->year;
+            $input['version'] = $request->version;
             $input['price'] = $request->price;
             $input['regional_specification_id'] = $request->regional_specification_id;
             $input['type_id'] = $request->type_id;
