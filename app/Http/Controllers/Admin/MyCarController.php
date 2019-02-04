@@ -609,16 +609,16 @@ class MyCarController extends AppBaseController
                     'maintenance'          => 'required',
                     'to'                   => 'required|greater_than_field:from',
                     'depreciation_trend.*' => 'required',
-                    'price'                => 'required',
-                    'price.*'              => 'numeric',
+                    'regions'              => 'required',
+                    'regions.*'            => 'numeric',
                     'media.*'              => 'image|mimes:jpg,jpeg,png|max:500'
                 ]), [
                 /*'category_id.required' => 'The category field is required.',
                 'model_id.required'    => 'The model field is required.',
                 'year.required'        => 'The year field is required.',*/
                 'amount.required'               => 'The amount field is required.',
-                'price.required'                => 'The price must be filled.',
-                'price.*'                       => 'The all price must be filled.',
+                'regions.required'              => 'The price must be filled.',
+                'regions.*'                     => 'The all price must be filled.',
                 'name.required'                 => 'The name field is required.',
                 'dealers.required'              => 'Dealers is required',
                 'dealers.between'               => 'Please Select 2 dealers',

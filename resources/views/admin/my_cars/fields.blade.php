@@ -690,13 +690,12 @@
 @if(isset($myCar))
     @foreach($myCar->carRegions as $region)
         <div class="regions">
-            <div class="form-group col-sm-3 regions  {{ $errors->has('price') ? ' has-error' : '' }}">
+            <div class="form-group col-sm-3 regions  {{ $errors->has('regions.'.$region->region_id) ? ' has-error' : '' }}">
                 {!! Form::label('price','Price in '. $region->region->name) !!}
-                {!! Form::hidden('regions[]',$region->region_id, null, ['class' => 'form-control']) !!}
-                {!! Form::number('price[]', $region->price, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
-                @if ($errors->has('price'))
+                {!! Form::number('regions['.$region->region_id.']', $region->price, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
+                @if ($errors->has('regions.'.$region->region_id))
                     <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first('price') }}</strong>
+                    <strong>{{ $errors->first('regions.'.$region->region_id) }}</strong>
                 </span>
                 @endif
             </div>
@@ -705,13 +704,13 @@
 @else
     @foreach($regions as $key => $region)
         <div class="regions" style="display: none">
-            <div class="form-group col-sm-6  {{ $errors->has('price.'.$key) ? ' has-error' : '' }}">
+            <div class="form-group col-sm-6  {{ $errors->has('regions.'.$key) ? ' has-error' : '' }}">
                 {!! Form::label('regions','Price in '.$region.'*', null, ['class' => 'form-control']) !!}
-                {!! Form::hidden('regions[]',$key, null, ['class' => 'form-control']) !!}
-                {!! Form::number('price[]', null, ['class' => 'form-control', 'placeholder' => 'Enter Region Price', 'pattern'=>"^[1-9]\d*$"]) !!}
-                @if ($errors->has('price.'.$key))
+                {{--                {!! Form::hidden('regions[]',$key, null, ['class' => 'form-control']) !!}--}}
+                {!! Form::number('regions['.$key.']', null, ['class' => 'form-control', 'placeholder' => 'Enter Region Price', 'pattern'=>"^[1-9]\d*$"]) !!}
+                @if ($errors->has('regions.'.$key))
                     <span class="help-block" style="color: red;">
-                        <strong>{{ $errors->first('price.'.$key) }}</strong>
+                        <strong>{{ $errors->first('regions.'.$key) }}</strong>
                     </span>
                 @endif
             </div>

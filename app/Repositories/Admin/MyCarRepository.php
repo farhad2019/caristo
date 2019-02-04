@@ -197,18 +197,26 @@ class MyCarRepository extends BaseRepository
             $input['depreciation_trend'] = 15;//$request->depreciation_trend;
             $myCar = $this->create($input);
 //            $input['region'] = $request->regions;
-            $region = intval($request->regions);
-            if (isset($input['category_id'])) {
-                $regions = [];
-                if ($region > 0) {
-                    foreach ($request->regions as $key => $val) {
-                        $regions['region_id'] = intval($request->regions[$key]);
-                        $regions['price'] = $input['price'][$key];
-                        $regions['car_id'] = $myCar->id;
-                        CarRegion::create($regions);
-                    }
-                }
+
+            foreach ($request->regions as $key => $val) {
+                $regions['region_id'] = (int)($key);
+                $regions['price'] = $val;
+                $regions['car_id'] = $myCar->id;
+                CarRegion::create($regions);
             }
+
+            /*  $region = intval($request->regions);
+            if (isset($input['category_id'])) {
+                 $regions = [];
+                 if ($region > 0) {
+                     foreach ($request->regions as $key => $val) {
+                         $regions['region_id'] = intval($request->regions[$key]);
+                         $regions['price'] = $input['price'][$key];
+                         $regions['car_id'] = $myCar->id;
+                         CarRegion::create($regions);
+                     }
+                 }
+             }*/
         } else {
             $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'version', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometer', 'price', 'description', 'is_featured']);
             $input['owner_id'] = $user->id;
@@ -462,7 +470,17 @@ class MyCarRepository extends BaseRepository
             $input['life_cycle'] = $request->from . '-' . $request->to;
             $input['depreciation_trend'] = 15;//$request->depreciation_trend;
             $myCar = $this->update($input, $myCar->id);
-//            $input['region'] = $request->regions;
+
+            CarRegion::where('car_id', $myCar->id)->delete();
+            foreach ($request->regions as $key => $val) {
+                $regions['region_id'] = (int)($key);
+                $regions['price'] = $val;
+                $regions['car_id'] = $myCar->id;
+                CarRegion::create($regions);
+            }
+
+
+           /* $input['region'] = $request->regions;
             $region = intval($request->regions);
             if (isset($input['category_id'])) {
                 $regions = [];
@@ -475,7 +493,7 @@ class MyCarRepository extends BaseRepository
                         CarRegion::create($regions);
                     }
                 }
-            }
+            }*/
         } else {
 
             $input['limited_edition_specs'] = null;
