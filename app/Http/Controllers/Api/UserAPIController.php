@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helper\Utils;
 use App\Http\Requests\API\CreateUserApiRequest;
 use App\Http\Requests\API\UpdateUserApiRequest;
 use App\Http\Requests\Api\UpdateUserDeviceRequest;
@@ -459,6 +460,6 @@ class UserAPIController extends AppBaseController
     public function brandUsers(Request $request)
     {
         $brands = $this->brandRepository->find($request->depends);
-        return $this->sendResponse($brands->users->toArray(), 'dealers fetched successfully');
+        return $this->sendResponse($brands->users()->where('status', Utils::BOOL_TRUE)->get()->toArray(), 'dealers fetched successfully');
     }
 }

@@ -52,7 +52,28 @@ class UserDetail extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'first_name', 'last_name', 'dealer_type', 'country_code', 'phone', 'address', 'image', 'area_id', 'email_updates', 'social_login', 'about', 'region_reminder', 'region_id', 'limit_for_cars', 'limit_for_featured_cars', 'expiry_date',  'dob', 'profession', 'nationality', 'gender', 'dealer_type_text'
+        'user_id',
+        'first_name',
+        'last_name',
+        'dealer_type',
+        'country_code',
+        'phone',
+        'address',
+        'image',
+        'area_id',
+        'email_updates',
+        'social_login',
+        'about',
+        'region_reminder',
+        'region_id',
+        'limit_for_cars',
+        'limit_for_featured_cars',
+        'expiry_date',
+        'dob',
+        'profession',
+        'nationality',
+        'gender',
+        'dealer_type_text'
     ];
 
     public static $rules = [];
@@ -146,7 +167,7 @@ class UserDetail extends Model
      */
     public function regionDetail()
     {
-        return $this->hasOne(Region::class,'id','region_id');
+        return $this->hasOne(Region::class, 'id', 'region_id');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\RequestForQuotation;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -10,24 +11,22 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-/**
- * Class ExampleEvent
- * @package App\Events
- */
-class ExampleEvent implements ShouldBroadcast
+class NewJobEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $value;
+    public $userID;
+    public $job;
+    public $notification;
 
     /**
      * Create a new event instance.
      *
-     * @param $value
+     * @param $userId
      */
-    public function __construct($value)
+    public function __construct($userId)
     {
-        $this->value = $value;
+        $this->userID = $userId;
     }
 
     /**
@@ -37,7 +36,7 @@ class ExampleEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('test-event');
+        return new PrivateChannel('job-' . $this->userID);
     }
 
     /**
@@ -47,7 +46,11 @@ class ExampleEvent implements ShouldBroadcast
     {
         return [
             'data' => [
-                'key' => $this->value
+                'job' => 'Hello jani',
+//                'job'          => $this->job,
+//                'notification' => $this->notification,
+//                'url'  => Url::route('view-job'),
+//                'text' => __('new_job')
             ]
         ];
     }

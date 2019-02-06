@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\NewJobEvent;
 use App\Helper\BreadcrumbsRegister;
 use App\Http\Controllers\Controller;
-use App\Models\Comment;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\MyCarRepository;
 use App\Repositories\Admin\NewsRepository;
@@ -64,6 +64,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        event(new NewJobEvent(Auth::id()));
         $users = $this->userRepository->all()->count() - 2;
         $roles = $this->roleRepository->all()->count();
         $categories = $this->categoryRepository->all()->count();

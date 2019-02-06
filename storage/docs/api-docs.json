@@ -4,7 +4,7 @@
         "title": "Laravel Generator APIs",
         "version": "1.0.0"
     },
-    "basePath": "/api/v1",
+    "basePath": "/CaristoCratApp/api/v1",
     "paths": {
         "/register": {
             "post": {
@@ -531,6 +531,13 @@
                         "description": "Date of birth of User : yyyy-mm-dd",
                         "required": false,
                         "type": "string"
+                    },
+                    {
+                        "name": "status",
+                        "in": "formData",
+                        "description": "user status 1->active, 0->inactive",
+                        "required": false,
+                        "type": "integer"
                     },
                     {
                         "name": "image",

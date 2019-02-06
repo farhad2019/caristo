@@ -159,7 +159,7 @@ class AuthAPIController extends AppBaseController
             $user->save();
 
             $credentials = [
-                'email' => $request->email,
+                'email'    => $request->email,
                 'password' => $request->password
             ];
 
@@ -279,6 +279,9 @@ class AuthAPIController extends AppBaseController
 
                 auth()->guard('api')->logout();
                 return $this->sendErrorWithData("Please verified Your Email", 200);
+            } elseif ($user['status'] == 0) {
+                auth()->guard('api')->logout();
+                return $this->sendErrorWithData("User deactivated, contact admin.", 403);
             }
 
             // check if device token exists
@@ -435,8 +438,8 @@ class AuthAPIController extends AppBaseController
         $user = auth()->guard('api')->setToken($token)->user()->toArray();
         $user = array_merge($user, [
             'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->guard('api')->factory()->getTTL() * 60
+            'token_type'   => 'bearer',
+            'expires_in'   => auth()->guard('api')->factory()->getTTL() * 60
         ]);
         return $this->sendResponse(['user' => $user], 'Logged in successfully');
     }
@@ -590,8 +593,8 @@ class AuthAPIController extends AppBaseController
                 $token = JWTAuth::fromUser($user);
                 $user = array_merge($user->toArray(), [
                     'access_token' => $token,
-                    'token_type' => 'bearer',
-                    'expires_in' => auth()->guard('api')->factory()->getTTL() * 60
+                    'token_type'   => 'bearer',
+                    'expires_in'   => auth()->guard('api')->factory()->getTTL() * 60
                 ]);
                 return $this->sendResponse(['user' => $user], 'Logged in successfully');
             } else {
@@ -864,7 +867,7 @@ class AuthAPIController extends AppBaseController
         $user = \Auth::user();
 
         $credentials = [
-            'email' => $user->email,
+            'email'    => $user->email,
             'password' => $old_password
         ];
         if (!$token = auth()->guard('api')->attempt($credentials)) {
@@ -947,6 +950,12 @@ class AuthAPIController extends AppBaseController
      *          type="string",
      *          required=false,
      *          in="formData"
+     *      ),@SWG\Parameter(
+     *          name="status",
+     *          description="user status 1->active, 0->inactive",
+     *          type="integer",
+     *          required=false,
+     *          in="formData"
      *      ),
      *     @SWG\Parameter(
      *          name="image",
@@ -976,7 +985,8 @@ class AuthAPIController extends AppBaseController
     public function updateUserProfile(UpdateUserProfileRequest $request)
     {
         $user = \Auth::user();
-        $userData = array_filter($request->only(['name']));
+        $userData = $request->only('name', 'status');
+
         $details = $request->only(['name', 'country_code', 'phone', 'about', 'gender', 'nationality', 'profession', 'dob']);
 
         if ($request->hasFile('image')) {
@@ -990,6 +1000,10 @@ class AuthAPIController extends AppBaseController
                 $details['first_name'] = $userData['name'];
             }
             $this->userRepository->update($userData, $user->id);
+
+            if (!empty($userData['status'])) {
+                auth()->guard('api')->logout();
+            }
         }
 
         if (count($details) > 0) {

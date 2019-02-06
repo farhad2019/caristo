@@ -373,7 +373,6 @@
 @if(config('constants.laravel-echo-server'))
     <script type="text/javascript" src="{{asset('public/js/echo/echo.js')}}"></script>
     <script type="text/javascript" src="http://localhost:6001/socket.io/socket.io.js"></script>
-
     <script type="text/javascript">
         window.Echo = new Echo({
             broadcaster: 'socket.io',
@@ -385,7 +384,7 @@
             });
 
         window.Echo.private('job-{{Auth::user()->id}}')
-            .listen('ExampleEvent', (e) => {
+            .listen('NewJobEvent', (e) => {
                 console.log('sadsa dsad sa dsa dsd sads adsa');
                 console.log(e);
             });

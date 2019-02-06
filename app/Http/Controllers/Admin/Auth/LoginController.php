@@ -7,6 +7,10 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Class LoginController
+ * @package App\Http\Controllers\Admin\Auth
+ */
 class LoginController extends Controller
 {
     /*
@@ -30,9 +34,7 @@ class LoginController extends Controller
     protected $redirectTo = '/admin/home';
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * LoginController constructor.
      */
     public function __construct()
     {
@@ -57,10 +59,17 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        session(['timezone' => $request->timezone]); // saving to session
+        if ($user->status == 1) {
+            session(['timezone' => $request->timezone]); // saving to session
 
-        if (\Entrust::can('adminpanel')) {
-            return redirect()->intended($this->redirectPath());
+            if (\Entrust::can('adminpanel')) {
+                return redirect()->intended($this->redirectPath());
+            } else {
+                $this->logout($request);
+                throw ValidationException::withMessages([
+                    $this->username() => [trans('auth.failed')],
+                ]);
+            }
         } else {
             $this->logout($request);
             throw ValidationException::withMessages([
@@ -78,9 +87,7 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $this->guard()->logout();
-
         $request->session()->invalidate();
-
         return $this->loggedOut($request) ?: redirect('/admin/login');
     }
 }

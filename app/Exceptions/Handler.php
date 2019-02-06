@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use InfyOm\Generator\Utils\ResponseUtil;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -57,6 +58,14 @@ class Handler extends ExceptionHandler
                 'success' => 0,
                 'message' => 'Method is not allowed for the requested route',
             ], 405);*/
+        }
+        if ($exception instanceof NotFoundHttpException) {
+            //return abort('404');
+            return response()->json([
+                'successasd' => $request->url(),
+                'success'    => 0,
+                'message'    => 'Page Not Found'
+            ], 405);
         }
         return parent::render($request, $exception);
     }

@@ -19,3 +19,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('test-broadcast', function () {
+    event(new \App\Events\ExampleEvent("value"));
+//    broadcast(new \App\Events\ExampleEvent);
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

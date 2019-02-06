@@ -44,6 +44,13 @@
                 <dd>{!! \App\Models\User::$DEALER_TYPE[$user->details->dealer_type] !!}</dd>
             </div>
         @endif
+
+        <div class="col-sm-6">
+            <!-- Email Field -->
+            <dt>{!! Form::label('status', 'Status:') !!}</dt>
+            <dd><span class='badge bg-{{\App\Helper\Utils::getBoolCss($user->status, true)}}'>{{ ($user->status == 1)? 'Active' : 'InActive' }}</span></dd>
+        </div>
+
         <div class="col-sm-6">
             <dt>{!! Form::label('phone', 'Phone:') !!}</dt>
             <dd>{!! $user->details->phone ? ($user->details->country_code .'-'.$user->details->phone) : 'N/A' !!}</dd>
