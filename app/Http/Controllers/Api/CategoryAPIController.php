@@ -37,7 +37,7 @@ class CategoryAPIController extends AppBaseController
      *      tags={"Category"},
      *      description="Get all Categories",
      *      produces={"application/json"},
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -45,7 +45,7 @@ class CategoryAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="locale",
      *          description="Response Language",
      *          type="string",
@@ -59,7 +59,7 @@ class CategoryAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
@@ -113,13 +113,13 @@ class CategoryAPIController extends AppBaseController
      * @param CreateCategoryAPIRequest $request
      * @return Response
      *
-     * @SWG\Post(
+     * //@SWG\Post(
      *      path="/categories",
      *      summary="Store a newly created Category in storage",
      *      tags={"Category"},
      *      description="Store Category",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="token",
      *          in="header",
      *          description="Token",
@@ -127,27 +127,27 @@ class CategoryAPIController extends AppBaseController
      *          type="string",
      *          default="Bearer abc"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="Category that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/Category")
+     *          //@SWG\Schema(ref="#/definitions/Category")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/Category"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -173,7 +173,7 @@ class CategoryAPIController extends AppBaseController
      *      tags={"Category"},
      *      description="Get Category",
      *      produces={"application/json"},
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -226,40 +226,40 @@ class CategoryAPIController extends AppBaseController
      * @param UpdateCategoryAPIRequest $request
      * @return Response
      *
-     * @SWG\Put(
+     * //@SWG\Put(
      *      path="/categories/{id}",
      *      summary="Update the specified Category in storage",
      *      tags={"Category"},
      *      description="Update Category",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of Category",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="Category that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/Category")
+     *          //@SWG\Schema(ref="#/definitions/Category")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/Category"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -287,33 +287,33 @@ class CategoryAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
-     * @SWG\Delete(
+     * //@SWG\Delete(
      *      path="/categories/{id}",
      *      summary="Remove the specified Category from storage",
      *      tags={"Category"},
      *      description="Delete Category",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of Category",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="string"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )

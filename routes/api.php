@@ -58,7 +58,7 @@ Route::post('v1/reset-password', 'AuthAPIController@updatePassword')->name('rese
 
 Route::get('v1/getUserByDeviceType', 'UserAPIController@getUserByDeviceType')->name('getUserByDeviceType');
 
-Route::resource('v1/makeBids', 'MakeBidAPIController');
+//Route::resource('v1/makeBids', 'MakeBidAPIController');
 
 ## Token Required to below APIs
 
@@ -113,12 +113,6 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/reportRequests', 'ReportRequestAPIController');
 
     Route::resource('v1/tradeInCars', 'TradeInCarAPIController');
-
-    Route::resource('v1/reviews', 'ReviewAPIController');
-
-    Route::resource('v1/makeBids', 'MakeBidAPIController');
-
-    Route::resource('v1/news', 'NewsAPIController');
 });
 
 Route::resource('v1/reviewAspects', 'ReviewAspectAPIController');
@@ -149,7 +143,9 @@ Route::get('v1/brandUsers', 'UserAPIController@brandUsers')->name('brandUsers');
 
 Route::resource('v1/categories', 'CategoryAPIController');
 
+Route::resource('v1/reviews', 'ReviewAPIController');
 
+Route::resource('v1/makeBids', 'MakeBidAPIController');
 
 Route::resource('v1/carTypes', 'CarTypeAPIController');
 
@@ -158,3 +154,5 @@ Route::resource('v1/carBrands', 'CarBrandAPIController');
 Route::resource('v1/carModels', 'CarModelAPIController');
 
 Route::resource('v1/regions', 'RegionAPIController');
+
+Route::resource('v1/news', 'NewsAPIController');

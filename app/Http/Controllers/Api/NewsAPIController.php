@@ -28,6 +28,11 @@ class NewsAPIController extends AppBaseController
     /** @var  NewsInteractionRepository */
     private $interactionRepository;
 
+    /**
+     * NewsAPIController constructor.
+     * @param NewsRepository $newsRepo
+     * @param NewsInteractionRepository $interactionRepo
+     */
     public function __construct(NewsRepository $newsRepo, NewsInteractionRepository $interactionRepo)
     {
         $this->newsRepository = $newsRepo;
@@ -53,14 +58,14 @@ class NewsAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="locale",
      *          description="Response Language",
      *          type="string",
      *          default="en",
      *          in="query"
      *      ),
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="category_id",
      *          type="integer",
      *          required=false,
@@ -73,7 +78,7 @@ class NewsAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
@@ -111,11 +116,13 @@ class NewsAPIController extends AppBaseController
         $this->newsRepository->pushCriteria(new NewsCriteria($request));
 
         $news = $this->newsRepository->all();
-        foreach ($news as $item) {
-            $this->interactionRepository->createRecord([
-                'news_id' => $item->id,
-                'type'    => NewsInteraction::TYPE_VIEW
-            ]);
+        if (Auth::id()){
+            foreach ($news as $item) {
+                $this->interactionRepository->createRecord([
+                    'news_id' => $item->id,
+                    'type'    => NewsInteraction::TYPE_VIEW
+                ]);
+            }
         }
 /*        var_dump($news->toArray());
         exit();
@@ -134,33 +141,33 @@ class NewsAPIController extends AppBaseController
      * @param CreateNewsAPIRequest $request
      * @return Response
      *
-     * @SWG\Post(
+     * //@SWG\Post(
      *      path="/news",
      *      summary="Store a newly created News in storage",
      *      tags={"News"},
      *      description="Store News",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="News that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/News")
+     *          //@SWG\Schema(ref="#/definitions/News")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/News"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -232,40 +239,40 @@ class NewsAPIController extends AppBaseController
      * @param UpdateNewsAPIRequest $request
      * @return Response
      *
-     * @SWG\Put(
+     * //@SWG\Put(
      *      path="/news/{id}",
      *      summary="Update the specified News in storage",
      *      tags={"News"},
      *      description="Update News",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of News",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="News that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/News")
+     *          //@SWG\Schema(ref="#/definitions/News")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/News"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -294,33 +301,33 @@ class NewsAPIController extends AppBaseController
      * @return Response
      * @throws \Exception
      *
-     * @SWG\Delete(
+     * //@SWG\Delete(
      *      path="/news/{id}",
      *      summary="Remove the specified News from storage",
      *      tags={"News"},
      *      description="Delete News",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of News",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="string"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
