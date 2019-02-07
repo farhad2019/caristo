@@ -166,7 +166,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         });
 
         $model = $model->when(($sort_by_year > 0), function ($query) {
-            return $query->orderBy('year', 'ASC');
+            return $query->groupBy('year')->orderBy('year', 'ASC');
         });
 
         $model = $model->where('status', MyCar::ACTIVE);
