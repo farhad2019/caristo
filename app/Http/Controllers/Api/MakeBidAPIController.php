@@ -244,7 +244,7 @@ class MakeBidAPIController extends AppBaseController
         $this->carRepository->pushCriteria(new RequestCriteria($request));
         $this->carRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->carRepository->pushCriteria(new CarsForBidsFilterCriteria($request));
-        $makeBids = $this->carRepository->all()->pluck('year');
+        $makeBids = $this->carRepository->all();
 
         return $this->sendResponse($makeBids->toArray(), 'Make Bids retrieved successfully');
     }
