@@ -210,6 +210,13 @@ class MakeBidAPIController extends AppBaseController
      *          type="integer",
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="sort_by_year",
+     *          description="sort by year, 0/1",
+     *          required=false,
+     *          type="integer",
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
@@ -234,11 +241,10 @@ class MakeBidAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-
         $this->carRepository->pushCriteria(new RequestCriteria($request));
         $this->carRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->carRepository->pushCriteria(new CarsForBidsFilterCriteria($request));
-        $makeBids = $this->carRepository->all();
+        $makeBids = $this->carRepository->all()->pluck('year');
 
         return $this->sendResponse($makeBids->toArray(), 'Make Bids retrieved successfully');
     }

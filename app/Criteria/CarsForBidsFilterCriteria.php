@@ -156,13 +156,17 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             return $query->where('average_rating', '>=', $rating);
         });
 
+        $sort_by_year = $this->request->get('sort_by_year', 0);
         $is_for_review = $this->request->get('is_for_review', 0);
         $model = $model->when(($is_for_review > 0), function ($query) {
             return $query->orderBy('bid_close_at', 'ASC');
         });
-
-        $model = $model->when(($is_for_review == 0), function ($query) {
+        $model = $model->when(($is_for_review == 0 && $sort_by_year == 0), function ($query) {
             return $query->orderBy('created_at', 'DESC');
+        });
+
+        $model = $model->when(($sort_by_year > 0), function ($query) {
+            return $query->orderBy('year', 'ASC');
         });
 
         $model = $model->where('status', MyCar::ACTIVE);

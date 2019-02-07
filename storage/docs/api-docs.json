@@ -2978,6 +2978,13 @@
                         "description": "is for review",
                         "required": false,
                         "type": "integer"
+                    },
+                    {
+                        "name": "sort_by_year",
+                        "in": "query",
+                        "description": "sort by year, 0/1",
+                        "required": false,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
