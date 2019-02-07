@@ -164,6 +164,7 @@ class TradeInCar extends Model
      * @var array
      */
     public static $api_rules = [
+        'customer_car_id' => 'required|exists:cars,id'
     ];
 
     /**

@@ -9,6 +9,7 @@ use App\Repositories\Admin\ContactUsRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 
@@ -125,7 +126,6 @@ class ContactUsAPIController extends AppBaseController
     public function store(CreateContactUsAPIRequest $request)
     {
         $contactUs = $this->contactUsRepository->saveRecord($request);
-
         return $this->sendResponse($contactUs->toArray(), 'Contact Us saved successfully');
     }
 

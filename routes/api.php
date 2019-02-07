@@ -113,7 +113,11 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/reportRequests', 'ReportRequestAPIController');
 
     Route::resource('v1/tradeInCars', 'TradeInCarAPIController');
+
+    Route::resource('v1/reviews', 'ReviewAPIController');
 });
+
+Route::resource('v1/contactus', 'ContactUsAPIController');
 
 Route::resource('v1/reviewAspects', 'ReviewAspectAPIController');
 
@@ -131,10 +135,6 @@ Route::resource('v1/cars', 'CarAPIController');
 
 Route::resource('v1/banksRates', 'BanksRateAPIController');
 
-Route::resource('v1/consultancyRequests', 'ConsultancyRequestAPIController');
-
-Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIController');
-
 Route::resource('v1/settings', 'SettingAPIController');
 
 Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
@@ -142,8 +142,6 @@ Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
 Route::get('v1/brandUsers', 'UserAPIController@brandUsers')->name('brandUsers');
 
 Route::resource('v1/categories', 'CategoryAPIController');
-
-Route::resource('v1/reviews', 'ReviewAPIController');
 
 Route::resource('v1/makeBids', 'MakeBidAPIController');
 
@@ -156,3 +154,9 @@ Route::resource('v1/carModels', 'CarModelAPIController');
 Route::resource('v1/regions', 'RegionAPIController');
 
 Route::resource('v1/news', 'NewsAPIController');
+
+Route::resource('v1/consultancyRequests', 'ConsultancyRequestAPIController');
+
+Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIController');
+
+Route::get('v1/reviews', 'ReviewAPIController@index');
