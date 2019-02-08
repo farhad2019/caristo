@@ -82,7 +82,9 @@ class WalkThrough extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'media'
+    ];
 
     /**
      * The attributes that should be append to toArray.
@@ -105,6 +107,7 @@ class WalkThrough extends Model
         'type_text',
         'title',
         'content',
+        'media',
         'created_at',
     ];
 

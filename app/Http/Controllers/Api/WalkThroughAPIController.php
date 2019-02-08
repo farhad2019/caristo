@@ -87,7 +87,7 @@ class WalkThroughAPIController extends AppBaseController
         $this->walkThroughRepository->pushCriteria(new LimitOffsetCriteria($request));
         $walkThroughs = $this->walkThroughRepository->all();
 
-        return $this->sendResponse($walkThroughs->toArray(), 'Walk Throughs retrieved successfully');
+        return $this->sendResponse($walkThroughs->toArray(), 'Walk Through retrieved successfully');
     }
 
     /**

@@ -734,7 +734,6 @@ class AuthAPIController extends AppBaseController
         if ($account && $account->user) {
             // Account found. generate token;
             $user = $account->user;
-
         } else {
             // Check if email address already exists. if yes, then link social account. else register new user.
             if (isset($input['email'])) {
@@ -772,6 +771,10 @@ class AuthAPIController extends AppBaseController
             $user->roles()->attach([Role::RANDOM_USER_ROLE]);
             $user->save();
 
+        }
+
+        if ($user->status == 0){
+            return $this->sendErrorWithData("User deactivated, contact admin.", 403);
         }
 
         $user->name = $request->input('username', null);

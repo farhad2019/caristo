@@ -5,6 +5,7 @@ namespace App\Repositories\Admin;
 use App\Helper\Utils;
 use App\Models\WalkThrough;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -50,8 +51,11 @@ class WalkThroughRepository extends BaseRepository
             $mediaFiles = $request->file('media');
             $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
-            foreach ($mediaFiles as $mediaFile) {
-                $media[] = Utils::handlePicture($mediaFile);
+            foreach ($mediaFiles as $key => $mediaFile) {
+                $media[] = [
+                    'title'    => $key,
+                    'filename' => Storage::putFile('media_files', $mediaFile)
+                ]; //Utils::handlePicture($mediaFile);
             }
             $walkThrough->media()->createMany($media);
         }
