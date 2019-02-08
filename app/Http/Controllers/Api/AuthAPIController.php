@@ -748,6 +748,7 @@ class AuthAPIController extends AppBaseController
                 );
                 $userData['name'] = $request->input('username', "");
                 $userData['password'] = config("app.name");
+                $userData['status'] = 1;
                 $user = User::create($userData);
                 $userDetails['user_id'] = $user->id;
                 $userDetails['phone'] = $request->input('phone', null);

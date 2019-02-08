@@ -778,7 +778,7 @@ class MyCar extends Model
                     $specs[$key][$count]['name'] = $name;
                     if (isset($item['value'])) {
                         $specs[$key][$count]['value'] = $item['value'];
-                        $specs[$key][$count]['is_highlight'] = $item['is_highlight'];
+                        $specs[$key][$count]['is_highlight'] = (int)$item['is_highlight'];
                     } else {
                         $specs[$key][$count]['value'] = $item;
                     }

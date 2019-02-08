@@ -50,7 +50,6 @@ class WalkThroughRepository extends BaseRepository
             $media = [];
             $mediaFiles = $request->file('media');
             $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
-
             foreach ($mediaFiles as $key => $mediaFile) {
                 $media[] = [
                     'title'    => $key,
