@@ -57,6 +57,16 @@
         </div>
 
         <div class="col-sm-6">
+            <dt>{!! Form::label('phone', 'Nationality:') !!}</dt>
+            <dd>{!! $user->details->nationality ?? 'N/A' !!}</dd>
+        </div>
+
+        <div class="col-sm-6">
+            <dt>{!! Form::label('phone', 'About Me:') !!}</dt>
+            <dd>{!! $user->details->about ?? 'N/A' !!}</dd>
+        </div>
+
+        <div class="col-sm-6">
             <dt>{!! Form::label('roles', 'Roles:') !!}</dt>
             <dd>{!! $user->rolesCsv !!}</dd>
         </div>

@@ -18,6 +18,7 @@ use App\Models\UserDetail;
 use App\Repositories\Admin\CarBrandRepository;
 use App\Repositories\Admin\CarInteractionRepository;
 use App\Repositories\Admin\CarRepository;
+use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\NewsRepository;
 use App\Repositories\Admin\RegionRepository;
 use App\Repositories\Admin\RoleRepository;
@@ -78,6 +79,11 @@ class UserController extends AppBaseController
     private $brandRepository;
 
     /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
+    /**
      * UserController constructor.
      * @param UserRepository $userRepo
      * @param UserdetailRepository $userDetailRepo
@@ -88,8 +94,9 @@ class UserController extends AppBaseController
      * @param CarRepository $carRepository
      * @param CarInteractionRepository $carInteractionRepo
      * @param CarBrandRepository $brandRepo
+     * @param CategoryRepository $categoryRepo
      */
-    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, NewsRepository $newsRepository, RoleRepository $roleRepo, RegionRepository $regionRepository, UserShowroomRepository $showroomRepo, CarRepository $carRepository, CarInteractionRepository $carInteractionRepo, CarBrandRepository $brandRepo)
+    public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, NewsRepository $newsRepository, RoleRepository $roleRepo, RegionRepository $regionRepository, UserShowroomRepository $showroomRepo, CarRepository $carRepository, CarInteractionRepository $carInteractionRepo, CarBrandRepository $brandRepo, CategoryRepository $categoryRepo)
     {
         $this->userRepository = $userRepo;
         $this->roleRepository = $roleRepo;
@@ -100,6 +107,7 @@ class UserController extends AppBaseController
         $this->newsRepository = $newsRepository;
         $this->carRepository = $carRepository;
         $this->brandRepository = $brandRepo;
+        $this->categoryRepository = $categoryRepo;
         $this->ModelName = 'users';
         $this->BreadCrumbName = 'Users';
     }
@@ -113,7 +121,6 @@ class UserController extends AppBaseController
      */
     public function index(Request $request, UserDataTable $userDataTable)
     {
-
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         $data = $request->all();
 
@@ -140,8 +147,13 @@ class UserController extends AppBaseController
                 $second_tile = "News : " . $news['headline'];
 
             } else if (isset($data['car_id'])) {
-                $car = $this->carRepository->findWithoutFail($data['car_id']);
-                $second_tile = "Car : " . $car['name'];
+                if ($data['type'] == CarInteraction::TYPE_CLICK_CATEGORY) {
+                    $car = $this->categoryRepository->findWithoutFail($data['car_id']);
+                    $second_tile = "Category : " . $car['name'];
+                }else{
+                    $car = $this->carRepository->findWithoutFail($data['car_id']);
+                    $second_tile = "Car : " . $car['name'];
+                }
             } else {
                 $second_tile = "";
             }
@@ -166,10 +178,10 @@ class UserController extends AppBaseController
         $brands = $this->brandRepository->all()->pluck('name', 'id')->all();
 
         return view('admin.users.create')->with([
-            'roles'         => $roles,
-            'regions'       => $regions,
-            'brands'        => $brands,
-            'DEALER_TYPE'   => User::$DEALER_TYPE
+            'roles'       => $roles,
+            'regions'     => $regions,
+            'brands'      => $brands,
+            'DEALER_TYPE' => User::$DEALER_TYPE
         ]);
     }
 
@@ -594,13 +606,210 @@ class UserController extends AppBaseController
         }
 
         $regions = $this->regionRepository->all()->pluck('name', 'id')->all();
+        $nationalities = [
+            'Afghan'                    => 'Afghan',
+            'Albanian'                  => 'Albanian',
+            'Algerian'                  => 'Algerian',
+            'American'                  => 'American',
+            'Andorran'                  => 'Andorran',
+            'Angolan'                   => 'Angolan',
+            'Antiguans'                 => 'Antiguans',
+            'Argentinean'               => 'Argentinean',
+            'Armenian'                  => 'Armenian',
+            'Australian'                => 'Australian',
+            'Austrian'                  => 'Austrian',
+            'Azerbaijani'               => 'Azerbaijani',
+            'Bahamian'                  => 'Bahamian',
+            'Bahraini'                  => 'Bahraini',
+            'Bangladeshi'               => 'Bangladeshi',
+            'Barbadian'                 => 'Barbadian',
+            'Barbudans'                 => 'Barbudans',
+            'Batswana'                  => 'Batswana',
+            'Belarusian'                => 'Belarusian',
+            'Belgian'                   => 'Belgian',
+            'Belizean'                  => 'Belizean',
+            'Beninese'                  => 'Beninese',
+            'Bhutanese'                 => 'Bhutanese',
+            'Bolivian'                  => 'Bolivian',
+            'Bosnian'                   => 'Bosnian',
+            'Brazilian'                 => 'Brazilian',
+            'British'                   => 'British',
+            'Bruneian'                  => 'Bruneian',
+            'Bulgarian'                 => 'Bulgarian',
+            'Burkinabe'                 => 'Burkinabe',
+            'Burmese'                   => 'Burmese',
+            'Burundian'                 => 'Burundian',
+            'Cambodian'                 => 'Cambodian',
+            'Cameroonian'               => 'Cameroonian',
+            'Canadian'                  => 'Canadian',
+            'Cape Verdean'              => 'Cape Verdean',
+            'Central African'           => 'Central African',
+            'Chadian'                   => 'Chadian',
+            'Chilean'                   => 'Chilean',
+            'Chinese'                   => 'Chinese',
+            'Colombian'                 => 'Colombian',
+            'Comoran'                   => 'Comoran',
+            'Congolese'                 => 'Congolese',
+            'Costa Rican'               => 'Costa Rican',
+            'Croatian'                  => 'Croatian',
+            'Cuban'                     => 'Cuban',
+            'Cypriot'                   => 'Cypriot',
+            'Czech'                     => 'Czech',
+            'Danish'                    => 'Danish',
+            'Djibouti'                  => 'Djibouti',
+            'Dominican'                 => 'Dominican',
+            'Dutch'                     => 'Dutch',
+            'East Timorese'             => 'East Timorese',
+            'Ecuadorean'                => 'Ecuadorean',
+            'Egyptian'                  => 'Egyptian',
+            'Emirian'                   => 'Emirian',
+            'Equatorial Guinean'        => 'Equatorial Guinean',
+            'Eritrean'                  => 'Eritrean',
+            'Estonian'                  => 'Estonian',
+            'Ethiopian'                 => 'Ethiopian',
+            'Fijian'                    => 'Fijian',
+            'Filipino'                  => 'Filipino',
+            'Finnish'                   => 'Finnish',
+            'French'                    => 'French',
+            'Gabonese'                  => 'Gabonese',
+            'Gambian'                   => 'Gambian',
+            'Georgian'                  => 'Georgian',
+            'German'                    => 'German',
+            'Ghanaian'                  => 'Ghanaian',
+            'Greek'                     => 'Greek',
+            'Grenadian'                 => 'Grenadian',
+            'Guatemalan'                => 'Guatemalan',
+            'Guinea--Bissauan'          => 'Guinea-Bissauan',
+            'Guinean'                   => 'Guinean',
+            'Guyanese'                  => 'Guyanese',
+            'Haitian'                   => 'Haitian',
+            'Herzegovinian'             => 'Herzegovinian',
+            'Honduran'                  => 'Honduran',
+            'Hungarian'                 => 'Hungarian',
+            'Icelander'                 => 'Icelander',
+            'Indian'                    => 'Indian',
+            'Indonesian'                => 'Indonesian',
+            'Iranian'                   => 'Iranian',
+            'Iraqi'                     => 'Iraqi',
+            'Irish'                     => 'Irish',
+            'Israeli'                   => 'Israeli',
+            'Italian'                   => 'Italian',
+            'Ivorian'                   => 'Ivorian',
+            'Jamaican'                  => 'Jamaican',
+            'Japanese'                  => 'Japanese',
+            'Jordanian'                 => 'Jordanian',
+            'Kazakhstani'               => 'Kazakhstani',
+            'Kenyan'                    => 'Kenyan',
+            'Kittian and Nevisian'      => 'Kittian and Nevisian',
+            'Kuwaiti'                   => 'Kuwaiti',
+            'Kyrgyz'                    => 'Kyrgyz',
+            'Laotian'                   => 'Laotian',
+            'Latvian'                   => 'Latvian',
+            'Lebanese'                  => 'Lebanese',
+            'Liberian'                  => 'Liberian',
+            'Libyan'                    => 'Libyan',
+            'Liechtensteiner'           => 'Liechtensteiner',
+            'Lithuanian'                => 'Lithuanian',
+            'Luxembourger'              => 'Luxembourger',
+            'Macedonian'                => 'Macedonian',
+            'Malagasy'                  => 'Malagasy',
+            'Malawian'                  => 'Malawian',
+            'Malaysian'                 => 'Malaysian',
+            'Maldivan'                  => 'Maldivan',
+            'Malian'                    => 'Malian',
+            'Maltese'                   => 'Maltese',
+            'Marshallese'               => 'Marshallese',
+            'Mauritanian'               => 'Mauritanian',
+            'Mauritian'                 => 'Mauritian',
+            'Mexican'                   => 'Mexican',
+            'Micronesian'               => 'Micronesian',
+            'Moldovan'                  => 'Moldovan',
+            'Monacan'                   => 'Monacan',
+            'Mongolian'                 => 'Mongolian',
+            'Moroccan'                  => 'Moroccan',
+            'Mosotho'                   => 'Mosotho',
+            'Motswana'                  => 'Motswana',
+            'Mozambican'                => 'Mozambican',
+            'Namibian'                  => 'Namibian',
+            'Nauruan'                   => 'Nauruan',
+            'Nepalese'                  => 'Nepalese',
+            'Netherlander'              => 'Netherlander',
+            'New Zealander'             => 'New Zealander',
+            'Ni-Vanuatu'                => 'Ni-Vanuatu',
+            'Nicaraguan'                => 'Nicaraguan',
+            'Nigerian'                  => 'Nigerian',
+            'Nigerien'                  => 'Nigerien',
+            'North Korean'              => 'North Korean',
+            'Northern Irish'            => 'Northern Irish',
+            'Norwegian'                 => 'Norwegian',
+            'Omani'                     => 'Omani',
+            'Pakistani'                 => 'Pakistani',
+            'Palauan'                   => 'Palauan',
+            'Panamanian'                => 'Panamanian',
+            'Papua New Guinean'         => 'Papua New Guinean',
+            'Paraguayan'                => 'Paraguayan',
+            'Peruvian'                  => 'Peruvian',
+            'Polish'                    => 'Polish',
+            'Portuguese'                => 'Portuguese',
+            'Qatari'                    => 'Qatari',
+            'Romanian'                  => 'Romanian',
+            'Russian'                   => 'Russian',
+            'Rwandan'                   => 'Rwandan',
+            'Saint Lucian'              => 'Saint Lucian',
+            'Salvadoran'                => 'Salvadoran',
+            'Samoan'                    => 'Samoan',
+            'San Marinese'              => 'San Marinese',
+            'Sao Tomean'                => 'Sao Tomean',
+            'Saudi'                     => 'Saudi',
+            'Scottish'                  => 'Scottish',
+            'Senegalese'                => 'Senegalese',
+            'Serbian'                   => 'Serbian',
+            'Seychellois'               => 'Seychellois',
+            'Sierra Leonean'            => 'Sierra Leonean',
+            'Singaporean'               => 'Singaporean',
+            'Slovakian'                 => 'Slovakian',
+            'Slovenian'                 => 'Slovenian',
+            'Solomon Islander'          => 'Solomon Islander',
+            'Somali'                    => 'Somali',
+            'South African'             => 'South African',
+            'South Korean'              => 'South Korean',
+            'Spanish'                   => 'Spanish',
+            'Sri Lankan'                => 'Sri Lankan',
+            'Sudanese'                  => 'Sudanese',
+            'Surinamer'                 => 'Surinamer',
+            'Swazi'                     => 'Swazi',
+            'Swedish'                   => 'Swedish',
+            'Swiss'                     => 'Swiss',
+            'Syrian'                    => 'Syrian',
+            'Taiwanese'                 => 'Taiwanese',
+            'Tajik'                     => 'Tajik',
+            'Tanzanian'                 => 'Tanzanian',
+            'Thai'                      => 'Thai',
+            'Togolese'                  => 'Togolese',
+            'Tongan'                    => 'Tongan',
+            'Trinidadian or Tobagonian' => 'Trinidadian or Tobagonian',
+            'Tunisian'                  => 'Tunisian',
+            'Turkish'                   => 'Turkish',
+            'Tuvaluan'                  => 'Tuvaluan',
+            'Ugandan'                   => 'Ugandan',
+            'Ukrainian'                 => 'Ukrainian',
+            'Uruguayan'                 => 'Uruguayan',
+            'Uzbekistani'               => 'Uzbekistani',
+            'Venezuelan'                => 'Venezuelan',
+            'Vietnamese'                => 'Vietnamese',
+            'Welsh'                     => 'Welsh',
+            'Yemenite'                  => 'Yemenite',
+            'Zambian'                   => 'Zambian',
+            'Zimbabwean'                => 'Zimbabwean'
+        ];
         $this->BreadCrumbName = 'Profile';
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         if ($user->hasRole('showroom-owner')) {
             return view('admin.showroom.profile')->with([
-                'user'    => $user,
-                'regions' => $regions,
-                'gender'  => UserDetail::$GENDER
+                'user'          => $user,
+                'regions'       => $regions,
+                'nationalities' => $nationalities,
+                'gender'        => UserDetail::$GENDER
             ]);
         }
         return view('admin.users.edit')->with([

@@ -99,7 +99,7 @@ $(window).on("load", function () {
 
 $(document).ready(function () {
     //refreshData();
-    var old_count;
+    /*var old_count;
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -118,5 +118,5 @@ $(document).ready(function () {
                 $(".badge").html('');
             }
         }
-    });
+    });*/
 });

@@ -119,7 +119,7 @@
 
             <!-- Address Field -->
             <dt>{!! Form::label('address', 'Address:') !!}</dt>
-            <dd>{!! $myCar['owner']['details']['address'] ?? 'N/A' !!}</dd>
+            <dd>{!! $myCar['owner']['showroomDetails']['address'] ?? 'N/A' !!}</dd>
         </div>
         <div class="col-md-8">
         {{--<dt>{!! Form::label('country_code', 'Country Code:') !!}</dt>--}}
@@ -193,21 +193,23 @@
             <dd>
                 @if($myCar->myCarAttributes->count() > 0)
                     @foreach($myCar->myCarAttributes as $attribute)
-                        <ul>
-                            @if($attribute->carAttribute->type == \App\Models\CarAttribute::TEXT || $attribute->carAttribute->type == \App\Models\CarAttribute::NUMBER )
-                                <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
-                            @else
-                                <li>
-                                    {!! $attribute->carAttribute->name !!} :
-                                    @php
-                                        $options_array = \App\Models\AttributeOption::where('id', $attribute->value)->get();
-                                        foreach ($options_array as $opt) {
-                                            echo $opt['option_array']['name'];
-                                        }
-                                    @endphp
-                                </li>
-                            @endif
-                        </ul>
+                        @if($attribute->carAttribute->name !== 'Trim')
+                            <ul>
+                                @if($attribute->carAttribute->type == \App\Models\CarAttribute::TEXT || $attribute->carAttribute->type == \App\Models\CarAttribute::NUMBER )
+                                    <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
+                                @else
+                                    <li>
+                                        {!! $attribute->carAttribute->name !!} :
+                                        @php
+                                            $options_array = \App\Models\AttributeOption::where('id', $attribute->value)->get();
+                                            foreach ($options_array as $opt) {
+                                                echo $opt['option_array']['name'];
+                                            }
+                                        @endphp
+                                    </li>
+                                @endif
+                            </ul>
+                        @endif
                     @endforeach
                 @else
                     <ul>
@@ -353,17 +355,20 @@
             @foreach($myCar->dealers as $dealer)
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Showroom:') !!}</dt>
-                    <dd><img src="{{ $dealer->showroomDetails->logo_url }}" width="50"> {!! $dealer->showroomDetails->name !!}</dd>
+                    <dd><img src="{{ $dealer->showroomDetails->logo_url }}"
+                             width="50"> {!! $dealer->showroomDetails->name !!}</dd>
                 </div>
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Address:') !!}</dt>
-                    <dd>{!! $dealer->details->address !!}</dd>
+                    <dd>{!! $dealer->showroomDetails->address !!}</dd>
                 </div>
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Contact#:') !!}</dt>
                     <dd>{!! $dealer->showroomDetails->phone !!}</dd>
                 </div>
-                <div class="col-sm-12 clearfix"><hr></div>
+                <div class="col-sm-12 clearfix">
+                    <hr>
+                </div>
             @endforeach
         </div>
         <!-- /.box-body -->

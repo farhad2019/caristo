@@ -153,7 +153,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
 
         $rating = $this->request->get('rating', -1);
         $model = $model->when(($rating > 0), function ($query) use ($rating) {
-            return $query->where('average_rating', '>=', $rating);
+            return $query->where('average_rating', '>=', (int) $rating);
         });
 
         $sort_by_year = $this->request->get('sort_by_year', 0);
@@ -168,7 +168,9 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         $model = $model->when(($sort_by_year > 0), function ($query) {
             return $query->groupBy('year')->orderBy('year', 'ASC');
         });
-
+        /*var_dump($model->getBindings());
+        var_dump($model->toSql());
+        exit();*/
         $model = $model->where('status', MyCar::ACTIVE);
         //$model = $model->orderBy('amount', 'DESC');
 

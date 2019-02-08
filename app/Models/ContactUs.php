@@ -173,7 +173,7 @@ class ContactUs extends Model
      */
     public function carDetail()
     {
-        return $this->belongsTo(MyCar::class, 'car_id');
+        return $this->belongsTo(MyCar::class, 'car_id')->withTrashed();
     }
 
     /**

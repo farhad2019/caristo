@@ -67,13 +67,13 @@
                 <td class="abc">{{ $bankRequest['country_code']}} {{ $bankRequest['phone']}}</td>
 
                 {{--<td  class="abc">{!! $bankRequest['userDetail']['details']['first_name'] .' '.$bankRequest['userDetail']['details']['last_name'] !!}</td>--}}
-                @if($bankRequest->carDetail->deleted_at == null)
-                    <td class="abc"><a href="{{URL::to('/')}}/admin/cars/{{$bankRequest['carDetail']['id']}}">
-                            {!! ($bankRequest->carDetail->year .' '.$bankRequest->carDetail->carModel->name .' '.$bankRequest->carDetail->carModel->brand->name) !!} </a>
+                @if(@$bankRequest->carDetail->deleted_at == null)
+                    <td class="abc"><a href="{{URL::to('/')}}/admin/cars/{{@$bankRequest['carDetail']['id']}}">
+                            {!! (@$bankRequest->carDetail->year .' '.@$bankRequest->carDetail->carModel->name .' '.@$bankRequest->carDetail->carModel->brand->name) !!} </a>
                     </td>
                 @else
-                    <td class="abc"><a href="javascript:void(0)">
-                            {!! ($bankRequest->carDetail->year .' '.$bankRequest->carDetail->carModel->name .' '.$bankRequest->carDetail->carModel->brand->name) !!} </a>
+                    <td class="abc">
+                            {!! (@$bankRequest->carDetail->year .' '.@$bankRequest->carDetail->carModel->name .' '.@$bankRequest->carDetail->carModel->brand->name) !!}
                     </td>
                 @endif
                 <td class="abc">{!! $bankRequest->created_at->timezone(session('timezone')) !!} </td>

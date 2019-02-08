@@ -221,7 +221,12 @@
                             <option value="{{ $key }}" {{ ($key == $user->details->gender)  ? 'selected' : '' }}>{{ $value }}</option>
                         @endforeach
                     </select> <br> <br>
-                    <input type="text" name="nationality" placeholder="Nationality" value="{{ old('nationality')? old('nationality'): $user->details->nationality }}" required maxlength="15"> <br> <br>
+                    <select name="nationality" required>
+                        @foreach($nationalities as $key => $value)
+                            <option value="{{ $key }}" {{ ($key == $user->details->nationality)  ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                    </select>
+                     <br> <br>
                     {{--<img src="{{ $user->details->image_url }}" width="80">--}}
                     <textarea name="about" placeholder="About"
                               required>{{ old('about')? old('about')  : $user->details->about }}</textarea>

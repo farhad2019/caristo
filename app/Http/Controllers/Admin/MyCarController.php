@@ -552,7 +552,7 @@ class MyCarController extends AppBaseController
     {
         $user = Auth::user();
         if (!$user->hasRole('admin') && $request->status == MyCar::ACTIVE) {
-            if ($user->cars()->where('status', MyCar::ACTIVE)->count() >= $user->details->limit_for_cars) {
+            if ($user->cars()->where('status', MyCar::ACTIVE)->where('id', '!=', $id)->count() >= $user->details->limit_for_cars) {
                 return Redirect::back()->withErrors(['msg' => 'Your active cars have reached to the limit(' . $user->details->limit_for_cars . ').']);
             }
         }

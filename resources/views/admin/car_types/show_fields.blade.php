@@ -21,10 +21,10 @@
 
                         <div class="box-body">
                             <dt>{!! Form::label('name', __('Name').':') !!}</dt>
-                            <dd><img src="{{ $carType->un_selected_icon }}" width="35"> {!! $translation->name !!}</dd>
-
+                            <dd><a class='showGallerySingle' data-id='{{ $carType->id }}' data-toggle='modal' data-target='#imageGallerySingle'><img src="{{ $carType->un_selected_icon }}" width="35"> </a>{!! $translation->name !!}</dd>
+<br>
                             <dt>{!! Form::label('name', __('Parent').':') !!}</dt>
-                            <dd>{!! ($carType->parentCategory) ? "<span class='label label-success' style='word-break: break-all'>" . $carType->parentCategory->name . "</span>" : "<span class='label label-default' style='word-break: break-all'>None</span>" !!}</dd>
+                            <dd>{!! ($carType->parentType) ? "<span class='label label-success' style='word-break: break-all'>" . $carType->parentType->name . "</span>" : "<span class='label label-default' style='word-break: break-all'>None</span>" !!}</dd>
                         </div>
 
                         <div class="box-footer">

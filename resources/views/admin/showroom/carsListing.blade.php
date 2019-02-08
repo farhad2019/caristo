@@ -28,8 +28,10 @@
 
                 <ul class="car_listing">
                     @foreach($tradeInRequests as $tradeInRequest)
-                        <li style="position: relative" class="clearfix current car{{$tradeInRequest->id}} {{ $tradeInRequest->status == 20 ? 'active':'' }}">
-                            <span class="label label-info" style=" padding: 3px 10px;position: absolute;right: 0; background: #ccc; font-size: 13px;">{{ $tradeInRequest->type == 10 ? 'Trade In' : 'Evaluate' }}</span>
+                        <li style="position: relative"
+                            class="clearfix current car{{$tradeInRequest->id}} {{ $tradeInRequest->status == 20 ? 'active':'' }}">
+                            <span class="label label-info"
+                                  style=" padding: 3px 10px;position: absolute;right: 0; background: #ccc; font-size: 13px;">{{ $tradeInRequest->type == 10 ? 'Trade In' : 'Evaluate' }}</span>
                             <a href="#car_detail1" class="car" data-id="{{ $tradeInRequest->id }}" title="">
                                 @if(isset($tradeInRequest->tradeAgainst->media[0]))
                                     <figure style="background-image: url({{ $tradeInRequest->tradeAgainst->media[0]->file_url }});"></figure>
@@ -364,52 +366,59 @@
         </div>
     </div>
     {{-- Car details end--}}
-
+    <input type="hidden" id="current_car_id" value="">
 @endsection
 @push('scripts')
-    <script>
-        $(document).ready(function () {
-            $('body').on('click', '.car', function () {
-                var id = $(this).data('id');
+<script>
+    $(document).ready(function () {
+        $('body').on('click', '.car', function () {
+            var id = $(this).data('id');
+            var current_car_id = $('#current_car_id').val();
+            //$('#current_car_id').val(0);
+            if (parseInt(current_car_id) === parseInt(id)) {
+                return false;
+            } else {
+                $('#current_car_id').val(id);
+            }
 
-                // $('.active').toggleClass('clearfix current');
-                // $(this).toggleClass('clearfix current active');
+            // $('.active').toggleClass('clearfix current');
+            // $(this).toggleClass('clearfix current active');
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-                $.ajax({
-                    method: "GET",
-                    url: '{{ url('admin/tradeInCars') }}/' + id,
-                    {{--url: '{{ url('admin/makeBids/') }}/' + carId + '?tradId=' + tradeInId,--}}
-                    type: "JSON",
-                    async: false
-                }).done(function (responce) {
-                    $(".car" + id).removeClass("active");
-                    var unreadCount = $('.badge').html();
-                    if (unreadCount > 1) {
-                        $('.badge').html(unreadCount - 1);
-                    } else {
-                        $('.badge').html('');
-                    }
-                    $('.car_detail_wrap').html('');
-                    $('.bid_widget').html('');
-                    $('.car_detail_wrap').html(responce);
-                    /!* Car Slider *!/
-                    $('.car_slider_warap').slick({
-                        infinite: true,
-                        arrows: false,
-                        dots: true,
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        autoplay: true,
-                        autoplaySpeed: 2000
-                    });
+            $.ajax({
+                method: "GET",
+                url: '{{ url('admin/tradeInCars') }}/' + id,
+                {{--url: '{{ url('admin/makeBids/') }}/' + carId + '?tradId=' + tradeInId,--}}
+                type: "JSON",
+                async: false
+            }).done(function (responce) {
+                $(".car" + id).removeClass("active");
+                var unreadCount = $('.badge').html();
+                if (unreadCount > 1) {
+                    $('.badge').html(unreadCount - 1);
+                } else {
+                    $('.badge').html('');
+                }
+                $('.car_detail_wrap').html('');
+                $('.bid_widget').html('');
+                $('.car_detail_wrap').html(responce);
+                /!* Car Slider *!/
+                $('.car_slider_warap').slick({
+                    infinite: true,
+                    arrows: false,
+                    dots: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    autoplaySpeed: 2000
                 });
             });
         });
-    </script>
+    });
+</script>
 @endpush

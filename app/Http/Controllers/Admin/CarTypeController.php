@@ -57,7 +57,7 @@ class CarTypeController extends AppBaseController
     /**
      * Show the form for creating a new CarType.
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -118,7 +118,7 @@ class CarTypeController extends AppBaseController
      *
      * @param  int $id
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
@@ -127,11 +127,13 @@ class CarTypeController extends AppBaseController
             Flash::error('Segments not found');
             return redirect(route('admin.carTypes.index'));
         }
-
+        $root = $this->parent + $this->carTypeRepository->findWhere(['parent_id' => 0])->pluck('name', 'id')->toArray();
+        unset($root[$id]);
         $locales = $this->languageRepository->orderBy('updated_at', 'ASC')->findWhere(['status' => 1]);
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $carType);
         return view('admin.car_types.edit')->with([
             'carType' => $carType,
+            'root'    => $root,
             'locales' => $locales
         ]);
     }
@@ -146,7 +148,6 @@ class CarTypeController extends AppBaseController
      */
     public function update($id, UpdateCarTypeRequest $request)
     {
-
         $carType = $this->carTypeRepository->findWithoutFail($id);
         if (empty($carType)) {
             Flash::error('Segments not found');
