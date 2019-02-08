@@ -127,8 +127,7 @@
                         {!! Form::label('region_id', 'Region:') !!}
                         {!! Form::select('region_id', $regions, isset($user->details->region_id)? $user->details->region_id : null, ['class' => 'form-control select2']) !!}
                     </div>
-                @if($user->hasRole('showroom-owner'))
-                    
+
                     <!-- Status Field -->
                         <div class="form-group col-sm-6">
                             {!! Form::label('status', 'Status:') !!}
@@ -141,6 +140,7 @@
                             {!! Form::select('nationality', $nationalities, $user->details->nationality, ['class' => 'form-control select2']) !!}
                         </div>
 
+                @if($user->hasRole('showroom-owner'))
                         <!-- Dealer Type Field -->
                         <div class="form-group col-sm-6">
                             {!! Form::label('dealer_type', 'Dealer Type:') !!}
