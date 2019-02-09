@@ -32,7 +32,7 @@ class ReviewCriteria implements CriteriaInterface
             return $model->where('car_id', $car_id);
         });
 
-        $model = $model->orderBy('created_at', 'ASC');
+        $model = $model->orderBy('created_at', 'DESC');
         return $model;
     }
 }
