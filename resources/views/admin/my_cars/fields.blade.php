@@ -77,7 +77,7 @@
 </div>
 
 <!-- Engine Type Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-6 engine_type_id">
     {!! Form::label('engine_type_id', 'Engine Type:*') !!}
     {!! Form::select('engine_type_id', $engineType, isset($myCar)?$myCar->engine_type_id:null, ['class' => 'form-control select2']) !!}
 </div>
@@ -946,6 +946,9 @@
             $('.years_pre_owned').hide();
             $('.years_classic').hide();
             $('.years_luxury_new_car').show();
+
+            $('.transmission_type').hide();
+            $('.engine_type_id').hide();
         } else {
 
         }
@@ -1038,6 +1041,9 @@
                 $('.non-luxury').hide();
 
                 $('.category2528').hide();
+
+                $('.transmission_type').hide();
+                $('.engine_type_id').hide();
             } else {
 
             }

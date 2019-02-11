@@ -153,6 +153,7 @@ class CarTypeController extends AppBaseController
             Flash::error('Segments not found');
             return redirect(route('admin.carTypes.index'));
         }
+
         $carTypes = $this->carTypeRepository->updateRecord($request, $carType);
         $this->carTypeTranslationRepository->updateRecord($request, $carType);
 
@@ -180,10 +181,16 @@ class CarTypeController extends AppBaseController
             Flash::error('Segments not found');
             return redirect(route('admin.carTypes.index'));
         }
-
-        if ($carType->cars->count() > 0) {
-            Flash::error('This Segments belongs to car. Cannot be deleted');
-            return redirect(route('admin.carTypes.index'));
+        if ($carType->parent_id == 0){
+            if ($carType->childTypes->count() > 0) {
+                Flash::error('This Segments belongs to sub segment. Cannot be deleted');
+                return redirect(route('admin.carTypes.index'));
+            }
+        }else{
+            if ($carType->cars->count() > 0) {
+                Flash::error('This Segments belongs to car. Cannot be deleted');
+                return redirect(route('admin.carTypes.index'));
+            }
         }
 
         $this->carTypeRepository->delete($id);
