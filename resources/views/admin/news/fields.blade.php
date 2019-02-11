@@ -13,7 +13,7 @@
 <!-- Category Field -->
 <div class="form-group col-sm-12">
     {!! Form::label('description', 'Description:') !!}
-    {!! Form::textarea('description', null, ['class' => 'form-control textarea', 'style' => 'width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;']) !!}
+    {!! Form::textarea('description', null, ['class' => 'form-control textarea', 'id' => 'editor1', 'style' => 'width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;']) !!}
 </div>
 
 <!-- Source Field -->

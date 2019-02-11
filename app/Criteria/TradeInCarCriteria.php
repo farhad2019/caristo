@@ -32,8 +32,14 @@ class TradeInCarCriteria implements CriteriaInterface
                 return $evaluationDetails->orderBy('amount', 'DESC');
             });
         });*/
-        $model = $model->where(['user_id' => Auth::id(), 'type' => $type]);
+        $model = $model->whereHas('tradeAgainst', function ($tradeAgainst) {
+            return $tradeAgainst->where('owner_id', Auth::id());
+        });
+//        $model = $model->where(['user_id' => Auth::id(), 'type' => $type]);
         $model = $model->orderBy('created_at', 'desc');
+//        var_dump($model->toSql());
+//        var_dump($model->getBindings());
+//        exit();
         return $model;
     }
 }

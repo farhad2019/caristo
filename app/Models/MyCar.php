@@ -206,7 +206,7 @@ class MyCar extends Model
 
     public static $STATUS = [
         self::ACTIVE   => 'Active',
-        self::INACTIVE => 'In Active',
+        self::INACTIVE => 'Inactive',
         self::SOLD     => 'Sold'
     ];
 
@@ -350,6 +350,7 @@ class MyCar extends Model
         'id',
         'name',
         'email',
+        'category_id',
         'average_rating',
         'country_code',
         'version',

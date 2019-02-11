@@ -20,17 +20,17 @@
             <dt>{!! Form::label('model_id', 'Model :') !!}</dt>
             <dd>{!! isset($myCar->carModel->name) ? $myCar->carModel->brand->name.' '.$myCar->carModel->name : 'N/A' !!}</dd>
 
-            <!-- Version Field -->
+            {{--<!-- Version Field -->
             <dt>{!! Form::label('version', 'Version:') !!}</dt>
-            <dd>{!! isset($myCar->version)? $myCar->version : 'N/A' !!}</dd>
+            <dd>{!! isset($myCar->version)? $myCar->version : 'N/A' !!}</dd>--}}
 
             <!-- Year Field -->
             <dt>{!! Form::label('year', 'Year:') !!}</dt>
             <dd>{!! $myCar->year?? 'N/A' !!}</dd>
 
-            <!-- Year Field -->
+            {{--<!-- Year Field -->
             <dt>{!! Form::label('chassis', 'Chassis:') !!}</dt>
-            <dd>{!! $myCar->chassis?? 'N/A' !!}</dd>
+            <dd>{!! $myCar->chassis?? 'N/A' !!}</dd>--}}
 
             <!-- Status Field -->
             <dt>{!! Form::label('status', 'Status:') !!}</dt>
@@ -51,9 +51,9 @@
                 <dt>{!! Form::label('category_id', 'Category :') !!}</dt>
                 <dd>{!! isset($myCar->category_id) ? $myCar->category->name : 'N/A' !!}</dd>
 
-                <!-- Type Id Field -->
+                {{--<!-- Type Id Field -->
                 <dt>{!! Form::label('type_id', 'Segments:') !!}</dt>
-                <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : 'N/A' !!}</dd>
+                <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : 'N/A' !!}</dd>--}}
 
                 <!-- Transmission Type Field -->
                 <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
@@ -193,7 +193,7 @@
             <dd>
                 @if($myCar->myCarAttributes->count() > 0)
                     @foreach($myCar->myCarAttributes as $attribute)
-                        @if($attribute->carAttribute->name !== 'Trim')
+                        @if($attribute->carAttribute->name !== 'Trim' || $attribute->carAttribute->name !== 'Accident')
                             <ul>
                                 @if($attribute->carAttribute->type == \App\Models\CarAttribute::TEXT || $attribute->carAttribute->type == \App\Models\CarAttribute::NUMBER )
                                     <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>

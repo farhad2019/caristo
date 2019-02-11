@@ -278,7 +278,7 @@ class AuthAPIController extends AppBaseController
                     });
 
                 auth()->guard('api')->logout();
-                return $this->sendErrorWithData("Please verified Your Email", 200);
+                return $this->sendErrorWithData("Please verified Your Email", 300);
             } elseif ($user['status'] == 0) {
                 auth()->guard('api')->logout();
                 return $this->sendErrorWithData("User deactivated, contact admin.", 403);

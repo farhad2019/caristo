@@ -178,10 +178,10 @@ class News extends Model
     public static $rules = [
         'category_id'  => 'required',
         'headline'     => 'required',
-        'source'       => 'required|url',
-        'source_image' => 'required|image|mimes:jpg,jpeg,png,bmp|max:500',
-        //'image'        => 'required_without:video_url|image|mimes:jpg,jpeg,png,bmp|max:5000',
-        //'video_url'    => 'required_without:image|nullable|url',
+        'source'       => 'sometimes|nullable|url',
+        'source_image' => 'sometimes|nullable|image|mimes:jpg,jpeg,png,bmp|max:500',
+//        'image'        => 'required_without:video_url|image|mimes:jpg,jpeg,png,bmp|max:5000',
+//        'video_url'    => 'required_without:image|nullable|url',
         'is_featured'  => 'required'
     ];
 

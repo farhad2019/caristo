@@ -20,9 +20,13 @@ class ConsultancyRequestDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        /*$dataTable->addColumn('car_name', function (ConsultancyRequest $model) {
-            return "<a href='" . route('admin.cars.show', ['id' => $model->car_id]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->car_name . "</span></a>";
-        });*/
+        $dataTable->addColumn('car_name', function (ConsultancyRequest $model) {
+            if ($model->car_id) {
+                return "<a href='" . route('admin.cars.show', ['id' => $model->car_id]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . $model->car_name . "</span></a>";
+            } else {
+                return '-';
+            }
+        });
 
         $dataTable->editColumn('name', function (ConsultancyRequest $model) {
             return $model->name;
@@ -40,7 +44,7 @@ class ConsultancyRequestDataTable extends DataTable
             return '<span style="word-break: break-all">' . $model->message . '</span>';
         });
 
-        $dataTable->rawColumns(['message', 'action']);
+        $dataTable->rawColumns(['car_name', 'message', 'action']);
         return $dataTable->addColumn('action', 'admin.consultancy_requests.datatables_actions');
     }
 
@@ -52,7 +56,7 @@ class ConsultancyRequestDataTable extends DataTable
      */
     public function query(ConsultancyRequest $model)
     {
-        return $model->newQuery()->select('admin_queries.*')->where(['admin_queries.type' => ContactUs::CONSULTANCY]);
+        return $model->newQuery()->select('admin_queries.*', 'cars.name as car_name')->leftJoin('cars', "admin_queries.car_id", "=", "cars.id")->where(['admin_queries.type' => ContactUs::CONSULTANCY]);
     }
 
     /**
@@ -98,7 +102,7 @@ class ConsultancyRequestDataTable extends DataTable
             'message' => [
                 'title' => 'Description'
             ],
-//            'car_name'
+            'car_name'
         ];
     }
 

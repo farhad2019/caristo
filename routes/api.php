@@ -115,6 +115,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/tradeInCars', 'TradeInCarAPIController');
 
     Route::resource('v1/reviews', 'ReviewAPIController');
+
+    Route::resource('v1/categories', 'CategoryAPIController');
 });
 
 Route::resource('v1/contactus', 'ContactUsAPIController');
@@ -140,8 +142,6 @@ Route::resource('v1/settings', 'SettingAPIController');
 Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
 
 Route::get('v1/brandUsers', 'UserAPIController@brandUsers')->name('brandUsers');
-
-Route::resource('v1/categories', 'CategoryAPIController');
 
 Route::resource('v1/makeBids', 'MakeBidAPIController');
 

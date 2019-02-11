@@ -60,11 +60,10 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        event(new NewJobEvent(Auth::id()));
         $users = $this->userRepository->all()->count() - 2;
         $roles = $this->roleRepository->all()->count();
         $categories = $this->categoryRepository->all()->count();

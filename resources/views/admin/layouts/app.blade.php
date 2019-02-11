@@ -33,9 +33,6 @@
     <!-- Bootstrap Toggle Switch -->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
-    <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="{{ url('public/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
-
     {{--@yield('css')--}}
 
     <style>
@@ -315,8 +312,8 @@
 <!-- SweetAlert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!-- Bootstrap WYSIHTML5 -->
-<script src="{{ url('public/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+<!-- CK Editor -->
+<script src="{{ url('public/ckeditor/ckeditor.js') }}"></script>
 
 <!-- SweetAlert -->
 <script src="{{ url('public/vendor/live_url/jquery.liveurl.js') }}"></script>
@@ -330,8 +327,8 @@
 
 <script>
     $(function () {
-        //bootstrap WYSIHTML5 - text editor
-        $('.textarea').wysihtml5();
+        CKEDITOR.replace('editor1');
+        CKEDITOR.replace('editor2');
     });
 
     function confirmCancel(id) {
@@ -378,12 +375,12 @@
             broadcaster: 'socket.io',
             host: window.location.hostname + ':6001'
         });
-        window.Echo.channel('test-event')
-            .listen('ExampleEvent', (e) => {
-                //console.log(e);
-            });
+//        window.Echo.channel('test-event')
+//            .listen('ExampleEvent', (e) => {
+//                //console.log(e);
+//            });
 
-        window.Echo.private('job-{{Auth::user()->id}}')
+        window.Echo.channel('job-{{Auth::user()->id}}')
             .listen('NewJobEvent', (e) => {
                 console.log('sadsa dsad sa dsa dsd sads adsa');
                 console.log(e);

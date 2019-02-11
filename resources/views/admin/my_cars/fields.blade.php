@@ -56,11 +56,19 @@
     {!! Form::select('year', $years_outlet_mall, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
 
-<!---- Version ----->
-<div class="form-group col-sm-6">
-    {!! Form::label('version', 'Version:*') !!}
-    {!! Form::text('version', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Version', 'maxLength' => 17]) !!}
+<!-- Year Field -->
+<div class="form-group col-sm-6 years_luxury_new_car" style="display: none">
+    {!! Form::label('year', 'Year:*') !!}
+    {!! Form::select('year', $depreciation_trend_years, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
+
+@if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
+    <!---- Version ----->
+    <div class="form-group col-sm-6">
+        {!! Form::label('version', 'Version:*') !!}
+        {!! Form::text('version', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Version', 'maxLength' => 17]) !!}
+    </div>
+@endif
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6 transmission_type">
@@ -187,7 +195,7 @@
         @elseif($attribute->type == 20)
             <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
-                {!! Form::number('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'step' =>0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
+                {!! Form::number('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'step' => 0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
                 @if ($errors->has('attribute.'.$attribute->id))
                     <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('attribute.'.$attribute->id) }}</strong>
@@ -241,7 +249,7 @@
         @elseif($attribute->type == 20)
             <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
-                {!! Form::number('attribute['.$attribute->id.']', (int)$value, ['class' => 'form-control', 'step' =>0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
+                {!! Form::number('attribute['.$attribute->id.']', $value, ['class' => 'form-control', 'step' => 0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
                 @if ($errors->has('attribute.'.$attribute->id))
                     <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('attribute.'.$attribute->id) }}</strong>
@@ -355,7 +363,7 @@
     <div class="form-group col-sm-4 regions {{ $errors->has('weight_dist') ? ' has-error' : '' }}">
         {!! Form::checkbox('highlight_weight_dist', 1, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT DISTRIBUTION']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
         {!! Form::label('weight_dist', 'WEIGHT DISTRIBUTION:*') !!}
-        {!! Form::number('weight_dist',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT DISTRIBUTION']['value']:null, ['class' => 'form-control', 'placeholder' => 'WEIGHT DISTRIBUTION']) !!}
+        {!! Form::text('weight_dist',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT DISTRIBUTION']['value']:null, ['class' => 'form-control', 'placeholder' => 'WEIGHT DISTRIBUTION']) !!}
         @if ($errors->has('weight_dist'))
             <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('weight_dist') }}</strong>
@@ -463,7 +471,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('acceleration') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_acceleration', 1, isset($limited_edition_specs)? $limited_edition_specs['Performance']['ACCELERATION 0-100']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('ACCELERATION', 'ACCELERATION:*') !!}
-            {!! Form::number('acceleration',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['ACCELERATION 0-100']['value']:null, ['class' => 'form-control', 'placeholder' => 'ACCELERATION 0-100 Sec']) !!}
+            {!! Form::number('acceleration',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['ACCELERATION 0-100']['value']:null, ['class' => 'form-control', 'placeholder' => 'ACCELERATION 0-100 Sec', 'step' => 0.1]) !!}
             @if ($errors->has('acceleration'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('acceleration') }}</strong>
@@ -472,8 +480,8 @@
         </div>
         <div class="form-group col-sm-6 regions {{ $errors->has('hp_rpm') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_hp_rpm', 1, isset($limited_edition_specs)? $limited_edition_specs['Performance']['HP / RPM']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
-            {!! Form::label('RPM', 'HP / RPM:*') !!}
-            {!! Form::number('hp_rpm',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['HP / RPM']['value']:null, ['class' => 'form-control', 'placeholder' => 'HP / RPM']) !!}
+            {!! Form::label('RPM', 'Horsepower:*') !!}
+            {!! Form::text('hp_rpm',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['HP / RPM']['value']:null, ['class' => 'form-control', 'placeholder' => 'HP / RPM']) !!}
             @if ($errors->has('hp_rpm'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('hp_rpm') }}</strong>
@@ -500,7 +508,7 @@
         <div class="form-group col-sm-6 regions  {{ $errors->has('gearbox') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_gearbox', 1, isset($limited_edition_specs)? $limited_edition_specs['Transmission ']['GEARBOX']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('GEARBOX', 'GEARBOX:*') !!}
-            {!! Form::number('gearbox',  isset($limited_edition_specs)? $limited_edition_specs['Transmission ']['GEARBOX']['value']:null, ['class' => 'form-control', 'placeholder' => 'GEARBOX']) !!}
+            {!! Form::text('gearbox',  isset($limited_edition_specs)? $limited_edition_specs['Transmission ']['GEARBOX']['value']:null, ['class' => 'form-control', 'placeholder' => 'GEARBOX']) !!}
             @if ($errors->has('gearbox'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('gearbox') }}</strong>
@@ -579,7 +587,7 @@
         <div class="form-group col-sm-12 regions  {{ $errors->has('consumption') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_consumption', 1, isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('FUEL_CONSUMPTION', 'FUEL CONSUMPTION:*') !!}
-            {!! Form::number('consumption',  isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']['value']:null, ['class' => 'form-control', 'placeholder' => 'FUEL CONSUMPTION L/100KM']) !!}
+            {!! Form::text('consumption',  isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']['value']:null, ['class' => 'form-control', 'placeholder' => 'FUEL CONSUMPTION L/100KM']) !!}
             @if ($errors->has('consumption'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('consumption') }}</strong>
@@ -595,7 +603,7 @@
         <div class="form-group col-sm-12 regions  {{ $errors->has('emission') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_emission', 1, isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('Emission', 'Emission:*') !!}
-            {!! Form::text('emission',  isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']['value']:null, ['class' => 'form-control', 'placeholder' => 'Emission in gmCO2/KM', 'maxLength' => 55]) !!}
+            {!! Form::text('emission',  isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']['value']:null, ['class' => 'form-control', 'placeholder' => 'Emission in gmCO2/km', 'maxLength' => 55]) !!}
             @if ($errors->has('emission'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('emission') }}</strong>
@@ -612,7 +620,7 @@
         <div class="form-group col-sm-6 regions  {{ $errors->has('warranty') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_warranty', 1, isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['WARRANTY']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('WARRANTY', 'WARRANTY:*') !!}
-            {!! Form::number('warranty',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['WARRANTY']['value']:null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
+            {!! Form::text('warranty',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['WARRANTY']['value']:null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
             @if ($errors->has('warranty'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('warranty') }}</strong>
@@ -822,106 +830,223 @@
         $('.region').hide();
         $('.category2528').hide();
 
-        if (parseInt(id) == 25) {
+        /*if (parseInt(id) === 25) {
+         $('.years_outlet_mall').show();
+         $('.years_pre_owned').hide();
+         $('.years_classic').hide();
+         }
+         if (parseInt(id) === 26) {
+         $('.years_outlet_mall').hide();
+         $('.years_pre_owned').show();
+         $('.years_classic').hide();
+         }
+         if (parseInt(id) === 27) {
+         $('.years_outlet_mall').hide();
+         $('.years_pre_owned').hide();
+         $('.years_classic').show();
+         }
+
+         if (parseInt(id) === 25 || parseInt(id) === 26 || parseInt(id) === 27) {
+         $('.cartype').hide();
+         $('.chassis').hide();
+         $('.Trim').hide();
+         $('.Accident').hide();
+         $('.transmission_type').hide();
+
+         } else {
+         $('.cartype').show();
+         $('.chassis').hide();
+         $('.Trim').show();
+         $('.Accident').show();
+         $('.transmission_type').show();
+         }
+
+         if (parseInt(id) === 28) {
+         $('.regions').show();
+         $('.cartype').show();
+         //                $('.region').hide();
+         $('.non-luxury').hide();
+         } else {
+         $('.regions').hide();
+         $('.cartype').hide();
+         //   $('.non-luxury').show();
+         //                $('.region').show();
+         }
+
+         if (parseInt(id) === 25) {
+         $('.category2528').hide();
+         } else if (parseInt(id) === 26 || parseInt(id) === 27) {
+         $('.category2528').show();
+         }*/
+
+        if (parseInt(id) === 25) {
             $('.years_outlet_mall').show();
             $('.years_pre_owned').hide();
             $('.years_classic').hide();
-        }
-        if (parseInt(id) == 26) {
-            $('.years_outlet_mall').hide();
-            $('.years_pre_owned').show();
-            $('.years_classic').hide();
-        }
-        if (parseInt(id) == 27) {
-            $('.years_outlet_mall').hide();
-            $('.years_pre_owned').hide();
-            $('.years_classic').show();
-        }
 
-        if (parseInt(id) == 25 || parseInt(id) == 26 || parseInt(id) == 27) {
             $('.cartype').hide();
             $('.chassis').hide();
             $('.Trim').hide();
             $('.Accident').hide();
             $('.transmission_type').hide();
 
-        } else {
+            $('.regions').hide();
+            $('.cartype').hide();
+            //   $('.non-luxury').show();
+//                $('.region').show();
+
+            $('.category2528').hide();
+        } else if (parseInt(id) === 26) {
+            $('.years_outlet_mall').hide();
+            $('.years_pre_owned').show();
+            $('.years_classic').hide();
+
+            $('.cartype').hide();
+            $('.chassis').hide();
+            $('.Trim').hide();
+            $('.Accident').hide();
+            $('.transmission_type').hide();
+
+            $('.regions').hide();
+            $('.cartype').hide();
+            //   $('.non-luxury').show();
+//                $('.region').show();
+
+            $('.category2528').show();
+        } else if (parseInt(id) === 27) {
+            $('.years_outlet_mall').hide();
+            $('.years_pre_owned').hide();
+            $('.years_classic').show();
+
+            $('.cartype').hide();
+            $('.chassis').hide();
+            $('.Trim').hide();
+            $('.Accident').hide();
+            $('.transmission_type').hide();
+
+            $('.regions').hide();
+            $('.cartype').hide();
+            //   $('.non-luxury').show();
+//                $('.region').show();
+
+            $('.category2528').show();
+        } else if (parseInt(id) === 28) {
             $('.cartype').show();
             $('.chassis').hide();
             $('.Trim').show();
             $('.Accident').show();
             $('.transmission_type').show();
-        }
 
-        if (parseInt(id) == 28) {
             $('.regions').show();
             $('.cartype').show();
 //                $('.region').hide();
             $('.non-luxury').hide();
-        } else {
-            $('.regions').hide();
-            $('.cartype').hide();
-            //   $('.non-luxury').show();
-//                $('.region').show();
-        }
 
-        if (parseInt(id) === 25) {
-            $('.category2528').hide();
-        } else if (parseInt(id) === 26 || parseInt(id) === 27) {
-            $('.category2528').show();
+            $('.years_outlet_mall').hide();
+            $('.years_pre_owned').hide();
+            $('.years_classic').hide();
+            $('.years_luxury_new_car').show();
+        } else {
+
         }
 
         $('#category_id').on('change', function () {
             var cat_id = $(this).val();
 
-            if (id == 25 || id == 26 || id == 27) {
+            /*if (id == 25 || id == 26 || id == 27) {
+             $('.cartype').hide();
+             $('.chassis').hide();
+             $('.Trim').hide();
+             $('.Accident').hide();
+             $('.transmission_type').hide();
+
+             } else {
+             $('.cartype').show();
+             $('.chassis').show();
+             $('.Trim').show();
+             $('.Accident').show();
+             $('.transmission_type').show();
+             }
+
+             if (parseInt(cat_id) == 28) {
+             $('.regions').show();
+             //                    $('.region').hide();
+             $('.cartype').show();
+             $('.non-luxury').hide();
+             } else {
+             $('.regions').hide();
+             $('.cartype').hide();
+             //                $('.non-luxury').show();
+             //                $('.region').show();
+             }*/
+
+            if (parseInt(cat_id) === 25) {
+                $('.years_outlet_mall').show();
+                $('.years_pre_owned').hide();
+                $('.years_classic').hide();
+
                 $('.cartype').hide();
                 $('.chassis').hide();
                 $('.Trim').hide();
                 $('.Accident').hide();
                 $('.transmission_type').hide();
 
-            } else {
-                $('.cartype').show();
-                $('.chassis').show();
-                $('.Trim').show();
-                $('.Accident').show();
-                $('.transmission_type').show();
-            }
-
-            if (parseInt(cat_id) == 28) {
-                $('.regions').show();
-//                    $('.region').hide();
-                $('.cartype').show();
-                $('.non-luxury').hide();
-            } else {
                 $('.regions').hide();
                 $('.cartype').hide();
 //                $('.non-luxury').show();
 //                $('.region').show();
-            }
 
-            if (parseInt(cat_id) == 25) {
-                $('.years_outlet_mall').show();
-                $('.years_pre_owned').hide();
-                $('.years_classic').hide();
-            }
-            if (parseInt(cat_id) == 26) {
+                $('.category2528').hide();
+            } else if (parseInt(cat_id) === 26) {
                 $('.years_outlet_mall').hide();
                 $('.years_pre_owned').show();
                 $('.years_classic').hide();
-            }
-            if (parseInt(cat_id) == 27) {
+
+                $('.cartype').hide();
+                $('.chassis').hide();
+                $('.Trim').hide();
+                $('.Accident').hide();
+                $('.transmission_type').hide();
+
+                $('.regions').hide();
+                $('.cartype').hide();
+//                $('.non-luxury').show();
+//                $('.region').show();
+
+                $('.category2528').show();
+            } else if (parseInt(cat_id) === 27) {
                 $('.years_outlet_mall').hide();
                 $('.years_pre_owned').hide();
                 $('.years_classic').show();
+
+                $('.cartype').hide();
+                $('.chassis').hide();
+                $('.Trim').hide();
+                $('.Accident').hide();
+                $('.transmission_type').hide();
+
+                $('.regions').hide();
+                $('.cartype').hide();
+//                $('.non-luxury').show();
+//                $('.region').show();
+
+                $('.category2528').show();
+            } else if (parseInt(cat_id) === 28) {
+                $('.regions').show();
+//                    $('.region').hide();
+                $('.cartype').show();
+                $('.non-luxury').hide();
+
+                $('.category2528').hide();
+            } else {
+
             }
 
-            if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
-                $('.category2528').hide();
-            } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
-                $('.category2528').show();
-            }
+            /*if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
+             $('.category2528').hide();
+             } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
+             $('.category2528').show();
+             }*/
         });
     });
 </script>

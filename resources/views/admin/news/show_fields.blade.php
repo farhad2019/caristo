@@ -16,13 +16,15 @@
 
 <!-- Headline Field -->
 <dt>{!! Form::label('source', 'Source:') !!}</dt>
-<dd>{!! $news->source !!}</dd>
+<dd>{!! $news->source?? 'N/A' !!}</dd>
 
 <!-- Headline Field -->
 <dt>{!! Form::label('source_image', 'Source Image:') !!}</dt>
 <dd>
     @if($news->source_image)
         <img src="{{$news->sourceImageUrl}}" alt="Image not found" width="150" style="padding-top: 10px">
+    @else
+        N/A
     @endif
 </dd>
 <br>
@@ -55,8 +57,9 @@
         <dt>{!! Form::label('image', 'Image:') !!}</dt>
         <dd>
             @foreach($news->media as $media)
-                <a class='showGallerySingle' data-id='{{ $media->id }}' data-toggle='modal' data-target='#imageGallerySingle'>
-                <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
+                <a class='showGallerySingle' data-id='{{ $media->id }}' data-toggle='modal'
+                   data-target='#imageGallerySingle'>
+                    <img src="{{$media->fileUrl}}" alt="{{$media->title}}" width="150">
                 </a>
             @endforeach
         </dd>
@@ -68,8 +71,9 @@
                 $aa = explode('?v=', $news->media[0]->fileUrl);
                 $bb = @$aa[1];
             @endphp
-            <a href="{{$news->media[0]->fileUrl}}" target='_blank'><img src='https://img.youtube.com/vi/{{$bb}}/0.jpg'
-                                                                         width='150'/></a>;
+            <a href="{{$news->media[0]->fileUrl}}" target='_blank'><img
+                        src='https://img.youtube.com/vi/{{$bb}}/0.jpg'
+                        width='150'/></a>;
         </dd>
     @endif
 @endif
@@ -81,7 +85,8 @@
         @foreach($news->comments as $row)
             <div class="box-comment">
                 <!-- User image -->
-                <img class="img-circle img-sm" src="{{$row->userwithtrash->detailswithtrash->image_url}}" alt="User Image">
+                <img class="img-circle img-sm" src="{{$row->userwithtrash->detailswithtrash->image_url}}"
+                     alt="User Image">
                 <div class="comment-text">
                       <span class="username">
                         {{$row->userwithtrash->detailswithtrash->first_name.' '.$row->userwithtrash->detailswithtrash->last_name}}

@@ -96,9 +96,9 @@ class TradeInCar extends Model
      * @var array
      */
     protected $casts = [
-        'amount' => 'float',
+        'amount'       => 'float',
         'bid_close_at' => 'Datetime',
-        'notes' => 'string'
+        'notes'        => 'string'
     ];
 
     /**
@@ -107,6 +107,7 @@ class TradeInCar extends Model
      * @var array
      */
     protected $with = [
+        'dealerInfo',
         'evaluationDetails',
         'myCar',
         'tradeAgainst'
@@ -132,6 +133,7 @@ class TradeInCar extends Model
         'notes',
         'type',
 //        'evaluationDetails',
+        'dealerInfo',
         'bid_close_at',
         'tradeAgainst'
     ];
@@ -142,11 +144,11 @@ class TradeInCar extends Model
      * @var array
      */
     public static $rules = [
-        'owner_car_id' => 'required',
+        'owner_car_id'    => 'required',
         'customer_car_id' => 'required',
-        'user_id' => 'required',
-        'amount' => 'required',
-        'notes' => 'required'
+        'user_id'         => 'required',
+        'amount'          => 'required',
+        'notes'           => 'required'
     ];
 
     /**
@@ -189,5 +191,10 @@ class TradeInCar extends Model
     public function evaluationDetails()
     {
         return $this->hasMany(CarEvaluationBid::class, 'evaluation_id')->orderBy('amount', 'DESC');
+    }
+
+    public function dealerInfo()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

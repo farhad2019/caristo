@@ -133,7 +133,8 @@ class NotificationsHelper
                     'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
                     'sound' => 'default',
                     //'sound' => 'default',
-                    'ref' => $extraPayLoadData['ref_id']
+                    'ref' => $extraPayLoadData['ref_id'],
+                    'type' => $extraPayLoadData['type']
                     /*'extra_payload'  => [
                         'extra_payload' => $extraPayLoadData,
                         $extraPayLoadData,
@@ -144,7 +145,8 @@ class NotificationsHelper
                     'badge' => Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count(),
                     'sound' => 'default',
                     //'sound' => 'default',
-                    'ref' => $extraPayLoadData['ref_id']
+                    'ref' => $extraPayLoadData['ref_id'],
+                    'type' => $extraPayLoadData['type']
                     /*'extra_payload'  => [
                         'extra_payload' => $extraPayLoadData,
                         $extraPayLoadData,

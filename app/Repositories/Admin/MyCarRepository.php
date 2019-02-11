@@ -179,7 +179,7 @@ class MyCarRepository extends BaseRepository
 
             $input['model_id'] = $request->model_id;
             $input['chassis'] = $request->chassis;
-            $input['year'] = $request->year;
+            $input['year'] = date('Y');
             $input['price'] = $request->price;
             $input['version'] = $request->version;
             $input['regional_specification_id'] = $request->regional_specification_id;
@@ -255,13 +255,13 @@ class MyCarRepository extends BaseRepository
 
             $input['currency'] = @Auth::user()->details->regionDetail->currency ?? 'AED';
             $myCar = $this->create($input);
-            $region = intval($request->region);
-            if ($region) {
-                $regions = [];
-                $regions['region_id'] = $region;
-                $regions['car_id'] = $myCar->id;
-                CarRegion::create($regions);
-            }
+//            $region = intval($request->region);
+//            if ($region) {
+//                $regions = [];
+//                $regions['region_id'] = Auth::user()->details->region_id;
+//                $regions['car_id'] = $myCar->id;
+                CarRegion::create(['region_id' => Auth::user()->details->region_id, 'car_id' => $myCar->id]);
+//            }
 
         }
         // Media Data

@@ -7,6 +7,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Api\CreateCategoryAPIRequest;
 use App\Http\Requests\Api\UpdateCategoryAPIRequest;
 use App\Models\Category;
+use App\Models\NotificationUser;
 use App\Repositories\Admin\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -105,7 +106,8 @@ class CategoryAPIController extends AppBaseController
         $this->categoryRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->categoryRepository->pushCriteria(new CategoryCriteria($request));
         $categories = $this->categoryRepository->all()->makeVisible('unread_count');
-
+//        $notifications = \Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->count();
+//        return $this->sendResponse(array_merge($categories->toArray(), ['unread_count' => $notifications]), 'Categories retrieved successfully');
         return $this->sendResponse($categories->toArray(), 'Categories retrieved successfully');
     }
 

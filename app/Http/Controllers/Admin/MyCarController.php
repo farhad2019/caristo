@@ -278,7 +278,7 @@ class MyCarController extends AppBaseController
                   '2028' => "2028",
                   '2029' => "2029",
                   '2030' => "2030"];
-        $years_classic = $years_pre_owned = $years_outlet_mall = [];
+        $years_classic = $years_pre_owned = $years_outlet_mall = $years_luxury_new_car = [];
 
         for ($a = 1901; $a <= now()->format('Y'); $a++) {
             if ($a <= 2010)

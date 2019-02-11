@@ -23,6 +23,18 @@ class UpdateShowroomProfileRequest extends BaseFormRequest
      *
      * @return array
      */
+    public function messages()
+    {
+        return [
+            'showroom_media.dimensions' => 'Media shouldn\'t exceed dimension of 192 x 192'
+        ];
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
     public function rules()
     {
         return User::$updateShowroomProfileRules;

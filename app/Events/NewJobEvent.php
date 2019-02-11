@@ -36,7 +36,7 @@ class NewJobEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('job-' . $this->userID);
+        return new Channel('job-' . $this->userID);
     }
 
     /**
@@ -46,7 +46,7 @@ class NewJobEvent implements ShouldBroadcast
     {
         return [
             'data' => [
-                'job' => 'Hello jani',
+                'job' => 'Hello',
 //                'job'          => $this->job,
 //                'notification' => $this->notification,
 //                'url'  => Url::route('view-job'),

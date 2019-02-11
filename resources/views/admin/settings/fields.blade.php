@@ -164,13 +164,13 @@
                         <!-- Content For Ask For Consultancy Field -->
                             <div class="form-group col-sm-6">
                                 {!! Form::label('ask_for_consultancy', 'Content For Ask For Consultancy:') !!}
-                                {!! Form::textarea('ask_for_consultancy['.$locale->code.']', $setting->translate($locale->code)['ask_for_consultancy'], ['class' => 'form-control', 'style'=>'direction:'.$locale->direction]) !!}
+                                {!! Form::textarea('ask_for_consultancy['.$locale->code.']', $setting->translate($locale->code)['ask_for_consultancy'], ['class' => 'form-control textarea', 'id' => 'editor1', 'style'=>'direction:'.$locale->direction]) !!}
                             </div>
 
                             <!-- Content For Personal Shopper Field -->
                             <div class="form-group col-sm-6">
                                 {!! Form::label('personal_shopper', 'Content For Personal Shopper:') !!}
-                                {!! Form::textarea('personal_shopper['.$locale->code.']', $setting->translate($locale->code)['ask_for_consultancy'], ['class' => 'form-control', 'style'=>'direction:'.$locale->direction]) !!}
+                                {!! Form::textarea('personal_shopper['.$locale->code.']', $setting->translate($locale->code)['personal_shopper'], ['class' => 'form-control textarea', 'id' => 'editor2', 'style'=>'direction:'.$locale->direction]) !!}
                             </div>
                             {{--<!-- Street Field -->
                             <div class="form-group col-sm-6">

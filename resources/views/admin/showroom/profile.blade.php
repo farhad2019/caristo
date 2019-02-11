@@ -4,42 +4,42 @@
     @include('flash::message')
     @include('adminlte-templates::common.errors')
     @push('css')
-        <style>
-            .right_side {
-                width: 85%;
-            }
+    <style>
+        .right_side {
+            width: 85%;
+        }
 
-            .left_side {
-                width: 15%;
-            }
+        .left_side {
+            width: 15%;
+        }
 
-            .dash_tabs {
-                width: 100%;
-            }
+        .dash_tabs {
+            width: 100%;
+        }
 
-            .tab_serach {
-                margin: 0;
-            }
+        .tab_serach {
+            margin: 0;
+        }
 
-            .right_side {
-                background: #fff;
-            }
+        .right_side {
+            background: #fff;
+        }
 
-            .profile_right_side {
-                border-left: 1px solid #c6c6c6;
-            }
+        .profile_right_side {
+            border-left: 1px solid #c6c6c6;
+        }
 
-            textarea {
-                font-size: 13px;
-                border-bottom: 1px solid #d5d5d5;
-                border-top: none;
-                border-right: none;
-                border-left: none;
-                width: 100%;
-                Resize: none
-            }
+        textarea {
+            font-size: 13px;
+            border-bottom: 1px solid #d5d5d5;
+            border-top: none;
+            border-right: none;
+            border-left: none;
+            width: 100%;
+            Resize: none
+        }
 
-        </style>
+    </style>
     @endpush
 
     <div class="left_side profile_left_side">
@@ -104,48 +104,62 @@
 
         <div class="table-responsive car-dtl-table">
             <div class="car_detail clearfix tab_serach">
-            <h3>Quota/Country Details: </h3> <br>
-            <table class="table">
-                <tbody>
-                <tr>
-                    <th></th>
-                    <th>Total</th>
-                    <th>Availed</th>
-                    <th>Remaining</th>
-                </tr>
+                <h3>Quota/Country Details: </h3> <br>
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th></th>
+                        <th>Total Allowed</th>
+                        <th>Active</th>
+                        <th>Remaining</th>
+                        <th>Sold</th>
+                        <th>Inactive</th>
+                    </tr>
 
-                <tr>
-                    <td><strong>Car Limits</strong></td>
-                    <td>{{$user->details->limit_for_cars}}</td>
-                    <td>{{ $user->cars->count() }}</td>
-                    <td>{{$user->details->limit_for_cars - $user->cars->count()}}</td>
-                </tr>
-                <tr>
-                    <td><strong>Featured Car limit</strong></td>
-                    <td>{{$user->details->limit_for_featured_cars}}</td>
-                    <td>{{ $user->cars()->where('is_featured',1)->count()}}</td>
-                    <td>{{$user->details->limit_for_featured_cars - $user->cars()->where('is_featured',1)->count() }}</td>
-                </tr>
-                <tr>
-                    <td><strong>Account Expiry Date</strong></td>
-                    <td colspan="3">{{date('d-m-Y',strtotime($user->details->expiry_date))}}</td>
-                </tr>
-                <tr>
-                    <td><strong>Country</strong></td>
-                    <td colspan="3">{{@$user->details->regionDetail->name ?? 'N/A'}}</td>
-                </tr>
-                <tr>
-                    <td><strong>Currency</strong></td>
-                    <td colspan="3">{{@$user->details->regionDetail->currency ?? 'N/A'}}</td>
-                </tr>
+                    <tr>
+                        <td><strong>Car Limits</strong></td>
+                        <td>{!! $user->details->limit_for_cars !!}</td>
+                        <td>{!! $user->cars()->where('status', \App\Models\MyCar::ACTIVE)->count() !!}</td>
+                        <td>{{$user->details->limit_for_cars - $user->cars->where('status', \App\Models\MyCar::ACTIVE)->count()}}</td>
+                        <td>{!! $user->cars()->where('status', \App\Models\MyCar::SOLD)->count() !!}</td>
+                        <td>{!! $user->cars()->where('status', \App\Models\MyCar::INACTIVE)->count() !!}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Featured Car limit</strong></td>
+                        <td>{{$user->details->limit_for_featured_cars}}</td>
+                        <td>{{ $user->cars()->where('status', \App\Models\MyCar::ACTIVE)->where('is_featured',1)->count()}}</td>
+                        <td>{{$user->details->limit_for_featured_cars - $user->cars()->where('status', \App\Models\MyCar::ACTIVE)->where('is_featured',1)->count() }}</td>
+                        <td>{{ $user->cars()->where('status', \App\Models\MyCar::SOLD)->where('is_featured',1)->count()}}</td>
+                        <td>{{ $user->cars()->where('status', \App\Models\MyCar::INACTIVE)->where('is_featured',1)->count()}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Account Expiry Date</strong></td>
+                        <td colspan="3">{{date('d-m-Y',strtotime($user->details->expiry_date))}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Country</strong></td>
+                        <td colspan="3">{{@$user->details->regionDetail->name ?? 'N/A'}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Currency</strong></td>
+                        <td colspan="3">{{@$user->details->regionDetail->currency ?? 'N/A'}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
 
-                <tr>
-                    <td><strong>Account Type</strong></td>
-                    <td colspan="3">{{@$user->details->dealer_type_text ?? 'N/A'}}</td>
-                </tr>
-                </tbody>
-            </table>
-                </div>
+                    <tr>
+                        <td><strong>Account Type</strong></td>
+                        <td colspan="3">{{@$user->details->dealer_type_text ?? 'N/A'}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
 
@@ -197,8 +211,6 @@
         </div>--}}
 
 
-
-
         <div class="car_detail_wrap" id="car_detail1">
             <div class="car_detail clearfix tab_serach"
                  style="margin-top: 0px; margin-left: 0px; padding-top: 0px; padding-left: 15px;">
@@ -206,17 +218,21 @@
                 <input type="text" name="name" placeholder="Name" value="{{ old('name')? old('name'): $user->name }}"
                        required maxlength="25"> <br> <br>
                 <div class="left" style="width: 48%;">
-                    <input type="text" name="profession" placeholder="Profession" value="{{ old('profession')? old('profession'): $user->details->profession }}" required maxlength="15"> <br> <br>
+                    <input type="text" name="profession" placeholder="Profession"
+                           value="{{ old('profession')? old('profession'): $user->details->profession }}" required
+                           maxlength="15"> <br> <br>
                     {{--<textarea name="address" placeholder="Address"--}}
                     {{--required>{{ old('address')?old('address'): $user->details->address }}</textarea>--}}
-                    <input type="text" name="phone" placeholder="Phone" value="{{ $user->details->phone }}"  required maxlength="15">
+
                     {{--<input type="password" name="password" placeholder="Password"> <br> <br>--}}
                     {{--<label>Logo:</label>
                     <input type="file" name="showroom_media">--}} <br> <br>
-                    <input type="date" name="dob" value="{{ old('dob')? old('dob'): $user->details->dob }}" required>
+                    {{--<input type="date" name="dob" value="{{ old('dob')? old('dob'): $user->details->dob }}" required>--}}
                 </div>
                 <div class="right" style="width: 48%;">
-                    <select name="gender" required>
+                    <input type="text" name="phone" placeholder="Phone" value="{{ $user->details->phone }}" required
+                           maxlength="15">
+                    {{--<select name="gender" required>
                         @foreach($gender as $key => $value)
                             <option value="{{ $key }}" {{ ($key == $user->details->gender)  ? 'selected' : '' }}>{{ $value }}</option>
                         @endforeach
@@ -226,11 +242,10 @@
                             <option value="{{ $key }}" {{ ($key == $user->details->nationality)  ? 'selected' : '' }}>{{ $value }}</option>
                         @endforeach
                     </select>
-                     <br> <br>
-                    {{--<img src="{{ $user->details->image_url }}" width="80">--}}
+                    <br> <br>
+                    --}}{{--<img src="{{ $user->details->image_url }}" width="80">--}}{{--
                     <textarea name="about" placeholder="About"
-                              required>{{ old('about')? old('about')  : $user->details->about }}</textarea>
-                    <br>
+                              required>{{ old('about')? old('about')  : $user->details->about }}</textarea>--}}
                 </div>
             </div>
         </div>
@@ -250,8 +265,10 @@
                            required> <br> <br>
                     <input type="password" name="password" placeholder="Password"><br> <br>
 
-                    <label>Profile Image:</label>
-                    <input type="file" name="showroom_media"> <br> <br>
+                    <label>Profile Image:<span style="color:darkgray; font-size: 13px">
+                        * Media should be in 192 x 192 dimension
+                    </span></label>
+                    <input type="file" name="showroom_media" accept="image/x-png,image/gif,image/jpeg"><br> <br>
 
                     <button type="submit" class="submit" name=""
                             style="font-size: 14px; color: #fff; text-align: center; background: #1f1f1f; border-radius: 30px;  border: 1px solid transparent; text-transform: uppercase; margin: 15px 0 0; transition: all 0.2s; cursor: pointer; width: 25%; height: 40px;">
