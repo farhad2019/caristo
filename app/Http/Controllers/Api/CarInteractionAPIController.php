@@ -31,13 +31,13 @@ class CarInteractionAPIController extends AppBaseController
      * @return Response
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/carInteractions",
      *      summary="Get a listing of the CarInteractions.",
      *      tags={"CarInteraction"},
      *      description="Get all CarInteractions",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -45,35 +45,35 @@ class CarInteractionAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/CarInteraction")
+     *                  //@SWG\Items(ref="#/definitions/CarInteraction")
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -149,33 +149,33 @@ class CarInteractionAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/carInteractions/{id}",
      *      summary="Display the specified CarInteraction",
      *      tags={"CarInteraction"},
      *      description="Get CarInteraction",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of CarInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/CarInteraction"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -199,40 +199,40 @@ class CarInteractionAPIController extends AppBaseController
      * @param UpdateCarInteractionAPIRequest $request
      * @return Response
      *
-     * @SWG\Put(
+     * //@SWG\Put(
      *      path="/carInteractions/{id}",
      *      summary="Update the specified CarInteraction in storage",
      *      tags={"CarInteraction"},
      *      description="Update CarInteraction",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of CarInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="CarInteraction that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/CarInteraction")
+     *          //@SWG\Schema(ref="#/definitions/CarInteraction")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/CarInteraction"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -261,33 +261,33 @@ class CarInteractionAPIController extends AppBaseController
      * @return Response
      * @throws \Exception
      *
-     * @SWG\Delete(
+     * //@SWG\Delete(
      *      path="/carInteractions/{id}",
      *      summary="Remove the specified CarInteraction from storage",
      *      tags={"CarInteraction"},
      *      description="Delete CarInteraction",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of CarInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="string"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )

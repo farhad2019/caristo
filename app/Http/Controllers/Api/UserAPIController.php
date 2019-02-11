@@ -50,41 +50,41 @@ class UserAPIController extends AppBaseController
      * @return Response
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/users",
      *      summary="Get a listing of the Users.",
      *      tags={"User"},
      *      description="Get all Users",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/User")
+     *                  //@SWG\Items(ref="#/definitions/User")
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -105,33 +105,33 @@ class UserAPIController extends AppBaseController
      * @param CreateUserAPIRequest $request
      * @return Response
      *
-     * @SWG\Post(
+     * //@SWG\Post(
      *      path="/users",
      *      summary="Store a newly created Customer in storage",
      *      tags={"User"},
      *      description="Store User",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="User that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/User")
+     *          //@SWG\Schema(ref="#/definitions/User")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/User"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -152,19 +152,20 @@ class UserAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/users/{id}",
      *      summary="Display the specified User",
      *      tags={"User"},
      *      description="Get User",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of User",
      *          type="integer",
      *          required=true,
      *          in="path"
-     *      ), @SWG\Parameter(
+     *      ),
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -172,20 +173,20 @@ class UserAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/User"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -210,13 +211,13 @@ class UserAPIController extends AppBaseController
      * @param UpdateUserAPIRequest $request
      * @return Response
      *
-     * @SWG\Put(
+     * //@SWG\Put(
      *      path="/users/{id}",
      *      summary="Update the specified User in storage",
      *      tags={"User"},
      *      description="Update User",
      *      produces={"application/json"},
-     *     @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -224,34 +225,34 @@ class UserAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of User",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="User that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/User")
+     *          //@SWG\Schema(ref="#/definitions/User")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/User"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -279,33 +280,33 @@ class UserAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
-     * @SWG\Delete(
+     * //@SWG\Delete(
      *      path="/users/{id}",
      *      summary="Remove the specified User from storage",
      *      tags={"User"},
      *      description="Delete User",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of User",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="string"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )

@@ -94,13 +94,13 @@ class ReportRequestAPIController extends AppBaseController
      * @param CreateReportRequestAPIRequest $request
      * @return Response
      *
-     * @SWG\Post(
+     * //@SWG\Post(
      *      path="/reportRequests",
      *      summary="Store a newly created ReportRequest in storage",
      *      tags={"ReportRequest"},
      *      description="Store ReportRequest",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -108,27 +108,27 @@ class ReportRequestAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="ReportRequest that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/ReportRequest")
+     *          //@SWG\Schema(ref="#/definitions/ReportRequest")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/ReportRequest"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )

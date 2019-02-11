@@ -32,13 +32,13 @@ class ConsultancyRequestAPIController extends AppBaseController
      * @return Response
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/consultancyRequests",
      *      summary="Get a listing of the ConsultancyRequests.",
      *      tags={"ConsultancyRequest"},
      *      description="Get all ConsultancyRequests",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -46,35 +46,35 @@ class ConsultancyRequestAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/ConsultancyRequest")
+     *                  //@SWG\Items(ref="#/definitions/ConsultancyRequest")
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -95,13 +95,13 @@ class ConsultancyRequestAPIController extends AppBaseController
      * @param CreateConsultancyRequestAPIRequest $request
      * @return Response
      *
-     * @SWG\Post(
+     * //@SWG\Post(
      *      path="/consultancyRequests",
      *      summary="Store a newly created ConsultancyRequest in storage",
      *      tags={"ConsultancyRequest"},
      *      description="Store ConsultancyRequest",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -109,27 +109,27 @@ class ConsultancyRequestAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="ConsultancyRequest that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/ConsultancyRequest")
+     *          //@SWG\Schema(ref="#/definitions/ConsultancyRequest")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/ConsultancyRequest"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -150,13 +150,13 @@ class ConsultancyRequestAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/consultancyRequests/{id}",
      *      summary="Display the specified ConsultancyRequest",
      *      tags={"ConsultancyRequest"},
      *      description="Get ConsultancyRequest",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -164,27 +164,27 @@ class ConsultancyRequestAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of ConsultancyRequest",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/ConsultancyRequest"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -209,13 +209,13 @@ class ConsultancyRequestAPIController extends AppBaseController
      * @param UpdateConsultancyRequestAPIRequest $request
      * @return Response
      *
-     * @SWG\Put(
+     * //@SWG\Put(
      *      path="/consultancyRequests/{id}",
      *      summary="Update the specified ConsultancyRequest in storage",
      *      tags={"ConsultancyRequest"},
      *      description="Update ConsultancyRequest",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -223,34 +223,34 @@ class ConsultancyRequestAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of ConsultancyRequest",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="ConsultancyRequest that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/ConsultancyRequest")
+     *          //@SWG\Schema(ref="#/definitions/ConsultancyRequest")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/ConsultancyRequest"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -279,13 +279,13 @@ class ConsultancyRequestAPIController extends AppBaseController
      * @return Response
      * @throws \Exception
      *
-     * @SWG\Delete(
+     * //@SWG\Delete(
      *      path="/consultancyRequests/{id}",
      *      summary="Remove the specified ConsultancyRequest from storage",
      *      tags={"ConsultancyRequest"},
      *      description="Delete ConsultancyRequest",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -293,27 +293,27 @@ class ConsultancyRequestAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of ConsultancyRequest",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="string"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )

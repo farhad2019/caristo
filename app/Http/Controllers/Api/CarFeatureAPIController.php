@@ -31,13 +31,13 @@ class CarFeatureAPIController extends AppBaseController
      * @return Response
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/carFeatures",
      *      summary="Get a listing of the CarFeatures.",
      *      tags={"CarFeature"},
      *      description="Get all CarFeatures",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -45,7 +45,7 @@ class CarFeatureAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="locale",
      *          description="Change the locale.",
      *          default="en",
@@ -53,35 +53,35 @@ class CarFeatureAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/CarFeature")
+     *                  //@SWG\Items(ref="#/definitions/CarFeature")
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -140,9 +140,7 @@ class CarFeatureAPIController extends AppBaseController
     public function store(CreateCarFeatureAPIRequest $request)
     {
         $input = $request->all();
-
         $carFeatures = $this->carFeatureRepository->create($input);
-
         return $this->sendResponse($carFeatures->toArray(), 'Car Feature saved successfully');
     }
 

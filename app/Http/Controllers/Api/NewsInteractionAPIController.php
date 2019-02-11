@@ -31,41 +31,41 @@ class NewsInteractionAPIController extends AppBaseController
      * @return Response
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/newsInteractions",
      *      summary="Get a listing of the NewsInteractions.",
      *      tags={"NewsInteraction"},
      *      description="Get all NewsInteractions",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *     @SWG\Parameter(
+     *     //@SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/NewsInteraction")
+     *                  //@SWG\Items(ref="#/definitions/NewsInteraction")
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -92,7 +92,7 @@ class NewsInteractionAPIController extends AppBaseController
      *      tags={"NewsInteraction"},
      *      description="Store NewsInteraction",
      *      produces={"application/json"},
-     *     @SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -141,33 +141,33 @@ class NewsInteractionAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
-     * @SWG\Get(
+     * //@SWG\Get(
      *      path="/newsInteractions/{id}",
      *      summary="Display the specified NewsInteraction",
      *      tags={"NewsInteraction"},
      *      description="Get NewsInteraction",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of NewsInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/NewsInteraction"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -191,40 +191,40 @@ class NewsInteractionAPIController extends AppBaseController
      * @param UpdateNewsInteractionAPIRequest $request
      * @return Response
      *
-     * @SWG\Put(
+     * //@SWG\Put(
      *      path="/newsInteractions/{id}",
      *      summary="Update the specified NewsInteraction in storage",
      *      tags={"NewsInteraction"},
      *      description="Update NewsInteraction",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of NewsInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="NewsInteraction that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/NewsInteraction")
+     *          //@SWG\Schema(ref="#/definitions/NewsInteraction")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/NewsInteraction"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -253,33 +253,33 @@ class NewsInteractionAPIController extends AppBaseController
      * @return Response
      * @throws \Exception
      *
-     * @SWG\Delete(
+     * //@SWG\Delete(
      *      path="/newsInteractions/{id}",
      *      summary="Remove the specified NewsInteraction from storage",
      *      tags={"NewsInteraction"},
      *      description="Delete NewsInteraction",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of NewsInteraction",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="string"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )

@@ -267,13 +267,13 @@ class TradeInCarAPIController extends AppBaseController
      * @param UpdateTradeInCarAPIRequest $request
      * @return Response
      *
-     * @SWG\Put(
+     * //@SWG\Put(
      *      path="/tradeInCars/{id}",
      *      summary="Update the specified TradeInCar in storage",
      *      tags={"TradeInCar"},
      *      description="Update TradeInCar",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -281,34 +281,34 @@ class TradeInCarAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of TradeInCar",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="TradeInCar that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/TradeInCar")
+     *          //@SWG\Schema(ref="#/definitions/TradeInCar")
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/TradeInCar"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -337,13 +337,13 @@ class TradeInCarAPIController extends AppBaseController
      * @return Response
      * @throws \Exception
      *
-     * @SWG\Delete(
+     * //@SWG\Delete(
      *      path="/tradeInCars/{id}",
      *      summary="Remove the specified TradeInCar from storage",
      *      tags={"TradeInCar"},
      *      description="Delete TradeInCar",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -351,27 +351,27 @@ class TradeInCarAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="id",
      *          description="id of TradeInCar",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      @SWG\Response(
+     *      //@SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          @SWG\Schema(
+     *          //@SWG\Schema(
      *              type="object",
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="data",
      *                  type="string"
      *              ),
-     *              @SWG\Property(
+     *              //@SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )

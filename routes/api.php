@@ -88,7 +88,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::get('v1/favorite-news', 'AuthAPIController@favoriteNewsIndex');
 
-//    Route::resource('v1/news', 'NewsAPIController');
+    Route::resource('v1/news', 'NewsAPIController');
 
     Route::resource('v1/comments', 'CommentAPIController');
 
@@ -117,6 +117,12 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/reviews', 'ReviewAPIController');
 
     Route::resource('v1/categories', 'CategoryAPIController');
+
+    Route::resource('v1/makeBids', 'MakeBidAPIController');
+
+    Route::resource('v1/consultancyRequests', 'ConsultancyRequestAPIController');
+
+    Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIController');
 });
 
 Route::resource('v1/contactus', 'ContactUsAPIController');
@@ -143,8 +149,6 @@ Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
 
 Route::get('v1/brandUsers', 'UserAPIController@brandUsers')->name('brandUsers');
 
-Route::resource('v1/makeBids', 'MakeBidAPIController');
-
 Route::resource('v1/carTypes', 'CarTypeAPIController');
 
 Route::resource('v1/carBrands', 'CarBrandAPIController');
@@ -153,10 +157,10 @@ Route::resource('v1/carModels', 'CarModelAPIController');
 
 Route::resource('v1/regions', 'RegionAPIController');
 
-Route::resource('v1/news', 'NewsAPIController');
-
-Route::resource('v1/consultancyRequests', 'ConsultancyRequestAPIController');
-
-Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIController');
-
 Route::get('v1/reviews', 'ReviewAPIController@index');
+
+Route::resource('v2/categories', 'CategoryAPIController');
+
+Route::resource('v2/news', 'NewsAPIController');
+
+Route::resource('v2/makeBids', 'MakeBidAPIController');

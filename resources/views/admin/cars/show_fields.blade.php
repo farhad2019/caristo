@@ -193,7 +193,7 @@
             <dd>
                 @if($myCar->myCarAttributes->count() > 0)
                     @foreach($myCar->myCarAttributes as $attribute)
-                        @if($attribute->carAttribute->name !== 'Trim' || $attribute->carAttribute->name !== 'Accident')
+                        @if($attribute->carAttribute->name !== 'Trim' && $attribute->carAttribute->name !== 'Accident')
                             <ul>
                                 @if($attribute->carAttribute->type == \App\Models\CarAttribute::TEXT || $attribute->carAttribute->type == \App\Models\CarAttribute::NUMBER )
                                     <li>{!! $attribute->carAttribute->name !!} : {!! $attribute->value !!}</li>
