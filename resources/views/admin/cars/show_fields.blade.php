@@ -355,8 +355,8 @@
             @foreach($myCar->dealers as $dealer)
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Showroom:') !!}</dt>
-                    <dd><img src="{{ $dealer->showroomDetails->logo_url }}"
-                             width="50"> {!! $dealer->showroomDetails->name !!}</dd>
+                    <dd><a href="{{ route('admin.users.show', $dealer->id) }}">
+                            {!! $dealer->showroomDetails->name !!}</a></dd>
                 </div>
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Address:') !!}</dt>

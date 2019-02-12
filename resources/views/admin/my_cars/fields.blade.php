@@ -337,8 +337,7 @@
     <div class="form-group col-sm-4 regions {{ $errors->has('length') ? ' has-error' : '' }}">
         {!! Form::checkbox('highlight_length', 1, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
         {!! Form::label('length', 'Length:*') !!}
-        {!! Form::number('length', isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']['value']:null, ['class' => 'form-control', 'placeholder' => 'Length in MM']) !!}
-
+        {!! Form::number('length', isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['LENGTH']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Length in MM']) !!}
         @if ($errors->has('length'))
             <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('length') }}</strong>
@@ -349,7 +348,7 @@
     <div class="form-group col-sm-4 regions {{ $errors->has('width') ? ' has-error' : '' }}">
         {!! Form::checkbox('highlight_width', 1, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WIDTH']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
         {!! Form::label('width', 'Width:*') !!}
-        {!! Form::number('width',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WIDTH']['value']:null, ['class' => 'form-control', 'placeholder' => 'Width in MM']) !!}
+        {!! Form::number('width',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WIDTH']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Width in MM']) !!}
         @if ($errors->has('width'))
             <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('width') }}</strong>
@@ -360,7 +359,7 @@
     <div class="form-group col-sm-4 regions {{ $errors->has('height') ? ' has-error' : '' }}">
         {!! Form::checkbox('highlight_height', 1, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['HEIGHT']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
         {!! Form::label('height', 'Height:*') !!}
-        {!! Form::number('height',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['HEIGHT']['value']:null, ['class' => 'form-control', 'placeholder' => 'Height in MM']) !!}
+        {!! Form::number('height',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['HEIGHT']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Height in MM']) !!}
         @if ($errors->has('height'))
             <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('height') }}</strong>
@@ -382,7 +381,7 @@
     <div class="form-group col-sm-4 regions" {{ $errors->has('trunk') ? ' has-error' : '' }}>
         {!! Form::checkbox('highlight_trunk', 1, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['TRUNK']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
         {!! Form::label('trunk', 'Trunk:*') !!}
-        {!! Form::number('trunk',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['TRUNK']['value']:null, ['class' => 'form-control', 'placeholder' => 'Trunk in Length']) !!}
+        {!! Form::number('trunk',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['TRUNK']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Trunk in Length']) !!}
         @if ($errors->has('trunk'))
             <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('trunk') }}</strong>
@@ -393,7 +392,7 @@
     <div class="form-group col-sm-4 regions {{ $errors->has('weight') ? ' has-error' : '' }}">
         {!! Form::checkbox('highlight_weight', 1, isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
         {!! Form::label('WEIGHT', 'WEIGHT:*') !!}
-        {!! Form::number('weight',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT']['value']:null, ['class' => 'form-control', 'placeholder' => 'Weight in KG']) !!}
+        {!! Form::number('weight',  isset($limited_edition_specs)? $limited_edition_specs['Dimensions_Weight']['WEIGHT']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Weight in KG']) !!}
         @if ($errors->has('weight'))
             <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('weight') }}</strong>
@@ -409,7 +408,7 @@
         <div class="form-group col-sm-12 regions {{ $errors->has('seats') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_seats', 1, isset($limited_edition_specs)? $limited_edition_specs['Seating_Capacity']['MAX.NO OF SEATS']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('seats', 'MAX.NO OF SEATS:*') !!}
-            {!! Form::number('seats', isset($limited_edition_specs)? $limited_edition_specs['Seating_Capacity']['MAX.NO OF SEATS']['value']:null, ['class' => 'form-control', 'placeholder' => 'MAX.NO OF SEATS']) !!}
+            {!! Form::number('seats', isset($limited_edition_specs)? $limited_edition_specs['Seating_Capacity']['MAX.NO OF SEATS']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'MAX.NO OF SEATS']) !!}
             @if ($errors->has('seats'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('seats') }}</strong>
@@ -442,7 +441,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('displacement') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_displacement', 1, isset($limited_edition_specs)? $limited_edition_specs['Engine']['DISPLACEMENT']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('DISPLACEMENT', 'DISPLACEMENT:*') !!}
-            {!! Form::number('displacement',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['DISPLACEMENT']['value']:null, ['class' => 'form-control', 'placeholder' => 'Displacement is CC']) !!}
+            {!! Form::number('displacement',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['DISPLACEMENT']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Displacement is CC']) !!}
             @if ($errors->has('displacement'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('displacement') }}</strong>
@@ -452,7 +451,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('cylinders') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_cylinders', 1, isset($limited_edition_specs)? $limited_edition_specs['Engine']['NO. OF CYLINDER']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('cylinders', 'NO. OF  cylinders:*') !!}
-            {!! Form::number('cylinders',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['NO. OF CYLINDER']['value']:null, ['class' => 'form-control', 'placeholder' => 'NO. OF  cylinders']) !!}
+            {!! Form::number('cylinders',  isset($limited_edition_specs)? $limited_edition_specs['Engine']['NO. OF CYLINDER']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'NO. OF  cylinders']) !!}
             @if ($errors->has('cylinders'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('cylinders') }}</strong>
@@ -469,7 +468,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('max_speed') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_max_speed', 1, isset($limited_edition_specs)? $limited_edition_specs['Performance']['MAX SPEED']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('SPEED', 'MAX SPEED:*') !!}
-            {!! Form::number('max_speed',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['MAX SPEED']['value']:null, ['class' => 'form-control', 'placeholder' => 'Max speed in KM/H']) !!}
+            {!! Form::number('max_speed',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['MAX SPEED']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Max speed in KM/H']) !!}
             @if ($errors->has('max_speed'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('max_speed') }}</strong>
@@ -479,7 +478,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('acceleration') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_acceleration', 1, isset($limited_edition_specs)? $limited_edition_specs['Performance']['ACCELERATION 0-100']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('ACCELERATION', 'ACCELERATION:*') !!}
-            {!! Form::number('acceleration',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['ACCELERATION 0-100']['value']:null, ['class' => 'form-control', 'placeholder' => 'ACCELERATION 0-100 Sec', 'step' => 0.1]) !!}
+            {!! Form::number('acceleration',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['ACCELERATION 0-100']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'ACCELERATION 0-100 Sec', 'step' => 0.1]) !!}
             @if ($errors->has('acceleration'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('acceleration') }}</strong>
@@ -489,7 +488,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('hp_rpm') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_hp_rpm', 1, isset($limited_edition_specs)? $limited_edition_specs['Performance']['HP / RPM']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('RPM', 'Horsepower:*') !!}
-            {!! Form::text('hp_rpm',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['HP / RPM']['value']:null, ['class' => 'form-control', 'placeholder' => 'HP / RPM']) !!}
+            {!! Form::text('hp_rpm',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['HP / RPM']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'HP / RPM']) !!}
             @if ($errors->has('hp_rpm'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('hp_rpm') }}</strong>
@@ -499,7 +498,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('torque') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_torque', 1, isset($limited_edition_specs)? $limited_edition_specs['Performance']['TORQUE']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('TORQUE', 'TORQUE:*') !!}
-            {!! Form::number('torque',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['TORQUE']['value']:null, ['class' => 'form-control', 'placeholder' => 'TORQUE']) !!}
+            {!! Form::number('torque',  isset($limited_edition_specs)? $limited_edition_specs['Performance']['TORQUE']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'TORQUE']) !!}
             @if ($errors->has('torque'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('torque') }}</strong>
@@ -516,7 +515,7 @@
         <div class="form-group col-sm-6 regions  {{ $errors->has('gearbox') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_gearbox', 1, isset($limited_edition_specs)? $limited_edition_specs['Transmission ']['GEARBOX']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('GEARBOX', 'GEARBOX:*') !!}
-            {!! Form::text('gearbox',  isset($limited_edition_specs)? $limited_edition_specs['Transmission ']['GEARBOX']['value']:null, ['class' => 'form-control', 'placeholder' => 'GEARBOX']) !!}
+            {!! Form::text('gearbox',  isset($limited_edition_specs)? $limited_edition_specs['Transmission ']['GEARBOX']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'GEARBOX']) !!}
             @if ($errors->has('gearbox'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('gearbox') }}</strong>
@@ -533,7 +532,7 @@
         <div class="form-group col-sm-12 regions  {{ $errors->has('brakes') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_brakes', 1, isset($limited_edition_specs)? $limited_edition_specs['Brakes']['BRAKES SYSTEM']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('Brakes_System', 'Brakes System:*') !!}
-            {!! Form::text('brakes',  isset($limited_edition_specs)? $limited_edition_specs['Brakes']['BRAKES SYSTEM']['value']:null, ['class' => 'form-control', 'placeholder' => 'Brakes  System', 'maxLength' => 55]) !!}
+            {!! Form::text('brakes',  isset($limited_edition_specs)? $limited_edition_specs['Brakes']['BRAKES SYSTEM']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Brakes  System', 'maxLength' => 55]) !!}
             @if ($errors->has('brakes'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('brakes') }}</strong>
@@ -549,7 +548,7 @@
         <div class="form-group col-sm-12 regions  {{ $errors->has('suspension') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_suspension', 1, isset($limited_edition_specs)? $limited_edition_specs['Suspension']['SUSPENSION']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('Suspension', 'Suspension:*') !!}
-            {!! Form::text('suspension',  isset($limited_edition_specs)? $limited_edition_specs['Suspension']['SUSPENSION']['value']:null, ['class' => 'form-control', 'placeholder' => 'Suspension', 'maxLength' => 55]) !!}
+            {!! Form::text('suspension',  isset($limited_edition_specs)? $limited_edition_specs['Suspension']['SUSPENSION']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Suspension', 'maxLength' => 55]) !!}
             @if ($errors->has('suspension'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('suspension') }}</strong>
@@ -566,7 +565,7 @@
         <div class="form-group col-sm-6 regions  {{ $errors->has('front_tyre') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_front_tyre', 1, isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['FRONT TYRE']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('FRONT_TYRE', 'Front tyre:*') !!}
-            {!! Form::text('front_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['FRONT TYRE']['value']:null, ['class' => 'form-control', 'placeholder' => 'FRONT TYRE', 'maxLength' => 55]) !!}
+            {!! Form::text('front_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['FRONT TYRE']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'FRONT TYRE', 'maxLength' => 55]) !!}
 
             @if ($errors->has('front_tyre'))
                 <span class="help-block" style="color: red;">
@@ -578,7 +577,7 @@
         <div class="form-group col-sm-6 regions  {{ $errors->has('back_tyre') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_back_tyre', 1, isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['BACK TYRE']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('Back_TYRE', 'Back tyre:*') !!}
-            {!! Form::text('back_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['BACK TYRE']['value']:null, ['class' => 'form-control', 'placeholder' => 'Back TYRE', 'maxLength' => 55]) !!}
+            {!! Form::text('back_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['BACK TYRE']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Back TYRE', 'maxLength' => 55]) !!}
 
             @if ($errors->has('back_tyre'))
                 <span class="help-block" style="color: red;">
@@ -595,7 +594,7 @@
         <div class="form-group col-sm-12 regions  {{ $errors->has('consumption') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_consumption', 1, isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('FUEL_CONSUMPTION', 'FUEL CONSUMPTION:*') !!}
-            {!! Form::text('consumption',  isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']['value']:null, ['class' => 'form-control', 'placeholder' => 'FUEL CONSUMPTION L/100KM']) !!}
+            {!! Form::text('consumption',  isset($limited_edition_specs)? $limited_edition_specs['Fuel']['FUEL CONSUMPTION']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'FUEL CONSUMPTION L/100KM']) !!}
             @if ($errors->has('consumption'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('consumption') }}</strong>
@@ -611,7 +610,7 @@
         <div class="form-group col-sm-12 regions  {{ $errors->has('emission') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_emission', 1, isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('Emission', 'Emission:*') !!}
-            {!! Form::text('emission',  isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']['value']:null, ['class' => 'form-control', 'placeholder' => 'Emission in gmCO2/km', 'maxLength' => 55]) !!}
+            {!! Form::text('emission',  isset($limited_edition_specs)? $limited_edition_specs['Emission']['EMISSION']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Emission in gmCO2/km', 'maxLength' => 55]) !!}
             @if ($errors->has('emission'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('emission') }}</strong>
@@ -628,7 +627,7 @@
         <div class="form-group col-sm-6 regions  {{ $errors->has('warranty') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_warranty', 1, isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['WARRANTY']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('WARRANTY', 'WARRANTY:*') !!}
-            {!! Form::text('warranty',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['WARRANTY']['value']:null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
+            {!! Form::text('warranty',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['WARRANTY']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'YEARS/KM']) !!}
             @if ($errors->has('warranty'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('warranty') }}</strong>
@@ -638,7 +637,7 @@
         <div class="form-group col-sm-6 regions  {{ $errors->has('maintenance') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_maintenance', 1, isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['MAINTENANCE PROGRAM ']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('MAINTENANCE_PROGRAM ', 'MAINTENANCE PROGRAM :*') !!}
-            {!! Form::text('maintenance',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['MAINTENANCE PROGRAM ']['value']:null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
+            {!! Form::text('maintenance',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['MAINTENANCE PROGRAM ']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'YEARS/KM']) !!}
             @if ($errors->has('maintenance'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('maintenance') }}</strong>
@@ -694,7 +693,7 @@
 <!-- Dealers Field -->
 <div class="form-group col-sm-12 {{ $errors->has('dealers') ? ' has-error' : '' }} regions">
     {!! Form::label('dealers', 'Dealers:') !!}
-    {!! Form::select('dealers[]', $users, null, ['class' => 'form-control select2', 'multiple', 'data-url' => route('api.brandUsers'), 'data-depends'=>'brand']) !!}
+    {!! Form::select('dealers[]', $users, null, ['class' => 'form-control select2 luxury-new', 'multiple', 'data-url' => route('api.brandUsers'), 'data-depends'=>'brand']) !!}
     @if ($errors->has('dealers'))
         <span class="help-block" style="color: red;">
             <strong>{{ $errors->first('dealers') }}</strong>
@@ -708,7 +707,7 @@
         <div class="regions">
             <div class="form-group col-sm-3 regions  {{ $errors->has('regions.'.$region->region_id) ? ' has-error' : '' }}">
                 {!! Form::label('price','Price in '. $region->region->name) !!}
-                {!! Form::number('regions['.$region->region_id.']', $region->price, ['class' => 'form-control', 'placeholder' => 'Enter Region Price']) !!}
+                {!! Form::number('regions['.$region->region_id.']', $region->price, ['class' => 'form-control luxury-new', 'placeholder' => 'Enter Region Price']) !!}
                 @if ($errors->has('regions.'.$region->region_id))
                     <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('regions.'.$region->region_id) }}</strong>
@@ -723,7 +722,7 @@
             <div class="form-group col-sm-6  {{ $errors->has('regions.'.$key) ? ' has-error' : '' }}">
                 {!! Form::label('regions','Price in '.$region.'*', null, ['class' => 'form-control']) !!}
                 {{--                {!! Form::hidden('regions[]',$key, null, ['class' => 'form-control']) !!}--}}
-                {!! Form::number('regions['.$key.']', null, ['class' => 'form-control', 'placeholder' => 'Enter Region Price', 'pattern'=>"^[1-9]\d*$"]) !!}
+                {!! Form::number('regions['.$key.']', null, ['class' => 'form-control luxury-new', 'placeholder' => 'Enter Region Price', 'pattern'=>"^[1-9]\d*$"]) !!}
                 @if ($errors->has('regions.'.$key))
                     <span class="help-block" style="color: red;">
                         <strong>{{ $errors->first('regions.'.$key) }}</strong>
@@ -739,7 +738,7 @@
     <div class="regions" style="display: none">
         <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend.'.$key) ? 'has-error' : '' }}">
             {!! Form::label('depreciation_trend','Year ('.$key.')', null, ['class' => 'form-control']) !!}
-            {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:null), ['class' => 'form-control', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
+            {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:null), ['class' => 'form-control luxury-new', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
             @if ($errors->has('depreciation_trend.'.$key))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('depreciation_trend.'.$key) }}</strong>
@@ -964,6 +963,8 @@
 
             $('.transmission_type').hide();
             $('.engine_type_id').hide();
+
+            $('.luxury-new').prop("required", true);
         } else {
 
         }

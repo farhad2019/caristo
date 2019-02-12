@@ -20,19 +20,19 @@
             <dt>{!! Form::label('model_id', 'Model :') !!}</dt>
             <dd>{!! isset($myCar->carModel->name) ? $myCar->carModel->brand->name.' '.$myCar->carModel->name : 'N/A' !!}</dd>
 
-            {{--<!-- Version Field -->
-            <dt>{!! Form::label('version', 'Version:') !!}</dt>
-            <dd>{!! isset($myCar->version)? $myCar->version : 'N/A' !!}</dd>--}}
+        {{--<!-- Version Field -->
+        <dt>{!! Form::label('version', 'Version:') !!}</dt>
+        <dd>{!! isset($myCar->version)? $myCar->version : 'N/A' !!}</dd>--}}
 
-            <!-- Year Field -->
+        <!-- Year Field -->
             <dt>{!! Form::label('year', 'Year:') !!}</dt>
             <dd>{!! $myCar->year?? 'N/A' !!}</dd>
 
-            {{--<!-- Year Field -->
-            <dt>{!! Form::label('chassis', 'Chassis:') !!}</dt>
-            <dd>{!! $myCar->chassis?? 'N/A' !!}</dd>--}}
+        {{--<!-- Year Field -->
+        <dt>{!! Form::label('chassis', 'Chassis:') !!}</dt>
+        <dd>{!! $myCar->chassis?? 'N/A' !!}</dd>--}}
 
-            <!-- Status Field -->
+        <!-- Status Field -->
             <dt>{!! Form::label('status', 'Status:') !!}</dt>
             @if($myCar->status == 10)
                 <dd>{!! '<span class="badge bg-blue" >'. $myCar->status_text .'</span>' !!}</dd>
@@ -51,11 +51,11 @@
                 <dt>{!! Form::label('category_id', 'Category :') !!}</dt>
                 <dd>{!! isset($myCar->category_id) ? $myCar->category->name : 'N/A' !!}</dd>
 
-                {{--<!-- Type Id Field -->
-                <dt>{!! Form::label('type_id', 'Segments:') !!}</dt>
-                <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : 'N/A' !!}</dd>--}}
+            {{--<!-- Type Id Field -->
+            <dt>{!! Form::label('type_id', 'Segments:') !!}</dt>
+            <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : 'N/A' !!}</dd>--}}
 
-                <!-- Transmission Type Field -->
+            <!-- Transmission Type Field -->
                 <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
                 <dd>{!! $myCar->transmission_type_text?? 'N/A' !!}</dd>
         @endif
@@ -355,8 +355,8 @@
             @foreach($myCar->dealers as $dealer)
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Showroom:') !!}</dt>
-                    <dd><img src="{{ $dealer->showroomDetails->logo_url }}"
-                             width="50"> {!! $dealer->showroomDetails->name !!}</dd>
+                    <dd><a href="{{ route('admin.users.show', $dealer->id) }}">
+                            {!! $dealer->showroomDetails->name !!}</a></dd>
                 </div>
                 <div class="col-sm-4">
                     <dt>{!! Form::label('owner_type', 'Address:') !!}</dt>
