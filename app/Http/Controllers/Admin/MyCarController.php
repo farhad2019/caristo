@@ -15,6 +15,7 @@ use App\Repositories\Admin\CarBrandRepository;
 use App\Repositories\Admin\CarFeatureRepository;
 use App\Repositories\Admin\CarModelRepository;
 use App\Repositories\Admin\CarTypeRepository;
+use App\Repositories\Admin\CarVersionRepository;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\DepreciationTrendRepository;
 use App\Repositories\Admin\EngineTypeRepository;
@@ -73,7 +74,10 @@ class MyCarController extends AppBaseController
     /** @var  UserRepository */
     private $userRepository;
 
-    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo, RegionRepository $regionRepo, DepreciationTrendRepository $trendRepo, UserRepository $userRepo)
+    /** @var  CarVersionRepository */
+    private $versionRepository;
+
+    public function __construct(MyCarRepository $myCarRepo, CategoryRepository $categoryRepo, CarBrandRepository $brandRepo, RegionalSpecificationRepository $regionalSpecRepo, EngineTypeRepository $engineTypeRepo, CarAttributeRepository $attributeRepo, CarTypeRepository $carTypeRepo, CarModelRepository $modelRepo, CarFeatureRepository $featureRepo, RegionRepository $regionRepo, DepreciationTrendRepository $trendRepo, UserRepository $userRepo, CarVersionRepository $versionRepo)
     {
         $this->myCarRepository = $myCarRepo;
         $this->categoryRepository = $categoryRepo;
@@ -87,6 +91,7 @@ class MyCarController extends AppBaseController
         $this->regionRepository = $regionRepo;
         $this->trendRepository = $trendRepo;
         $this->userRepository = $userRepo;
+        $this->versionRepository = $versionRepo;
         $this->ModelName = 'myCars';
         $this->BreadCrumbName = 'MyCar';
     }
@@ -131,12 +136,13 @@ class MyCarController extends AppBaseController
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
         $engineType = $this->engineTypeRepository->all()->pluck('name', 'id');
-        $attributes = $this->attributeRepository->all();
+        $attributes = $this->attributeRepository->findWhereNotIn('id', [23, 24]);
         $features = $this->featureRepository->all();
         $carTypes = $this->carTypeRepository->findWhere(['parent_id' => 0])->pluck('name', 'id');
         $carTypesChildren = $this->carTypeRepository->findWhereNotIn('parent_id', [0])->pluck('name', 'id');
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
+        $versions = $this->versionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
         $limited_attr = [
             'Dimensions Weight'    => [
                 'LENGTH'              => 'in MM',
@@ -308,6 +314,7 @@ class MyCarController extends AppBaseController
             'years_classic'            => $years_classic,
             'years_pre_owned'          => $years_pre_owned,
             'years_outlet_mall'        => $years_outlet_mall,
+            'versions'                 => $versions,
             'users'                    => $users,
             'brands'                   => $brands
         ]);
@@ -416,6 +423,8 @@ class MyCarController extends AppBaseController
         $carModels = $this->modelRepository->all()->pluck('name', 'id');
         $regions = $this->regionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
         $users = $this->userRepository->all()->pluck('name', 'id');
+        $versions = $this->versionRepository->orderBy('created_at', 'ASC')->all()->pluck('name', 'id');
+
         $years = ['1950' => "1950",
                   '1951' => "1951",
                   '1952' => "1952",
@@ -529,6 +538,7 @@ class MyCarController extends AppBaseController
             'carTypes'                 => $carTypes,
             'carModels'                => $carModels,
             'brands'                   => $brands,
+            'versions'                 => $versions,
             'users'                    => $users,
             'regions'                  => $regions,
             'depreciation_trend_years' => $depreciation_trend_years,

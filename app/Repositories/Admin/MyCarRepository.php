@@ -181,7 +181,7 @@ class MyCarRepository extends BaseRepository
             $input['chassis'] = $request->chassis;
             $input['year'] = date('Y');
             $input['price'] = $request->price;
-            $input['version'] = $request->version;
+            $input['version_id'] = $request->version_id;
             $input['regional_specification_id'] = $request->regional_specification_id;
             $input['type_id'] = $request->type_id;
             $input['engine_type_id'] = $request->engine_type_id;

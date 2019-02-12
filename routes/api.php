@@ -46,6 +46,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 
 ## No Token Required
+Route::post('v2/login', 'AuthAPIController@login')->name('login');
+Route::post('v2/social-login', 'AuthAPIController@socialLogin')->name('socialLogin');
+Route::post('v2/register', 'AuthAPIController@register')->name('register');
+
+## No Token Required
 Route::post('v1/login', 'AuthAPIController@login')->name('login');
 Route::post('v1/social-login', 'AuthAPIController@socialLogin')->name('socialLogin');
 Route::post('v1/register', 'AuthAPIController@register')->name('register');
@@ -126,41 +131,59 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::resource('v1/contactus', 'ContactUsAPIController');
+Route::resource('v2/contactus', 'ContactUsAPIController');
 
 Route::resource('v1/reviewAspects', 'ReviewAspectAPIController');
+Route::resource('v2/reviewAspects', 'ReviewAspectAPIController');
 
 Route::resource('v1/walkThroughs', 'WalkThroughAPIController');
+Route::resource('v2/walkThroughs', 'WalkThroughAPIController');
 
 Route::resource('v1/pages', 'PageAPIController');
+Route::resource('v2/pages', 'PageAPIController');
 
 Route::resource('v1/languages', 'LanguageAPIController');
+Route::resource('v2/languages', 'LanguageAPIController');
 
 Route::resource('v1/regionalSpecifications', 'RegionalSpecificationAPIController');
+Route::resource('v2/regionalSpecifications', 'RegionalSpecificationAPIController');
 
 Route::resource('v1/bidsHistories', 'BidsHistoryAPIController');
+Route::resource('v2/bidsHistories', 'BidsHistoryAPIController');
 
 Route::resource('v1/cars', 'CarAPIController');
+Route::resource('v2/cars', 'CarAPIController');
 
 Route::resource('v1/banksRates', 'BanksRateAPIController');
+Route::resource('v2/banksRates', 'BanksRateAPIController');
 
 Route::resource('v1/settings', 'SettingAPIController');
+Route::resource('v2/settings', 'SettingAPIController');
 
 Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
+Route::resource('v2/carsEvaluations', 'CarsEvaluationAPIController');
 
 Route::get('v1/brandUsers', 'UserAPIController@brandUsers')->name('brandUsers');
 
 Route::resource('v1/carTypes', 'CarTypeAPIController');
+Route::resource('v2/carTypes', 'CarTypeAPIController');
 
 Route::resource('v1/carBrands', 'CarBrandAPIController');
+Route::resource('v2/carBrands', 'CarBrandAPIController');
 
 Route::resource('v1/carModels', 'CarModelAPIController');
+Route::resource('v2/carModels', 'CarModelAPIController');
 
 Route::resource('v1/regions', 'RegionAPIController');
+Route::resource('v2/regions', 'RegionAPIController');
 
 Route::get('v1/reviews', 'ReviewAPIController@index');
+Route::resource('v2/reviews', 'ReviewAPIController');
 
 Route::resource('v2/categories', 'CategoryAPIController');
 
 Route::resource('v2/news', 'NewsAPIController');
 
 Route::resource('v2/makeBids', 'MakeBidAPIController');
+
+Route::resource('v1/carVersions', 'CarVersionAPIController');

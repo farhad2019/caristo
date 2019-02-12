@@ -14,8 +14,8 @@
                     </dl>
                     <div class='btn-group'>
                         @ability('super-admin' ,'settings.show')
-                        <a href="{!! route('admin.settings.index') !!}" class="btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-left"></i> Back
+                        <a href="{!! route('admin.dashboard') !!}" class="btn btn-default">
+                            <i class="glyphicon glyphicon-arrow-left"></i> Cancel
                         </a>
                         @endability
                     </div>

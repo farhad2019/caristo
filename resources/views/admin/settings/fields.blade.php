@@ -281,3 +281,11 @@
     });
 </script>
 @endpush--}}
+@push('scripts')
+<script>
+    $(function () {
+        CKEDITOR.replace('editor1');
+        CKEDITOR.replace('editor2');
+    });
+</script>
+@endpush

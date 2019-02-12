@@ -93,6 +93,8 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
+        CKEDITOR.replace('editor1');
+
         $('#image').hide();
         $('#video').hide();
         var type = $('#mediaType').val();

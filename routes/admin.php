@@ -117,3 +117,5 @@ Route::resource('personalShopperRequests', 'PersonalShopperRequestController');
 Route::resource('settings', 'SettingController');
 
 Route::resource('carsEvaluations', 'CarsEvaluationController');
+
+Route::resource('carVersions', 'CarVersionController');

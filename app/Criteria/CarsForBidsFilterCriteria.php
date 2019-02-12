@@ -114,15 +114,13 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         $car_type = $this->request->get('car_type', -1);
         $model = $model->when(($car_type > 0), function ($query) use ($car_type) {
             return $query->whereHas('carType', function ($carType) use ($car_type){
-                return $carType->whereHas('parentType', function ($parentType) use ($car_type) {
-                    return $parentType->whereIn('id', explode(',', $car_type));
-                });
+                return $carType->whereIn('parent_id', explode(',', $car_type));
             });
 //            return $query->whereIn('type_id', explode(',', $car_type));
         });
 
         $car_sub_type = $this->request->get('car_sub_type', -1);
-        $model = $model->when(($car_type > 0), function ($query) use ($car_sub_type) {
+        $model = $model->when(($car_sub_type > 0), function ($query) use ($car_sub_type) {
             return $query->whereIn('type_id', explode(',', $car_sub_type));
         });
 

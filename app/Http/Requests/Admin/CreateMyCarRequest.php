@@ -13,7 +13,6 @@ class CreateMyCarRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -23,7 +22,6 @@ class CreateMyCarRequest extends BaseFormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function messages()
@@ -41,17 +39,19 @@ class CreateMyCarRequest extends BaseFormRequest
             'kilometer.required'            => 'The mileage field is required.',
             'depreciation_trend.required'   => 'Depreciation Trend value is required',
             'depreciation_trend.*.required' => 'Depreciation Trend value is required',
+            'version_id.required'           => 'Version is required',
             'dealers.required'              => 'Dealers is required',
             'dealers.between'               => 'Please Select 2 dealers',
 //            'depreciation_trend.*.max'    => 'Depreciation Trend value must be between 1-99',
 //            'average_mkp.required' => 'The Average MK field is required.',
 
         ]);
-
         return $validationMessages;
-
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         $validationArray = [
@@ -64,6 +64,7 @@ class CreateMyCarRequest extends BaseFormRequest
         if ($this->input('category_id') == MyCar::LIMITED_EDITION) {
             $validationArray = array_merge($validationArray, [
                 'is_featured'          => 'check_featured',
+                'version_id'           => 'required',
                 'length'               => 'required',
                 'width'                => 'required',
                 'height'               => 'required',

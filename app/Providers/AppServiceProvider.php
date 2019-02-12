@@ -6,6 +6,7 @@ use App\Models\CarAttribute;
 use App\Models\CarInteraction;
 use App\Models\Comment;
 use App\Models\Module;
+use App\Models\MyCar;
 use App\Models\NewsInteraction;
 use App\Models\NotificationUser;
 use App\Models\Review;
@@ -68,7 +69,7 @@ class AppServiceProvider extends ServiceProvider
         \Validator::extend('check_featured', function ($attribute, $value, $parameters, $validator) {
             if ($value == 1) {
                 $user = Auth::user();
-                $featured_car_count = $user->cars()->where('is_featured', 1)->count();
+                $featured_car_count = $user->cars()->where(['is_featured' => 1, 'status' => MyCar::ACTIVE])->count();
                 return $featured_car_count < $user->details->limit_for_featured_cars;
             }
             return true;
@@ -77,15 +78,15 @@ class AppServiceProvider extends ServiceProvider
             return 'Your featured cars have reached to the limit.(' . Auth::user()->details->limit_for_featured_cars . ')';
         });
 
-        \Validator::extend('check_featured_update', function ($attribute, $value, $parameters, $validator){
+        \Validator::extend('check_featured_update', function ($attribute, $value, $parameters, $validator) {
             $user = Auth::user();
             if ($value == 1 && (!$user->hasRole('admin'))) {
-                $featured_car_count = $user->cars()->where('is_featured', 1)->where('id', '!=', Request::segment(3))->count();
+                $featured_car_count = $user->cars()->where('status', MyCar::ACTIVE)->where('is_featured', 1)->where('id', '!=', Request::segment(3))->count();
                 return $featured_car_count < $user->details->limit_for_featured_cars;
             }
             return true;
         });
-        \Validator::replacer('check_featured_update', function ($message, $attribute, $rule, $parameters, $value){
+        \Validator::replacer('check_featured_update', function ($message, $attribute, $rule, $parameters, $value) {
             return 'Your featured cars have reached to the limit.(' . Auth::user()->details->limit_for_featured_cars . ')';
         });
     }

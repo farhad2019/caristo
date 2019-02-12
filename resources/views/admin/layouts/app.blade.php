@@ -326,11 +326,6 @@
 {{--<script src="{{ url('public/js/admin/custom_new.js') }}"></script>--}}
 
 <script>
-    $(function () {
-        CKEDITOR.replace('editor1');
-        CKEDITOR.replace('editor2');
-    });
-
     function confirmCancel(id) {
         swal({
             title: "Are you sure?",

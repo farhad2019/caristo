@@ -1018,7 +1018,9 @@ class AuthAPIController extends AppBaseController
             $details['first_name'] = $request->name;
             $this->userDetailRepository->update($details, $user->details->id);
         }
-
+        if ($userData['status'] == 0){
+            auth()->guard('api')->logout();
+        }
         return $this->sendResponse(['user' => $this->userRepository->findWithoutFail($user->id)->toArray()], 'Profile Updated Successfully');
 
     }

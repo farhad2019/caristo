@@ -264,7 +264,7 @@ class MyCar extends Model
         'chassis',
         'transmission_type',
         'name',
-        'version',
+        'version_id',
         'email',
         'country_code',
         'phone',

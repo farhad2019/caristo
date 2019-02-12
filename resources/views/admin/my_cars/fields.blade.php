@@ -38,37 +38,42 @@
     {!! Form::select('model_id', $carModels, isset($myCar)?$myCar->model_id:null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand']) !!}
 </div>
 
+@if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
+    <!---- Version ----->
+    <div class="form-group col-sm-6 {{ $errors->has('version_id') ? ' has-error' : '' }}">
+        {!! Form::label('version', 'Version:*') !!}
+        {!! Form::select('version_id', $versions, isset($myCar)?$myCar->version_id:null, ['class' => 'form-control select2', 'data-url' => route('api.carVersions.index'), 'data-depends' => 'model_id']) !!}
+        @if ($errors->has('version_id'))
+            <span class="help-block" style="color: red;">
+            <strong>{{ $errors->first('version_id') }}</strong>
+        </span>
+        @endif
+    </div>
+@endif
+
 <!-- Year Field -->
 <div class="form-group col-sm-6 years_classic" style="display: none">
-    {!! Form::label('year', 'Year:*') !!}
+    {!! Form::label('year', 'Model Year:*') !!}
     {!! Form::select('year', $years_classic, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Year Field -->
 <div class="form-group col-sm-6 years_pre_owned" style="display: none">
-    {!! Form::label('year', 'Year:*') !!}
+    {!! Form::label('year', 'Model Year:*') !!}
     {!! Form::select('year', $years_pre_owned, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Year Field -->
 <div class="form-group col-sm-6 years_outlet_mall" style="display: none">
-    {!! Form::label('year', 'Year:*') !!}
+    {!! Form::label('year', 'Model Year:*') !!}
     {!! Form::select('year', $years_outlet_mall, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Year Field -->
 <div class="form-group col-sm-6 years_luxury_new_car" style="display: none">
-    {!! Form::label('year', 'Year:*') !!}
+    {!! Form::label('year', 'Model Year:*') !!}
     {!! Form::select('year', $depreciation_trend_years, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
-
-@if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
-    <!---- Version ----->
-    <div class="form-group col-sm-6">
-        {!! Form::label('version', 'Version:*') !!}
-        {!! Form::text('version', null, ['class' => 'form-control', 'placeholder' => 'Enter Car Version', 'maxLength' => 17]) !!}
-    </div>
-@endif
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6 transmission_type">
@@ -121,7 +126,7 @@
 <!-- Amount Field -->
 <div class="form-group col-sm-6 category2528 {{ $errors->has('kilometer') ? ' has-error' : '' }}" {{--id="mileage" style="display:none;"--}}>
     {!! Form::label('kilometers', 'Mileage(km):') !!}
-    {!! Form::number('kilometer', isset($myCar)?$myCar->kilometer:null, ['class' => 'form-control', 'placeholder' => 'Enter Car Mileage', 'maxLength' => 6]) !!}
+    {!! Form::number('kilometer', isset($myCar)?$myCar->kilometer:null, ['class' => 'form-control kilometer', 'placeholder' => 'Enter Car Mileage', 'maxLength' => 6]) !!}
     @if ($errors->has('kilometer'))
         <span class="help-block" style="color: red;">
             <strong>{{ $errors->first('kilometer') }}</strong>
@@ -132,7 +137,7 @@
 <!-- Amount Field -->
 <div class="form-group col-sm-6 {{ $errors->has('amount') ? ' has-error' : '' }}">
     {!! Form::label('amount', 'Amount('. @\Illuminate\Support\Facades\Auth::user()->details->regionDetail->currency.'):*' ?? 'AED' .'):*') !!}
-    {!! Form::number('amount', isset($myCar)?$myCar->amount:null, ['class' => 'form-control', 'placeholder' => 'Enter Car Amount', 'pattern'=>"^[1-9]\d*$", "min" => 1, "max"=> 99999999]) !!}
+    {!! Form::number('amount', isset($myCar)?$myCar->amount:null, ['class' => 'form-control', 'placeholder' => 'Enter Car Amount', 'pattern'=>"^[1-9]\d*$", "min" => 1, "max"=> 99999999, 'required']) !!}
 
     @if ($errors->has('amount'))
         <span class="help-block" style="color: red;">
@@ -179,13 +184,14 @@
 </div>
 
 @if(!isset($myCar))
+    @php($count = 0)
     <div class="clearfix"></div>
     @foreach($attributes as $attribute)
+        @php($count++)
         @if($attribute->type == 10)
             <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('attribute', $attribute->name.':*') !!}
-                {!! Form::text('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'placeholder' => 'Enter attribute '.$attribute->name, 'maxLength' => 55]) !!}
-
+                {!! Form::text('attribute['.$attribute->id.']', null, ['class' => 'form-control non-luxury', 'placeholder' => 'Enter attribute '.$attribute->name, 'maxLength' => 55]) !!}
                 @if ($errors->has('attribute.'.$attribute->id))
                     <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('attribute.'.$attribute->id) }}</strong>
@@ -195,7 +201,7 @@
         @elseif($attribute->type == 20)
             <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label('phone', $attribute->name.':') !!}
-                {!! Form::number('attribute['.$attribute->id.']', null, ['class' => 'form-control', 'step' => 0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
+                {!! Form::number('attribute['.$attribute->id.']', null, ['class' => 'form-control non-luxury', 'step' => 0.1, 'placeholder' => 'Enter attribute '.$attribute->name]) !!}
                 @if ($errors->has('attribute.'.$attribute->id))
                     <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('attribute.'.$attribute->id) }}</strong>
@@ -230,6 +236,9 @@
                 @endif
             </div>
         @endif
+        @if($count%2 == 0)
+            <div class="col-sm-12 clearfix"></div>
+        @endif
     @endforeach
 @else
     <div class="clearfix"></div>
@@ -239,7 +248,6 @@
             <div class="form-group col-sm-6 non-luxury {{ $attribute->name }} {{ $errors->has('attribute.'.$attribute->id) ? ' has-error' : '' }}">
                 {!! Form::label($attribute->name, $attribute->name.':') !!}
                 {!! Form::text('attribute['.$attribute->id.']', $value, ['class' => 'form-control', 'placeholder' => 'Enter attribute '.$attribute->name, 'maxLength' => 55]) !!}
-
                 @if ($errors->has('attribute.'.$attribute->id))
                     <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('attribute.'.$attribute->id) }}</strong>
@@ -630,7 +638,7 @@
         <div class="form-group col-sm-6 regions  {{ $errors->has('maintenance') ? ' has-error' : '' }}">
             {!! Form::checkbox('highlight_maintenance', 1, isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['MAINTENANCE PROGRAM ']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
             {!! Form::label('MAINTENANCE_PROGRAM ', 'MAINTENANCE PROGRAM :*') !!}
-            {!! Form::number('maintenance',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['MAINTENANCE PROGRAM ']['value']:null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
+            {!! Form::text('maintenance',  isset($limited_edition_specs)? $limited_edition_specs['Warranty_Maintenance']['MAINTENANCE PROGRAM ']['value']:null, ['class' => 'form-control', 'placeholder' => 'YEARS/KM']) !!}
             @if ($errors->has('maintenance'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('maintenance') }}</strong>
@@ -886,8 +894,8 @@
 
             $('.cartype').hide();
             $('.chassis').hide();
-            $('.Trim').hide();
-            $('.Accident').hide();
+//            $('.Trim').hide();
+//            $('.Accident').hide();
             $('.transmission_type').hide();
 
             $('.regions').hide();
@@ -896,6 +904,8 @@
 //                $('.region').show();
 
             $('.category2528').hide();
+
+            $('.non-luxury').prop("required", true);
         } else if (parseInt(id) === 26) {
             $('.years_outlet_mall').hide();
             $('.years_pre_owned').show();
@@ -903,8 +913,8 @@
 
             $('.cartype').hide();
             $('.chassis').hide();
-            $('.Trim').hide();
-            $('.Accident').hide();
+//            $('.Trim').hide();
+//            $('.Accident').hide();
             $('.transmission_type').hide();
 
             $('.regions').hide();
@@ -912,7 +922,10 @@
             //   $('.non-luxury').show();
 //                $('.region').show();
 
-            $('.category2528').show();
+            $('.mileage').show();
+            $('.mileage').prop("required", true);
+
+            $('.non-luxury').prop("required", true);
         } else if (parseInt(id) === 27) {
             $('.years_outlet_mall').hide();
             $('.years_pre_owned').hide();
@@ -920,8 +933,8 @@
 
             $('.cartype').hide();
             $('.chassis').hide();
-            $('.Trim').hide();
-            $('.Accident').hide();
+//            $('.Trim').hide();
+//            $('.Accident').hide();
             $('.transmission_type').hide();
 
             $('.regions').hide();
@@ -930,11 +943,13 @@
 //                $('.region').show();
 
             $('.category2528').show();
+
+            $('.non-luxury').prop("required", true);
         } else if (parseInt(id) === 28) {
             $('.cartype').show();
             $('.chassis').hide();
-            $('.Trim').show();
-            $('.Accident').show();
+//            $('.Trim').show();
+//            $('.Accident').show();
             $('.transmission_type').show();
 
             $('.regions').show();
@@ -990,8 +1005,8 @@
 
                 $('.cartype').hide();
                 $('.chassis').hide();
-                $('.Trim').hide();
-                $('.Accident').hide();
+//                $('.Trim').hide();
+//                $('.Accident').hide();
                 $('.transmission_type').hide();
 
                 $('.regions').hide();
@@ -1007,8 +1022,8 @@
 
                 $('.cartype').hide();
                 $('.chassis').hide();
-                $('.Trim').hide();
-                $('.Accident').hide();
+//                $('.Trim').hide();
+//                $('.Accident').hide();
                 $('.transmission_type').hide();
 
                 $('.regions').hide();
@@ -1017,6 +1032,8 @@
 //                $('.region').show();
 
                 $('.category2528').show();
+                $('.kilometer').show();
+                $('.kilometer').prop("required", true);
             } else if (parseInt(cat_id) === 27) {
                 $('.years_outlet_mall').hide();
                 $('.years_pre_owned').hide();
@@ -1024,8 +1041,8 @@
 
                 $('.cartype').hide();
                 $('.chassis').hide();
-                $('.Trim').hide();
-                $('.Accident').hide();
+//                $('.Trim').hide();
+//                $('.Accident').hide();
                 $('.transmission_type').hide();
 
                 $('.regions').hide();

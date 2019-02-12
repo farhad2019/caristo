@@ -215,9 +215,11 @@
             <div class="car_detail clearfix tab_serach"
                  style="margin-top: 0px; margin-left: 0px; padding-top: 0px; padding-left: 15px;">
                 <h3>Contact Person: </h3> <br>
+                <label>Name:</label>
                 <input type="text" name="name" placeholder="Name" value="{{ old('name')? old('name'): $user->name }}"
                        required maxlength="25"> <br> <br>
                 <div class="left" style="width: 48%;">
+                    <label>Profession:</label>
                     <input type="text" name="profession" placeholder="Profession"
                            value="{{ old('profession')? old('profession'): $user->details->profession }}" required
                            maxlength="15"> <br> <br>
@@ -226,10 +228,11 @@
 
                     {{--<input type="password" name="password" placeholder="Password"> <br> <br>--}}
                     {{--<label>Logo:</label>
-                    <input type="file" name="showroom_media">--}} <br> <br>
+                    <input type="file" name="showroom_media">--}}
                     {{--<input type="date" name="dob" value="{{ old('dob')? old('dob'): $user->details->dob }}" required>--}}
                 </div>
                 <div class="right" style="width: 48%;">
+                    <label>Phone:</label>
                     <input type="text" name="phone" placeholder="Phone" value="{{ $user->details->phone }}" required
                            maxlength="15">
                     {{--<select name="gender" required>
@@ -253,16 +256,20 @@
         <div class="car_detail_wrap" id="car_detail1">
             <div class="car_detail clearfix tab_serach">
                 <h3>Showroom Details: </h3> <br>
+                <label>Name:</label>
                 <input type="text" name="showroom_name" placeholder="Show Room Name"
                        value="{{ old('showroom_name')? old('showroom_name'):$user->showroomDetails->name }}" required>
                 <br> <br>
                 <div class="left" style="width: 48%;">
+                    <label>Address:</label>
                     <textarea name="showroom_address" placeholder="Show Room Address"
                               required>{{ old('showroom_address')? old('showroom_address') : $user->showroomDetails->address }}</textarea>
                     <br> <br>
+                    <label>Phone:</label>
                     <input type="text" name="showroom_phone" placeholder="Show Room Phone"
                            value="{{ old('showroom_phone')?old('showroom_phone'): $user->showroomDetails->phone }}"
                            required> <br> <br>
+                    <label>Password:</label>
                     <input type="password" name="password" placeholder="Password"><br> <br>
 
                     <label>Profile Image:<span style="color:darkgray; font-size: 13px">
@@ -277,11 +284,14 @@
                 </div>
 
                 <div class="right" style="width: 48%;">
+                    <label>About:</label>
                         <textarea name="showroom_about" placeholder="Show Room About"
                                   required>{{ old('showroom_about')? old('showroom_about'): $user->showroomDetails->about }}</textarea>
                     <br> <br>
+                    <label>Email:</label>
                     <input type="text" name="showroom_email" placeholder="Show Room Email"
                            value="{{ $user->email }}" required readonly style="opacity: 0.6"> <br> <br>
+                    <label>Confirm Password:</label>
                     <input type="password" name="password_confirmation" placeholder="Confirm Password"> <br> <br>
                     <img src="{{ Auth::user()->showroomDetails->logo_url }}" width="80">
                 </div>
