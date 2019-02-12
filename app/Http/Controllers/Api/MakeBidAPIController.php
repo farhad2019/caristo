@@ -204,10 +204,10 @@ class MakeBidAPIController extends AppBaseController
      *          in="query"
      *      ),
      *      @SWG\Parameter(
-     *          name="version",
-     *          description="version",
+     *          name="version_id",
+     *          description="version id",
      *          required=false,
-     *          type="string",
+     *          type="integer",
      *          in="query"
      *      ),
      *      @SWG\Parameter(

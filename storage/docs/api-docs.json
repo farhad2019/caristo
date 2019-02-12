@@ -4116,7 +4116,7 @@
         "CarVersion": {
             "required": [
                 "model_id",
-                "title"
+                "name"
             ],
             "properties": {
                 "id": {
@@ -4129,8 +4129,8 @@
                     "type": "integer",
                     "format": "int32"
                 },
-                "title": {
-                    "description": "title",
+                "name": {
+                    "description": "name",
                     "type": "string"
                 }
             }
