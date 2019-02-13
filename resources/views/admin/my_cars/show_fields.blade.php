@@ -19,11 +19,11 @@
             <!-- Model Id Field -->
             <dt>{!! Form::label('model_id', 'Model :') !!}</dt>
             <dd>{!! isset($myCar->carModel->name) ? $myCar->carModel->brand->name.' '.$myCar->carModel->name : 'N/A' !!}</dd>
-
-        {{--<!-- Version Field -->
-        <dt>{!! Form::label('version', 'Version:') !!}</dt>
-        <dd>{!! isset($myCar->version)? $myCar->version : 'N/A' !!}</dd>--}}
-
+        @if($myCar->category_id == 28)
+            <!-- Version Field -->
+                <dt>{!! Form::label('version', 'Version:') !!}</dt>
+                <dd>{!! (isset($myCar->version_id) && $myCar->version_id != null)? $myCar->version_id : 'N/A' !!}</dd>
+        @endif
         <!-- Year Field -->
             <dt>{!! Form::label('year', 'Year:') !!}</dt>
             <dd>{!! $myCar->year?? 'N/A' !!}</dd>

@@ -77,6 +77,8 @@ class SettingRepository extends BaseRepository
     {
         $input = $request->only(['socialName', 'socialLink', 'logo', 'default_locale', 'email', 'phone', 'latitude', 'longitude', 'playstore', 'appstore', 'social_links', 'force_update', 'app_version']);
 
+        $socialAccounts = [];
+
         $input['socialName'] = array_values(array_filter($input['socialName']));
         $input['socialLink'] = array_values(array_filter($input['socialLink']));
 

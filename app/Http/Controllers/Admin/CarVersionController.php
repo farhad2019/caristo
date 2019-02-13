@@ -168,6 +168,11 @@ class CarVersionController extends AppBaseController
             Flash::error('Car Version not found');
             return redirect(route('admin.carVersions.index'));
         }
+        
+        if ($carVersion->cars->count() > 0) {
+            Flash::error('This Version belongs to car. Cannot be deleted');
+            return redirect(route('admin.carVersions.index'));
+        }
 
         $this->carVersionRepository->delete($id);
         Flash::success('Car Version deleted successfully.');

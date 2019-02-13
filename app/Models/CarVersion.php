@@ -119,4 +119,12 @@ class CarVersion extends Model
     {
         return $this->belongsTo(CarModel::class, 'model_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function cars()
+    {
+        return $this->hasMany(MyCar::class, 'version_id');
+    }
 }

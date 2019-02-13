@@ -134,12 +134,6 @@
                             {!! Form::select('status', [0 => 'De-Activate', 1 => 'Activate'], $user->status, ['class' => 'form-control select2']) !!}
                         </div>
 
-                        <!-- Nationality Field -->
-                        <div class="form-group col-sm-6">
-                            {!! Form::label('nationality', 'Nationality:') !!}
-                            {!! Form::select('nationality', $nationalities, $user->details->nationality, ['class' => 'form-control select2']) !!}
-                        </div>
-
                 @if($user->hasRole('showroom-owner'))
                         <!-- Dealer Type Field -->
                         <div class="form-group col-sm-6">
@@ -171,11 +165,20 @@
                             {!! Form::date('expiry_date', $user->details->expiry_date, ['class' => 'form-control', 'required']) !!}
                         </div>
                 @endif
+
+                @if($user->hasRole('user'))
+                <!-- Nationality Field -->
+                    <div class="form-group col-sm-6">
+                        {!! Form::label('nationality', 'Nationality:') !!}
+                        {!! Form::select('nationality', $nationalities, $user->details->nationality, ['class' => 'form-control select2']) !!}
+                    </div>
+
                 <!-- Phone Field -->
                     <div class="form-group col-sm-6">
                         {!! Form::label('dob', 'Date Of Birth:*') !!}
                         {!! Form::date('dob', $user->details->dob, ['class' => 'form-control']) !!}
                     </div>
+                @endif
 
                 {{--<!-- Roles Field -->
                 <div class="form-group col-sm-6">
