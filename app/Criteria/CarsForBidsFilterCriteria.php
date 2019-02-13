@@ -101,9 +101,9 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
             });
         });
 
-        $version = $this->request->get('version', '');
-        $model = $model->when((strlen($version) > 0), function ($query) use ($version) {
-            return $query->where('version', $version);
+        $version_id = $this->request->get('version_id', 0);
+        $model = $model->when(($version_id > 0), function ($query) use ($version_id) {
+            return $query->where('version_id', $version_id);
         });
 
         $transmission_type = $this->request->get('transmission_type', -1);

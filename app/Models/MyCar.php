@@ -314,6 +314,7 @@ class MyCar extends Model
         'category',
         'reviews',
         'dealers',
+        'version',
         'engineType'
 //        'myCarFeatures',
 //        'bids',
@@ -353,7 +354,7 @@ class MyCar extends Model
         'category_id',
         'average_rating',
         'country_code',
-        'version',
+        'version_id',
         'phone',
         'year',
         'currency',
@@ -387,21 +388,22 @@ class MyCar extends Model
         'is_featured',
         'status',
         'status_text',
-        'owner',
-        'engineType',
-        'carType',
-        'carModel',
-        'carRegions',
-        'media',
-        'top_bids',
-        'regionalSpecs',
-        'myCarAttributes',
-        'category',
-        'limited_edition_specs_array',
-        'DepreciationTrend',
-        'reviews',
-        'dealers',
-        'specification'
+        'version',
+//        'owner',
+//        'engineType',
+//        'carType',
+//        'carModel',
+//        'carRegions',
+//        'media',
+//        'top_bids',
+//        'regionalSpecs',
+//        'myCarAttributes',
+//        'category',
+//        'limited_edition_specs_array',
+//        'DepreciationTrend',
+//        'reviews',
+//        'dealers',
+//        'specification'
     ];
 
     /**
@@ -669,6 +671,14 @@ class MyCar extends Model
     public function DepreciationTrend()
     {
         return $this->hasMany(DepreciationTrend::class, 'car_id')->orderBy('year', 'ASC');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function version()
+    {
+        return $this->belongsTo(CarVersion::class, 'version_id');
     }
 
     /**

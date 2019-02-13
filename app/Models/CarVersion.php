@@ -63,9 +63,7 @@ class CarVersion extends Model
      *
      * @var array
      */
-    protected $with = [
-        'carModel'
-    ];
+    protected $with = [];
 
     /**
      * The attributes that should be append to toArray.
@@ -81,8 +79,7 @@ class CarVersion extends Model
      */
     protected $visible = [
         'id',
-        'name',
-        'carModel'
+        'name'
     ];
 
     /**
