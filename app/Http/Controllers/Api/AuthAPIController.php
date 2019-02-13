@@ -295,7 +295,6 @@ class AuthAPIController extends AppBaseController
             $deviceData['push_notification'] = $user['push_notification'];
 
             $this->uDevice->create($deviceData);
-
         }
         return $this->respondWithToken($token);
     }
