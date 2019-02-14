@@ -19,8 +19,8 @@
                     <hr>
 
                     <!-- Status Field -->
-                    <dt>{!! Form::label('visible', __('Visible').':') !!}</dt>
-                    <dd>{!! ($translation->status==1)?'<span class="label label-success">Yes</span>':'<span class="label label-danger">No</span>' !!}</dd>
+                    {{--<dt>{!! Form::label('visible', __('Visible').':') !!}</dt>
+                    <dd>{!! ($translation->status==1)?'<span class="label label-success">Yes</span>':'<span class="label label-danger">No</span>' !!}</dd>--}}
 
                     <!-- Slug Field -->
                     <dt>{!! Form::label('slug', __('Slug').':') !!}</dt>

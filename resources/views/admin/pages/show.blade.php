@@ -18,13 +18,15 @@
                         <i class="glyphicon glyphicon-arrow-left"></i> Back
                     </a>
                     @endability
-
+                </div>
+                <div class='btn-group'>
                     @ability('super-admin' ,'pages.edit')
                     <a href="{{ route('admin.pages.edit', $page->id) }}" class='btn btn-default'>
                         <i class="glyphicon glyphicon-edit"></i> Edit
                     </a>
                     @endability
-
+                </div>
+                <div class='btn-group'>
                     @ability('super-admin' ,'pages.destroy')
                     {!! Form::button('<i class="glyphicon glyphicon-trash"></i> Delete', [
                         'type' => 'submit',

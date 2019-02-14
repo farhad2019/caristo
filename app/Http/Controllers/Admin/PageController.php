@@ -142,6 +142,7 @@ class PageController extends AppBaseController
      * @param UpdatePageRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdatePageRequest $request)
     {
@@ -149,7 +150,6 @@ class PageController extends AppBaseController
 
         if (empty($page)) {
             Flash::error('Page not found');
-
             return redirect(route('admin.pages.index'));
         }
 
@@ -165,7 +165,7 @@ class PageController extends AppBaseController
                 $update_data['locale'] = $locale;
                 $update_data['title'] = $title;
                 $update_data['content'] = $request['content'][$key];
-                $update_data['status'] = isset($request['status'][$key]) ? $request['status'][$key] : 0;
+                $update_data['status'] = 1;
                 if (array_search($locale, $localeList)) {
                     $translation_id = array_search($locale, $localeList);
                     $this->pageTranslationRepository->update($update_data, $translation_id);
@@ -176,7 +176,7 @@ class PageController extends AppBaseController
         }
 
         $input['slug'] = $request->slug;
-        $input['status'] = $request->status;
+        $input['status'] = 1;
         $page = $this->pageRepository->update($input, $id);
 
         Flash::success('Page updated successfully.');

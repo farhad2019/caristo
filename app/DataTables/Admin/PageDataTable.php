@@ -86,7 +86,7 @@ class PageDataTable extends DataTable
                 'title'      => 'Title'
             ],
             'slug',
-            'status'
+//            'status'
         ];
     }
 

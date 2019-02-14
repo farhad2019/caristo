@@ -5,12 +5,12 @@
 </div>
 
 <!-- Status Field -->
-<div class="form-group col-sm-6">
+{{--<div class="form-group col-sm-6">
     {!! Form::label('status', 'Status:') !!}
     {!! Form::hidden('status', 0, false) !!} <br>
     {!! Form::checkbox('status', 1, true, ['class'=> 'form-control', 'data-toggle'=>'toggle']) !!}
-</div>
-
+</div>--}}
+<div class="col-sm-06 clearfix"></div>
 @if(isset($page))
     <div class="">
         <h3 class="box-title">Translations</h3>
@@ -41,10 +41,10 @@
                         </div>
 
                         <!-- Status Field -->
-                        <div class="form-group col-sm-6">
+                        {{--<div class="form-group col-sm-6">
                             {!! Form::label('status', __('Status').':') !!}
                             {!! Form::checkbox('status['.$locale->id.']', 1, isset($page->translations[$key]->status)?$page->translations[$key]->status:null, ['class' => 'form-control']) !!}
-                        </div>
+                        </div>--}}
                     </div>
                 @endforeach
             </div>
