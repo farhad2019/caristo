@@ -63,10 +63,7 @@ Route::post('v1/reset-password', 'AuthAPIController@updatePassword')->name('rese
 
 Route::get('v1/getUserByDeviceType', 'UserAPIController@getUserByDeviceType')->name('getUserByDeviceType');
 
-//Route::resource('v1/makeBids', 'MakeBidAPIController');
-
 ## Token Required to below APIs
-
 Route::middleware('auth:api')->group(function () {
     Route::post('v1/logout', 'AuthAPIController@logout');
     Route::post('v1/refresh', 'AuthAPIController@refresh');
@@ -130,8 +127,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIController');
 });
 
-Route::resource('v1/contactus', 'ContactUsAPIController');
-Route::resource('v2/contactus', 'ContactUsAPIController');
+//Route::resource('v1/contactus', 'ContactUsAPIController');
+//Route::resource('v2/contactus', 'ContactUsAPIController');
 
 Route::resource('v1/reviewAspects', 'ReviewAspectAPIController');
 Route::resource('v2/reviewAspects', 'ReviewAspectAPIController');
@@ -161,7 +158,7 @@ Route::resource('v1/settings', 'SettingAPIController');
 Route::resource('v2/settings', 'SettingAPIController');
 
 Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
-Route::resource('v2/carsEvaluations', 'CarsEvaluationAPIController');
+Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
 
 Route::get('v1/brandUsers', 'UserAPIController@brandUsers')->name('brandUsers');
 
@@ -178,7 +175,6 @@ Route::resource('v1/regions', 'RegionAPIController');
 Route::resource('v2/regions', 'RegionAPIController');
 
 Route::get('v1/reviews', 'ReviewAPIController@index');
-Route::resource('v2/reviews', 'ReviewAPIController');
 
 Route::resource('v2/categories', 'CategoryAPIController');
 

@@ -37,7 +37,7 @@
                         <!-- Content Field -->
                         <div class="form-group">
                             {!! Form::label('content', __('Content').':') !!}
-                            {!! Form::textarea('content['.$locale->id.']', isset($page->translations[$key]->content)?$page->translations[$key]->content:null, ['class' => 'textarea form-control', 'style'=>'width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;']) !!}
+                            {!! Form::textarea('content['.$locale->id.']', isset($page->translations[$key]->content)?$page->translations[$key]->content:null, ['class' => 'form-control', 'id' => 'editor1', 'style'=>'width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;']) !!}
                         </div>
 
                         <!-- Status Field -->
@@ -61,3 +61,11 @@
     {!! Form::submit(__('Save And Add More'), ['class' => 'btn btn-primary', 'name'=>'continue']) !!}
     <a href="{!! route('admin.pages.index') !!}" class="btn btn-default">{{ __('Cancel') }}</a>
 </div>
+
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace('editor1');
+    });
+</script>
+@endpush

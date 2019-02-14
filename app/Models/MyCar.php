@@ -314,7 +314,7 @@ class MyCar extends Model
         'category',
         'reviews',
         'dealers',
-        'version',
+//        'version',
         'engineType'
 //        'myCarFeatures',
 //        'bids',
@@ -333,6 +333,7 @@ class MyCar extends Model
         'owner_type_text',
 //        'views_count',
         'top_bids',
+        'version',
         'is_liked',
         'is_viewed',
         'is_favorite',
@@ -389,21 +390,21 @@ class MyCar extends Model
         'status',
         'status_text',
         'version',
-//        'owner',
-//        'engineType',
-//        'carType',
-//        'carModel',
-//        'carRegions',
-//        'media',
-//        'top_bids',
-//        'regionalSpecs',
-//        'myCarAttributes',
-//        'category',
-//        'limited_edition_specs_array',
-//        'DepreciationTrend',
-//        'reviews',
-//        'dealers',
-//        'specification'
+        'owner',
+        'engineType',
+        'carType',
+        'carModel',
+        'carRegions',
+        'media',
+        'top_bids',
+        'regionalSpecs',
+        'myCarAttributes',
+        'category',
+        'limited_edition_specs_array',
+        'DepreciationTrend',
+        'reviews',
+        'dealers',
+        'specification'
     ];
 
     /**
@@ -544,6 +545,14 @@ class MyCar extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
+    public function carVersion()
+    {
+        return $this->belongsTo(CarVersion::class, 'version_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function carType()
     {
         return $this->belongsTo(CarType::class, 'type_id')->withTrashed();
@@ -676,10 +685,10 @@ class MyCar extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function version()
-    {
-        return $this->belongsTo(CarVersion::class, 'version_id');
-    }
+//    public function version()
+//    {
+//        return $this->belongsTo(CarVersion::class, 'version_id');
+//    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -712,6 +721,11 @@ class MyCar extends Model
 //    {
 //        return $this->likes()->count();
 //    }
+
+    public function getVersionAttribute()
+    {
+        return null;
+    }
 
     /**
      * @return mixed

@@ -119,7 +119,7 @@ class User extends Authenticatable implements JWTSubject
         'name'                    => 'required|max:20',
 //        'email'                   => 'sometimes|required|email',
         'profession'              => 'required',
-        'dob'                     => 'required|date_format:Y-m-d|before:today',
+        'dob'                     => 'sometimes|required|date_format:Y-m-d|before:today',
         'country_code'            => 'required|max:5',
         'phone'                   => 'phone|max:20',
 //        'brand_ids'               => 'required',
