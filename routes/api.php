@@ -1,6 +1,7 @@
 <?php
 
 use Intervention\Image\Facades\Image;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,6 @@ Route::get('/resize/{img}', function ($img) {
     }
 })->name('resize')->where('img', '(.*)');
 
-
 /*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -46,9 +46,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 
 ## No Token Required
-Route::post('v2/login', 'AuthAPIController@login')->name('login');
-Route::post('v2/social-login', 'AuthAPIController@socialLogin')->name('socialLogin');
-Route::post('v2/register', 'AuthAPIController@register')->name('register');
 
 ## No Token Required
 Route::post('v1/login', 'AuthAPIController@login')->name('login');
@@ -60,128 +57,118 @@ Route::get('v1/forget-password', 'AuthAPIController@getForgetPasswordCode')->nam
 Route::post('v1/verify-reset-code', 'AuthAPIController@verifyCode')->name('verify-code');
 Route::post('v1/reset-password', 'AuthAPIController@updatePassword')->name('reset-password');
 
-
 Route::get('v1/getUserByDeviceType', 'UserAPIController@getUserByDeviceType')->name('getUserByDeviceType');
 
+if (is_object(JWTAuth::getToken())){
 ## Token Required to below APIs
-Route::middleware('auth:api')->group(function () {
-    Route::post('v1/logout', 'AuthAPIController@logout');
-    Route::post('v1/refresh', 'AuthAPIController@refresh');
-    Route::post('v1/me', 'AuthAPIController@me');
-    Route::post('v1/update-push-notification', 'UserAPIController@updatePushNotification');
+    Route::middleware('auth:api')->group(function () {
+        Route::post('v1/logout', 'AuthAPIController@logout');
+        Route::post('v1/refresh', 'AuthAPIController@refresh');
+        Route::post('v1/me', 'AuthAPIController@me');
+        Route::post('v1/update-push-notification', 'UserAPIController@updatePushNotification');
 
-    Route::resource('v1/users', 'UserAPIController');
+        Route::resource('v1/users', 'UserAPIController');
 
-    Route::resource('v1/roles', 'RoleAPIController');
+        Route::resource('v1/roles', 'RoleAPIController');
 
-    Route::resource('v1/permissions', 'PermissionAPIController');
+        Route::resource('v1/permissions', 'PermissionAPIController');
 
+        Route::resource('v1/notifications', 'NotificationAPIController');
+
+        Route::resource('v1/comments', 'CommentAPIController');
+
+        Route::resource('v1/newsInteractions', 'NewsInteractionAPIController');
+
+        Route::post('v1/change-password', 'AuthAPIController@changePassword')->name('change-password');
+
+        Route::post('v1/update-profile', 'AuthAPIController@updateUserProfile')->name('update-profile');
+
+        Route::get('v1/favorite-news', 'AuthAPIController@favoriteNewsIndex');
+
+        Route::resource('v1/news', 'NewsAPIController');
+
+        Route::resource('v1/comments', 'CommentAPIController');
+
+        Route::resource('v1/media', 'MediaAPIController');
+
+        Route::resource('v1/news_interactions', 'NewsInteractionAPIController');
+
+        Route::resource('v1/carAttributes', 'CarAttributeAPIController');
+
+        Route::resource('v1/carFeatures', 'CarFeatureAPIController');
+
+        Route::resource('v1/carTypes', 'CarTypeAPIController');
+
+        Route::resource('v1/engineTypes', 'EngineTypeAPIController');
+
+        Route::resource('v1/myCars', 'MyCarAPIController');
+
+        Route::post('v1/users-regions', 'UserAPIController@addRegion');
+
+        Route::resource('v1/carInteractions', 'CarInteractionAPIController');
+
+        Route::resource('v1/reportRequests', 'ReportRequestAPIController');
+
+        Route::resource('v1/tradeInCars', 'TradeInCarAPIController');
+
+        Route::resource('v1/reviews', 'ReviewAPIController');
+
+        Route::resource('v1/categories', 'CategoryAPIController');
+
+        Route::resource('v1/makeBids', 'MakeBidAPIController');
+
+        Route::resource('v1/consultancyRequests', 'ConsultancyRequestAPIController');
+
+        Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIController');
+
+        Route::resource('v1/contactus', 'ContactUsAPIController');
+
+        Route::resource('v1/cars', 'CarAPIController');
+
+        Route::resource('v1/banksRates', 'BanksRateAPIController');
+
+        Route::resource('v1/regions', 'RegionAPIController');
+    });
+} else {
     Route::resource('v1/contactus', 'ContactUsAPIController');
-
-    Route::resource('v1/notifications', 'NotificationAPIController');
-
-    Route::resource('v1/comments', 'CommentAPIController');
-
-    Route::resource('v1/newsInteractions', 'NewsInteractionAPIController');
-
-    Route::post('v1/change-password', 'AuthAPIController@changePassword')->name('change-password');
-
-    Route::post('v1/update-profile', 'AuthAPIController@updateUserProfile')->name('update-profile');
-
-    Route::get('v1/favorite-news', 'AuthAPIController@favoriteNewsIndex');
-
-    Route::resource('v1/news', 'NewsAPIController');
-
-    Route::resource('v1/comments', 'CommentAPIController');
-
-    Route::resource('v1/media', 'MediaAPIController');
-
-    Route::resource('v1/news_interactions', 'NewsInteractionAPIController');
-
-    Route::resource('v1/carAttributes', 'CarAttributeAPIController');
-
-    Route::resource('v1/carFeatures', 'CarFeatureAPIController');
-
-    Route::resource('v1/carTypes', 'CarTypeAPIController');
-
-    Route::resource('v1/engineTypes', 'EngineTypeAPIController');
-
-    Route::resource('v1/myCars', 'MyCarAPIController');
-
-    Route::post('v1/users-regions', 'UserAPIController@addRegion');
-
-    Route::resource('v1/carInteractions', 'CarInteractionAPIController');
-
-    Route::resource('v1/reportRequests', 'ReportRequestAPIController');
-
-    Route::resource('v1/tradeInCars', 'TradeInCarAPIController');
 
     Route::resource('v1/reviews', 'ReviewAPIController');
 
+    Route::resource('v1/cars', 'CarAPIController');
+
+    Route::resource('v1/banksRates', 'BanksRateAPIController');
+
+    Route::resource('v1/regions', 'RegionAPIController');
+
     Route::resource('v1/categories', 'CategoryAPIController');
 
+    Route::resource('v1/news', 'NewsAPIController');
+
     Route::resource('v1/makeBids', 'MakeBidAPIController');
-
-    Route::resource('v1/consultancyRequests', 'ConsultancyRequestAPIController');
-
-    Route::resource('v1/personalShopperRequests', 'PersonalShopperRequestAPIController');
-});
-
-//Route::resource('v1/contactus', 'ContactUsAPIController');
-//Route::resource('v2/contactus', 'ContactUsAPIController');
+}
 
 Route::resource('v1/reviewAspects', 'ReviewAspectAPIController');
-Route::resource('v2/reviewAspects', 'ReviewAspectAPIController');
 
 Route::resource('v1/walkThroughs', 'WalkThroughAPIController');
-Route::resource('v2/walkThroughs', 'WalkThroughAPIController');
 
 Route::resource('v1/pages', 'PageAPIController');
-Route::resource('v2/pages', 'PageAPIController');
 
 Route::resource('v1/languages', 'LanguageAPIController');
-Route::resource('v2/languages', 'LanguageAPIController');
 
 Route::resource('v1/regionalSpecifications', 'RegionalSpecificationAPIController');
-Route::resource('v2/regionalSpecifications', 'RegionalSpecificationAPIController');
 
 Route::resource('v1/bidsHistories', 'BidsHistoryAPIController');
-Route::resource('v2/bidsHistories', 'BidsHistoryAPIController');
-
-Route::resource('v1/cars', 'CarAPIController');
-Route::resource('v2/cars', 'CarAPIController');
-
-Route::resource('v1/banksRates', 'BanksRateAPIController');
-Route::resource('v2/banksRates', 'BanksRateAPIController');
 
 Route::resource('v1/settings', 'SettingAPIController');
-Route::resource('v2/settings', 'SettingAPIController');
 
-Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
 Route::resource('v1/carsEvaluations', 'CarsEvaluationAPIController');
 
 Route::get('v1/brandUsers', 'UserAPIController@brandUsers')->name('brandUsers');
 
-Route::resource('v1/carTypes', 'CarTypeAPIController');
-Route::resource('v2/carTypes', 'CarTypeAPIController');
-
 Route::resource('v1/carBrands', 'CarBrandAPIController');
-Route::resource('v2/carBrands', 'CarBrandAPIController');
 
 Route::resource('v1/carModels', 'CarModelAPIController');
-Route::resource('v2/carModels', 'CarModelAPIController');
-
-Route::resource('v1/regions', 'RegionAPIController');
-Route::resource('v2/regions', 'RegionAPIController');
-
-Route::get('v1/reviews', 'ReviewAPIController@index');
-
-Route::resource('v2/categories', 'CategoryAPIController');
-
-Route::resource('v2/news', 'NewsAPIController');
-
-Route::resource('v2/makeBids', 'MakeBidAPIController');
 
 Route::resource('v1/carVersions', 'CarVersionAPIController');
 
-Route::get('v1/pushForBidClosed', 'WalkThroughAPIController@pushForBidClosed');
+Route::resource('v1/carTypes', 'CarTypeAPIController');

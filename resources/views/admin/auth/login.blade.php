@@ -8,6 +8,9 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+    <!-- Tell the browser to be responsive to screen width -->
+    <link rel="icon" href="{{ asset('storage/app/public/logo-mini.png') }}" type="image/x-icon">
+
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
