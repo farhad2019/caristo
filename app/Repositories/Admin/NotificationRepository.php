@@ -42,6 +42,7 @@ class NotificationRepository extends BaseRepository
      * @param $notification
      * @param $receiver_id
      * @return bool
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function notification($notification, $receiver_id)
     {
@@ -50,7 +51,7 @@ class NotificationRepository extends BaseRepository
         NotificationUser::create([
             'notification_id' => $notification->id,
             'user_id'         => $receiver_id,
-            'status'          => 20
+            'status'          => NotificationUser::STATUS_DELIVERED
         ]);
 
         return true;

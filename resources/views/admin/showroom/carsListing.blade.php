@@ -7,22 +7,35 @@
         <span class="icon-close2 left_side_close"></span>
         @include('admin.layouts.showroom_sidebar')
         {{-- side menu End--}}
-
+        @php($filerBy = app('request')->input('filerBy'))
+        @php($keyword = app('request')->input('keyword'))
         {{-- Car lsiting--}}
         <div class="dash_tab_content dash_tab" id="tab1">
             @if($tradeInRequests->count() > 0)
                 <div class="tab_serach">
                     <div class="row no-gutters">
-                        <div class="col-md-6">
-                            <form action="{{ url('admin/tradeInCars') }}" method="GET">
+                        <form action="{{ url('admin/tradeInCars') }}" name="filter" class="col-md-12" method="GET">
+                        <div class="col-md-6" style="float: left">
+                            {{--<form action="{{ url('admin/tradeInCars') }}" method="GET">--}}
                                 <input type="text" name="keyword" placeholder="Search"
-                                       value="{{@$_REQUEST['keyword']}}">
-                            </form>
+                                       value="{{ @$keyword }}">
+                            {{--</form>--}}
                         </div>
-                        <div class="col-md-6 sort_parent">
-                            <label>Total Requests:</label>
-                            <div> {{ $tradeInRequests->count() }}</div>
+                        <div class="col-md-6 sort_parent" style="float: right">
+                            {{--<form action="{{ url('admin/tradeInCars') }}" name="filter" method="GET">--}}
+                                <label>View:</label>
+                                <div class="select" onchange="filter.submit()">
+                                    <select name="filerBy">
+                                        <option value="0" {{ $filerBy == '0'?'selected':'' }}>All</option>
+                                        <option value="10" {{ $filerBy == '10'?'selected':'' }}>Trade In</option>
+                                        <option value="20" {{ $filerBy == '20'?'selected':'' }}>Evaluation</option>
+                                    </select>
+                                </div>
+                                <label>Total Requests:</label>
+                                <div class=""> {{ $tradeInRequests->count() }}</div>
+                            {{--</form>--}}
                         </div>
+                        </form>
                     </div>
                 </div>
 
@@ -61,8 +74,18 @@
                             </form>
                         </div>
                         <div class="col-md-6 sort_parent">
-                            <label>Total Trade In Reqeusts:</label>
-                            <div class=""> {{ $tradeInRequests->count() }}</div>
+                            <form action="{{ url('admin/tradeInCars') }}" name="filter" method="GET">
+                                <label>View:</label>
+                                <div class="select" onchange="filter.submit()">
+                                    <select name="filerBy">
+                                        <option value="0" {{ $filerBy == '0'?'selected':'' }}>All</option>
+                                        <option value="10" {{ $filerBy == '10'?'selected':'' }}>Trade In</option>
+                                        <option value="20" {{ $filerBy == '20'?'selected':'' }}>Evaluation</option>
+                                    </select>
+                                </div>
+                                <label>Total Requests:</label>
+                                <div class=""> {{ $tradeInRequests->count() }}</div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -369,56 +392,56 @@
     <input type="hidden" id="current_car_id" value="">
 @endsection
 @push('scripts')
-<script>
-    $(document).ready(function () {
-        $('body').on('click', '.car', function () {
-            var id = $(this).data('id');
-            var current_car_id = $('#current_car_id').val();
-            //$('#current_car_id').val(0);
-            if (parseInt(current_car_id) === parseInt(id)) {
-                return false;
-            } else {
-                $('#current_car_id').val(id);
-            }
-
-            // $('.active').toggleClass('clearfix current');
-            // $(this).toggleClass('clearfix current active');
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                method: "GET",
-                url: '{{ url('admin/tradeInCars') }}/' + id,
-                {{--url: '{{ url('admin/makeBids/') }}/' + carId + '?tradId=' + tradeInId,--}}
-                type: "JSON",
-                async: false
-            }).done(function (responce) {
-                $(".car" + id).removeClass("active");
-                var unreadCount = $('.badge').html();
-                if (unreadCount > 1) {
-                    $('.badge').html(unreadCount - 1);
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.car', function () {
+                var id = $(this).data('id');
+                var current_car_id = $('#current_car_id').val();
+                //$('#current_car_id').val(0);
+                if (parseInt(current_car_id) === parseInt(id)) {
+                    return false;
                 } else {
-                    $('.badge').html('');
+                    $('#current_car_id').val(id);
                 }
-                $('.car_detail_wrap').html('');
-                $('.bid_widget').html('');
-                $('.car_detail_wrap').html(responce);
-                /!* Car Slider *!/
-                $('.car_slider_warap').slick({
-                    infinite: true,
-                    arrows: false,
-                    dots: true,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    autoplay: true,
-                    autoplaySpeed: 2000
+
+                // $('.active').toggleClass('clearfix current');
+                // $(this).toggleClass('clearfix current active');
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    method: "GET",
+                    url: '{{ url('admin/tradeInCars') }}/' + id,
+                    {{--url: '{{ url('admin/makeBids/') }}/' + carId + '?tradId=' + tradeInId,--}}
+                    type: "JSON",
+                    async: false
+                }).done(function (responce) {
+                    $(".car" + id).removeClass("active");
+                    var unreadCount = $('.badge').html();
+                    if (unreadCount > 1) {
+                        $('.badge').html(unreadCount - 1);
+                    } else {
+                        $('.badge').html('');
+                    }
+                    $('.car_detail_wrap').html('');
+                    $('.bid_widget').html('');
+                    $('.car_detail_wrap').html(responce);
+                    /!* Car Slider *!/
+                    $('.car_slider_warap').slick({
+                        infinite: true,
+                        arrows: false,
+                        dots: true,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        autoplay: true,
+                        autoplaySpeed: 2000
+                    });
                 });
             });
         });
-    });
-</script>
+    </script>
 @endpush

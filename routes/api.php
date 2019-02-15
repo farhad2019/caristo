@@ -183,3 +183,5 @@ Route::resource('v2/news', 'NewsAPIController');
 Route::resource('v2/makeBids', 'MakeBidAPIController');
 
 Route::resource('v1/carVersions', 'CarVersionAPIController');
+
+Route::get('v1/pushForBidClosed', 'WalkThroughAPIController@pushForBidClosed');

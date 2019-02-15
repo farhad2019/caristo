@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\CreateWalkThroughAPIRequest;
 use App\Http\Requests\Api\UpdateWalkThroughAPIRequest;
+use App\Models\Notification;
+use App\Models\TradeInCar;
 use App\Models\WalkThrough;
+use App\Repositories\Admin\NotificationRepository;
+use App\Repositories\Admin\TradeInCarRepository;
 use App\Repositories\Admin\WalkThroughRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 
@@ -21,9 +26,17 @@ class WalkThroughAPIController extends AppBaseController
     /** @var  WalkThroughRepository */
     private $walkThroughRepository;
 
-    public function __construct(WalkThroughRepository $walkThroughRepo)
+    /** @var  TradeInCarRepository */
+    private $tradeInRepository;
+
+    /** @var  NotificationRepository */
+    private $notificationRepository;
+
+    public function __construct(WalkThroughRepository $walkThroughRepo, TradeInCarRepository $tradeInRepo, NotificationRepository $notificationRepo)
     {
         $this->walkThroughRepository = $walkThroughRepo;
+        $this->tradeInRepository = $tradeInRepo;
+        $this->notificationRepository = $notificationRepo;
     }
 
     /**
@@ -127,6 +140,7 @@ class WalkThroughAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateWalkThroughAPIRequest $request)
     {
@@ -240,6 +254,7 @@ class WalkThroughAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateWalkThroughAPIRequest $request)
     {
@@ -294,6 +309,7 @@ class WalkThroughAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Exception
      */
     public function destroy($id)
     {
@@ -307,5 +323,25 @@ class WalkThroughAPIController extends AppBaseController
         $walkThrough->delete();
 
         return $this->sendResponse($id, 'Walk Through deleted successfully');
+    }
+
+    /**
+     * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
+    public function pushForBidClosed()
+    {
+        $evolutions = $this->tradeInRepository->getClosedBids();
+        foreach ($evolutions as $evolution) {
+            $notification = [
+                'sender_id'   => 2,
+                'action_type' => Notification::NOTIFICATION_TYPE_EVALUATION_NEW_BID,
+                'url'         => null,
+                'ref_id'      => $evolution->id,
+                'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_EVALUATION_NEW_BID]
+            ];
+            $this->notificationRepository->notification($notification, $evolution->tradeAgainst->owner_id);
+        }
+        return $this->sendResponse(true, 'Walk Through retrieved successfully');
     }
 }

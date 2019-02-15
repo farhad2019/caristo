@@ -58,7 +58,7 @@ class TradeInCarRepository extends BaseRepository
         })->pluck('id');
 
         $user_brand_related_cars = ($brand_cars->count() > 0) ? implode(",", $brand_cars->toArray()) : 0;
-//        dd($user_brand_related_cars);
+
         return $this->model
             ->when(($hasBid), function ($q) use ($cars) {
                 return $q->whereRaw(DB::raw('CASE
@@ -96,25 +96,31 @@ class TradeInCarRepository extends BaseRepository
                 ->whereRaw(DB::raw('(bid_close_at > NOW()) > 0'));*/
             })
             ->when((!empty(array_filter($search))), function ($q) use ($search) {
-                return $q->whereHas('tradeAgainst', function ($tradeAgainst) use ($search) {
-                    return $tradeAgainst
-                        ->where('kilometer', 'like', '%' . $search['keyword'] . '%')
-                        ->orWhere('year', 'like', '%' . $search['keyword'] . '%')
-                        ->orWhere('chassis', 'like', '%' . $search['keyword'] . '%')
-                        ->orWhereHas('carModel', function ($carModel) use ($search) {
-                            return $carModel->whereHas('translations', function ($tr) use ($search) {
-                                return $tr->where('name', 'like', '%' . $search['keyword'] . '%')
-                                    ->where('locale', App::getLocale('en'));
-                            })
-                                ->orWhereHas('brand', function ($brand) use ($search) {
-                                    return $brand->whereHas('translations', function ($tr) use ($search) {
+                return $q
+                    ->when(isset($search['filerBy']), function ($filerBy) use ($search) {
+                        return $filerBy->where('type', (int)$search['filerBy']);
+                    })
+                    ->when(isset($search['keyword']), function ($keyword) use ($search) {
+                        return $keyword->whereHas('tradeAgainst', function ($tradeAgainst) use ($search) {
+                            return $tradeAgainst
+                                ->where('kilometer', 'like', '%' . $search['keyword'] . '%')
+                                ->orWhere('year', 'like', '%' . $search['keyword'] . '%')
+                                ->orWhere('chassis', 'like', '%' . $search['keyword'] . '%')
+                                ->orWhereHas('carModel', function ($carModel) use ($search) {
+                                    return $carModel->whereHas('translations', function ($tr) use ($search) {
                                         return $tr->where('name', 'like', '%' . $search['keyword'] . '%')
                                             ->where('locale', App::getLocale('en'));
-                                    });
+                                    })
+                                        ->orWhereHas('brand', function ($brand) use ($search) {
+                                            return $brand->whereHas('translations', function ($tr) use ($search) {
+                                                return $tr->where('name', 'like', '%' . $search['keyword'] . '%')
+                                                    ->where('locale', App::getLocale('en'));
+                                            });
+                                        });
                                 });
-                        });
 
-                });
+                        });
+                    });
             })
             ->when(($status > 0), function ($q) use ($status) {
                 return $q->where('status', $status);
@@ -142,6 +148,7 @@ class TradeInCarRepository extends BaseRepository
     /**
      * @param $request
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function saveRecord($request)
     {
@@ -222,6 +229,7 @@ class TradeInCarRepository extends BaseRepository
      * @param $request
      * @param $tradeInCar
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function updateRecord($request, $tradeInCar)
     {
@@ -244,5 +252,16 @@ class TradeInCarRepository extends BaseRepository
         }*/
 
         return $tradeInCar;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClosedBids()
+    {
+        return $this->model
+            ->where(['type' => TradeInCar::EVALUATE_CAR, 'status' => TradeInCar::UNREAD])
+            ->whereRaw(DB::raw('(bid_close_at < NOW()) > 0'))
+            ->get();
     }
 }

@@ -76,10 +76,12 @@ class Notification extends Model
 
     const NOTIFICATION_TYPE_TRADE_IN_NEW_BID = 10;
     const NOTIFICATION_TYPE_EVALUATION_NEW_BID = 20;
+    const NOTIFICATION_TYPE_TRADE_IN = 30;
 
     public static $NOTIFICATION_MESSAGE = [
-        self::NOTIFICATION_TYPE_TRADE_IN_NEW_BID => 'You have new bid on your car.',
-        self::NOTIFICATION_TYPE_EVALUATION_NEW_BID => 'You have new bid on your car.'
+        self::NOTIFICATION_TYPE_TRADE_IN_NEW_BID   => 'You have new bid on your car.',
+        self::NOTIFICATION_TYPE_EVALUATION_NEW_BID => 'Your evolution request is available to view now.!!',
+        self::NOTIFICATION_TYPE_TRADE_IN           => 'You have new TradeIn Request.',
     ];
 
     public $fillable = [
@@ -97,12 +99,12 @@ class Notification extends Model
      * @var array
      */
     protected $casts = [
-        'sender_id' => 'int',
-        'url' => 'string',
-        'ref_id' => 'int',
+        'sender_id'   => 'int',
+        'url'         => 'string',
+        'ref_id'      => 'int',
         'action_type' => 'int',
-        'message' => 'string',
-        'status' => 'boolean'
+        'message'     => 'string',
+        'status'      => 'boolean'
     ];
 
     /**
@@ -142,7 +144,7 @@ class Notification extends Model
      */
     public static $rules = [
         'action_type' => 'required',
-        'message' => 'required',
+        'message'     => 'required',
     ];
 
     /**
@@ -152,7 +154,7 @@ class Notification extends Model
      */
     public static $update_rules = [
         'action_type' => 'required',
-        'message' => 'required',
+        'message'     => 'required',
     ];
 
     /**
@@ -162,7 +164,7 @@ class Notification extends Model
      */
     public static $api_rules = [
         'action_type' => 'required',
-        'message' => 'required'
+        'message'     => 'required'
     ];
 
     /**
@@ -194,7 +196,6 @@ class Notification extends Model
      */
     public function getDeliveryStatusAttribute()
     {
-
         $delivery_status = 0;
         $delivery_status = NotificationUser::where('notification_id', $this->id)->pluck('status')->first();
         return $delivery_status;

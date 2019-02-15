@@ -7,6 +7,7 @@ use App\DataTables\Admin\TradeInCarDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateTradeInCarRequest;
 use App\Http\Requests\Admin\UpdateTradeInCarRequest;
+use App\Models\NotificationUser;
 use App\Models\TradeInCar;
 use App\Repositories\Admin\CarEvaluationBidRepository;
 use App\Repositories\Admin\TradeInCarRepository;
@@ -67,12 +68,15 @@ class TradeInCarController extends AppBaseController
     public function index(Request $request, TradeInCarDataTable $tradeInCarDataTable)
     {
         $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(false, $request->all());
+        $notifications = Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->get();
+
         /*dd($tradeInRequests);
         dd($tradeInRequests->getBindings(), $tradeInRequests->toSql());
         if (Auth::user()->hasRole('showroom-owner')) {*/
         return view('admin.showroom.carsListing')
             ->with([
-                'tradeInRequests' => $tradeInRequests
+                'tradeInRequests' => $tradeInRequests,
+                'notifications'   => $notifications
             ]);
 //        }
 //        $myCars = Auth::user()->cars()->whereHas('myTradeCars', function ($cars) {
@@ -125,6 +129,7 @@ class TradeInCarController extends AppBaseController
      * @param  int $id
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function show($id)
     {
@@ -138,6 +143,9 @@ class TradeInCarController extends AppBaseController
 
 //        if (Auth::user()->hasRole('showroom-owner')) {
         $this->tradeInCarRepository->update(['status' => 10], $id);
+        $notificationIds = $this->notificationRepository->findWhere(['ref_id' => $id])->pluck('id');
+//        NotificationUser::where('notification_id', $notification->id)->update(['status' => NotificationUser::STATUS_READ]);
+        Auth::user()->notifications()->whereIn('notification_id', $notificationIds)->update(['status' => NotificationUser::STATUS_READ]);
         return view('admin.showroom.details')->with([
             'tradeInRequest' => $tradeInRequest
         ]);
@@ -175,6 +183,7 @@ class TradeInCarController extends AppBaseController
      * @param UpdateTradeInCarRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateTradeInCarRequest $request)
     {
@@ -188,23 +197,23 @@ class TradeInCarController extends AppBaseController
             $tradeInCar = $this->tradeInCarRepository->updateRecord($request, $tradeInCar);
             Flash::success('Bid on trade in request has been submitted successfully');
             $notification_type = Notification::NOTIFICATION_TYPE_TRADE_IN_NEW_BID;
+
+            ################# NOTIFICATION ####################
+            $notification = [
+                'sender_id'   => Auth::id(),
+                'action_type' => $notification_type,
+                'url'         => null,
+                'ref_id'      => $tradeInCar->id,
+                'message'     => Notification::$NOTIFICATION_MESSAGE[$notification_type]
+            ];
+
+            $this->notificationRepository->notification($notification, $tradeInCar->tradeAgainst->owner_id);
         } else {
             $this->tradeInCarRepository->update(['updated_at' => Carbon::now()->format('Y-m-d H:i:s')], $id);
             $this->bidRepository->saveRecord($request, $tradeInCar);
             Flash::success('Bid on evaluation request has been submitted successfully');
-            $notification_type = Notification::NOTIFICATION_TYPE_EVALUATION_NEW_BID;
+            //$notification_type = Notification::NOTIFICATION_TYPE_EVALUATION_NEW_BID;
         }
-
-        ################# NOTIFICATION ####################
-        $notification = [
-            'sender_id' => Auth::id(),
-            'action_type' => $notification_type,
-            'url' => null,
-            'ref_id' => $tradeInCar->id,
-            'message' => Notification::$NOTIFICATION_MESSAGE[$notification_type]
-        ];
-
-        $this->notificationRepository->notification($notification, $tradeInCar->tradeAgainst->owner_id);
 
         return redirect(route('admin.tradeInCars.index'));
     }

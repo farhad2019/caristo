@@ -11,6 +11,7 @@ use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\CarInteraction;
 use App\Models\News;
 use App\Models\NewsInteraction;
+use App\Models\NotificationUser;
 use App\Models\Role;
 use App\Models\TradeInCar;
 use App\Models\User;
@@ -150,7 +151,7 @@ class UserController extends AppBaseController
                 if ($data['type'] == CarInteraction::TYPE_CLICK_CATEGORY) {
                     $car = $this->categoryRepository->findWithoutFail($data['car_id']);
                     $second_tile = "Category : " . $car['name'];
-                }else{
+                } else {
                     $car = $this->carRepository->findWithoutFail($data['car_id']);
                     $second_tile = "Car : " . $car['name'];
                 }
@@ -805,10 +806,12 @@ class UserController extends AppBaseController
         $this->BreadCrumbName = 'Profile';
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
         if ($user->hasRole('showroom-owner')) {
+            $notifications = Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->get();
             return view('admin.showroom.profile')->with([
                 'user'          => $user,
                 'regions'       => $regions,
                 'nationalities' => $nationalities,
+                'notifications' => $notifications,
                 'gender'        => UserDetail::$GENDER
             ]);
         }
@@ -823,6 +826,7 @@ class UserController extends AppBaseController
      * @param $id
      * @param UpdateShowroomProfileRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function updateShowroomProfile($id, UpdateShowroomProfileRequest $request)
     {

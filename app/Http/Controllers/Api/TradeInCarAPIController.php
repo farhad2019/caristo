@@ -6,10 +6,13 @@ use App\Criteria\TradeInCarCriteria;
 use App\Http\Requests\Api\CreateTradeInCarAPIRequest;
 use App\Http\Requests\Api\UpdateTradeInCarAPIRequest;
 use App\Models\MyCar;
+use App\Models\Notification;
 use App\Models\TradeInCar;
+use App\Repositories\Admin\NotificationRepository;
 use App\Repositories\Admin\TradeInCarRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -24,9 +27,13 @@ class TradeInCarAPIController extends AppBaseController
     /** @var  TradeInCarRepository */
     private $tradeInCarRepository;
 
-    public function __construct(TradeInCarRepository $tradeInCarRepo)
+    /** @var  NotificationRepository */
+    private $notificationRepository;
+
+    public function __construct(TradeInCarRepository $tradeInCarRepo, NotificationRepository $notificationRepo)
     {
         $this->tradeInCarRepository = $tradeInCarRepo;
+        $this->notificationRepository = $notificationRepo;
     }
 
     /**
@@ -161,7 +168,6 @@ class TradeInCarAPIController extends AppBaseController
         }
 
         if ($request->type == TradeInCar::EVALUATE_CAR) {
-
             /*$evaluateCarRequest = $this->tradeInCarRepository->findWhere(['customer_car_id' => $request->customer_car_id, 'type' => $request->type]);
             if ($evaluateCarRequest->count() > 0) {
                 return $this->sendError('This car has already been requested for evaluation!');
@@ -171,8 +177,8 @@ class TradeInCarAPIController extends AppBaseController
         }
 
         $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
-        $subject  = 'New Trade In Request';
-        if ($tradeInCar->owner_car_id) {
+        $subject = 'New Trade In Request';
+        if ($request->type == TradeInCar::TRADE_IN) {
             if ($tradeInCar->myCar->category_id == MyCar::LIMITED_EDITION) {
                 foreach ($tradeInCar->myCar->dealers as $dealer) {
                     $name = $dealer->name;
@@ -184,6 +190,19 @@ class TradeInCarAPIController extends AppBaseController
                             $mail->to($email, $name);
                             $mail->subject($subject);
                         });
+
+                    ################# NOTIFICATION ####################
+                    $dealerTradeInCar = $this->tradeInCarRepository->findWhere(['user_id' => $dealer->id, 'owner_car_id' => $tradeInCar->owner_car_id, 'customer_car_id' => $tradeInCar->customer_car_id])->first();
+
+                    $notification = [
+                        'sender_id'   => Auth::id(),
+                        'action_type' => Notification::NOTIFICATION_TYPE_TRADE_IN,
+                        'url'         => null,
+                        'ref_id'      => $dealerTradeInCar->id,
+                        'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_TRADE_IN]
+                    ];
+
+                    $this->notificationRepository->notification($notification, $dealer->id);
                 }
                 return $this->sendResponse($tradeInCar->toArray(), $message);
             }
@@ -199,6 +218,17 @@ class TradeInCarAPIController extends AppBaseController
                     $mail->to($email, $name);
                     $mail->subject($subject);
                 });
+
+            ################# NOTIFICATION ####################
+            $notification = [
+                'sender_id'   => Auth::id(),
+                'action_type' => Notification::NOTIFICATION_TYPE_TRADE_IN,
+                'url'         => null,
+                'ref_id'      => $tradeInCar->id,
+                'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_TRADE_IN]
+            ];
+
+            $this->notificationRepository->notification($notification, $tradeInCar->myCar->owner_id);
         }
 
         return $this->sendResponse($tradeInCar->toArray(), $message);
@@ -315,6 +345,7 @@ class TradeInCarAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateTradeInCarAPIRequest $request)
     {

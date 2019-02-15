@@ -63,6 +63,9 @@ class TradeInCar extends Model
 
     protected $dates = ['deleted_at'];
 
+    const READ = 10;
+    const UNREAD = 20;
+
     const TRADE_IN = 10;
     const EVALUATE_CAR = 20;
 

@@ -8,6 +8,7 @@ use App\DataTables\Admin\BidsHistoryDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateBidsHistoryRequest;
 use App\Http\Requests\Admin\UpdateBidsHistoryRequest;
+use App\Models\NotificationUser;
 use App\Repositories\Admin\BidsHistoryRepository;
 use App\Repositories\Admin\MakeBidRepository;
 use App\Repositories\Admin\MyCarRepository;
@@ -57,12 +58,13 @@ class BidsHistoryController extends AppBaseController
     public function index(BidsHistoryDataTable $bidsHistoryDataTable)
     {
         $tradeInRequests = $this->tradeInCarRepository->getTradeInCars(true);
-
+        $notifications = Auth::user()->notifications()->where('status', NotificationUser::STATUS_DELIVERED)->get();
 //        if (Auth::user()->hasRole('showroom-owner')) {
-            return view('admin.showroom.carsListing')
-                ->with([
-                    'tradeInRequests' => $tradeInRequests
-                ]);
+        return view('admin.showroom.carsListing')
+            ->with([
+                'tradeInRequests' => $tradeInRequests,
+                'notifications'   => $notifications
+            ]);
 //        }
 
         /*$this->carRepository->pushCriteria(new BidsHistoryForShowroomOwnerCriteria($request));

@@ -13,8 +13,7 @@
         </li>--}}
         <li class="{{ (Request::segments()[1] == 'tradeInCars')?'current':'' }}">
             <a href="{{ route('admin.tradeInCars.index') }}" title="New Requests">
-                <span class="icon-icon-1"></span> New Requests <i class="badge"></i>
-
+                <span class="icon-icon-1"></span> New Requests <i class="badge">{{ $notifications->count() > 0 ? $notifications->count() : '' }}</i>
                     {{--Span--}}
                 </a>
 
