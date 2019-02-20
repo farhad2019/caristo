@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Request;
 
 /**
  * @property mixed attribute
+ * @property mixed meta_title
  */
 class CreateMyCarRequest extends BaseFormRequest
 {

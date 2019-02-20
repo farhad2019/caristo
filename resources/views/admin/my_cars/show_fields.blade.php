@@ -1,5 +1,38 @@
 <div class="box">
     <div class="box-header with-border">
+        <h3 class="box-title">Meta Information</h3>
+        <div class="box-tools pull-right">
+            <!-- Collapse Button -->
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+        </div>
+        <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div class="col-md-6">
+            <!-- Engine Type Id Field -->
+            <dt>{!! Form::label('engine_type_id', 'Meta Title :') !!}</dt>
+            <dd>{!! isset($myCar->meta[0]) ? $myCar->meta[0]->title : 'N/A' !!}</dd>
+        </div>
+        <div class="col-md-6">
+            <!-- Engine Type Id Field -->
+            <dt>{!! Form::label('engine_type_id', 'Meta Tags :') !!}</dt>
+            <dd>{!! isset($myCar->meta[0]) ? $myCar->meta[0]->tags : 'N/A' !!}</dd>
+        </div>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <!-- Engine Type Id Field -->
+        <dt>{!! Form::label('engine_type_id', 'Meta Description :') !!}</dt>
+        <dd>{!! isset($myCar->meta[0]) ? $myCar->meta[0]->description : 'N/A' !!}</dd>
+    </div>
+    <!-- box-footer -->
+</div>
+
+<div class="box">
+    <div class="box-header with-border">
         <h3 class="box-title">Basic Information</h3>
         <div class="box-tools pull-right">
             <!-- Collapse Button -->

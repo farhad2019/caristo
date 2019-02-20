@@ -1,10 +1,6 @@
 <!-- Category Id Field -->
 <dt>{!! Form::label('category_id', 'Category:') !!}</dt>
-{{--<dd>{!! $news->category->name !!}</dd>--}}
-<dd>
-    <h3 class='label label-success'>{!! $news->category->name !!}</h3>
-</dd>
-
+<dd><h3 class='label label-success'>{!! $news->category->name !!}</h3></dd>
 
 <!-- Headline Field -->
 <dt>{!! Form::label('headline', 'Headline:') !!}</dt>
@@ -13,6 +9,18 @@
 <!-- Headline Field -->
 <dt>{!! Form::label('description', 'Description:') !!}</dt>
 <dd style="padding: 0 65px 0 0;">{!! nl2br($news->description) !!}</dd>
+
+<!-- Headline Field -->
+<dt>{!! Form::label('description', 'Meta Title:') !!}</dt>
+<dd>{!! isset($news->meta[0]) ? $news->meta[0]->title : 'N/A' !!}</dd>
+
+<!-- Headline Field -->
+<dt>{!! Form::label('description', 'Meta Tags:') !!}</dt>
+<dd>{!! isset($news->meta[0]) ? $news->meta[0]->title : 'N/A' !!}</dd>
+
+<!-- Headline Field -->
+<dt>{!! Form::label('description', 'Meta Description:') !!}</dt>
+<dd>{!! isset($news->meta[0]) ? $news->meta[0]->title : 'N/A' !!}</dd>
 
 <!-- Headline Field -->
 <dt>{!! Form::label('source', 'Source:') !!}</dt>

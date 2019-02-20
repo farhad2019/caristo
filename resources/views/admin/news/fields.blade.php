@@ -1,3 +1,36 @@
+<!-- Meta Title Field -->
+<div class="form-group col-sm-6 {{ $errors->has('meta_title') ? ' has-error' : '' }}">
+    {!! Form::label('meta_title', 'Meta Title:*') !!}
+    {!! Form::text('meta_title', isset($news->meta[0])?$news->meta[0]->title:null, ['class' => 'form-control', 'maxLength' => 55, 'required']) !!}
+    @if ($errors->has('meta_title'))
+        <span class="help-block" style="color: red;">
+            <strong>{{ $errors->first('meta_title') }}</strong>
+        </span>
+    @endif
+</div>
+
+<!-- Meta Tag Field -->
+<div class="form-group col-sm-6 {{ $errors->has('meta_tag') ? ' has-error' : '' }}">
+    {!! Form::label('meta_tag', 'Meta Tag:*') !!}
+    {!! Form::text('meta_tag', isset($news->meta[0])?$news->meta[0]->tags:null, ['class' => 'form-control', 'maxLength' => 55, 'required']) !!}
+    @if ($errors->has('meta_tag'))
+        <span class="help-block" style="color: red;">
+            <strong>{{ $errors->first('meta_tag') }}</strong>
+        </span>
+    @endif
+</div>
+
+<!-- Meta Description Field -->
+<div class="form-group col-sm-6 {{ $errors->has('Meta Description') ? ' has-error' : '' }}">
+    {!! Form::label('meta_description', 'meta_description:*') !!}
+    {!! Form::text('meta_description', isset($news->meta[0])?$news->meta[0]->description:null, ['class' => 'form-control', 'maxLength' => 55, 'required']) !!}
+    @if ($errors->has('meta_description'))
+        <span class="help-block" style="color: red;">
+            <strong>{{ $errors->first('meta_description') }}</strong>
+        </span>
+    @endif
+</div>
+
 <!-- Category Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('category_id', 'Category:') !!}

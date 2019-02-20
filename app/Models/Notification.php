@@ -79,7 +79,7 @@ class Notification extends Model
     const NOTIFICATION_TYPE_TRADE_IN = 30;
 
     public static $NOTIFICATION_MESSAGE = [
-        self::NOTIFICATION_TYPE_TRADE_IN_NEW_BID   => 'You have new bid on your car.',
+        self::NOTIFICATION_TYPE_TRADE_IN_NEW_BID   => 'You have new offer on your car.',
         self::NOTIFICATION_TYPE_EVALUATION_NEW_BID => 'Your evolution request is available to view now.!!',
         self::NOTIFICATION_TYPE_TRADE_IN           => 'You have new TradeIn Request.',
     ];

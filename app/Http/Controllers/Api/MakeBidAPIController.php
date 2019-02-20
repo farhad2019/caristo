@@ -224,6 +224,13 @@ class MakeBidAPIController extends AppBaseController
      *          type="integer",
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="sort_by_version",
+     *          description="sort by version, 0/1",
+     *          required=false,
+     *          type="integer",
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",

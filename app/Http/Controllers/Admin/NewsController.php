@@ -7,6 +7,8 @@ use App\Helper\BreadcrumbsRegister;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Admin\CreateNewsRequest;
 use App\Http\Requests\Admin\UpdateNewsRequest;
+use App\Models\MetaInformation;
+use App\Models\News;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\CommentRepository;
 use App\Repositories\Admin\NewsRepository;
@@ -81,6 +83,15 @@ class NewsController extends AppBaseController
     {
         $news = $this->newsRepository->createRecord($request);
 
+        if (strlen($request->meta_title) > 0) {
+            MetaInformation::create([
+                'instance_type' => News::INSTANCE,
+                'instance_id'   => $news->id,
+                'title'         => $request->meta_title,
+                'tags'          => $request->meta_tag ?? '',
+                'description'   => $request->meta_description ?? '',
+            ]);
+        }
         Flash::success('News saved successfully.');
         return redirect(route('admin.news.index'));
     }
@@ -153,6 +164,24 @@ class NewsController extends AppBaseController
             return redirect(route('admin.news.index'));
         }
         $news = $this->newsRepository->updateRecord($request, $news);
+
+        if (strlen($request->meta_title) > 0) {
+            if ($news->meta->count() > 0){
+                $news->meta[0]->update([
+                    'title'       => $request->meta_title,
+                    'tags'        => $request->meta_tag ?? '',
+                    'description' => $request->meta_description ?? '',
+                ]);
+            }else{
+                MetaInformation::create([
+                    'instance_type' => News::INSTANCE,
+                    'instance_id'   => $news->id,
+                    'title'         => $request->meta_title,
+                    'tags'          => $request->meta_tag ?? '',
+                    'description'   => $request->meta_description ?? '',
+                ]);
+            }
+        }
 
         Flash::success('News updated successfully.');
         return redirect(route('admin.news.index'));

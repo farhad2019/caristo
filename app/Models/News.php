@@ -74,6 +74,8 @@ class News extends Model
     public $translatedAttributes = ['headline', 'description', 'source'];
     protected $dates = ['deleted_at'];
 
+    const INSTANCE = 'news';
+
     const TYPE_IMAGE = 10;
     const TYPE_VIDEO = 20;
 
@@ -128,7 +130,7 @@ class News extends Model
      */
     protected $with = [
         'media',
-//        'category'
+        'meta'
     ];
 
     /**
@@ -165,6 +167,7 @@ class News extends Model
         'is_favorite',
         'link',
         'media',
+        'meta',
         'source_image_url',
 //        'category'
 //        'deleted_at'
@@ -248,11 +251,19 @@ class News extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function meta()
+    {
+        return $this->morphMany(MetaInformation::class, 'instance');
+    }
+
+    /**
      * @return string
      */
     public function getMorphClass()
     {
-        return 'news';
+        return self::INSTANCE;
     }
 
     /**

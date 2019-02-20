@@ -56,7 +56,7 @@ class HomeController extends Controller
         $this->newsRepository = $newsRepo;
         $this->carRepository = $carRepo;
     }
-
+//unlink media file from folder
     /**
      * Show the application dashboard.
      *

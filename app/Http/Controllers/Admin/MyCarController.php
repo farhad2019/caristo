@@ -8,6 +8,7 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateMyCarRequest;
 use App\Models\CarRegion;
 use App\Models\DepreciationTrend;
+use App\Models\MetaInformation;
 use App\Models\MyCar;
 use App\Models\TradeInCar;
 use App\Repositories\Admin\CarAttributeRepository;
@@ -340,6 +341,15 @@ class MyCarController extends AppBaseController
         //$request->validate($validationArray, $validationMessages);
         $myCar = $this->myCarRepository->saveRecord($request);
 
+        if (strlen($request->meta_title) > 0) {
+            MetaInformation::create([
+                'instance_type' => MyCar::INSTANCE,
+                'instance_id'   => $myCar->id,
+                'title'         => $request->meta_title,
+                'tags'          => $request->meta_tag ?? '',
+                'description'   => $request->meta_description ?? '',
+            ]);
+        }
         if ($request->category_id != MyCar::LIMITED_EDITION) {
             if (!empty(array_filter($request->attribute))) {
                 foreach ($request->attribute as $key => $item) {
@@ -557,6 +567,7 @@ class MyCarController extends AppBaseController
      * @param Request $request
      *
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, Request $request)
     {
@@ -863,6 +874,14 @@ class MyCarController extends AppBaseController
             CarRegion::where('car_id', $id)->delete();
         }
         $myCar = $this->myCarRepository->updateRecord($request, $myCar);
+
+        if (strlen($request->meta_title) > 0) {
+            $myCar->meta[0]->update([
+                'title'       => $request->meta_title,
+                'tags'        => $request->meta_tag ?? '',
+                'description' => $request->meta_description ?? '',
+            ]);
+        }
 
         if ($request->category_id != MyCar::LIMITED_EDITION) {
             if (!empty(array_filter($request->attribute))) {

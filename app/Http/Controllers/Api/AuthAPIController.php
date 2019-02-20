@@ -22,6 +22,7 @@ use App\Repositories\Admin\UserdetailRepository;
 use App\Repositories\Admin\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -239,6 +240,7 @@ class AuthAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function login(LoginAPIRequest $request)
     {
@@ -435,6 +437,7 @@ class AuthAPIController extends AppBaseController
     protected function respondWithToken($token)
     {
         $user = auth()->guard('api')->setToken($token)->user()->toArray();
+        DB::table('user_tokens')->insert(['user_id' => $user['id'], 'token' => $token, 'created_at' => Carbon::now()]);
         $user = array_merge($user, [
             'access_token' => $token,
             'token_type'   => 'bearer',
@@ -717,6 +720,7 @@ class AuthAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function socialLogin(SocialLoginAPIRequest $request)
     {
@@ -984,12 +988,12 @@ class AuthAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function updateUserProfile(UpdateUserProfileRequest $request)
     {
         $user = \Auth::user();
         $userData = $request->only('name', 'status');
-
         $details = $request->only(['name', 'country_code', 'phone', 'about', 'gender', 'nationality', 'profession', 'dob']);
 
         if ($request->hasFile('image')) {
@@ -1005,7 +1009,7 @@ class AuthAPIController extends AppBaseController
             $this->userRepository->update($userData, $user->id);
 
             if (!empty($userData['status'])) {
-                auth()->guard('api')->logout();
+                //auth()->guard('api')->logout();
             }
         }
 
@@ -1017,11 +1021,14 @@ class AuthAPIController extends AppBaseController
             $details['first_name'] = $request->name;
             $this->userDetailRepository->update($details, $user->details->id);
         }
-//        if ($userData['status'] == 0){
-//            auth()->guard('api')->logout();
+
+//        if (isset($userData['status'])){
+//            if ($userData['status'] == 0){
+//                $this->invalidateTokens($user->id);
+//                //auth()->guard('api')->logout();
+//            }
 //        }
         return $this->sendResponse(['user' => $this->userRepository->findWithoutFail($user->id)->toArray()], 'Profile Updated Successfully');
-
     }
 
     /**
@@ -1100,4 +1107,18 @@ class AuthAPIController extends AppBaseController
         $categories = $this->userRepository->findFavoriteNews($request, $this->categoryRepo);
         return $this->sendResponse($categories, 'Favorite News retrieved successfully');
     }
+
+    /*public function invalidateTokens($user_id)
+    {
+        $tokens = DB::table('user_tokens')->where(['user_id' => $user_id])->pluck('token');
+//        JWTAuth::invalidate($tokens);
+//        var_dump($tokens->toArray());
+//        exit();
+        foreach ($tokens as $token) {
+            JWTAuth::invalidate();
+        }
+        DB::table('user_tokens')->where(['user_id' => $user_id])->delete();
+        var_dump($tokens->toArray());
+        exit();
+    }*/
 }

@@ -2372,6 +2372,13 @@
                         "description": "sort by year, 0/1",
                         "required": false,
                         "type": "integer"
+                    },
+                    {
+                        "name": "sort_by_version",
+                        "in": "query",
+                        "description": "sort by version, 0/1",
+                        "required": false,
+                        "type": "integer"
                     }
                 ],
                 "responses": {

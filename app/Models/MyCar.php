@@ -197,8 +197,7 @@ class MyCar extends Model
     public $table = 'cars';
     protected $dates = ['deleted_at', 'bid_close_at'];
 
-    const CAR_LIMIT = 15;
-    const FEATURED_CAR_LIMIT = 5;
+    const INSTANCE = 'car';
 
     const ACTIVE = 10;
     const INACTIVE = 20;
@@ -307,6 +306,7 @@ class MyCar extends Model
         'carModel',
         'carType',
         'media',
+        'meta',
         'myCarAttributes',
         'regionalSpecs',
         'DepreciationTrend',
@@ -396,6 +396,7 @@ class MyCar extends Model
         'carModel',
         'carRegions',
         'media',
+        'meta',
         'top_bids',
         'regionalSpecs',
         'myCarAttributes',
@@ -487,11 +488,19 @@ class MyCar extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function meta()
+    {
+        return $this->morphMany(MetaInformation::class, 'instance');
+    }
+
+    /**
      * @return string
      */
     public function getMorphClass()
     {
-        return 'car';
+        return self::INSTANCE;
     }
 
     /**

@@ -160,16 +160,25 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         });
 
         $sort_by_year = $this->request->get('sort_by_year', 0);
+        $sort_by_version = $this->request->get('sort_by_version', 0);
         $is_for_review = $this->request->get('is_for_review', 0);
+
         $model = $model->when(($is_for_review > 0), function ($query) {
             return $query->orderBy('bid_close_at', 'DESC ');
         });
+
         $model = $model->when(($is_for_review == 0 && $sort_by_year == 0), function ($query) {
             return $query->orderBy('created_at', 'DESC');
         });
 
         $model = $model->when(($sort_by_year > 0), function ($query) {
             return $query->groupBy('year')->orderBy('year', 'ASC');
+        });
+
+        $model = $model->when(($sort_by_version > 0), function ($query) {
+            return $query->whereHas('version', function ($version){
+                    $version->orderBy('name', 'ASC');
+                })->groupBy('version_id');
         });
         /*var_dump($model->getBindings());
         var_dump($model->toSql());
