@@ -172,3 +172,5 @@ Route::resource('v1/carModels', 'CarModelAPIController');
 Route::resource('v1/carVersions', 'CarVersionAPIController');
 
 Route::resource('v1/carTypes', 'CarTypeAPIController');
+
+Route::resource('v1/subscribers', 'SubscriberAPIController');
