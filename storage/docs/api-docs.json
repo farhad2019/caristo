@@ -5196,11 +5196,6 @@
                 "email"
             ],
             "properties": {
-                "id": {
-                    "description": "id",
-                    "type": "integer",
-                    "format": "int32"
-                },
                 "email": {
                     "description": "email",
                     "type": "string"

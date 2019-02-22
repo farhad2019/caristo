@@ -41,6 +41,7 @@ class CarEvaluationBidRepository extends BaseRepository
      * @param $request
      * @param $tradeInCar
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function saveRecord($request, $tradeInCar)
     {
@@ -61,8 +62,6 @@ class CarEvaluationBidRepository extends BaseRepository
      */
     public function updateRecord($request, $tradeInCar)
     {
-
-
         /*if ($tradeInCar) {
             $this->notificationRepository = App::make(NotificationRepository::class);
 

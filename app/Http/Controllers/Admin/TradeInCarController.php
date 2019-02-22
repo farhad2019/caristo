@@ -110,6 +110,7 @@ class TradeInCarController extends AppBaseController
      * @param CreateTradeInCarRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateTradeInCarRequest $request)
     {
@@ -193,8 +194,11 @@ class TradeInCarController extends AppBaseController
             return redirect(route('admin.tradeInCars.index'));
         }
 
+        $this->tradeInCarRepository->update(['updated_at' => Carbon::now()->format('Y-m-d H:i:s')], $id);
+        $this->bidRepository->saveRecord($request, $tradeInCar);
+
         if ($request->type == TradeInCar::TRADE_IN) {
-            $tradeInCar = $this->tradeInCarRepository->updateRecord($request, $tradeInCar);
+            //$tradeInCar = $this->tradeInCarRepository->updateRecord($request, $tradeInCar);
             Flash::success('Bid on trade in request has been submitted successfully');
             $notification_type = Notification::NOTIFICATION_TYPE_TRADE_IN_NEW_BID;
 
@@ -209,8 +213,8 @@ class TradeInCarController extends AppBaseController
 
             $this->notificationRepository->notification($notification, $tradeInCar->tradeAgainst->owner_id);
         } else {
-            $this->tradeInCarRepository->update(['updated_at' => Carbon::now()->format('Y-m-d H:i:s')], $id);
-            $this->bidRepository->saveRecord($request, $tradeInCar);
+//            $this->tradeInCarRepository->update(['updated_at' => Carbon::now()->format('Y-m-d H:i:s')], $id);
+//            $this->bidRepository->saveRecord($request, $tradeInCar);
             Flash::success('Bid on evaluation request has been submitted successfully');
             //$notification_type = Notification::NOTIFICATION_TYPE_EVALUATION_NEW_BID;
         }

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer owner_car_id
  * @property integer customer_car_id
  * @property integer user_id
+ * @property integer type
  * @property double amount
  * @property string notes
  * @property string created_at
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property MyCar $trade_against
  * @property MyCar $my_car
  * @property \Carbon\Carbon bid_close_at
+ * @property CarEvaluationBid evaluationDetails
  *
  * @SWG\Definition(
  *      definition="TradeInCar",
@@ -110,8 +112,8 @@ class TradeInCar extends Model
      * @var array
      */
     protected $with = [
-        'dealerInfo',
-        'evaluationDetails',
+//        'dealerInfo',
+//        'evaluationDetails',
         'myCar',
         'tradeAgainst'
     ];
@@ -121,7 +123,9 @@ class TradeInCar extends Model
      *
      * @var array
      */
-    protected $appends = [];
+    protected $appends = [
+        'offer_details'
+    ];
 
     /**
      * The attributes that should be visible in toArray.
@@ -131,14 +135,15 @@ class TradeInCar extends Model
     protected $visible = [
         'id',
         'myCar',
-        'amount',
-        'currency',
         'notes',
-        'type',
-//        'evaluationDetails',
-        'dealerInfo',
+        'offer_details',
         'bid_close_at',
-        'tradeAgainst'
+        'tradeAgainst',
+//        'amount',
+//        'currency',
+//        'type',
+//        'evaluationDetails',
+//        'dealerInfo',
     ];
 
     /**
@@ -196,8 +201,37 @@ class TradeInCar extends Model
         return $this->hasMany(CarEvaluationBid::class, 'evaluation_id')->orderBy('amount', 'DESC');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function dealerInfo()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return array|CarEvaluationBid
+     */
+    public function getOfferDetailsAttribute()
+    {
+        $OfferDetails = [];
+        if ($this->type == TradeInCar::TRADE_IN) {
+            $car = $this->myCar()->first();
+            if ($car->category_id == MyCar::LIMITED_EDITION) {
+                $dealers = $car['dealers'];
+                foreach ($dealers as $key => $dealer) {
+                    $OfferDetails[$key]['user'] = $dealer;
+                    $OfferDetails[$key]['amount'] = $this->evaluationDetails()->where('user_id', $dealer['id'])->first()['amount'];
+                    $OfferDetails[$key]['currency'] = $this->evaluationDetails()->where('user_id', $dealer['id'])->first()['currency'];
+                }
+                return $OfferDetails;
+            } else {
+                $OfferDetails['user'] = $car['owner'];
+                $OfferDetails['amount'] = $this->evaluationDetails()->where('user_id', $car['owner']['id'])->first()['amount'];
+                $OfferDetails['currency'] = $this->evaluationDetails()->where('user_id', $car['owner']['id'])->first()['currency'];
+                return $OfferDetails;
+            }
+        }
+        return $this->evaluationDetails;
     }
 }

@@ -298,7 +298,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function likeCars()
     {
@@ -306,7 +306,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function viewCars()
     {
@@ -397,9 +397,18 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function dealers()
+    public function deals()
     {
         return $this->belongsToMany(MyCar::class, 'user_brands', 'user_id', 'car_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function dealerOf()
+    {
+        return $this->belongsToMany(MyCar::class, 'car_dealers', 'user_id', 'car_id');
+        //return $this->belongsToMany(MyCar::class, 'user_brands', 'user_id', 'car_id');
     }
 
     /**

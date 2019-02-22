@@ -68,13 +68,13 @@
                     {{ $tradeInRequest->tradeAgainst->regionalSpecs->name }}
                 </p>
             </li>
-            {{--<li>--}}
-            {{--<span class="icon-icon-12"></span>--}}
-            {{--<p>--}}
-            {{--<small>engine type</small>--}}
-            {{--{{ $tradeInRequest->tradeAgainst->engineType->name?? '-' }}--}}
-            {{--</p>--}}
-            {{--</li>--}}
+            {{--<li>
+            <span class="icon-icon-12"></span>
+            <p>
+            <small>engine type</small>
+            {{ $tradeInRequest->tradeAgainst->engineType->name?? '-' }}
+            </p>
+            </li>--}}
             @foreach($tradeInRequest->tradeAgainst->myCarAttributes as $attribute)
                 @if($attribute->carAttribute->name !== 'Trim')
                     <li>
@@ -121,10 +121,10 @@
                 </li>
             @endforeach--}}
             <li>
-                <span class="icon-icon-16"></span>
+                <span class="icon-icon-9"></span>
                 <p>
-                    <small>Additional Notes</small>
-                    {{ $tradeInRequest->tradeAgainst->notes }}
+                    <small>Additional Notes </small>
+                    {!! $tradeInRequest->tradeAgainst->notes !!}
                 </p>
             </li>
         </ul>
@@ -202,7 +202,7 @@
                         </svg>
                     </div>
                     <div class="controlls">
-                        <div style="font-size: 18px;"> {!! ($tradeInRequest->type == \App\Models\TradeInCar::TRADE_IN ) ? number_format($tradeInRequest->amount) . '<br>'. $tradeInRequest->currency : number_format($tradeInRequest->evaluationDetails()->where('user_id', \Illuminate\Support\Facades\Auth::id())->first()->amount) . '<br>' . $tradeInRequest->evaluationDetails()->where('user_id', \Illuminate\Support\Facades\Auth::id())->first()->currency !!}
+                        <div style="font-size: 18px;"> {!! number_format($tradeInRequest->evaluationDetails()->where('user_id', \Illuminate\Support\Facades\Auth::id())->first()->amount) . '<br>' . $tradeInRequest->evaluationDetails()->where('user_id', \Illuminate\Support\Facades\Auth::id())->first()->currency !!}
                         </div>
                         <button class="play" id="pause"></button>
                     </div>

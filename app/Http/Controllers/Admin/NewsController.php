@@ -212,6 +212,7 @@ class NewsController extends AppBaseController
     /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
     public function confirmCancel($id)
     {
