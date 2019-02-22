@@ -157,6 +157,7 @@ class NotificationAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateNotificationAPIRequest $request)
     {

@@ -18,6 +18,14 @@ class NotificationDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
+        $dataTable->editColumn('action_type', function ($model) {
+            return Notification::$NOTIFICATION_ACTION_TYPE[$model->action_type];
+        });
+
+        $dataTable->editColumn('created_at', function ($model) {
+            return $model->created_at->timezone(session('timezone'))->format('M d, Y h:s');
+        });
+
         return $dataTable->addColumn('action', 'admin.notifications.datatables_actions');
     }
 
@@ -71,9 +79,9 @@ class NotificationDataTable extends DataTable
     {
         return [
             'id',
-            'url',
+//            'url',
             'action_type',
-            'ref_id',
+//            'ref_id',
             'message',
             'created_at'
         ];

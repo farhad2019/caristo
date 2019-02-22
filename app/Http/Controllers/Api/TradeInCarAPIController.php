@@ -154,6 +154,7 @@ class TradeInCarAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateTradeInCarAPIRequest $request)
     {
@@ -227,7 +228,6 @@ class TradeInCarAPIController extends AppBaseController
                 'ref_id'      => $tradeInCar->id,
                 'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_TRADE_IN]
             ];
-
             $this->notificationRepository->notification($notification, $tradeInCar->myCar->owner_id);
         }
 

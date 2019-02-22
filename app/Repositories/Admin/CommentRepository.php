@@ -37,11 +37,20 @@ class CommentRepository extends BaseRepository
         return Comment::class;
     }
 
+    /**
+     * @param $newsId
+     * @return mixed
+     */
     public function getNewsComments($newsId)
     {
         return Comment::where('news_id', $newsId)->get();
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
+     */
     public function createRecord(Request $request)
     {
         $input = $request->all();

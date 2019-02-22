@@ -100,21 +100,48 @@
                     <ul class="nav navbar-nav">
                         <!-- User Account Menu -->
                         @ability('admin' ,'comments.show')
-                        <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle alert-msg" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-bell-o"></i>
-                                {{--Span--}}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have <span></span> unread notifications</li>
-                                <li>
-                                    <ul class="menu">
-
-                                    </ul>
-                                </li>
-                                {{--<li class="footer"><a href="#">View all</a></li>--}}
-                            </ul>
-                        </li>
+                        @isset($notifications)
+                            <li class="dropdown notifications-menu">
+                                <a href="#" class="dropdown-toggle alert-msg" data-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <i class="fa fa-bell-o"></i>
+                                    <span class="label label-success">{{ $notifications->count() }}</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="header">You have <span>{{ $notifications->count() }}</span> unread
+                                        notifications
+                                    </li>
+                                    <li>
+                                        <ul class="menu">
+                                            @foreach($notifications as $notification)
+                                                <li>
+                                                    <a href="{{ route('admin.news.show', $notification->ref_id) }}"
+                                                       target="_blank">
+                                                        <i class="fa fa-comments text-aqua"></i> {{ $notification->message }}
+                                                        by {{ $notification->sender->name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                            {{--<li><!-- start message -->
+                                                <a href="#">
+                                                    <div class="pull-left">
+                                                        <img src="{!! Auth::user()->showroomDetails->logo_url !!}"
+                                                             width="60" class="img-circle" alt="User Image">
+                                                    </div>
+                                                    <h5>
+                                                        <strong>New Comment</strong>
+                                                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                    </h5>
+                                                    <p>Why not buy a new awesome theme?</p>
+                                                </a>
+                                            </li>--}}
+                                        </ul>
+                                    </li>
+                                    <li class="footer"><a href="{{ route('admin.notifications.index') }}">View all</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endisset
                         @endability
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->
@@ -347,8 +374,7 @@
                         }).then(function (willDelete) {
                             location.reload();
                         });
-                    }
-                    else {
+                    } else {
                         location.reload();
                     }
                 });
@@ -370,10 +396,10 @@
             broadcaster: 'socket.io',
             host: window.location.hostname + ':6001'
         });
-//        window.Echo.channel('test-event')
-//            .listen('ExampleEvent', (e) => {
-//                //console.log(e);
-//            });
+        //        window.Echo.channel('test-event')
+        //            .listen('ExampleEvent', (e) => {
+        //                //console.log(e);
+        //            });
 
         window.Echo.channel('job-{{Auth::user()->id}}')
             .listen('NewJobEvent', (e) => {

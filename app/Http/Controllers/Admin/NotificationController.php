@@ -7,6 +7,7 @@ use App\DataTables\Admin\NotificationDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateNotificationRequest;
 use App\Http\Requests\Admin\UpdateNotificationRequest;
+use App\Models\Notification;
 use App\Repositories\Admin\NotificationRepository;
 use App\Repositories\Admin\UserRepository;
 use App\Http\Controllers\AppBaseController;
@@ -66,23 +67,27 @@ class NotificationController extends AppBaseController
      * @param CreateNotificationRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateNotificationRequest $request)
     {
         $input = $request->all();
-        $input['sender_id'] = Auth::id();
+//        $input['sender_id'] = Auth::id();
+//        $input['action_type'] = Notification::NOTIFICATION_TYPE_ALERT;
+//        $input['url'] = null;
+//        $input['ref_id'] = 0;
+//        $notification = $this->notificationRepository->create($input);
+//        $notification->users()->attach($input['send_to']);
+        $notification = [
+            'sender_id'   => Auth::id(),
+            'action_type' => Notification::NOTIFICATION_TYPE_ALERT,
+            'url'         => null,
+            'ref_id'      => 0,
+            'message'     => $input['message']
+        ];
+        $this->notificationRepository->notification($notification, $input['send_to']);
 
-        $notification = $this->notificationRepository->create($input);
-        $notification->users()->attach($input['send_to']);
-
-//        if (isset($input['push'])) {
-//            #TODO: Sent Push Notification
-//
-//            $data['status'] = 1;
-//            $this->notificationRepository->update($data, $notification->id);
-//        }
         Flash::success('Notification saved successfully.');
-
         return redirect(route('admin.notifications.index'));
     }
 
@@ -142,6 +147,7 @@ class NotificationController extends AppBaseController
      * @param UpdateNotificationRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateNotificationRequest $request)
     {

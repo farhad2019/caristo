@@ -15,12 +15,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *      definition="Subscriber",
  *      required={"email"},
  *      @SWG\Property(
- *          property="id",
- *          description="id",
- *          type="integer",
- *          format="int32"
- *      ),
- *      @SWG\Property(
  *          property="email",
  *          description="email",
  *          type="string"

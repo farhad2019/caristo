@@ -77,11 +77,22 @@ class Notification extends Model
     const NOTIFICATION_TYPE_TRADE_IN_NEW_BID = 10;
     const NOTIFICATION_TYPE_EVALUATION_NEW_BID = 20;
     const NOTIFICATION_TYPE_TRADE_IN = 30;
+    const NOTIFICATION_TYPE_ALERT = 40;
+    const NOTIFICATION_TYPE_COMMENT = 50;
+
+    public static $NOTIFICATION_ACTION_TYPE = [
+        self::NOTIFICATION_TYPE_TRADE_IN_NEW_BID   => 'New offer alert.',
+        self::NOTIFICATION_TYPE_EVALUATION_NEW_BID => 'New evolution request alert.',
+        self::NOTIFICATION_TYPE_TRADE_IN           => 'New trade-in alert.',
+        self::NOTIFICATION_TYPE_ALERT              => 'App alert.',
+        self::NOTIFICATION_TYPE_COMMENT            => 'Comment alert.'
+    ];
 
     public static $NOTIFICATION_MESSAGE = [
         self::NOTIFICATION_TYPE_TRADE_IN_NEW_BID   => 'You have new offer on your car.',
         self::NOTIFICATION_TYPE_EVALUATION_NEW_BID => 'Your evolution request is available to view now.!!',
         self::NOTIFICATION_TYPE_TRADE_IN           => 'You have new TradeIn Request.',
+        self::NOTIFICATION_TYPE_COMMENT            => 'New comment on news.'
     ];
 
     public $fillable = [
@@ -144,6 +155,7 @@ class Notification extends Model
      */
     public static $rules = [
         'action_type' => 'required',
+        'sent_to'     => 'required',
         'message'     => 'required',
     ];
 
@@ -168,6 +180,15 @@ class Notification extends Model
     ];
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_id');
+        //return $this->belongsToMany(User::class, 'notification_users')->withPivot('status');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
@@ -188,7 +209,7 @@ class Notification extends Model
      */
     public function getUsersCsvAttribute()
     {
-        return implode(",", $this->users->pluck('name')->all());
+        return implode(", ", $this->users->pluck('name')->all());
     }
 
     /**

@@ -437,7 +437,7 @@ class AuthAPIController extends AppBaseController
     protected function respondWithToken($token)
     {
         $user = auth()->guard('api')->setToken($token)->user()->toArray();
-        DB::table('user_tokens')->insert(['user_id' => $user['id'], 'token' => $token, 'created_at' => Carbon::now()]);
+        //DB::table('user_tokens')->insert(['user_id' => $user['id'], 'token' => $token, 'created_at' => Carbon::now()]);
         $user = array_merge($user, [
             'access_token' => $token,
             'token_type'   => 'bearer',

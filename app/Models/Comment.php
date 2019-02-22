@@ -31,12 +31,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Comment extends Model
 {
     use SoftDeletes;
-
     public $table = 'comments';
-
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'id',

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Events\NewJobEvent;
 use App\Helper\BreadcrumbsRegister;
 use App\Http\Controllers\Controller;
+use App\Models\NotificationUser;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\MyCarRepository;
 use App\Repositories\Admin\NewsRepository;
+use App\Repositories\Admin\NotificationRepository;
 use App\Repositories\Admin\RoleRepository;
 use App\Repositories\Admin\UserRepository;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +49,7 @@ class HomeController extends Controller
      * @param NewsRepository $newsRepo
      * @param MyCarRepository $carRepo
      */
-    public function __construct(UserRepository $userRepo, RoleRepository $roleRepo, CategoryRepository $categoryRepo, NewsRepository $newsRepo, MyCarRepository $carRepo)
+    public function __construct(UserRepository $userRepo, RoleRepository $roleRepo, CategoryRepository $categoryRepo, NewsRepository $newsRepo, MyCarRepository $carRepo, NotificationRepository $notificationRepository)
     {
         $this->middleware('auth');
         $this->userRepository = $userRepo;
@@ -57,6 +59,7 @@ class HomeController extends Controller
         $this->carRepository = $carRepo;
     }
 //unlink media file from folder
+
     /**
      * Show the application dashboard.
      *
@@ -69,6 +72,9 @@ class HomeController extends Controller
         $categories = $this->categoryRepository->all()->count();
         $news = $this->newsRepository->all()->count();
         $cars = $this->carRepository->all()->count();
+        $notifications = Auth::user()->notificationMaster()->whereHas('details', function ($details){
+            return $details->where('status', NotificationUser::STATUS_DELIVERED);
+        })->where('notification_users.deleted_at', null)->orderBy('created_at', 'DESC')->get();
 
         BreadcrumbsRegister::Register();
         if (Auth::user()->hasRole('showroom-owner')) {
@@ -76,13 +82,14 @@ class HomeController extends Controller
         }
 
         return view('admin.home')->with([
-            'users'      => $users,
-            'roles'      => $roles,
-            'categories' => $categories,
-            'news'       => $news,
-            'cars'       => $cars
+            'notifications' => $notifications,
+            'users'         => $users,
+            'roles'         => $roles,
+            'categories'    => $categories,
+            'news'          => $news,
+            'cars'          => $cars
         ]);
     }
-    
-    
+
+
 }

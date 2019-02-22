@@ -18,6 +18,14 @@ class CreateNotificationRequest extends BaseFormRequest
         return true;
     }
 
+    public function messages()
+    {
+        return [
+            'sent_to.required' => 'Please select recipient',
+            'message.required' => 'Please add message'
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *

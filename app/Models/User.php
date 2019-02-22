@@ -71,6 +71,8 @@ class User extends Authenticatable implements JWTSubject
 
     protected $cascadeDeletes = ['details', 'devices'];
 
+    const ADMIN = 2;
+
     const SHOWROOM_OWNER = 10;
     const RANDOM_USER = 20;
 

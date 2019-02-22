@@ -24,6 +24,10 @@ class CommentController extends AppBaseController
     /** @var  CommentRepository */
     private $commentRepository;
 
+    /**
+     * CommentController constructor.
+     * @param CommentRepository $commentRepo
+     */
     public function __construct(CommentRepository $commentRepo)
     {
         $this->commentRepository = $commentRepo;
@@ -60,6 +64,7 @@ class CommentController extends AppBaseController
      * @param CreateCommentRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateCommentRequest $request)
     {
@@ -117,6 +122,7 @@ class CommentController extends AppBaseController
      * @param UpdateCommentRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateCommentRequest $request)
     {
@@ -156,11 +162,14 @@ class CommentController extends AppBaseController
 //        return redirect(route('admin.comments.index'));
     }
 
+    /**
+     * @return array
+     */
     public function getNotification()
     {
         $data = Comment::where('deleted_at',null)->orderBy('created_at','desc')->get();
 //        $data = $this->commentRepository->where('deleted_at',null)->get();
-        
+
         $resultArray = [];
         $i =0;
         foreach ($data as $item){

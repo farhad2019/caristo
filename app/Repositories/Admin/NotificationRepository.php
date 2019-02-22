@@ -37,7 +37,6 @@ class NotificationRepository extends BaseRepository
         return Notification::class;
     }
 
-
     /**
      * @param $notification
      * @param $receiver_id
@@ -48,12 +47,23 @@ class NotificationRepository extends BaseRepository
     {
         $notification = $this->create($notification);
 
-        NotificationUser::create([
-            'notification_id' => $notification->id,
-            'user_id'         => $receiver_id,
-            'status'          => NotificationUser::STATUS_DELIVERED
-        ]);
+        //$receiver_id = isset($receiver_id[0]) ? $receiver_id : [$receiver_id];
 
+        if (is_array($receiver_id)){
+            foreach ($receiver_id as $item) {
+                NotificationUser::create([
+                    'notification_id' => $notification->id,
+                    'user_id'         => $item,
+                    'status'          => NotificationUser::STATUS_DELIVERED
+                ]);
+            }
+        }else{
+            NotificationUser::create([
+                'notification_id' => $notification->id,
+                'user_id'         => $receiver_id,
+                'status'          => NotificationUser::STATUS_DELIVERED
+            ]);
+        }
         return true;
     }
 }

@@ -68,6 +68,7 @@ class SubscriberDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            'id',
             'email'
         ];
     }

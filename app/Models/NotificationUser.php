@@ -31,6 +31,7 @@ class NotificationUser extends Model
     const STATUS_SENT = 10;
     const STATUS_DELIVERED = 20;
     const STATUS_READ = 30;
+
     public static $NOTIFICATION_STATUS_TEXT = [
         self::STATUS_SENT      => 'Notification Sent Successfully',
         self::STATUS_DELIVERED => 'Notification delivered to user.',

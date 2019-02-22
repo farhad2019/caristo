@@ -75,8 +75,6 @@ if (is_object(JWTAuth::getToken())){
 
         Route::resource('v1/notifications', 'NotificationAPIController');
 
-        Route::resource('v1/comments', 'CommentAPIController');
-
         Route::resource('v1/newsInteractions', 'NewsInteractionAPIController');
 
         Route::post('v1/change-password', 'AuthAPIController@changePassword')->name('change-password');
@@ -130,6 +128,7 @@ if (is_object(JWTAuth::getToken())){
         Route::resource('v1/regions', 'RegionAPIController');
     });
 } else {
+    #guest Routes
     Route::resource('v1/contactus', 'ContactUsAPIController');
 
     Route::resource('v1/reviews', 'ReviewAPIController');
@@ -145,6 +144,8 @@ if (is_object(JWTAuth::getToken())){
     Route::resource('v1/news', 'NewsAPIController');
 
     Route::resource('v1/makeBids', 'MakeBidAPIController');
+
+    Route::resource('v1/comments', 'CommentAPIController');
 }
 
 Route::resource('v1/reviewAspects', 'ReviewAspectAPIController');

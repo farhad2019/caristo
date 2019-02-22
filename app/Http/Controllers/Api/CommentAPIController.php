@@ -6,7 +6,10 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Api\CreateCommentAPIRequest;
 use App\Http\Requests\Api\UpdateCommentAPIRequest;
 use App\Models\Comment;
+use App\Models\Notification;
+use App\Models\User;
 use App\Repositories\Admin\CommentRepository;
+use App\Repositories\Admin\NotificationRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -22,9 +25,18 @@ class CommentAPIController extends AppBaseController
     /** @var  CommentRepository */
     private $commentRepository;
 
-    public function __construct(CommentRepository $commentRepo)
+    /** @var  NotificationRepository */
+    private $notificationRepository;
+
+    /**
+     * CommentAPIController constructor.
+     * @param CommentRepository $commentRepo
+     * @param NotificationRepository $notificationRepo
+     */
+    public function __construct(CommentRepository $commentRepo, NotificationRepository $notificationRepo)
     {
         $this->commentRepository = $commentRepo;
+        $this->notificationRepository = $notificationRepo;
     }
 
     /**
@@ -151,13 +163,21 @@ class CommentAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateCommentAPIRequest $request)
     {
-        $input = $request->all();
-
         $comment = $this->commentRepository->createRecord($request);
         $comments = $this->commentRepository->findWithoutFail($comment->id);
+
+        $notification = [
+            'sender_id'   => Auth::id(),
+            'action_type' => Notification::NOTIFICATION_TYPE_COMMENT,
+            'url'         => null,
+            'ref_id'      => $comments->news_id,
+            'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_COMMENT]
+        ];
+        $this->notificationRepository->notification($notification, User::ADMIN);
 
         return $this->sendResponse($comments->toArray(), 'Comment saved successfully');
     }
@@ -265,6 +285,7 @@ class CommentAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateCommentAPIRequest $request)
     {
@@ -327,6 +348,7 @@ class CommentAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Exception
      */
     public function destroy($id)
     {
@@ -344,5 +366,4 @@ class CommentAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'Comment deleted successfully');
     }
-
 }
