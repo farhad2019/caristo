@@ -692,7 +692,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('from') ? ' has-error' : '' }}">
             {!! Form::label('Lifecycle', 'Start Year:*') !!}
             {{--{!! Form::number('from', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
-            {!! Form::select('from', $years, @$explodeLifeCycle[0], ['class' => 'form-control select2']) !!}
+            {!! Form::select('from', array_merge([0 => 'Null'], $years), @$explodeLifeCycle[0], ['class' => 'form-control select2']) !!}
             @if ($errors->has('from'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('from') }}</strong>
@@ -702,7 +702,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('to') ? ' has-error' : '' }}">
             {!! Form::label('Lifecycle', 'End Year:*') !!}
             {{--{!! Form::number('to', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
-            {!! Form::select('to', $years, @$explodeLifeCycle[1], ['class' => 'form-control select2']) !!}
+            {!! Form::select('to', array_merge([0 => 'Null'], $years), @$explodeLifeCycle[1], ['class' => 'form-control select2']) !!}
             @if ($errors->has('to'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('from') }}</strong>
@@ -776,7 +776,7 @@
     <div class="regions" style="display: none">
         <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend.'.$key) ? 'has-error' : '' }}">
             {!! Form::label('depreciation_trend',(($index==1)?'1st':(($index==2)?'2nd':(($index==3)?'3rd':(($index==4)?'4th':(($index==5)?'5th':''))))).' Year', null, ['class' => 'form-control']) !!}
-            {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:null), ['class' => 'form-control luxury-new', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
+            {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:null), ['class' => 'form-control ', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
             @if ($errors->has('depreciation_trend.'.$key))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('depreciation_trend.'.$key) }}</strong>

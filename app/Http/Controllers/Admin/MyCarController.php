@@ -363,19 +363,20 @@ class MyCarController extends AppBaseController
                 }
             }
         } else {
-            $amount = $request->amount;
-            foreach ($request->depreciation_trend as $key => $value) {
-                $index = array_search($key, array_keys($request->depreciation_trend)) + 1;
-                $amount = $amount - (($amount * $value) / 100);
-                DepreciationTrend::create([
-                    'car_id'     => $myCar->id,
+            if (!empty(array_filter($request->depreciation_trend))) {
+                $amount = $request->amount;
+                foreach ($request->depreciation_trend as $key => $value) {
+                    $index = array_search($key, array_keys($request->depreciation_trend)) + 1;
+                    $amount = $amount - (($amount * $value) / 100);
+                    DepreciationTrend::create([
+                        'car_id'     => $myCar->id,
 //                    'year'       => $key,
-                    'year'       => (($index == 1) ? '1st' : (($index == 2) ? '2nd' : (($index == 3) ? '3rd' : (($index == 4) ? '4th' : (($index == 5) ? '5th' : ''))))).' Year',
-                    'percentage' => $value,
-                    'amount'     => $amount
-                ]);
+                        'year'       => (($index == 1) ? '1st' : (($index == 2) ? '2nd' : (($index == 3) ? '3rd' : (($index == 4) ? '4th' : (($index == 5) ? '5th' : ''))))) . ' Year',
+                        'percentage' => $value,
+                        'amount'     => $amount
+                    ]);
+                }
             }
-
             $myCar->dealers()->attach($request->dealers);
         }
 
@@ -614,39 +615,39 @@ class MyCarController extends AppBaseController
 //                'year'                      => 'required',
 //                'regional_specification_id' => 'required',
 //                'email'                     => 'required|email',
-                    'amount'               => 'required',
-                    'dealers'              => 'required|array|between:2,2',
-                    'name'                 => 'required',
+                    'amount'       => 'required',
+                    'dealers'      => 'required',
+                    'name'         => 'required',
 //                    'chassis' => 'required',
-                    'is_featured'          => 'check_featured_update',
-                    'length'               => 'required',
-                    'width'                => 'required',
-                    'height'               => 'required',
-                    'weight_dist'          => 'required',
-                    'trunk'                => 'required',
-                    'weight'               => 'required',
-                    'seats'                => 'required',
-                    'drive_train'          => 'required',
-                    'displacement'         => 'required',
-                    'cylinders'            => 'required',
-                    'max_speed'            => 'required',
-                    'acceleration'         => 'required',
-                    'hp_rpm'               => 'required',
-                    'torque'               => 'required',
-                    'gearbox'              => 'required',
-                    'brakes'               => 'required',
-                    'suspension'           => 'required',
-                    'front_tyre'           => 'required',
-                    'back_tyre'            => 'required',
-                    'consumption'          => 'required',
-                    'emission'             => 'required',
-                    'warranty'             => 'required',
-                    'maintenance'          => 'required',
-                    'to'                   => 'required|greater_than_field:from',
-                    'depreciation_trend.*' => 'required',
-                    'regions'              => 'required',
-                    'regions.*'            => 'numeric',
-                    'media.*'              => 'image|mimes:jpg,jpeg,png|max:500'
+                    'is_featured'  => 'check_featured_update',
+                    'length'       => 'required',
+                    'width'        => 'required',
+                    'height'       => 'required',
+                    'weight_dist'  => 'required',
+                    'trunk'        => 'required',
+                    'weight'       => 'required',
+                    'seats'        => 'required',
+                    'drive_train'  => 'required',
+                    'displacement' => 'required',
+                    'cylinders'    => 'required',
+                    'max_speed'    => 'required',
+                    'acceleration' => 'required',
+                    'hp_rpm'       => 'required',
+                    'torque'       => 'required',
+                    'gearbox'      => 'required',
+                    'brakes'       => 'required',
+                    'suspension'   => 'required',
+                    'front_tyre'   => 'required',
+                    'back_tyre'    => 'required',
+                    'consumption'  => 'required',
+                    'emission'     => 'required',
+                    'warranty'     => 'required',
+                    'maintenance'  => 'required',
+//                    'to'                   => 'required|greater_than_field:from',
+//                    'depreciation_trend.*' => 'required',
+                    'regions'      => 'required',
+                    'regions.*'    => 'numeric',
+                    'media.*'      => 'image|mimes:jpg,jpeg,png|max:500'
                 ]), [
                 /*'category_id.required' => 'The category field is required.',
                 'model_id.required'    => 'The model field is required.',
@@ -920,13 +921,15 @@ class MyCarController extends AppBaseController
                 $myCar->carFeatures()->sync($carFeatures, false);
             }*/
         } else {
-            $amount = $request->amount;
-            foreach ($request->depreciation_trend as $key => $value) {
-                $amount = $amount - (($amount * $value) / 100);
-                $this->trendRepository->updateOrCreate(['car_id' => $myCar->id, 'year' => $key], [
-                    'percentage' => $value,
-                    'amount'     => $amount
-                ]);
+            if (!empty(array_filter($request->depreciation_trend))) {
+                $amount = $request->amount;
+                foreach ($request->depreciation_trend as $key => $value) {
+                    $amount = $amount - (($amount * $value) / 100);
+                    $this->trendRepository->updateOrCreate(['car_id' => $myCar->id, 'year' => $key], [
+                        'percentage' => $value,
+                        'amount'     => $amount
+                    ]);
+                }
             }
             $myCar->dealers()->sync($request->dealers);
 
