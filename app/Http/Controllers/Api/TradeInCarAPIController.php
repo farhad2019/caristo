@@ -193,17 +193,17 @@ class TradeInCarAPIController extends AppBaseController
                         });
 
                     ################# NOTIFICATION ####################
-                    $dealerTradeInCar = $this->tradeInCarRepository->findWhere(['user_id' => $dealer->id, 'owner_car_id' => $tradeInCar->owner_car_id, 'customer_car_id' => $tradeInCar->customer_car_id])->first();
-
-                    $notification = [
-                        'sender_id'   => Auth::id(),
-                        'action_type' => Notification::NOTIFICATION_TYPE_TRADE_IN,
-                        'url'         => null,
-                        'ref_id'      => $dealerTradeInCar->id,
-                        'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_TRADE_IN]
-                    ];
-
-                    $this->notificationRepository->notification($notification, $dealer->id);
+//                    $dealerTradeInCar = $this->tradeInCarRepository->findWhere(['user_id' => $dealer->id, 'owner_car_id' => $tradeInCar->owner_car_id, 'customer_car_id' => $tradeInCar->customer_car_id])->first();
+//
+//                    $notification = [
+//                        'sender_id'   => Auth::id(),
+//                        'action_type' => Notification::NOTIFICATION_TYPE_TRADE_IN,
+//                        'url'         => null,
+//                        'ref_id'      => $dealerTradeInCar->id,
+//                        'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_TRADE_IN]
+//                    ];
+//
+//                    $this->notificationRepository->notification($notification, $dealer->id);
                 }
                 return $this->sendResponse($tradeInCar->toArray(), $message);
             }

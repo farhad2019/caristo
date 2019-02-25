@@ -106,6 +106,8 @@ class Category extends Model
      */
     protected $appends = [
         'unread_count',
+        'banner_images',
+        'images',
 //        'clicks_count',
 //        'type_text'
     ];
@@ -128,6 +130,8 @@ class Category extends Model
         'updated_at',
 //        'parentCategory',
         'media',
+        'banner_images',
+        'images',
         'childCategory',
         'views_count',
 //        'deleted_at'
@@ -145,8 +149,10 @@ class Category extends Model
      * @var array
      */
     public static $rules = [
-        'name'  => 'required',
-        'media' => 'required|image|mimes:jpg,jpeg,png',
+        'name'           => 'required',
+        'media'          => 'required|image|mimes:jpg,jpeg,png|max:500',
+        'banner_media'   => 'required',
+        'banner_media.*' => 'image|mimes:jpg,jpeg,png|max:500',
 //        'slug'  => 'required',
     ];
 
@@ -156,8 +162,9 @@ class Category extends Model
      * @var array
      */
     public static $update_rules = [
-        'name'  => 'required',
-        'media' => 'sometimes|image|mimes:jpg,jpeg,png',
+        'name'           => 'required',
+        'media'          => 'sometimes|image|mimes:jpg,jpeg,png|max:500',
+        'banner_media.*' => 'sometimes|image|mimes:jpg,jpeg,png|max:500',
 //        'slug'  => 'required',
     ];
 
@@ -189,6 +196,22 @@ class Category extends Model
     public function cars()
     {
         return $this->hasMany(MyCar::class, 'category_id');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBannerImagesAttribute()
+    {
+        return $this->media->where('media_type', Media::BANNER_IMAGE);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImagesAttribute()
+    {
+        return $this->media->where('media_type', Media::IMAGE);
     }
 
     /**

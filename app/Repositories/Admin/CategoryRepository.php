@@ -4,6 +4,7 @@ namespace App\Repositories\Admin;
 
 use App\Helper\Utils;
 use App\Models\Category;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Image;
@@ -68,6 +69,7 @@ class CategoryRepository extends BaseRepository
     /**
      * @param Request $request
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function saveRecord(Request $request)
     {
@@ -83,9 +85,23 @@ class CategoryRepository extends BaseRepository
             $mediaFiles = $request->file('media');
             $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
 
-            foreach ($mediaFiles as $mediaFile) {
+            foreach ($mediaFiles as $key => $mediaFile) {
 //                $media[] = $this->handlePicture($mediaFile);
-                $media[] = Utils::handlePicture($mediaFile);
+                $media[$key] = Utils::handlePicture($mediaFile);
+            }
+
+            $data->media()->createMany($media);
+        }
+
+        if ($request->hasFile('banner_media')) {
+            $media = [];
+            $mediaFiles = $request->file('banner_media');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $key => $mediaFile) {
+//                $media[] = $this->handlePicture($mediaFile);
+                $media[$key] = Utils::handlePicture($mediaFile);
+                $media[$key]['media_type'] = Media::BANNER_IMAGE;
             }
 
             $data->media()->createMany($media);
@@ -97,6 +113,7 @@ class CategoryRepository extends BaseRepository
      * @param Category $category
      * @param Request $request
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function updateRecord($category, Request $request)
     {
@@ -116,7 +133,22 @@ class CategoryRepository extends BaseRepository
             }
 
             // TODO: We are deleting all other media for now.
-            $category->media()->delete();
+            $category->media()->where('media_type', Media::IMAGE)->delete();
+            $category->media()->createMany($media);
+        }
+        $media = [];
+        // Media Data
+        if ($request->hasFile('banner_media')) {
+            $media = [];
+            $mediaFiles = $request->file('banner_media');
+            $mediaFiles = is_array($mediaFiles) ? $mediaFiles : [$mediaFiles];
+
+            foreach ($mediaFiles as $key => $mediaFile) {
+//                $media[] = $this->handlePicture($mediaFile);
+                $media[$key] = Utils::handlePicture($mediaFile);
+                $media[$key]['media_type'] = Media::BANNER_IMAGE;
+            }
+
             $category->media()->createMany($media);
         }
         return $data;

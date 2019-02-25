@@ -58,6 +58,10 @@ class Media extends Model
 
     protected $dates = ['deleted_at'];
 
+    const IMAGE = 10;
+    const URL = 20; //for news
+    const BANNER_IMAGE = 30; //for category web
+
     public $fillable = [
         'instance_id',
         'instance_type',
@@ -150,9 +154,9 @@ class Media extends Model
      */
     public function getFileUrlAttribute()
     {
-        if ($this->media_type == News::TYPE_IMAGE) {
+        if ($this->media_type == self::IMAGE || $this->media_type == self::BANNER_IMAGE) {
             return ($this->filename && file_exists(storage_path('app/' . $this->filename))) ? route('api.resize', ['img' => $this->filename]) : route('api.resize', ['img' => 'public/no_image.png', 'w=50', 'h=50']);
-        } elseif ($this->media_type == News::TYPE_VIDEO) {
+        } elseif ($this->media_type == self::URL) {
             return $this->filename;
         }
 

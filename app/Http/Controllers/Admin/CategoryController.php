@@ -8,6 +8,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Admin\CreateCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Models\Media;
 use App\Repositories\Admin\CategoryRepository;
 use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
@@ -62,6 +63,7 @@ class CategoryController extends AppBaseController
      * @param CreateCategoryRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateCategoryRequest $request)
     {
@@ -122,6 +124,7 @@ class CategoryController extends AppBaseController
      * @param UpdateCategoryRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateCategoryRequest $request)
     {
@@ -131,13 +134,24 @@ class CategoryController extends AppBaseController
             return redirect(route('admin.categories.index'));
         }
 
-        if ($category->media->count() == 0) {
+        if ($category->media->where('media_type', Media::IMAGE)->count() == 0) {
             $validatedData = $request->validate([
                 'media' => 'required|image|mimes:jpg,jpeg,png|max:500',
             ], [
                 'media.required' => 'The media is required.',
                 'media.mimes'    => 'The media must be a file of type: jpg, jpeg, png.',
                 'media.max'      => 'The media may not be greater than 500 kilobytes.',
+            ]);
+        }
+        if ($category->media->where('media_type', Media::BANNER_IMAGE)->count() == 0) {
+            $validatedData = $request->validate([
+                'banner_media'   => 'required',
+                'banner_media.*' => 'image|mimes:jpg,jpeg,png',
+            ], [
+                'banner_media.required' => 'The banner image field is required.',
+                'banner_media.*.image'  => 'Please select valid banner image file.',
+                'banner_media.*.mimes'  => 'The banner image must be a file of type: jpg, jpeg, png.',
+                'banner_media.max'      => 'The banner image may not be greater than 500 kilobytes.',
             ]);
         }
 

@@ -19,6 +19,15 @@ class CreateCategoryRequest extends FormRequest
         return true;
     }
 
+    public function messages()
+    {
+        return [
+            'banner_media.required' => 'The banner image field is required.',
+            'banner_media.*.image'  => 'Please select valid banner image file.',
+            'banner_media.*.mimes'  => 'The banner image must be a file of type: jpg, jpeg, png.',
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
