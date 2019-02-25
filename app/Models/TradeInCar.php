@@ -124,7 +124,8 @@ class TradeInCar extends Model
      * @var array
      */
     protected $appends = [
-        'offer_details'
+        'offer_details',
+        'is_expired'
     ];
 
     /**
@@ -136,6 +137,7 @@ class TradeInCar extends Model
         'id',
         'myCar',
         'notes',
+        'is_expired',
         'offer_details',
         'bid_close_at',
         'tradeAgainst',
@@ -182,7 +184,7 @@ class TradeInCar extends Model
      */
     public function myCar()
     {
-        return $this->belongsTo(MyCar::class, 'owner_car_id'); //showroom owner's car
+        return $this->belongsTo(MyCar::class, 'owner_car_id')->without(['reviews', 'car_regions', 'depreciation_trend', 'regional_specs', 'my_car_attributes']); //showroom owner's car
     }
 
     /**
@@ -190,7 +192,7 @@ class TradeInCar extends Model
      */
     public function tradeAgainst()
     {
-        return $this->belongsTo(MyCar::class, 'customer_car_id'); //app user's car
+        return $this->belongsTo(MyCar::class, 'customer_car_id')->without(['meta', 'reviews', 'car_regions', 'depreciation_trend', 'regional_specs', 'my_car_attributes', 'dealers']); //app user's car
     }
 
     /**
@@ -226,12 +228,20 @@ class TradeInCar extends Model
                 }
                 return $OfferDetails;
             } else {
-                $OfferDetails['user'] = $car['owner'];
-                $OfferDetails['amount'] = $this->evaluationDetails()->where('user_id', $car['owner']['id'])->first()['amount'];
-                $OfferDetails['currency'] = $this->evaluationDetails()->where('user_id', $car['owner']['id'])->first()['currency'];
+                $OfferDetails[0]['user'] = $car['owner'];
+                $OfferDetails[0]['amount'] = $this->evaluationDetails()->where('user_id', $car['owner']['id'])->first()['amount'];
+                $OfferDetails[0]['currency'] = $this->evaluationDetails()->where('user_id', $car['owner']['id'])->first()['currency'];
                 return $OfferDetails;
             }
         }
-        return $this->evaluationDetails;
+        return $this->evaluationDetails->take(5);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsExpiredAttribute()
+    {
+        return $this->bid_close_at < now()->timezone(session('timezone'));
     }
 }

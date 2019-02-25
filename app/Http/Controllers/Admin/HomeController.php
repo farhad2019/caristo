@@ -72,9 +72,6 @@ class HomeController extends Controller
         $categories = $this->categoryRepository->all()->count();
         $news = $this->newsRepository->all()->count();
         $cars = $this->carRepository->all()->count();
-        $notifications = Auth::user()->notificationMaster()->whereHas('details', function ($details){
-            return $details->where('status', NotificationUser::STATUS_DELIVERED);
-        })->where('notification_users.deleted_at', null)->orderBy('created_at', 'DESC')->get();
 
         BreadcrumbsRegister::Register();
         if (Auth::user()->hasRole('showroom-owner')) {
@@ -82,7 +79,6 @@ class HomeController extends Controller
         }
 
         return view('admin.home')->with([
-            'notifications' => $notifications,
             'users'         => $users,
             'roles'         => $roles,
             'categories'    => $categories,

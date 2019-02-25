@@ -198,10 +198,14 @@ class MyCarController extends AppBaseController
                 'MAINTENANCE PROGRAM' => 'in YEARS/KM'
             ]
         ];
-
+        $years_luxury_new_car = [];
         for ($a = 0; $a < 5; $a++) {
-            $year_list = now()->format('Y') + $a;
+            $currentYear = now()->format('Y');
+            $year_list = ($currentYear + 1) + $a;
             $depreciation_trend_years[$year_list] = $year_list;
+
+            $luxury_new_car_years = ($currentYear) + $a;
+            $years_luxury_new_car[$luxury_new_car_years] = $luxury_new_car_years;
         }
 
         $years = ['1950' => "1950",
@@ -285,7 +289,7 @@ class MyCarController extends AppBaseController
                   '2028' => "2028",
                   '2029' => "2029",
                   '2030' => "2030"];
-        $years_classic = $years_pre_owned = $years_outlet_mall = $years_luxury_new_car = [];
+        $years_classic = $years_pre_owned = $years_outlet_mall = [];
 
         for ($a = 1901; $a <= now()->format('Y'); $a++) {
             if ($a <= 2010)
@@ -315,6 +319,7 @@ class MyCarController extends AppBaseController
             'years_classic'            => $years_classic,
             'years_pre_owned'          => $years_pre_owned,
             'years_outlet_mall'        => $years_outlet_mall,
+            'years_luxury_new_car'     => $years_luxury_new_car,
             'versions'                 => $versions,
             'users'                    => $users,
             'brands'                   => $brands
@@ -324,6 +329,7 @@ class MyCarController extends AppBaseController
     /**
      * @param CreateMyCarRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateMyCarRequest $request)
     {
@@ -359,10 +365,12 @@ class MyCarController extends AppBaseController
         } else {
             $amount = $request->amount;
             foreach ($request->depreciation_trend as $key => $value) {
+                $index = array_search($key, array_keys($request->depreciation_trend)) + 1;
                 $amount = $amount - (($amount * $value) / 100);
                 DepreciationTrend::create([
                     'car_id'     => $myCar->id,
-                    'year'       => $key,
+//                    'year'       => $key,
+                    'year'       => (($index == 1) ? '1st' : (($index == 2) ? '2nd' : (($index == 3) ? '3rd' : (($index == 4) ? '4th' : (($index == 5) ? '5th' : ''))))).' Year',
                     'percentage' => $value,
                     'amount'     => $amount
                 ]);
@@ -421,7 +429,7 @@ class MyCarController extends AppBaseController
         if (!empty($myCar->limited_edition_specs)) {
             $limited_edition_specs = json_decode($myCar->limited_edition_specs, true);
         }
-//        dd($limited_edition_specs);
+
         $brands = $this->brandRepository->all()->pluck('name', 'id');
         $categories = $this->categoryRepository->getCarCategories()->pluck('name', 'id');
         $regional_specs = $this->regionalSpecRepository->all()->pluck('name', 'id');
@@ -528,9 +536,14 @@ class MyCarController extends AppBaseController
         }
 
         $depreciation_trend_years = [];
+        $years_luxury_new_car = [];
         for ($a = 0; $a < 5; $a++) {
-            $year_list = now()->format('Y') + $a;
+            $currentYear = now()->format('Y');
+            $year_list = ($currentYear + 1) + $a;
             $depreciation_trend_years[$year_list] = $year_list;
+
+            $luxury_new_car_years = ($currentYear) + $a;
+            $years_luxury_new_car[$luxury_new_car_years] = $luxury_new_car_years;
         }
 
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $myCar);
@@ -556,6 +569,7 @@ class MyCarController extends AppBaseController
             'years_classic'            => $years_classic,
             'years_pre_owned'          => $years_pre_owned,
             'years_outlet_mall'        => $years_outlet_mall,
+            'years_luxury_new_car'     => $years_luxury_new_car,
             'limited_edition_specs'    => $limited_edition_specs,
         ]);
     }

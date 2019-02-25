@@ -100,48 +100,50 @@
                     <ul class="nav navbar-nav">
                         <!-- User Account Menu -->
                         @ability('admin' ,'comments.show')
-                        @isset($notifications)
-                            <li class="dropdown notifications-menu">
-                                <a href="#" class="dropdown-toggle alert-msg" data-toggle="dropdown"
-                                   aria-expanded="false">
-                                    <i class="fa fa-bell-o"></i>
-                                    <span class="label label-success">{{ $notifications->count() }}</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="header">You have <span>{{ $notifications->count() }}</span> unread
-                                        notifications
-                                    </li>
-                                    <li>
-                                        <ul class="menu">
-                                            @foreach($notifications as $notification)
-                                                <li>
-                                                    <a href="{{ route('admin.news.show', $notification->ref_id) }}"
-                                                       target="_blank">
-                                                        <i class="fa fa-comments text-aqua"></i> {{ $notification->message }}
-                                                        by {{ $notification->sender->name }}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                            {{--<li><!-- start message -->
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img src="{!! Auth::user()->showroomDetails->logo_url !!}"
-                                                             width="60" class="img-circle" alt="User Image">
-                                                    </div>
-                                                    <h5>
-                                                        <strong>New Comment</strong>
-                                                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                    </h5>
-                                                    <p>Why not buy a new awesome theme?</p>
+                        @php($notifications = Auth::user()->notificationMaster()->whereHas('details', function ($details){
+            return $details->where('status', App\Models\NotificationUser::STATUS_DELIVERED);
+        })->where('notification_users.deleted_at', null)->orderBy('created_at', 'DESC')->get())
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle alert-msg" data-toggle="dropdown"
+                               aria-expanded="false">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-success">{{ $notifications->count() == 0?'':$notifications->count() }}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">You
+                                    <span>{{ $notifications->count()==0?'don\'t have any ':'have '.$notifications->count() }}</span>
+                                    unread notifications
+                                </li>
+                                <li>
+                                    <ul class="menu">
+                                        @foreach($notifications as $notification)
+                                            <li>
+                                                <a href="{{ route('admin.news.show', $notification->ref_id) }}"
+                                                   target="_blank">
+                                                    <i class="fa fa-comments text-aqua"></i> {{ $notification->message }}
+                                                    by {{ $notification->sender->name }}
                                                 </a>
-                                            </li>--}}
-                                        </ul>
-                                    </li>
-                                    <li class="footer"><a href="{{ route('admin.notifications.index') }}">View all</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endisset
+                                            </li>
+                                        @endforeach
+                                        {{--<li><!-- start message -->
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src="{!! Auth::user()->showroomDetails->logo_url !!}"
+                                                         width="60" class="img-circle" alt="User Image">
+                                                </div>
+                                                <h5>
+                                                    <strong>New Comment</strong>
+                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                </h5>
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>--}}
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="{{ route('admin.notifications.index') }}">View all</a>
+                                </li>
+                            </ul>
+                        </li>
                         @endability
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->

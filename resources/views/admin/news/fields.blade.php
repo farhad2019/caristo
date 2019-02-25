@@ -77,9 +77,8 @@
 <!-- Slug Field -->
 <div class="form-group col-sm-6 ">
     {!! Form::label('mediaType', 'Media Type:') !!}
-    {!! Form::select('media_type', \App\Models\News::$MEDIA_TYPE, isset($news)?$news->media[0]->media_type:null, ['class' => 'form-control select2', 'id'=>'mediaType']) !!}
+    {!! Form::select('media_type', \App\Models\News::$MEDIA_TYPE, (isset($news) && count($news->media) > 0)?$news->media[0]->media_type:null, ['class' => 'form-control select2', 'id'=>'mediaType']) !!}
 </div>
-
 <!-- Slug Field -->
 <div class="form-group col-sm-6">
     <div id="image">
@@ -105,7 +104,7 @@
     </div>
     <div id="video" style="display:none;">
         {!! Form::label('video_url', 'Video Url:') !!}
-        {!! Form::url('video_url', isset($news)?$news->media[0]->fileUrl:null, ['class' => 'form-control', 'id' => 'videoField']) !!}
+        {!! Form::url('video_url', (isset($news) && count($news->media) > 0)?$news->media[0]->fileUrl:null, ['class' => 'form-control', 'id' => 'videoField']) !!}
     </div>
 </div>
 

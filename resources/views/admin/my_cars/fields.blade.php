@@ -1,9 +1,9 @@
 @push('css')
-<style>
-    .regions {
-        display: none;
-    }
-</style>
+    <style>
+        .regions {
+            display: none;
+        }
+    </style>
 @endpush
 @if($errors->has('msg'))
     @include('adminlte-templates::common.errors')
@@ -109,7 +109,7 @@
 <!-- Year Field -->
 <div class="form-group col-sm-6 years_luxury_new_car" style="display: none">
     {!! Form::label('year', 'Model Year:*') !!}
-    {!! Form::select('year', $depreciation_trend_years, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
+    {!! Form::select('year', $years_luxury_new_car, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Engine Type Field -->
@@ -772,9 +772,10 @@
 
 <div class="col-sm-12 clearfix"></div>
 @foreach($depreciation_trend_years as $key => $depreciation_trend_year)
+    @php($index=array_search($key, array_keys($depreciation_trend_years)) + 1)
     <div class="regions" style="display: none">
         <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend.'.$key) ? 'has-error' : '' }}">
-            {!! Form::label('depreciation_trend','Year ('.$key.')', null, ['class' => 'form-control']) !!}
+            {!! Form::label('depreciation_trend',(($index==1)?'1st':(($index==2)?'2nd':(($index==3)?'3rd':(($index==4)?'4th':(($index==5)?'5th':''))))).' Year', null, ['class' => 'form-control']) !!}
             {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:null), ['class' => 'form-control luxury-new', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
             @if ($errors->has('depreciation_trend.'.$key))
                 <span class="help-block" style="color: red;">
@@ -864,152 +865,33 @@
     <a href="{!! route('admin.myCars.index') !!}" class="btn btn-default">Cancel</a>
 </div>
 @push('scripts')
-<script>
-    $(document).ready(function () {
-        var id = $('#category_id').val();
+    <script>
+        $(document).ready(function () {
+            var id = $('#category_id').val();
 
-        $('.years_pre_owned').hide();
-        $('.years_outlet_mall').hide();
-        $('.years_classic').hide();
-        $('.region').hide();
-        $('.category2528').hide();
-
-        /*if (parseInt(id) === 25) {
-         $('.years_outlet_mall').show();
-         $('.years_pre_owned').hide();
-         $('.years_classic').hide();
-         }
-         if (parseInt(id) === 26) {
-         $('.years_outlet_mall').hide();
-         $('.years_pre_owned').show();
-         $('.years_classic').hide();
-         }
-         if (parseInt(id) === 27) {
-         $('.years_outlet_mall').hide();
-         $('.years_pre_owned').hide();
-         $('.years_classic').show();
-         }
-
-         if (parseInt(id) === 25 || parseInt(id) === 26 || parseInt(id) === 27) {
-         $('.cartype').hide();
-         $('.chassis').hide();
-         $('.Trim').hide();
-         $('.Accident').hide();
-         $('.transmission_type').hide();
-
-         } else {
-         $('.cartype').show();
-         $('.chassis').hide();
-         $('.Trim').show();
-         $('.Accident').show();
-         $('.transmission_type').show();
-         }
-
-         if (parseInt(id) === 28) {
-         $('.regions').show();
-         $('.cartype').show();
-         //                $('.region').hide();
-         $('.non-luxury').hide();
-         } else {
-         $('.regions').hide();
-         $('.cartype').hide();
-         //   $('.non-luxury').show();
-         //                $('.region').show();
-         }
-
-         if (parseInt(id) === 25) {
-         $('.category2528').hide();
-         } else if (parseInt(id) === 26 || parseInt(id) === 27) {
-         $('.category2528').show();
-         }*/
-
-        if (parseInt(id) === 25) {
-            $('.years_outlet_mall').show();
             $('.years_pre_owned').hide();
+            $('.years_outlet_mall').hide();
             $('.years_classic').hide();
-
-            $('.cartype').hide();
-            $('.chassis').hide();
-//            $('.Trim').hide();
-//            $('.Accident').hide();
-            $('.transmission_type').hide();
-
-            $('.regions').hide();
-            $('.cartype').hide();
-            //   $('.non-luxury').show();
-//                $('.region').show();
-
+            $('.region').hide();
             $('.category2528').hide();
 
-            $('.non-luxury').prop("required", true);
-        } else if (parseInt(id) === 26) {
-            $('.years_outlet_mall').hide();
-            $('.years_pre_owned').show();
-            $('.years_classic').hide();
+            /*if (parseInt(id) === 25) {
+             $('.years_outlet_mall').show();
+             $('.years_pre_owned').hide();
+             $('.years_classic').hide();
+             }
+             if (parseInt(id) === 26) {
+             $('.years_outlet_mall').hide();
+             $('.years_pre_owned').show();
+             $('.years_classic').hide();
+             }
+             if (parseInt(id) === 27) {
+             $('.years_outlet_mall').hide();
+             $('.years_pre_owned').hide();
+             $('.years_classic').show();
+             }
 
-            $('.cartype').hide();
-            $('.chassis').hide();
-//            $('.Trim').hide();
-//            $('.Accident').hide();
-            $('.transmission_type').hide();
-
-            $('.regions').hide();
-            $('.cartype').hide();
-            //   $('.non-luxury').show();
-//                $('.region').show();
-
-            $('.mileage').show();
-            $('.mileage').prop("required", true);
-
-            $('.non-luxury').prop("required", true);
-        } else if (parseInt(id) === 27) {
-            $('.years_outlet_mall').hide();
-            $('.years_pre_owned').hide();
-            $('.years_classic').show();
-
-            $('.cartype').hide();
-            $('.chassis').hide();
-//            $('.Trim').hide();
-//            $('.Accident').hide();
-            $('.transmission_type').hide();
-
-            $('.regions').hide();
-            $('.cartype').hide();
-            //   $('.non-luxury').show();
-//                $('.region').show();
-
-            $('.category2528').show();
-
-            $('.non-luxury').prop("required", true);
-        } else if (parseInt(id) === 28) {
-            $('.cartype').show();
-            $('.chassis').hide();
-//            $('.Trim').show();
-//            $('.Accident').show();
-            $('.transmission_type').show();
-
-            $('.regions').show();
-            $('.cartype').show();
-//                $('.region').hide();
-            $('.non-luxury').hide();
-
-            $('.years_outlet_mall').hide();
-            $('.years_pre_owned').hide();
-            $('.years_classic').hide();
-            $('.years_luxury_new_car').show();
-
-            $('.transmission_type').hide();
-            $('.engine_type_id').hide();
-
-            $('.luxury-new').prop("required", true);
-        } else {
-
-        }
-
-        $('#category_id').on('change', function () {
-            var cat_id = $(this).val();
-
-            /*if (id == 25 || id == 26 || id == 27) {
+             if (parseInt(id) === 25 || parseInt(id) === 26 || parseInt(id) === 27) {
              $('.cartype').hide();
              $('.chassis').hide();
              $('.Trim').hide();
@@ -1018,97 +900,216 @@
 
              } else {
              $('.cartype').show();
-             $('.chassis').show();
+             $('.chassis').hide();
              $('.Trim').show();
              $('.Accident').show();
              $('.transmission_type').show();
              }
 
-             if (parseInt(cat_id) == 28) {
+             if (parseInt(id) === 28) {
              $('.regions').show();
-             //                    $('.region').hide();
              $('.cartype').show();
+             //                $('.region').hide();
              $('.non-luxury').hide();
              } else {
              $('.regions').hide();
              $('.cartype').hide();
-             //                $('.non-luxury').show();
+             //   $('.non-luxury').show();
              //                $('.region').show();
+             }
+
+             if (parseInt(id) === 25) {
+             $('.category2528').hide();
+             } else if (parseInt(id) === 26 || parseInt(id) === 27) {
+             $('.category2528').show();
              }*/
 
-            if (parseInt(cat_id) === 25) {
+            if (parseInt(id) === 25) {
                 $('.years_outlet_mall').show();
                 $('.years_pre_owned').hide();
                 $('.years_classic').hide();
 
                 $('.cartype').hide();
                 $('.chassis').hide();
-//                $('.Trim').hide();
-//                $('.Accident').hide();
+//            $('.Trim').hide();
+//            $('.Accident').hide();
                 $('.transmission_type').hide();
 
                 $('.regions').hide();
                 $('.cartype').hide();
-//                $('.non-luxury').show();
+                //   $('.non-luxury').show();
 //                $('.region').show();
 
                 $('.category2528').hide();
-            } else if (parseInt(cat_id) === 26) {
+
+                $('.non-luxury').prop("required", true);
+            } else if (parseInt(id) === 26) {
                 $('.years_outlet_mall').hide();
                 $('.years_pre_owned').show();
                 $('.years_classic').hide();
 
                 $('.cartype').hide();
                 $('.chassis').hide();
-//                $('.Trim').hide();
-//                $('.Accident').hide();
+//            $('.Trim').hide();
+//            $('.Accident').hide();
                 $('.transmission_type').hide();
 
                 $('.regions').hide();
                 $('.cartype').hide();
-//                $('.non-luxury').show();
+                //   $('.non-luxury').show();
 //                $('.region').show();
 
-                $('.category2528').show();
-                $('.kilometer').show();
-                $('.kilometer').prop("required", true);
-            } else if (parseInt(cat_id) === 27) {
+                $('.mileage').show();
+                $('.mileage').prop("required", true);
+
+                $('.non-luxury').prop("required", true);
+            } else if (parseInt(id) === 27) {
                 $('.years_outlet_mall').hide();
                 $('.years_pre_owned').hide();
                 $('.years_classic').show();
 
                 $('.cartype').hide();
                 $('.chassis').hide();
-//                $('.Trim').hide();
-//                $('.Accident').hide();
+//            $('.Trim').hide();
+//            $('.Accident').hide();
                 $('.transmission_type').hide();
 
                 $('.regions').hide();
                 $('.cartype').hide();
-//                $('.non-luxury').show();
+                //   $('.non-luxury').show();
 //                $('.region').show();
 
                 $('.category2528').show();
-            } else if (parseInt(cat_id) === 28) {
-                $('.regions').show();
-//                    $('.region').hide();
+
+                $('.non-luxury').prop("required", true);
+            } else if (parseInt(id) === 28) {
                 $('.cartype').show();
+                $('.chassis').hide();
+//            $('.Trim').show();
+//            $('.Accident').show();
+                $('.transmission_type').show();
+
+                $('.regions').show();
+                $('.cartype').show();
+//                $('.region').hide();
                 $('.non-luxury').hide();
 
-                $('.category2528').hide();
+                $('.years_outlet_mall').hide();
+                $('.years_pre_owned').hide();
+                $('.years_classic').hide();
+                $('.years_luxury_new_car').show();
 
                 $('.transmission_type').hide();
                 $('.engine_type_id').hide();
+
+                $('.luxury-new').prop("required", true);
             } else {
 
             }
 
-            /*if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
-             $('.category2528').hide();
-             } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
-             $('.category2528').show();
-             }*/
+            $('#category_id').on('change', function () {
+                var cat_id = $(this).val();
+
+                /*if (id == 25 || id == 26 || id == 27) {
+                 $('.cartype').hide();
+                 $('.chassis').hide();
+                 $('.Trim').hide();
+                 $('.Accident').hide();
+                 $('.transmission_type').hide();
+
+                 } else {
+                 $('.cartype').show();
+                 $('.chassis').show();
+                 $('.Trim').show();
+                 $('.Accident').show();
+                 $('.transmission_type').show();
+                 }
+
+                 if (parseInt(cat_id) == 28) {
+                 $('.regions').show();
+                 //                    $('.region').hide();
+                 $('.cartype').show();
+                 $('.non-luxury').hide();
+                 } else {
+                 $('.regions').hide();
+                 $('.cartype').hide();
+                 //                $('.non-luxury').show();
+                 //                $('.region').show();
+                 }*/
+
+                if (parseInt(cat_id) === 25) {
+                    $('.years_outlet_mall').show();
+                    $('.years_pre_owned').hide();
+                    $('.years_classic').hide();
+
+                    $('.cartype').hide();
+                    $('.chassis').hide();
+//                $('.Trim').hide();
+//                $('.Accident').hide();
+                    $('.transmission_type').hide();
+
+                    $('.regions').hide();
+                    $('.cartype').hide();
+//                $('.non-luxury').show();
+//                $('.region').show();
+
+                    $('.category2528').hide();
+                } else if (parseInt(cat_id) === 26) {
+                    $('.years_outlet_mall').hide();
+                    $('.years_pre_owned').show();
+                    $('.years_classic').hide();
+
+                    $('.cartype').hide();
+                    $('.chassis').hide();
+//                $('.Trim').hide();
+//                $('.Accident').hide();
+                    $('.transmission_type').hide();
+
+                    $('.regions').hide();
+                    $('.cartype').hide();
+//                $('.non-luxury').show();
+//                $('.region').show();
+
+                    $('.category2528').show();
+                    $('.kilometer').show();
+                    $('.kilometer').prop("required", true);
+                } else if (parseInt(cat_id) === 27) {
+                    $('.years_outlet_mall').hide();
+                    $('.years_pre_owned').hide();
+                    $('.years_classic').show();
+
+                    $('.cartype').hide();
+                    $('.chassis').hide();
+//                $('.Trim').hide();
+//                $('.Accident').hide();
+                    $('.transmission_type').hide();
+
+                    $('.regions').hide();
+                    $('.cartype').hide();
+//                $('.non-luxury').show();
+//                $('.region').show();
+
+                    $('.category2528').show();
+                } else if (parseInt(cat_id) === 28) {
+                    $('.regions').show();
+//                    $('.region').hide();
+                    $('.cartype').show();
+                    $('.non-luxury').hide();
+
+                    $('.category2528').hide();
+
+                    $('.transmission_type').hide();
+                    $('.engine_type_id').hide();
+                } else {
+
+                }
+
+                /*if (parseInt(cat_id) === 25 || parseInt(cat_id) === 28) {
+                 $('.category2528').hide();
+                 } else if (parseInt(cat_id) === 26 || parseInt(cat_id) === 27) {
+                 $('.category2528').show();
+                 }*/
+            });
         });
-    });
-</script>
+    </script>
 @endpush

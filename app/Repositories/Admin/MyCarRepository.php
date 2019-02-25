@@ -44,6 +44,7 @@ class MyCarRepository extends BaseRepository
     /**
      * @param $request
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function saveRecord($request)
     {
@@ -288,6 +289,7 @@ class MyCarRepository extends BaseRepository
      * @param $request
      * @param $myCar
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function updateApiRecord($request, $myCar)
     {

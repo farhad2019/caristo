@@ -9,9 +9,9 @@ use App\Http\Requests\Admin\CreateMediaRequest;
 use App\Http\Requests\Admin\UpdateMediaRequest;
 use App\Repositories\Admin\MediaRepository;
 use App\Repositories\Admin\MyCarRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
 class MediaController extends AppBaseController
 {
@@ -64,15 +64,14 @@ class MediaController extends AppBaseController
      * @param CreateMediaRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateMediaRequest $request)
     {
         $input = $request->all();
-
         $media = $this->mediaRepository->create($input);
 
         Flash::success('Media saved successfully.');
-
         return redirect(route('admin.media.index'));
     }
 
@@ -89,7 +88,6 @@ class MediaController extends AppBaseController
 
         if (empty($media)) {
             Flash::error('Media not found');
-
             return redirect(route('admin.media.index'));
         }
 
@@ -110,7 +108,6 @@ class MediaController extends AppBaseController
 
         if (empty($media)) {
             Flash::error('Media not found');
-
             return redirect(route('admin.media.index'));
         }
 
@@ -125,6 +122,7 @@ class MediaController extends AppBaseController
      * @param UpdateMediaRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateMediaRequest $request)
     {
@@ -132,14 +130,11 @@ class MediaController extends AppBaseController
 
         if (empty($media)) {
             Flash::error('Media not found');
-
             return redirect(route('admin.media.index'));
         }
-
         $media = $this->mediaRepository->update($request->all(), $id);
 
         Flash::success('Media updated successfully.');
-
         return redirect(route('admin.media.index'));
     }
 
@@ -156,14 +151,11 @@ class MediaController extends AppBaseController
 
         if (empty($media)) {
             Flash::error('Media not found');
-
             return redirect(route('admin.media.index'));
         }
-
         $this->mediaRepository->delete($id);
 
         Flash::success('Media deleted successfully.');
-
         return redirect(route('admin.media.index'));
     }
 

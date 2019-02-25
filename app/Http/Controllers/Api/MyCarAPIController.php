@@ -155,8 +155,9 @@ class MyCarAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function store(Request $request)
+    public function store(CreateMyCarAPIRequest $request)
     {
         $myCars = $this->myCarRepository->saveRecord($request);
 

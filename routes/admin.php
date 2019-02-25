@@ -100,11 +100,6 @@ Route::resource('tradeInCars', 'TradeInCarController');
 Route::resource('banksRates', 'BanksRateController');
 
 Route::resource('comments', 'CommentController');
-Route::post('notification', 'CommentController@getNotification');
-Route::post('alert', 'CommentController@getAlertNotification');
-Route::get('unread/{id}', 'CommentController@markRead');
-
-Route::Get('tradealert', 'TradeInCarController@getCount');
 
 Route::resource('reviewAspects', 'ReviewAspectController');
 

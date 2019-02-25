@@ -338,7 +338,7 @@ class MyCar extends Model
         'is_viewed',
         'is_favorite',
         'limited_edition_specs_array',
-        'depreciation_trend_value',
+//        'depreciation_trend_value',
         'review_count',
         'ref_num'
     ];
@@ -379,7 +379,7 @@ class MyCar extends Model
         'like_count',
         'is_favorite',
         'bid_close_at',
-        'depreciation_trend_value',
+//        'depreciation_trend_value',
         'life_cycle',
         'created_at',
 //        'bids',
@@ -453,6 +453,7 @@ class MyCar extends Model
         'country_code'              => 'required',
         'phone'                     => 'required',
         'model_id'                  => 'required|exists:car_models,id',
+        'version_id'                => 'required|exists:car_versions,id',
         'year'                      => 'required',
         'regional_specification_id' => 'required|exists:regional_specifications,id',
 //        'type_id'                   => 'required|exists:car_types,id',

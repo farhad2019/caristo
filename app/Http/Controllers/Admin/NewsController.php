@@ -9,10 +9,14 @@ use App\Http\Requests\Admin\CreateNewsRequest;
 use App\Http\Requests\Admin\UpdateNewsRequest;
 use App\Models\MetaInformation;
 use App\Models\News;
+use App\Models\Notification;
+use App\Models\NotificationUser;
 use App\Repositories\Admin\CategoryRepository;
 use App\Repositories\Admin\CommentRepository;
 use App\Repositories\Admin\NewsRepository;
+use App\Repositories\Admin\NotificationRepository;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
 
 class NewsController extends AppBaseController
@@ -29,13 +33,29 @@ class NewsController extends AppBaseController
     /** @var  CategoryRepository */
     private $categoryRepository;
 
+    /**
+     * @var CommentRepository
+     */
     private $commentRepository;
 
-    public function __construct(NewsRepository $newsRepo, CategoryRepository $categoryRepository,CommentRepository $commentRepo)
+    /**
+     * @var NotificationRepository
+     */
+    private $notificationRepository;
+
+    /**
+     * NewsController constructor.
+     * @param NewsRepository $newsRepo
+     * @param CategoryRepository $categoryRepository
+     * @param CommentRepository $commentRepo
+     * @param NotificationRepository $notificationRepo
+     */
+    public function __construct(NewsRepository $newsRepo, CategoryRepository $categoryRepository, CommentRepository $commentRepo, NotificationRepository $notificationRepo)
     {
         $this->newsRepository = $newsRepo;
         $this->categoryRepository = $categoryRepository;
         $this->commentRepository = $commentRepo;
+        $this->notificationRepository = $notificationRepo;
         $this->ModelName = 'news';
         $this->BreadCrumbName = 'News';
     }
@@ -111,6 +131,11 @@ class NewsController extends AppBaseController
             Flash::error('News not found');
             return redirect(route('admin.news.index'));
         }
+        $notification = $this->notificationRepository->findWhere(['ref_id' => $id, 'action_type' => Notification::NOTIFICATION_TYPE_COMMENT])->first();
+        if (!empty($notification)) {
+            $notification->details()->where('user_id', Auth::id())->update(['status' => NotificationUser::STATUS_READ]);
+        }
+
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName, $news);
         return view('admin.news.show')->with('news', $news);
     }
@@ -166,13 +191,13 @@ class NewsController extends AppBaseController
         $news = $this->newsRepository->updateRecord($request, $news);
 
         if (strlen($request->meta_title) > 0) {
-            if ($news->meta->count() > 0){
+            if ($news->meta->count() > 0) {
                 $news->meta[0]->update([
                     'title'       => $request->meta_title,
                     'tags'        => $request->meta_tag ?? '',
                     'description' => $request->meta_description ?? '',
                 ]);
-            }else{
+            } else {
                 MetaInformation::create([
                     'instance_type' => News::INSTANCE,
                     'instance_id'   => $news->id,
@@ -225,5 +250,5 @@ class NewsController extends AppBaseController
 
         Flash::success('Status Updated.');
         return redirect()->back();
-    }    
+    }
 }

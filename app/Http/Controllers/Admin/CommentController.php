@@ -7,7 +7,6 @@ use App\DataTables\Admin\CommentDataTable;
 use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateCommentRequest;
 use App\Http\Requests\Admin\UpdateCommentRequest;
-use App\Models\Comment;
 use App\Repositories\Admin\CommentRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
@@ -160,48 +159,5 @@ class CommentController extends AppBaseController
         Flash::success('Comment deleted successfully.');
         return redirect()->back();
 //        return redirect(route('admin.comments.index'));
-    }
-
-    /**
-     * @return array
-     */
-    public function getNotification()
-    {
-        $data = Comment::where('deleted_at',null)->orderBy('created_at','desc')->get();
-//        $data = $this->commentRepository->where('deleted_at',null)->get();
-
-        $resultArray = [];
-        $i =0;
-        foreach ($data as $item){
-            $resultArray[$i] = $item;
-            $resultArray[$i]['created_at'] = $resultArray[$i]['created_at']->timezone(session('timezone'));
-            $i++;
-        }
-
-        if (empty($data)) {
-            Flash::error('Notification not found');
-        }
-
-        return $resultArray;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAlertNotification()
-    {
-        $count = Comment::where('status', 20)->count();
-        return $count;
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function markRead($id)
-    {
-        $value['status'] = 10;
-        Comment::where('id',$id)->update($value);
-        return true;
     }
 }

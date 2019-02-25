@@ -96,27 +96,3 @@ $(window).on("load", function () {
         autoplaySpeed: 2000
     });
 });
-
-$(document).ready(function () {
-    //refreshData();
-    /*var old_count;
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $.ajax({
-        type: "GET",
-        url: "tradealert",
-        success: function (data) {
-            old_count = data;
-            if (data > 0) {
-                $(".badge").html('');
-                $(".badge").html(data);
-            } else {
-                $(".badge").html('');
-            }
-        }
-    });*/
-});
