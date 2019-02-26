@@ -178,33 +178,33 @@ class TradeInCarAPIController extends AppBaseController
         }
 
         $tradeInCar = $this->tradeInCarRepository->saveRecord($request);
+
         $subject = 'New Trade In Request';
         if ($request->type == TradeInCar::TRADE_IN) {
             if ($tradeInCar->myCar->category_id == MyCar::LIMITED_EDITION) {
+                $dealerIds = [];
                 foreach ($tradeInCar->myCar->dealers as $dealer) {
                     $name = $dealer->name;
                     $email = $dealer->email;
-
                     Mail::send('email.notify', ['name' => $name],
                         function ($mail) use ($email, $name, $subject) {
                             $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrat App");
                             $mail->to($email, $name);
                             $mail->subject($subject);
                         });
-
-                    ################# NOTIFICATION ####################
-//                    $dealerTradeInCar = $this->tradeInCarRepository->findWhere(['user_id' => $dealer->id, 'owner_car_id' => $tradeInCar->owner_car_id, 'customer_car_id' => $tradeInCar->customer_car_id])->first();
-//
-//                    $notification = [
-//                        'sender_id'   => Auth::id(),
-//                        'action_type' => Notification::NOTIFICATION_TYPE_TRADE_IN,
-//                        'url'         => null,
-//                        'ref_id'      => $dealerTradeInCar->id,
-//                        'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_TRADE_IN]
-//                    ];
-//
-//                    $this->notificationRepository->notification($notification, $dealer->id);
+                    $dealerIds[] = $dealer->id;
                 }
+
+                ################# NOTIFICATION ####################
+                $notification = [
+                    'sender_id'   => Auth::id(),
+                    'action_type' => Notification::NOTIFICATION_TYPE_TRADE_IN,
+                    'url'         => null,
+                    'ref_id'      => $tradeInCar->id,
+                    'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_TRADE_IN]
+                ];
+
+                $this->notificationRepository->notification($notification, $dealerIds);
                 return $this->sendResponse($tradeInCar->toArray(), $message);
             }
 

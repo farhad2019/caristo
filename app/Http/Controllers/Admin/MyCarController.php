@@ -891,11 +891,21 @@ class MyCarController extends AppBaseController
         $myCar = $this->myCarRepository->updateRecord($request, $myCar);
 
         if (strlen($request->meta_title) > 0) {
-            $myCar->meta[0]->update([
-                'title'       => $request->meta_title,
-                'tags'        => $request->meta_tag ?? '',
-                'description' => $request->meta_description ?? '',
-            ]);
+            if (isset($myCar->meta[0])){
+                $myCar->meta[0]->update([
+                    'title'       => $request->meta_title,
+                    'tags'        => $request->meta_tag ?? '',
+                    'description' => $request->meta_description ?? '',
+                ]);
+            }else{
+                MetaInformation::create([
+                    'instance_type' => MyCar::INSTANCE,
+                    'instance_id'   => $myCar->id,
+                    'title'         => $request->meta_title,
+                    'tags'          => $request->meta_tag ?? '',
+                    'description'   => $request->meta_description ?? '',
+                ]);
+            }
         }
 
         if ($request->category_id != MyCar::LIMITED_EDITION) {

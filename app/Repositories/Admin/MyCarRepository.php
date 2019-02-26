@@ -322,6 +322,7 @@ class MyCarRepository extends BaseRepository
      * @param $request
      * @param $myCar
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function updateRecord($request, $myCar)
     {

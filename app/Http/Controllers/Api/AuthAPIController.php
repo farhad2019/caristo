@@ -963,6 +963,12 @@ class AuthAPIController extends AppBaseController
      *          type="integer",
      *          required=false,
      *          in="formData"
+     *      ),@SWG\Parameter(
+     *          name="region_id",
+     *          description="user region id",
+     *          type="integer",
+     *          required=false,
+     *          in="formData"
      *      ),
      *     @SWG\Parameter(
      *          name="image",
@@ -994,7 +1000,7 @@ class AuthAPIController extends AppBaseController
     {
         $user = \Auth::user();
         $userData = $request->only('name', 'status');
-        $details = $request->only(['name', 'country_code', 'phone', 'about', 'gender', 'nationality', 'profession', 'dob']);
+        $details = $request->only(['name', 'country_code', 'phone', 'about', 'gender', 'nationality', 'profession', 'dob', 'region_id']);
 
         if ($request->hasFile('image')) {
             $mediaFile = $request->file('image');
