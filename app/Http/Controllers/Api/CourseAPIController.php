@@ -33,13 +33,13 @@ class CourseAPIController extends AppBaseController
      * @return Response
      * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
-     * //@SWG\Get(
+     * @SWG\Get(
      *      path="/courses",
      *      summary="Get a listing of the Courses.",
      *      tags={"Course"},
      *      description="Get all Courses",
      *      produces={"application/json"},
-     *      //@SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -47,42 +47,42 @@ class CourseAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      //@SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="limit",
      *          description="Change the Default Record Count. If not found, Returns All Records in DB.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      //@SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="offset",
      *          description="Change the Default Offset of the Query. If not found, 0 will be used.",
      *          type="integer",
      *          required=false,
      *          in="query"
      *      ),
-     *      //@SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="category_id",
      *          description="Course category id.",
      *          type="integer",
      *          required=true,
      *          in="query"
      *      ),
-     *      //@SWG\Response(
+     *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          //@SWG\Schema(
+     *          @SWG\Schema(
      *              type="object",
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  //@SWG\Items(ref="#/definitions/Course")
+     *                  @SWG\Items(ref="#/definitions/Course")
      *              ),
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -104,13 +104,13 @@ class CourseAPIController extends AppBaseController
      * @param CreateCourseAPIRequest $request
      * @return Response
      *
-     * @SWG\Post(
+     * //@SWG\Post(
      *      path="/courses",
      *      summary="Store a newly created Course in storage",
      *      tags={"Course"},
      *      description="Store Course",
      *      produces={"application/json"},
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -118,7 +118,7 @@ class CourseAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      @SWG\Parameter(
+     *      //@SWG\Parameter(
      *          name="body",
      *          in="body",
      *          description="Course that should be stored",
@@ -160,13 +160,13 @@ class CourseAPIController extends AppBaseController
      * @param int $id
      * @return Response
      *
-     * //@SWG\Get(
+     * @SWG\Get(
      *      path="/courses/{id}",
      *      summary="Display the specified Course",
      *      tags={"Course"},
      *      description="Get Course",
      *      produces={"application/json"},
-     *      //@SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="Authorization",
      *          description="User Auth Token{ Bearer ABC123 }",
      *          type="string",
@@ -174,27 +174,27 @@ class CourseAPIController extends AppBaseController
      *          default="Bearer ABC123",
      *          in="header"
      *      ),
-     *      //@SWG\Parameter(
+     *      @SWG\Parameter(
      *          name="id",
      *          description="id of Course",
      *          type="integer",
      *          required=true,
      *          in="path"
      *      ),
-     *      //@SWG\Response(
+     *      @SWG\Response(
      *          response=200,
      *          description="successful operation",
-     *          //@SWG\Schema(
+     *          @SWG\Schema(
      *              type="object",
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="success",
      *                  type="boolean"
      *              ),
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="data",
      *                  ref="#/definitions/Course"
      *              ),
-     *              //@SWG\Property(
+     *              @SWG\Property(
      *                  property="message",
      *                  type="string"
      *              )
@@ -267,6 +267,7 @@ class CourseAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateCourseAPIRequest $request)
     {
