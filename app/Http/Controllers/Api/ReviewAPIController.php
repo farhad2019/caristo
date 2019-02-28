@@ -155,10 +155,10 @@ class ReviewAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateReviewAPIRequest $request)
     {
-
         if (Auth::user()->reviews()->where('car_id', $request->car_id)->count() > 0) {
             return $this->sendError('Your review had already been record for this car.');
         }
@@ -296,6 +296,7 @@ class ReviewAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateReviewAPIRequest $request)
     {
