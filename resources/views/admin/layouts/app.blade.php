@@ -14,6 +14,10 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="{{ url('public/css/bootstrap-timepicker.min.css') }}">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="{{ url('public/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
@@ -340,6 +344,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <!-- SweetAlert -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!-- bootstrap time picker -->
+<script src="{{ url('public/js/bootstrap-timepicker.min.js') }}"></script>
+
+<!-- bootstrap datepicker -->
+<script src="{{ url('public/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 
 <!-- CK Editor -->
 <script src="{{ url('public/ckeditor/ckeditor.js') }}"></script>

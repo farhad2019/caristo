@@ -28,7 +28,7 @@ class NewsDataTable extends DataTable
 
         $dataTable->editColumn('category.translations.name', function (News $model) {
 //            return ($model->category) ? "<span id='category-" . $model->category_id . "' class='label label-success'>" . $model->category->name . "</span>" : "<span class='label label-default'>None</span>";
-            return $model->category->name;
+            return @$model->category->name;
         });
 
         $dataTable->editColumn('image', function (News $model) {

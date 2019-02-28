@@ -126,6 +126,10 @@ if (is_object(JWTAuth::getToken())){
         Route::resource('v1/banksRates', 'BanksRateAPIController');
 
         Route::resource('v1/regions', 'RegionAPIController');
+
+        Route::resource('v1/courses', 'CourseAPIController');
+
+        Route::resource('v1/chapters', 'ChapterAPIController');
     });
 } else {
     #guest Routes

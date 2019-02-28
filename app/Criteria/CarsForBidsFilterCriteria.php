@@ -164,11 +164,12 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         $is_for_review = $this->request->get('is_for_review', 0);
 
         $model = $model->when(($is_for_review > 0), function ($query) {
-            return $query->orderBy('bid_close_at', 'DESC ');
+            return $query->orderBy('bid_close_at', 'DESC ');  //used for last reviewed car, as bid closed at feild updated when car gets review
         });
 
         $model = $model->when(($is_for_review == 0 && $sort_by_year == 0), function ($query) {
-            return $query->orderBy('created_at', 'DESC');
+            return $query->orderBy('is_featured', 'DESC');
+//            return $query->orderBy('created_at', 'DESC');
         });
 
         $model = $model->when(($sort_by_year > 0), function ($query) {
@@ -184,7 +185,7 @@ class CarsForBidsFilterCriteria implements CriteriaInterface
         var_dump($model->toSql());
         exit();*/
         $model = $model->where('status', MyCar::ACTIVE);
-        //$model = $model->orderBy('amount', 'DESC');
+        //$model = $model->orderBy('is_featured', 'DESC');
 
         return $model;
     }

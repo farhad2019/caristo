@@ -284,7 +284,8 @@ class MyCar extends Model
         'life_cycle',
         'call_clicks',
         'personal_shopper_clicks',
-        'status'
+        'status',
+        'version_app'
     ];
 
     /**
@@ -405,7 +406,8 @@ class MyCar extends Model
         'DepreciationTrend',
         'reviews',
         'dealers',
-        'specification'
+        'specification',
+        'version_app'
     ];
 
     /**
@@ -453,7 +455,7 @@ class MyCar extends Model
         'country_code'              => 'required',
         'phone'                     => 'required',
         'model_id'                  => 'required|exists:car_models,id',
-        'version_id'                => 'required|exists:car_versions,id',
+        //'version_id'                => 'required|exists:car_versions,id',
         'year'                      => 'required',
         'regional_specification_id' => 'required|exists:regional_specifications,id',
 //        'type_id'                   => 'required|exists:car_types,id',

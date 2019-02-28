@@ -18,7 +18,7 @@
 
     @if(isset($region))
         <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
-            <img src="{!! $region->media[0]->file_url !!}" style="width: 125px;">
+            <img src="{!! @$region->media[0]->file_url !!}" style="width: 125px;">
         </div>
         {{--<div class="col-sm-3">
             <img src="{!! $region->media[0]->file_url !!}" width="45">

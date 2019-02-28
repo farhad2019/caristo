@@ -62,6 +62,7 @@ class Category extends Model
     const NEWS = 10;
     const COMPARE = 20;
     const LUX_MARKET = 30;
+    const COACH = 50;
 
     public static $TYPE_TEXT = [
         self::NEWS       => 'News',
@@ -203,7 +204,7 @@ class Category extends Model
      */
     public function getBannerImagesAttribute()
     {
-        return $this->media->where('media_type', Media::BANNER_IMAGE);
+        return $this->media()->where('media_type', Media::BANNER_IMAGE)->get()->toArray();
     }
 
     /**
@@ -211,7 +212,7 @@ class Category extends Model
      */
     public function getImagesAttribute()
     {
-        return $this->media->where('media_type', Media::IMAGE);
+        return $this->media()->where('media_type', Media::IMAGE)->get()->toArray();
     }
 
     /**
@@ -252,6 +253,11 @@ class Category extends Model
     public function carInteraction()
     {
         return $this->hasMany(CarInteraction::class, 'car_id');
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'category_id');
     }
 
     /**

@@ -1024,7 +1024,9 @@ class AuthAPIController extends AppBaseController
 //                $details['phone'] = $details['country_code'] . $details['phone'];
 //                unset($details['country_code']);
 //            }
-            $details['first_name'] = $request->name;
+            if (isset($request->name)){
+                $details['first_name'] = $request->name;
+            }
             $this->userDetailRepository->update($details, $user->details->id);
         }
 

@@ -177,12 +177,12 @@ class MyCarRepository extends BaseRepository
             $input['category_id'] = $request->category_id;
             $input['owner_id'] = $user->id;
             $input['owner_type'] = User::SHOWROOM_OWNER;
-
+            $input['version_app'] = @$request->version_app;
+            $input['version_id'] = $request->version_id;
             $input['model_id'] = $request->model_id;
             $input['chassis'] = $request->chassis;
             $input['year'] = date('Y');
             $input['price'] = $request->price;
-            $input['version_id'] = $request->version_id;
             $input['regional_specification_id'] = $request->regional_specification_id;
             $input['type_id'] = $request->type_id;
             $input['engine_type_id'] = $request->engine_type_id;
@@ -219,7 +219,8 @@ class MyCarRepository extends BaseRepository
                  }
              }*/
         } else {
-            $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'version_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometer', 'price', 'description', 'is_featured']);
+            $input = $request->only(['type_id', 'model_id', 'year', 'transmission_type', 'engine_type_id', 'version_id', 'name', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'category_id', 'average_mkp', 'amount', 'kilometer', 'price', 'description', 'is_featured', 'version_app']);
+
             $input['owner_id'] = $user->id;
             if (Auth::user()->hasRole(['showroom-owner', 'Administrators'])) {
                 $user_type = User::SHOWROOM_OWNER;
@@ -261,7 +262,7 @@ class MyCarRepository extends BaseRepository
 //                $regions = [];
 //                $regions['region_id'] = Auth::user()->details->region_id;
 //                $regions['car_id'] = $myCar->id;
-                CarRegion::create(['region_id' => Auth::user()->details->region_id, 'car_id' => $myCar->id]);
+            CarRegion::create(['region_id' => Auth::user()->details->region_id, 'car_id' => $myCar->id]);
 //            }
 
         }
@@ -293,7 +294,7 @@ class MyCarRepository extends BaseRepository
      */
     public function updateApiRecord($request, $myCar)
     {
-        $input = $request->only(['type_id', 'model_id', 'year', 'engine_type_id', 'name', 'version_id', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'kilometer', 'status']);
+        $input = $request->only(['type_id', 'model_id', 'year', 'engine_type_id', 'name', 'version_id', 'email', 'country_code', 'phone', 'chassis', 'notes', 'regional_specification_id', 'kilometer', 'status', 'version_app']);
 
         $myCar = $this->update($input, $myCar->id);
 
@@ -483,20 +484,20 @@ class MyCarRepository extends BaseRepository
             }
 //            $myCar->carRegions->updateExistingPivot();
 
-           /* $input['region'] = $request->regions;
-            $region = intval($request->regions);
-            if (isset($input['category_id'])) {
-                $regions = [];
-                if ($region > 0) {
-                    CarRegion::where('car_id', $myCar->id)->delete();
-                    foreach ($request->regions as $key => $val) {
-                        $regions['region_id'] = intval($request->regions[$key]);
-                        $regions['price'] = $input['price'][$key];
-                        $regions['car_id'] = $myCar->id;
-                        CarRegion::create($regions);
-                    }
-                }
-            }*/
+            /* $input['region'] = $request->regions;
+             $region = intval($request->regions);
+             if (isset($input['category_id'])) {
+                 $regions = [];
+                 if ($region > 0) {
+                     CarRegion::where('car_id', $myCar->id)->delete();
+                     foreach ($request->regions as $key => $val) {
+                         $regions['region_id'] = intval($request->regions[$key]);
+                         $regions['price'] = $input['price'][$key];
+                         $regions['car_id'] = $myCar->id;
+                         CarRegion::create($regions);
+                     }
+                 }
+             }*/
         } else {
 
             $input['limited_edition_specs'] = null;

@@ -11,8 +11,8 @@
 
 <!-- Meta Title Field -->
 <div class="form-group col-sm-6 {{ $errors->has('meta_title') ? ' has-error' : '' }}">
-    {!! Form::label('meta_title', 'Meta Title:*') !!}
-    {!! Form::text('meta_title', isset($myCar->meta[0])?$myCar->meta[0]->title:null, ['class' => 'form-control', 'maxLength' => 55, 'required']) !!}
+    {!! Form::label('meta_title', 'Meta Title:') !!}
+    {!! Form::text('meta_title', isset($myCar->meta[0])?$myCar->meta[0]->title:null, ['class' => 'form-control', 'maxLength' => 55]) !!}
 
     @if ($errors->has('meta_title'))
         <span class="help-block" style="color: red;">
@@ -23,8 +23,8 @@
 
 <!-- Meta Tag Field -->
 <div class="form-group col-sm-6 {{ $errors->has('meta_tag') ? ' has-error' : '' }}">
-    {!! Form::label('meta_tag', 'Meta Tag:*') !!}
-    {!! Form::text('meta_tag', isset($myCar->meta[0])?$myCar->meta[0]->tags:null, ['class' => 'form-control', 'maxLength' => 55, 'required']) !!}
+    {!! Form::label('meta_tag', 'Meta Tag:') !!}
+    {!! Form::text('meta_tag', isset($myCar->meta[0])?$myCar->meta[0]->tags:null, ['class' => 'form-control', 'maxLength' => 55]) !!}
 
     @if ($errors->has('meta_tag'))
         <span class="help-block" style="color: red;">
@@ -35,8 +35,8 @@
 
 <!-- Meta Description Field -->
 <div class="form-group col-sm-6 {{ $errors->has('Meta Description') ? ' has-error' : '' }}">
-    {!! Form::label('meta_description', 'meta_description:*') !!}
-    {!! Form::text('meta_description', isset($myCar->meta[0])?$myCar->meta[0]->description:null, ['class' => 'form-control', 'maxLength' => 55, 'required']) !!}
+    {!! Form::label('meta_description', 'Meta Description:') !!}
+    {!! Form::text('meta_description', isset($myCar->meta[0])?$myCar->meta[0]->description:null, ['class' => 'form-control', 'maxLength' => 55]) !!}
 
     @if ($errors->has('meta_description'))
         <span class="help-block" style="color: red;">

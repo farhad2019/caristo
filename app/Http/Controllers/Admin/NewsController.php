@@ -188,6 +188,15 @@ class NewsController extends AppBaseController
             Flash::error('News not found');
             return redirect(route('admin.news.index'));
         }
+
+        if ($news->media()->count() == 0){
+            $request->validate([
+                'image' => 'required'
+            ], [
+                'image.required' => 'The image is required.'
+            ]);
+        }
+
         $news = $this->newsRepository->updateRecord($request, $news);
 
         if (strlen($request->meta_title) > 0) {

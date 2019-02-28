@@ -116,3 +116,7 @@ Route::resource('carsEvaluations', 'CarsEvaluationController');
 Route::resource('carVersions', 'CarVersionController');
 
 Route::resource('subscribers', 'SubscriberController');
+
+Route::resource('courses', 'CourseController');
+
+Route::resource('chapters', 'ChapterController');

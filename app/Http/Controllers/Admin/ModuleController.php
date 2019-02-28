@@ -51,7 +51,7 @@ class ModuleController extends Controller
     public function index()
     {
         BreadcrumbsRegister::Register($this->ModelName, $this->BreadCrumbName);
-        $this->data['modules'] = Module::where('is_protected', 0)->where('is_module', 1)->where('deleted_at', null)->get();
+        $this->data['modules'] = Module::where('is_protected', 0)->where('is_module', 1)->where('deleted_at', null)->orderBy('created_at', 'DESC')->get();
         return view('admin.module.list', $this->data);
     }
 

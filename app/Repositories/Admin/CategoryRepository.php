@@ -67,6 +67,18 @@ class CategoryRepository extends BaseRepository
     }
 
     /**
+     * @return mixed
+     */
+    public function getCoachCategories()
+    {
+        /*return ((Auth::user()->hasRole('showroom-owner')) ? $this->model->where('type', Category::LUX_MARKET)->where('slug', '!=', 'luxury-new-cars')->whereNotIn('parent_id', [0])->get() : $this->model->where('type', Category::LUX_MARKET)->where('slug', 'luxury-new-cars')->whereNotIn('parent_id', [0])->get());*/
+         return $this->model->where('type', Category::COACH)
+             ->whereNotIn('parent_id', [0])
+             ->whereNotIn('id', [58]) //temp solution
+             ->get();
+    }
+
+    /**
      * @param Request $request
      * @return mixed
      * @throws \Prettus\Validator\Exceptions\ValidatorException

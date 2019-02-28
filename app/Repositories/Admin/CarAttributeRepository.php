@@ -35,6 +35,7 @@ class CarAttributeRepository extends BaseRepository
     /**
      * @param $request
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function saveRecord($request)
     {
@@ -59,6 +60,7 @@ class CarAttributeRepository extends BaseRepository
      * @param $request
      * @param $carAttribute
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function updateRecord($request, $carAttribute)
     {

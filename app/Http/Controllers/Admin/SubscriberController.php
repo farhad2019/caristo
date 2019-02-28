@@ -8,10 +8,14 @@ use App\Http\Requests\Admin;
 use App\Http\Requests\Admin\CreateSubscriberRequest;
 use App\Http\Requests\Admin\UpdateSubscriberRequest;
 use App\Repositories\Admin\SubscriberRepository;
-use Flash;
 use App\Http\Controllers\AppBaseController;
-use Response;
+use Illuminate\Http\Response;
+use Laracasts\Flash\Flash;
 
+/**
+ * Class SubscriberController
+ * @package App\Http\Controllers\Admin
+ */
 class SubscriberController extends AppBaseController
 {
     /** ModelName */
@@ -59,15 +63,14 @@ class SubscriberController extends AppBaseController
      * @param CreateSubscriberRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateSubscriberRequest $request)
     {
         $input = $request->all();
-
         $subscriber = $this->subscriberRepository->create($input);
 
         Flash::success('Subscriber saved successfully.');
-
         return redirect(route('admin.subscribers.index'));
     }
 
@@ -84,7 +87,6 @@ class SubscriberController extends AppBaseController
 
         if (empty($subscriber)) {
             Flash::error('Subscriber not found');
-
             return redirect(route('admin.subscribers.index'));
         }
 
@@ -105,7 +107,6 @@ class SubscriberController extends AppBaseController
 
         if (empty($subscriber)) {
             Flash::error('Subscriber not found');
-
             return redirect(route('admin.subscribers.index'));
         }
 
@@ -116,10 +117,11 @@ class SubscriberController extends AppBaseController
     /**
      * Update the specified Subscriber in storage.
      *
-     * @param  int              $id
+     * @param  int $id
      * @param UpdateSubscriberRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateSubscriberRequest $request)
     {
@@ -127,14 +129,11 @@ class SubscriberController extends AppBaseController
 
         if (empty($subscriber)) {
             Flash::error('Subscriber not found');
-
             return redirect(route('admin.subscribers.index'));
         }
-
         $subscriber = $this->subscriberRepository->update($request->all(), $id);
 
         Flash::success('Subscriber updated successfully.');
-
         return redirect(route('admin.subscribers.index'));
     }
 
@@ -151,14 +150,12 @@ class SubscriberController extends AppBaseController
 
         if (empty($subscriber)) {
             Flash::error('Subscriber not found');
-
             return redirect(route('admin.subscribers.index'));
         }
 
         $this->subscriberRepository->delete($id);
 
         Flash::success('Subscriber deleted successfully.');
-
         return redirect(route('admin.subscribers.index'));
     }
 }

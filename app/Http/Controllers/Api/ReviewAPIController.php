@@ -158,6 +158,7 @@ class ReviewAPIController extends AppBaseController
      */
     public function store(CreateReviewAPIRequest $request)
     {
+
         if (Auth::user()->reviews()->where('car_id', $request->car_id)->count() > 0) {
             return $this->sendError('Your review had already been record for this car.');
         }
@@ -177,7 +178,8 @@ class ReviewAPIController extends AppBaseController
             ]);
         }
         $reviews->refresh();
-        $reviews = $this->reviewRepository->update(['average_rating' => $reviews->details->avg('rating')], $reviews->id);
+//        $reviews = $this->reviewRepository->update(['average_rating' => $reviews->details->avg('rating')], $reviews->id);
+        $reviews = $this->reviewRepository->update(['average_rating' => $rating[7]], $reviews->id);
         $reviews->refresh();
 
         return $this->sendResponse($reviews->toArray(), 'Review saved successfully');

@@ -60,8 +60,8 @@
                             {!! Form::text('name['.$locale->code.']', $carType->translate($locale->code)['name'], ['class' => 'form-control','maxlength'=>"50",  'autofocus', 'style'=>'direction:'.$locale->direction]) !!}
                         </div>
 
-                        @if($carType->childTypes->count() == 0)
-                            <!-- Slug Field -->
+                    @if($carType->childTypes->count() == 0)
+                        <!-- Slug Field -->
                             <div class="form-group col-sm-6">
                                 {!! Form::label('parent_id', 'Parent Segment:') !!}
                                 {!! Form::select('parent_id', $root, (isset($carType) ? $carType->parent_id : null), ['class' => 'form-control select2']) !!}
@@ -80,7 +80,7 @@
         {{ Form::file('image[un_selected]', ['class'=>'form-control']) }}
         @if($carType->media->count() > 0)
             <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
-                <a class='showGallery' data-id='{{ $carType->media[0]->id }}' data-toggle='modal'>
+                <a class='showGallery' data-id='{{ @$carType->media[0]->id }}' data-toggle='modal'>
                     <img src="{!! $carType->un_selected_icon !!}" style="width: 125px;">
                 </a>
             </div>
@@ -92,7 +92,7 @@
         {{ Form::file('image[selected]', ['class'=>'form-control']) }}
         @if($carType->media->count() > 0)
             <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
-                <a class='showGallery' data-id='{{ $carType->media[1]->id }}' data-toggle='modal'>
+                <a class='showGallery' data-id='{{ @$carType->media[1]->id }}' data-toggle='modal'>
                     <img src="{!! $carType->selected_icon !!}" style="width: 125px; background: black">
                 </a>
             </div>

@@ -21,6 +21,10 @@ class SubscriberAPIController extends AppBaseController
     /** @var  SubscriberRepository */
     private $subscriberRepository;
 
+    /**
+     * SubscriberAPIController constructor.
+     * @param SubscriberRepository $subscriberRepo
+     */
     public function __construct(SubscriberRepository $subscriberRepo)
     {
         $this->subscriberRepository = $subscriberRepo;
@@ -140,7 +144,6 @@ class SubscriberAPIController extends AppBaseController
     public function store(CreateSubscriberAPIRequest $request)
     {
         $input = $request->all();
-
         $subscribers = $this->subscriberRepository->create($input);
 
         return $this->sendResponse($subscribers->toArray(), 'Subscriber saved successfully');
