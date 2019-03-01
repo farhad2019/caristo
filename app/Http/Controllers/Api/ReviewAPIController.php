@@ -179,7 +179,7 @@ class ReviewAPIController extends AppBaseController
         }
         $reviews->refresh();
 //        $reviews = $this->reviewRepository->update(['average_rating' => $reviews->details->avg('rating')], $reviews->id);
-        $reviews = $this->reviewRepository->update(['average_rating' => $rating[7]], $reviews->id);
+        $reviews = $this->reviewRepository->update(['average_rating' => $reviews->details->where('type_id', 7)->first()->rating], $reviews->id);
         $reviews->refresh();
 
         return $this->sendResponse($reviews->toArray(), 'Review saved successfully');

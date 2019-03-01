@@ -86,6 +86,9 @@
                             @elseif($attribute->carAttribute->type == 10 || $attribute->carAttribute->type == 20)
                                 {!! $attribute->value !!}
                             @endif
+                            @if($attribute->carAttribute->id == 5 || $attribute->carAttribute->id == 6)
+                                {{ ' Months' }}
+                            @endif
                         </p>
                     </li>
                 @endif
@@ -123,7 +126,7 @@
             <li>
                 <span class="icon-icon-9"></span>
                 <p>
-                    <small>Additional Notes </small>
+                    <small>Additional Notes</small>
                     {!! $tradeInRequest->tradeAgainst->notes !!}
                 </p>
             </li>

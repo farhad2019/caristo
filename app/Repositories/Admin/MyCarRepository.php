@@ -140,7 +140,7 @@ class MyCarRepository extends BaseRepository
                         'value'        => $request->front_tyre,
                         'is_highlight' => $request->highlight_front_tyre ?? 0
                     ],
-                    'BACK TYRE'  => [
+                    'RARE TYRE'  => [
                         'value'        => $request->back_tyre,
                         'is_highlight' => $request->highlight_back_tyre ?? 0
                     ],
@@ -419,7 +419,7 @@ class MyCarRepository extends BaseRepository
                         'value'        => $request->front_tyre,
                         'is_highlight' => $request->highlight_front_tyre ?? 0
                     ],
-                    'BACK TYRE'  => [
+                    'RARE TYRE'  => [
                         'value'        => $request->back_tyre,
                         'is_highlight' => $request->highlight_back_tyre ?? 0
                     ],

@@ -63,30 +63,24 @@
     {!! Form::select('category_id', $categories, isset($myCar)?$myCar->category_id:null, ['class' => 'form-control select2']) !!}
 </div>
 
-<!-- Brand Field -->
+<!-- Regional Specification Field -->
 <div class="form-group col-sm-6">
+    {!! Form::label('regional_specific1ation_id', 'Regional Specification:*') !!}
+    {!! Form::select('regional_specification_id', $regional_specs, null, ['class' => 'form-control select2']) !!}
+</div>
+
+<div class="col-sm-12 clearfix"></div>
+<!-- Brand Field -->
+<div class="form-group col-sm-3">
     {!! Form::label('brand', 'Brand:') !!}
     {!! Form::select('brand', $brands, (isset($myCar))? $myCar->carModel->brand->id: null, ['class' => 'form-control select2']) !!}
 </div>
 
 <!-- Model Id Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-3">
     {!! Form::label('model_id', 'Model:*') !!}
     {!! Form::select('model_id', $carModels, isset($myCar)?$myCar->model_id:null, ['class' => 'form-control select2', 'data-url'=> route('api.carModels.index'), 'data-depends'=> 'brand']) !!}
 </div>
-
-@if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
-    <!---- Version ----->
-    <div class="form-group col-sm-6 {{ $errors->has('version_id') ? ' has-error' : '' }}">
-        {!! Form::label('version', 'Version:*') !!}
-        {!! Form::select('version_id', $versions, isset($myCar)?$myCar->version_id:null, ['class' => 'form-control select2', 'data-url' => route('api.carVersions.index'), 'data-depends' => 'model_id']) !!}
-        @if ($errors->has('version_id'))
-            <span class="help-block" style="color: red;">
-            <strong>{{ $errors->first('version_id') }}</strong>
-        </span>
-        @endif
-    </div>
-@endif
 
 <!-- Year Field -->
 <div class="form-group col-sm-6 years_classic" style="display: none">
@@ -107,10 +101,23 @@
 </div>
 
 <!-- Year Field -->
-<div class="form-group col-sm-6 years_luxury_new_car" style="display: none">
+<div class="form-group col-sm-3 years_luxury_new_car" style="display: none">
     {!! Form::label('year', 'Model Year:*') !!}
     {!! Form::select('year', $years_luxury_new_car, isset($myCar)?$myCar->year:null, ['class' => 'form-control select2']) !!}
 </div>
+
+@if(\Illuminate\Support\Facades\Auth::user()->hasRole('admin'))
+    <!---- Version ----->
+    <div class="form-group col-sm-3 {{ $errors->has('version_id') ? ' has-error' : '' }}">
+        {!! Form::label('version', 'Version:*') !!}
+        {!! Form::select('version_id', $versions, isset($myCar)?$myCar->version_id:null, ['class' => 'form-control select2', 'data-url' => route('api.carVersions.index'), 'data-depends' => 'model_id']) !!}
+        @if ($errors->has('version_id'))
+            <span class="help-block" style="color: red;">
+            <strong>{{ $errors->first('version_id') }}</strong>
+        </span>
+        @endif
+    </div>
+@endif
 
 <!-- Engine Type Field -->
 <div class="form-group col-sm-6 transmission_type">
@@ -213,12 +220,6 @@
     {!! Form::label('phone', 'Phone:') !!}
     {!! Form::number('phone', $user->details->phone, ['class' => 'form-control']) !!}
 </div>--}}
-
-<!-- Regional Specification Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('regional_specific1ation_id', 'Regional Specification:*') !!}
-    {!! Form::select('regional_specification_id', $regional_specs, null, ['class' => 'form-control select2']) !!}
-</div>
 
 @if(!isset($myCar))
     @php($count = 0)
@@ -612,8 +613,8 @@
         </div>
 
         <div class="form-group col-sm-6 regions  {{ $errors->has('back_tyre') ? ' has-error' : '' }}">
-            {!! Form::checkbox('highlight_back_tyre', 1, isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['BACK TYRE']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'asdsad sad sadsa dsa']) !!}
-            {!! Form::label('Back_TYRE', 'Back tyre:*') !!}
+            {!! Form::checkbox('highlight_back_tyre', 1, isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['BACK TYRE']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+            {!! Form::label('Back_TYRE', 'Rare tyre:*') !!}
             {!! Form::text('back_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['BACK TYRE']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Back TYRE', 'maxLength' => 55]) !!}
 
             @if ($errors->has('back_tyre'))
@@ -690,9 +691,9 @@
         <h3>Production Life Cycle</h3>
         <hr>
         <div class="form-group col-sm-6 regions {{ $errors->has('from') ? ' has-error' : '' }}">
-            {!! Form::label('Lifecycle', 'Start Year:*') !!}
+            {!! Form::label('Lifecycle', 'Start Year:') !!}
             {{--{!! Form::number('from', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
-            {!! Form::select('from', array_merge([0 => 'Null'], $years), @$explodeLifeCycle[0], ['class' => 'form-control select2']) !!}
+            {!! Form::select('from', array_merge([0 => 'Select'], $years), @$explodeLifeCycle[0], ['class' => 'form-control select2']) !!}
             @if ($errors->has('from'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('from') }}</strong>
@@ -700,9 +701,9 @@
             @endif
         </div>
         <div class="form-group col-sm-6 regions {{ $errors->has('to') ? ' has-error' : '' }}">
-            {!! Form::label('Lifecycle', 'End Year:*') !!}
+            {!! Form::label('Lifecycle', 'End Year:') !!}
             {{--{!! Form::number('to', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
-            {!! Form::select('to', array_merge([0 => 'Null'], $years), @$explodeLifeCycle[1], ['class' => 'form-control select2']) !!}
+            {!! Form::select('to', array_merge([0 => 'Select'], $years), @$explodeLifeCycle[1], ['class' => 'form-control select2']) !!}
             @if ($errors->has('to'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('from') }}</strong>
@@ -723,6 +724,28 @@
 </div>
 </div>--}}
 <!-- End of Limited Editions Field -->
+</div>
+
+<div class="form-group col-sm-12">
+    <hr>
+    <h3>Depreciation Life Cycle</h3>
+    <hr>
+    <div class="col-sm-12 clearfix"></div>
+    @foreach($depreciation_trend_years as $key => $depreciation_trend_year)
+        @php($index=array_search($key, array_keys($depreciation_trend_years)) + 1)
+        <div class="regions" style="display: none">
+            <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend.'.$key) ? 'has-error' : '' }}">
+                {!! Form::label('depreciation_trend',(($index==1)?'1st':(($index==2)?'2nd':(($index==3)?'3rd':(($index==4)?'4th':(($index==5)?'5th':''))))).' Year', null, ['class' => 'form-control']) !!}
+                {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:null), ['class' => 'form-control ', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
+                @if ($errors->has('depreciation_trend.'.$key))
+                    <span class="help-block" style="color: red;">
+                    <strong>{{ $errors->first('depreciation_trend.'.$key) }}</strong>
+                </span>
+                @endif
+            </div>
+        </div>
+    @endforeach
+    <hr>
 </div>
 
 <!-- Dealers Field -->
@@ -769,22 +792,6 @@
         </div>
     @endforeach
 @endif
-
-<div class="col-sm-12 clearfix"></div>
-@foreach($depreciation_trend_years as $key => $depreciation_trend_year)
-    @php($index=array_search($key, array_keys($depreciation_trend_years)) + 1)
-    <div class="regions" style="display: none">
-        <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend.'.$key) ? 'has-error' : '' }}">
-            {!! Form::label('depreciation_trend',(($index==1)?'1st':(($index==2)?'2nd':(($index==3)?'3rd':(($index==4)?'4th':(($index==5)?'5th':''))))).' Year', null, ['class' => 'form-control']) !!}
-            {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:null), ['class' => 'form-control ', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
-            @if ($errors->has('depreciation_trend.'.$key))
-                <span class="help-block" style="color: red;">
-                    <strong>{{ $errors->first('depreciation_trend.'.$key) }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
-@endforeach
 
 <div class="clearfix"></div>
 <div class="col-sm-12">
