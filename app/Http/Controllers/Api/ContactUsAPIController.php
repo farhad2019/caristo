@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\CreateContactUsAPIRequest;
 use App\Http\Requests\Api\UpdateContactUsAPIRequest;
 use App\Models\ContactUs;
+use App\Repositories\Admin\BanksRateRepository;
 use App\Repositories\Admin\ContactUsRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Prettus\Repository\Criteria\RequestCriteria;
 
@@ -22,15 +24,23 @@ class ContactUsAPIController extends AppBaseController
     /** @var  ContactUsRepository */
     private $contactUsRepository;
 
-    public function __construct(ContactUsRepository $contactUsRepo)
+    /** @var  BanksRateRepository */
+    private $banksRateRepository;
+
+    /**
+     * ContactUsAPIController constructor.
+     * @param ContactUsRepository $contactUsRepo
+     * @param BanksRateRepository $banksRateRepo
+     */
+    public function __construct(ContactUsRepository $contactUsRepo, BanksRateRepository $banksRateRepo)
     {
         $this->contactUsRepository = $contactUsRepo;
+        $this->banksRateRepository = $banksRateRepo;
     }
 
     /**
      * @param Request $request
      * @return Response
-     * @throws \Prettus\Repository\Exceptions\RepositoryException
      *
      * @SWG\Get(
      *      path="/contactus",
@@ -122,10 +132,25 @@ class ContactUsAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateContactUsAPIRequest $request)
     {
         $contactUs = $this->contactUsRepository->saveRecord($request);
+        if ($request->type == ContactUs::BANK) {
+            if ($contactUs->bankDetail->email){
+                $email = $contactUs->bankDetail->email;
+                $name = $contactUs->bankDetail->title;
+                $subject = 'Virtual Buy Request.';
+
+                Mail::send('email.virtualBuy', ['name' => $name],
+                    function ($mail) use ($email, $name, $subject) {
+                        $mail->from(getenv('MAIL_FROM_ADDRESS'), "CaristoCrat App");
+                        $mail->to($email, $name);
+                        $mail->subject($subject);
+                    });
+            }
+        }
         return $this->sendResponse($contactUs->toArray(), 'Contact Us saved successfully');
     }
 
@@ -224,6 +249,7 @@ class ContactUsAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateContactUsAPIRequest $request)
     {

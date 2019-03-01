@@ -72,6 +72,7 @@ class BanksRate extends Model
         'title',
         'phone_no',
         'address',
+        'email',
         'rate',
         'type',
         'created_at',
@@ -131,11 +132,11 @@ class BanksRate extends Model
     public static $rules = [
         'title'    => 'required',
         'phone_no' => 'required|phone',
+        'email'    => 'required|email',
         'address'  => 'required',
         'rate'     => 'required|max:99',
         'type'     => 'required',
         'media'    => 'required|image|mimes:jpg,jpeg,png'
-
     ];
 
     /**
@@ -191,6 +192,4 @@ class BanksRate extends Model
     {
         return 'bank';
     }
-
-
 }

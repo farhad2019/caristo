@@ -366,15 +366,17 @@ class MyCarController extends AppBaseController
             if (!empty(array_filter($request->depreciation_trend))) {
                 $amount = $request->amount;
                 foreach ($request->depreciation_trend as $key => $value) {
-                    $index = array_search($key, array_keys($request->depreciation_trend)) + 1;
-                    $amount = $amount - (($amount * $value) / 100);
-                    DepreciationTrend::create([
-                        'car_id'     => $myCar->id,
+                    if ($value != null) {
+                        $index = array_search($key, array_keys($request->depreciation_trend)) + 1;
+                        $amount = $amount - (($amount * $value) / 100);
+                        DepreciationTrend::create([
+                            'car_id'     => $myCar->id,
 //                    'year'       => $key,
-                        'year'       => (($index == 1) ? '1st' : (($index == 2) ? '2nd' : (($index == 3) ? '3rd' : (($index == 4) ? '4th' : (($index == 5) ? '5th' : ''))))) . ' Year',
-                        'percentage' => $value,
-                        'amount'     => $amount
-                    ]);
+                            'year'       => (($index == 1) ? '1st' : (($index == 2) ? '2nd' : (($index == 3) ? '3rd' : (($index == 4) ? '4th' : (($index == 5) ? '5th' : ''))))) . ' Year',
+                            'percentage' => $value,
+                            'amount'     => $amount
+                        ]);
+                    }
                 }
             }
             $myCar->dealers()->attach($request->dealers);
@@ -391,7 +393,8 @@ class MyCarController extends AppBaseController
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public
+    function show($id)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
 
@@ -418,7 +421,8 @@ class MyCarController extends AppBaseController
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public
+    function edit($id)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
         if (empty($myCar)) {
@@ -584,7 +588,8 @@ class MyCarController extends AppBaseController
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public function update($id, Request $request)
+    public
+    function update($id, Request $request)
     {
         $user = Auth::user();
         if (!$user->hasRole('admin') && $request->status == MyCar::ACTIVE) {
@@ -891,13 +896,13 @@ class MyCarController extends AppBaseController
         $myCar = $this->myCarRepository->updateRecord($request, $myCar);
 
         if (strlen($request->meta_title) > 0) {
-            if (isset($myCar->meta[0])){
+            if (isset($myCar->meta[0])) {
                 $myCar->meta[0]->update([
                     'title'       => $request->meta_title,
                     'tags'        => $request->meta_tag ?? '',
                     'description' => $request->meta_description ?? '',
                 ]);
-            }else{
+            } else {
                 MetaInformation::create([
                     'instance_type' => MyCar::INSTANCE,
                     'instance_id'   => $myCar->id,
@@ -934,11 +939,13 @@ class MyCarController extends AppBaseController
             if (!empty(array_filter($request->depreciation_trend))) {
                 $amount = $request->amount;
                 foreach ($request->depreciation_trend as $key => $value) {
-                    $amount = $amount - (($amount * $value) / 100);
-                    $this->trendRepository->updateOrCreate(['car_id' => $myCar->id, 'year' => $key], [
-                        'percentage' => $value,
-                        'amount'     => $amount
-                    ]);
+                    if ($value != null) {
+                        $amount = $amount - (($amount * $value) / 100);
+                        $this->trendRepository->updateOrCreate(['car_id' => $myCar->id, 'year' => $key], [
+                            'percentage' => $value,
+                            'amount'     => $amount
+                        ]);
+                    }
                 }
             }
             $myCar->dealers()->sync($request->dealers);
@@ -956,7 +963,8 @@ class MyCarController extends AppBaseController
      *
      * @return Response
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
         if (empty($myCar)) {

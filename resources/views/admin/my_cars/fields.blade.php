@@ -613,9 +613,9 @@
         </div>
 
         <div class="form-group col-sm-6 regions  {{ $errors->has('back_tyre') ? ' has-error' : '' }}">
-            {!! Form::checkbox('highlight_back_tyre', 1, isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['BACK TYRE']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+            {!! Form::checkbox('highlight_back_tyre', 1, isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['RARE TYRE']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
             {!! Form::label('Back_TYRE', 'Rare tyre:*') !!}
-            {!! Form::text('back_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['BACK TYRE']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Back TYRE', 'maxLength' => 55]) !!}
+            {!! Form::text('back_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['RARE TYRE']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'Back TYRE', 'maxLength' => 55]) !!}
 
             @if ($errors->has('back_tyre'))
                 <span class="help-block" style="color: red;">

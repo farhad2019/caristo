@@ -13,6 +13,10 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Response;
 use Laracasts\Flash\Flash;
 
+/**
+ * Class BanksRateController
+ * @package App\Http\Controllers\Admin
+ */
 class BanksRateController extends AppBaseController
 {
     /** ModelName */
@@ -69,6 +73,7 @@ class BanksRateController extends AppBaseController
      * @param CreateBanksRateRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateBanksRateRequest $request)
     {
@@ -132,6 +137,7 @@ class BanksRateController extends AppBaseController
      * @param UpdateBanksRateRequest $request
      *
      * @return Response
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateBanksRateRequest $request)
     {

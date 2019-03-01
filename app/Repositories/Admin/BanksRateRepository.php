@@ -43,6 +43,7 @@ class BanksRateRepository extends BaseRepository
     /**
      * @param $request
      * @return mixed
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function saveRecord($request)
     {

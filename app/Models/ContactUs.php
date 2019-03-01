@@ -75,6 +75,7 @@ class ContactUs extends Model
 
     const CONSULTANCY = 10;
     const PERSONAL_SHOPPER = 20;
+    const BANK = 30;
 
     public $fillable = [
         'type',

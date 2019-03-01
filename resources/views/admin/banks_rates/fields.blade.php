@@ -16,6 +16,12 @@
     {!! Form::text('address', null, ['class' => 'form-control', 'maxlength' => 50, 'required']) !!}
 </div>
 
+<!-- Email Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('email', 'Email:') !!}
+    {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
+</div>
+
 <!-- Rate Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('rate', 'Rate:') !!}
@@ -32,7 +38,7 @@
 
 <div class="form-group col-sm-6">
     {!! Form::label('name', 'Media*:') !!}
-    {!! Form::file('media', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg', 'required']) !!}
+    {!! Form::file('media', ['class' => 'form-control', 'accept' => 'image/x-png,image/gif,image/jpeg', isset($banksRate)?'':'required']) !!}
 
     @if(isset($banksRate) && count($banksRate->media)>0)
         <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
