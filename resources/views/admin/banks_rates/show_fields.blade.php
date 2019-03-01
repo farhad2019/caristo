@@ -13,7 +13,7 @@
 <!-- Rate Field -->
 <dt>{!! Form::label('rate', 'Rate:') !!}</dt>
 <dd>{!! $banksRate->rate !!}%</dd>
-
+@if($banksRate->media->count() > 0)
 <dt>{!! Form::label('image', 'Image:') !!}</dt>
 <dd>
     <div style="float: left;padding: 8px; border:1px solid #ddd; min-height:75px;margin-top: 8px;">
@@ -24,7 +24,7 @@
         </a>
     </div>
 </dd>
-
+@endif
 <br>
 
 <!-- Type Field -->

@@ -83,7 +83,7 @@ class Course extends Model
     use SoftDeletes, Translatable;
 
     public $table = 'courses';
-    public $translatedAttributes = ['title', 'subtitle', 'description'];
+    public $translatedAttributes = ['title', 'subtitle', 'description', 'about'];
     protected $dates = ['deleted_at'];
 
     const INSTANCE = 'category';
@@ -143,6 +143,7 @@ class Course extends Model
         'id',
         'title',
         'description',
+        'about',
         'subtitle',
         'latitude',
         'longitude',

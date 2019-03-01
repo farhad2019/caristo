@@ -57,6 +57,11 @@
                 <dt>{!! Form::label('version', 'Version:') !!}</dt>
                 <dd>{!! (isset($myCar->version_id) && $myCar->version_id != null)? $myCar->version_id : 'N/A' !!}</dd>
         @endif
+        @if($myCar->category_id == null)
+            <!-- Version Field -->
+                <dt>{!! Form::label('version', 'Version:') !!}</dt>
+                <dd>{!! (isset($myCar->version_app) && $myCar->version_app != null)? $myCar->version_app : 'N/A' !!}</dd>
+        @endif
         <!-- Year Field -->
             <dt>{!! Form::label('year', 'Year:') !!}</dt>
             <dd>{!! $myCar->year?? 'N/A' !!}</dd>

@@ -31,6 +31,7 @@ class CourseTranslation extends Model
         'locale',
         'title',
         'subtitle',
+        'about',
         'description'
     ];
 

@@ -20,6 +20,11 @@
             <dt>{!! Form::label('model_id', 'Model :') !!}</dt>
             <dd>{!! isset($myCar->carModel->name) ? $myCar->carModel->brand->name.' '.$myCar->carModel->name : 'N/A' !!}</dd>
 
+        @if($myCar->category_id == null)
+            <!-- Version Field -->
+                <dt>{!! Form::label('version', 'Version:') !!}</dt>
+                <dd>{!! (isset($myCar->version_app) && $myCar->version_app != null)? $myCar->version_app : 'N/A' !!}</dd>
+        @endif
         {{--<!-- Version Field -->
         <dt>{!! Form::label('version', 'Version:') !!}</dt>
         <dd>{!! isset($myCar->version)? $myCar->version : 'N/A' !!}</dd>--}}
