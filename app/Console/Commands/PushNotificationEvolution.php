@@ -53,8 +53,7 @@ class PushNotificationEvolution extends Command
                 'ref_id'      => $evolution->id,
                 'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_EVALUATION_NEW_BID]
             ];
-            echo $key;
-            //$this->notificationRepository->notification($notification, $evolution->tradeAgainst->owner_id);
+            $this->notificationRepository->notification($notification, $evolution->tradeAgainst->owner_id);
         }
     }
 }

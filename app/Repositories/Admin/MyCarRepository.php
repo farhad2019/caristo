@@ -669,14 +669,12 @@ class MyCarRepository extends BaseRepository
                  }
              }*/
         } else {
-
             $input['limited_edition_specs'] = null;
-
             $input['currency'] = @Auth::user()->details->regionDetail->currency ?? 'AED';
-
             $myCar = $this->update($input, $myCar->id);
+            CarRegion::create(['region_id' => @Auth::user()->details->region_id, 'car_id' => $myCar->id]);
 
-            if ($input['category_id'] == MyCar::LIMITED_EDITION) {
+            /*if ($input['category_id'] == MyCar::LIMITED_EDITION) {
                 $regions = [];
 
                 foreach ($input['regions'] as $key => $val) {
@@ -685,7 +683,7 @@ class MyCarRepository extends BaseRepository
                     $regions['car_id'] = $myCar->id;
                     CarRegion::where('id', $id)->update($regions);
                 }
-            }
+            }*/
         }
 
         // Media Data

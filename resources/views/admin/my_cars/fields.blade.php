@@ -714,7 +714,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('from') ? ' has-error' : '' }}">
             {!! Form::label('Lifecycle', 'Start Year:') !!}
             {{--{!! Form::number('from', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
-            {!! Form::select('from', array_merge([0 => 'Select'], $years), @$explodeLifeCycle[0], ['class' => 'form-control select2']) !!}
+            {!! Form::select('from', $years, @$explodeLifeCycle[0], ['class' => 'form-control select2', 'placeholder' => 'select year']) !!}
             @if ($errors->has('from'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('from') }}</strong>
@@ -724,7 +724,7 @@
         <div class="form-group col-sm-6 regions {{ $errors->has('to') ? ' has-error' : '' }}">
             {!! Form::label('Lifecycle', 'End Year:') !!}
             {{--{!! Form::number('to', null, ['class' => 'form-control', 'placeholder' => 'number/YEARS']) !!}--}}
-            {!! Form::select('to', array_merge([0 => 'Select'], $years), @$explodeLifeCycle[1], ['class' => 'form-control select2']) !!}
+            {!! Form::select('to', $years, @$explodeLifeCycle[1], ['class' => 'form-control select2', 'placeholder' => 'select year']) !!}
             @if ($errors->has('to'))
                 <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('from') }}</strong>
