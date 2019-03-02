@@ -332,16 +332,17 @@ class MyCar extends Model
         'link',
         'status_text',
         'owner_type_text',
-//        'views_count',
         'top_bids',
-//        'version',
         'is_liked',
         'is_viewed',
         'is_favorite',
         'limited_edition_specs_array',
-//        'depreciation_trend_value',
         'review_count',
-        'ref_num'
+        'ref_num',
+
+//        'views_count',
+//        'version',
+//        'depreciation_trend_value',
     ];
 
     /**

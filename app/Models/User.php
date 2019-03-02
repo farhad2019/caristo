@@ -242,7 +242,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function details()
     {
-        return $this->hasOne(UserDetail::class);
+        return $this->hasOne(UserDetail::class)->withTrashed();
     }
 
     /**

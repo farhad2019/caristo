@@ -393,8 +393,7 @@ class MyCarController extends AppBaseController
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public
-    function show($id)
+    public function show($id)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
 
@@ -421,8 +420,7 @@ class MyCarController extends AppBaseController
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public
-    function edit($id)
+    public function edit($id)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
         if (empty($myCar)) {
@@ -588,8 +586,7 @@ class MyCarController extends AppBaseController
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
-    public
-    function update($id, Request $request)
+    public function update($id, Request $request)
     {
         $user = Auth::user();
         if (!$user->hasRole('admin') && $request->status == MyCar::ACTIVE) {
@@ -949,7 +946,6 @@ class MyCarController extends AppBaseController
                 }
             }
             $myCar->dealers()->sync($request->dealers);
-
         }
 
         Flash::success('Car updated successfully . ');
@@ -963,8 +959,7 @@ class MyCarController extends AppBaseController
      *
      * @return Response
      */
-    public
-    function destroy($id)
+    public function destroy($id)
     {
         $myCar = $this->myCarRepository->findWithoutFail($id);
         if (empty($myCar)) {

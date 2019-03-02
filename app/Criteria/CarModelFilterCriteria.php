@@ -22,7 +22,7 @@ class CarModelFilterCriteria implements CriteriaInterface
         $depends = $this->request->get('depends', -1);
 
         $model = $model->when(($brand_id > 0 || $depends > 0), function ($model) use ($depends, $brand_id) {
-            return $model->whereIn('brand_id', [$depends, $brand_id]);
+            return $model->whereIn('brand_id', [$depends, $brand_id])->whereHas('cars');
         });
 
         $model = $model->when((!empty($name)), function ($model) use ($name) {

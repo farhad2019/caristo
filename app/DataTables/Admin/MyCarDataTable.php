@@ -23,11 +23,11 @@ class MyCarDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         $dataTable->editColumn('created_at', function ($model) {
-            return $model->created_at->format('M d, Y');
+            return @$model->created_at->format('M d, Y');
         });
 
         $dataTable->editColumn('category.translations.name', function ($model) {
-            return $model->category->name;
+            return @$model->category->name;
         });
 
 //        $dataTable->editColumn('carModel.brand.translations.name', function ($model) {
@@ -43,7 +43,7 @@ class MyCarDataTable extends DataTable
 //        });
 
         $dataTable->editColumn('amount', function ($model) {
-            return $model->amount . ' AED' ?? '-';
+            return @$model->amount . ' AED' ?? '-';
         });
 
         $dataTable->editColumn('image', function ($model) {
@@ -54,9 +54,9 @@ class MyCarDataTable extends DataTable
             }
         });
 
-        $dataTable->editColumn('brand', function ($model) {
-            return @$model->carModel->brand->name;
-        });
+//        $dataTable->editColumn('brand', function ($model) {
+//            return @$model->carModel->brand->name;
+//        });
 
         $dataTable->editColumn('is_featured', function ($model) {
             return "<span class='badge bg-" . Utils::getBoolCss($model->is_featured, true) . "'> <i class='fa fa-" . ($model->is_featured ? "check" : "times") . "'></i> " . Utils::getBoolText($model->is_featured) . "</span>";
@@ -135,8 +135,8 @@ class MyCarDataTable extends DataTable
             ->minifiedAjax()
             ->addAction(['width' => '80px', 'printable' => false])
             ->parameters([
-                'dom' => 'Bfrtip',
-                'order' => [[4, 'desc'],[0, 'desc']],
+                'dom'     => 'Bfrtip',
+                'order'   => [[4, 'desc'], [0, 'desc']],
                 'buttons' => $buttons,
             ]);
     }
@@ -150,36 +150,36 @@ class MyCarDataTable extends DataTable
     {
         return [
 //            'id',
-            'created_at' => [
-                'title' => 'Added On',
-            ],
 //            'image'                            => [
 //                'orderable'  => false,
 //                'searchable' => false,
 //            ],
-            'category.translations.name' => [
-                'title' => 'Category',
-            ],
-            'name',
 //            'carModel.translations.name'       => [
 //                'title' => 'Model'
 //            ],
 //            'year',
+            'created_at'                 => [
+                'title' => 'Added On',
+            ],
+            'category.translations.name' => [
+                'title' => 'Category',
+            ],
+            'name',
             'amount',
-            'is_featured' => [
+            'is_featured'                => [
                 'title' => 'Featured'
             ],
             'status',
-            'views_count' => [
+            'views_count'                => [
                 'title' => 'User Views'
             ],
-            'favorite_count' => [
+            'favorite_count'             => [
                 'title' => 'User Favorites'
             ],
-            'call_clicks' => [
+            'call_clicks'                => [
                 'title' => 'Call Clicks'
             ],
-            'personal_shopper_clicks' => [
+            'personal_shopper_clicks'    => [
                 'title' => 'Per.Shopper Clicks'
             ]
         ];

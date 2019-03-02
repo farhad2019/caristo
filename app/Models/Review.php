@@ -140,7 +140,7 @@ class Review extends Model
      */
     public function reviewBy()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
     /**
@@ -148,7 +148,7 @@ class Review extends Model
      */
     public function reviewOn()
     {
-        return $this->belongsTo(MyCar::class, 'car_id');
+        return $this->belongsTo(MyCar::class, 'car_id')->withTrashed();
     }
 
     /**

@@ -278,7 +278,7 @@
                     <dd>
                         @foreach($values as $label => $value)
                             <ul>
-                                <li>{!! $label !!} : {!! $value['value'] !!}</li>
+                                <li>{!! $label !!} : {!! $value['value'] !!} {{ @$value['unit'] }}</li>
                             </ul>
                         @endforeach
                     </dd>
