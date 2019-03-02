@@ -76,6 +76,13 @@ class CarBrandAPIController extends AppBaseController
      *          required=false,
      *          in="query"
      *      ),
+     *      @SWG\Parameter(
+     *          name="for_comparision",
+     *          description="Search Car brand by name.",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
      *      @SWG\Response(
      *          response=200,
      *          description="successful operation",

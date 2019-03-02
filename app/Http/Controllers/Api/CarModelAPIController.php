@@ -69,6 +69,13 @@ class CarModelAPIController extends AppBaseController
      *          in="query"
      *      ),
      *      @SWG\Parameter(
+     *          name="for_comparision",
+     *          description="for comparision.0,1",
+     *          type="integer",
+     *          required=false,
+     *          in="query"
+     *      ),
+     *      @SWG\Parameter(
      *          name="brand_id",
      *          description="Get brand's models.",
      *          type="integer",

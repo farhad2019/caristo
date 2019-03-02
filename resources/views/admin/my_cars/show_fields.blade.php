@@ -274,11 +274,11 @@
         <div class="box-body">
             @if(!empty($myCar->limited_edition_specs))
                 @foreach(json_decode($myCar->limited_edition_specs, true) as $key => $values)
-                    <dt>{!! Form::label('owner_type', $key.':') !!}</dt>
+                    <dt>{!! Form::label('owner_type', str_replace('_', ' ', $key).':') !!}</dt>
                     <dd>
                         @foreach($values as $label => $value)
                             <ul>
-                                <li>{!! $label !!} : {!! $value['value'] !!} {{ @$value['unit'] }}</li>
+                                <li>{!! str_replace('_', ' ', $label) !!} : {!! $value['value'] !!} {{ @$value['unit'] }}</li>
                             </ul>
                         @endforeach
                     </dd>

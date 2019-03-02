@@ -105,9 +105,8 @@ class ReviewAPIController extends AppBaseController
         $this->reviewRepository->pushCriteria(new RequestCriteria($request));
         $this->reviewRepository->pushCriteria(new LimitOffsetCriteria($request));
         $this->reviewRepository->pushCriteria(new ReviewCriteria($request));
-        $reviews = $this->reviewRepository->find(109)->first();
-        var_dump($reviews->reviewBy);
-        exit();
+        $reviews = $this->reviewRepository->all();
+
         return $this->sendResponse($reviews->toArray(), 'Reviews retrieved successfully');
     }
 

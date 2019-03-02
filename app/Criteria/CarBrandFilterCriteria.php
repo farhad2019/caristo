@@ -27,13 +27,18 @@ class CarBrandFilterCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
         $name = $this->request->get('name', '');
-
         $model = $model->when((!empty($name)), function ($model) use ($name) {
             return $model->whereHas('translations', function ($trans) use ($name) {
                 return $trans->where('name', 'like', '%' . $name . '%');
             });
         });
 
+        $for_comparision = $this->request->get('for_comparision', -1);
+        $model = $model->when(($for_comparision > 0), function ($brand) {
+            return $brand->whereHas('carModels', function ($carModels){
+                $carModels->whereHas('cars');
+            });
+        });
         return $model;
     }
 }
