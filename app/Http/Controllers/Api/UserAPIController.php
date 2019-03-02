@@ -450,7 +450,7 @@ class UserAPIController extends AppBaseController
      */
     public function getUserByDeviceType(Request $request)
     {
-        $users = $this->userRepository->getUserByDeviceType($request->depends);
+        $users = $this->userRepository->getUserByDeviceType($request->depends, $request->term);
         return $this->sendResponse($users->toArray(), "User's region fetched successfully");
     }
 
