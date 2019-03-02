@@ -92,10 +92,11 @@
             {{--<!-- Type Id Field -->
             <dt>{!! Form::label('type_id', 'Segments:') !!}</dt>
             <dd>{!! isset($myCar->carType->name) ? $myCar->carType->name : 'N/A' !!}</dd>--}}
-
-            <!-- Transmission Type Field -->
-                <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
-                <dd>{!! $myCar->transmission_type_text?? 'N/A' !!}</dd>
+            @if($myCar->transmission_type_text !== null && $myCar->category_id != 28)
+                <!-- Transmission Type Field -->
+                    <dt>{!! Form::label('transmission_type', 'Transmission Type:') !!}</dt>
+                    <dd>{!! $myCar->transmission_type_text?? 'N/A' !!}</dd>
+            @endif
         @endif
         @if($myCar->category_id == \App\Models\MyCar::APPROVED_PRE_OWNED || $myCar->category_id == \App\Models\MyCar::CLASSIC_CARS || $myCar->category_id == Null)
             <!-- Year Field -->
@@ -106,7 +107,6 @@
             <!-- Year Field -->
                 <dt>{!! Form::label('amount', 'Amount:') !!}</dt>
                 <dd>{!! $myCar->amount ? number_format($myCar->amount) : 'N/A' !!} {!! $myCar->currency ?? 'AED' !!}</dd>
-
         @endif
 
         <!-- Status Field -->
@@ -278,7 +278,8 @@
                     <dd>
                         @foreach($values as $label => $value)
                             <ul>
-                                <li>{!! str_replace('_', ' ', $label) !!} : {!! $value['value'] !!} {{ @$value['unit'] }}</li>
+                                <li>{!! str_replace('_', ' ', $label) !!}
+                                    : {!! $value['value'] !!} {{ @$value['unit'] }}</li>
                             </ul>
                         @endforeach
                     </dd>

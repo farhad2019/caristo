@@ -73,12 +73,28 @@ class MyCarDataTable extends DataTable
                 return $model->status_text;
         });
 
-        $dataTable->editColumn('views_count', function (MyCar $model) {
+        /*$dataTable->editColumn('views_count', function (MyCar $model) {
             return "<span class='badge badge-success'> <i class='fa fa-eye'></i> " . @$model->views_count . "</span>";
         });
 
         $dataTable->editColumn('favorite_count', function (MyCar $model) {
             return "<span class='badge badge-success'> <i class='fa fa-heart'></i> " . @$model->favorite_count . "</span>";
+        });
+
+        $dataTable->editColumn('call_clicks', function (MyCar $model) {
+            return "<span class='badge badge-success'> <i class='fa fa-phone'></i> " . @$model->call_clicks . "</span>";
+        });
+
+        $dataTable->editColumn('personal_shopper_clicks', function (MyCar $model) {
+            return "<span class='badge badge-success'> <i class='fa fa-cart-arrow-down'></i> " . @$model->personal_shopper_clicks . "</span>";
+        });*/
+
+        $dataTable->editColumn('views_count', function (MyCar $model) {
+            return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_VIEW]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . @$model->views_count . "</span></a>";
+        });
+
+        $dataTable->editColumn('favorite_count', function (MyCar $model) {
+            return "<a href='" . route('admin.users.index', ['car_id' => $model->id, 'type' => CarInteraction::TYPE_FAVORITE]) . "' target='_blank'> <span class='badge badge-success'> <i class='fa fa-eye'></i> " . @$model->favorite_count . "</span></a>";
         });
 
         $dataTable->editColumn('call_clicks', function (MyCar $model) {

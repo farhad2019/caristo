@@ -79,20 +79,23 @@ class Notification extends Model
     const NOTIFICATION_TYPE_TRADE_IN = 30;
     const NOTIFICATION_TYPE_ALERT = 40;
     const NOTIFICATION_TYPE_COMMENT = 50;
+    const NOTIFICATION_TYPE_COMMENT_UPDATE = 60;
 
     public static $NOTIFICATION_ACTION_TYPE = [
         self::NOTIFICATION_TYPE_TRADE_IN_NEW_BID   => 'New offer alert.',
         self::NOTIFICATION_TYPE_EVALUATION_NEW_BID => 'New evolution request alert.',
         self::NOTIFICATION_TYPE_TRADE_IN           => 'New trade-in alert.',
         self::NOTIFICATION_TYPE_ALERT              => 'App alert.',
-        self::NOTIFICATION_TYPE_COMMENT            => 'Comment alert.'
+        self::NOTIFICATION_TYPE_COMMENT            => 'Comment alert.',
+        self::NOTIFICATION_TYPE_COMMENT_UPDATE     => 'Comment alert.'
     ];
 
     public static $NOTIFICATION_MESSAGE = [
         self::NOTIFICATION_TYPE_TRADE_IN_NEW_BID   => 'You have new offer on your car.',
         self::NOTIFICATION_TYPE_EVALUATION_NEW_BID => 'Your evolution request is available to view now.!!',
         self::NOTIFICATION_TYPE_TRADE_IN           => 'You have new TradeIn Request.',
-        self::NOTIFICATION_TYPE_COMMENT            => 'New comment on news.'
+        self::NOTIFICATION_TYPE_COMMENT            => 'New comment on news.',
+        self::NOTIFICATION_TYPE_COMMENT_UPDATE     => 'comment updated on news.'
     ];
 
     public $fillable = [
@@ -155,7 +158,7 @@ class Notification extends Model
      */
     public static $rules = [
         'action_type' => 'required',
-        'sent_to'     => 'required',
+        'sent_to.*'     => 'required',
         'message'     => 'required',
     ];
 

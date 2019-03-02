@@ -69,7 +69,7 @@ class User extends Authenticatable implements JWTSubject
         restore as private restoreB;
     }
 
-    protected $cascadeDeletes = ['details', 'devices'];
+    protected $cascadeDeletes = ['details', 'devices', 'socialAccounts'];
 
     const ADMIN = 2;
 
@@ -352,6 +352,14 @@ class User extends Authenticatable implements JWTSubject
     public function showroomDetails()
     {
         return $this->hasOne(UserShowroom::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function socialAccounts()
+    {
+        return $this->hasMany(SocialAccount::class);
     }
 
     /**

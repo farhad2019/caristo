@@ -371,8 +371,8 @@ class MyCarController extends AppBaseController
                         $amount = $amount - (($amount * $value) / 100);
                         DepreciationTrend::create([
                             'car_id'     => $myCar->id,
-//                    'year'       => $key,
-                            'year'       => (($index == 1) ? '1st' : (($index == 2) ? '2nd' : (($index == 3) ? '3rd' : (($index == 4) ? '4th' : (($index == 5) ? '5th' : ''))))) . ' Year',
+                            'year'       => $key,
+                            'year_title' => (($index == 1) ? '1st' : (($index == 2) ? '2nd' : (($index == 3) ? '3rd' : (($index == 4) ? '4th' : (($index == 5) ? '5th' : ''))))) . ' Year',
                             'percentage' => $value,
                             'amount'     => $amount
                         ]);

@@ -110,7 +110,7 @@ class TradeInCarRepository extends BaseRepository
             })
             ->when((!empty(array_filter($search))), function ($q) use ($search) {
                 return $q
-                    ->when(isset($search['filerBy']), function ($filerBy) use ($search) {
+                    ->when((isset($search['filerBy']) && (int)$search['filerBy'] !== 0), function ($filerBy) use ($search) {
                         return $filerBy->where('type', (int)$search['filerBy']);
                     })
                     ->when(isset($search['keyword']), function ($keyword) use ($search) {

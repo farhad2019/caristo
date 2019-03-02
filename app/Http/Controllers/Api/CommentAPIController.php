@@ -299,7 +299,14 @@ class CommentAPIController extends AppBaseController
         }
 
         $comment = $this->commentRepository->update($input, $id);
-
+        $notification = [
+            'sender_id'   => Auth::id(),
+            'action_type' => Notification::NOTIFICATION_TYPE_COMMENT_UPDATE,
+            'url'         => null,
+            'ref_id'      => $comment->news_id,
+            'message'     => Notification::$NOTIFICATION_MESSAGE[Notification::NOTIFICATION_TYPE_COMMENT_UPDATE]
+        ];
+        $this->notificationRepository->notification($notification, User::ADMIN);
         return $this->sendResponse($comment->toArray(), 'Comment updated successfully');
     }
 

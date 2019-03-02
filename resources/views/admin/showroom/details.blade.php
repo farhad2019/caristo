@@ -44,7 +44,7 @@
                 <span class="icon-icon-6"></span>
                 <p>
                     <small>version</small>
-                    {{ $tradeInRequest->tradeAgainst->version }}
+                    {{ $tradeInRequest->tradeAgainst->version_app?? 'N/A' }}
                 </p>
             </li>
             <li>

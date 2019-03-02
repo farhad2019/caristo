@@ -725,14 +725,14 @@ class AuthAPIController extends AppBaseController
     public function socialLogin(SocialLoginAPIRequest $request)
     {
         $input = $request->all();
-        $account = SocialAccount::where(['platform' => $input['platform'], 'client_id' => $input['client_id'], 'deleted_at' => null])->first();
+        $account = SocialAccount::where(['platform' => $input['platform'], 'client_id' => $input['client_id']])->first();
+
         $user = false;
         $dev_msg = "User login successfully";
 
         if ($this->uDevice->getByDeviceToken($request->device_token)) {
             $this->uDevice->deleteByDeviceToken($request->device_token);
         }
-
 
         if ($account && $account->user) {
             // Account found. generate token;

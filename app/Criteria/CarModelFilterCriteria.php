@@ -2,6 +2,7 @@
 
 namespace App\Criteria;
 
+use App\Models\MyCar;
 use Illuminate\Http\Request;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
@@ -36,7 +37,9 @@ class CarModelFilterCriteria implements CriteriaInterface
         });
 
         $model = $model->when(($brand_id > 0 && $for_comparision > 0), function ($model) use ($for_comparision, $brand_id) {
-            return $model->whereIn('brand_id', [$brand_id])->whereHas('cars');
+            return $model->whereIn('brand_id', [$brand_id])->whereHas('cars', function ($car){
+                return $car->where('category_id', MyCar::LIMITED_EDITION);
+            });
         });
 
         $model = $model->when((!empty($name)), function ($model) use ($name) {
