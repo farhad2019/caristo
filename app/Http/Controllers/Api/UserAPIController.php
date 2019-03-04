@@ -37,6 +37,13 @@ class UserAPIController extends AppBaseController
     /** @var  CarBrandRepository */
     private $brandRepository;
 
+    /**
+     * UserAPIController constructor.
+     * @param UserRepository $userRepo
+     * @param UserdetailRepository $userDetailRepo
+     * @param UdeviceRepository $userDeviceRepo
+     * @param CarBrandRepository $brandRepo
+     */
     public function __construct(UserRepository $userRepo, UserdetailRepository $userDetailRepo, UdeviceRepository $userDeviceRepo, CarBrandRepository $brandRepo)
     {
         $this->userRepository = $userRepo;
@@ -138,6 +145,7 @@ class UserAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function store(CreateUserApiRequest $request)
     {
@@ -259,6 +267,7 @@ class UserAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function update($id, UpdateUserApiRequest $request)
     {
@@ -373,6 +382,7 @@ class UserAPIController extends AppBaseController
      *          )
      *      )
      * )
+     * @throws \Prettus\Validator\Exceptions\ValidatorException
      */
     public function addRegion(Request $request)
     {

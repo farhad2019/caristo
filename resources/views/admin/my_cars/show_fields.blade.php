@@ -293,7 +293,7 @@
             <dd>
                 @foreach($myCar->DepreciationTrend as $label => $value)
                     <ul>
-                        <li>{!! $value->year !!} : {!! number_format($value->amount, 2) !!} ({!! $value->percentage !!}
+                        <li>{!! $value->year_title !!} : {!! number_format($value->amount, 2) !!} ({!! $value->percentage !!}
                             %)
                         </li>
                     </ul>
@@ -303,7 +303,11 @@
             <dt>{!! Form::label('life_cycle', 'Life Cycle:') !!}</dt>
             <dd>
                 <ul>
-                    <li>{!! $life_cycle[0] !!} - {!! $life_cycle[1] !!}</li>
+                    @if($life_cycle[0] == null && $life_cycle[1] == null)
+                        <li>N/A</li>
+                    @else
+                        <li>{!! $life_cycle[0] !!} - {!! $life_cycle[1] !!}</li>
+                    @endif
                 </ul>
             </dd>
         </div>

@@ -199,9 +199,9 @@ class MyCarController extends AppBaseController
             ]
         ];
         $years_luxury_new_car = [];
-        for ($a = 0; $a < 5; $a++) {
+        for ($a = 0; $a < 6; $a++) {
             $currentYear = now()->format('Y');
-            $year_list = ($currentYear + 1) + $a;
+            $year_list = ($currentYear) + $a;
             $depreciation_trend_years[$year_list] = $year_list;
 
             $luxury_new_car_years = ($currentYear) + $a;
@@ -369,10 +369,11 @@ class MyCarController extends AppBaseController
                     if ($value != null) {
                         $index = array_search($key, array_keys($request->depreciation_trend)) + 1;
                         $amount = $amount - (($amount * $value) / 100);
+                        $title = (($index == 1) ? 'Purchase' : (($index == 2) ? '1st' : (($index == 3) ? '2nd' : (($index == 4) ? '3rd' : (($index == 5) ? '4th' : (($index == 6) ? '5th' : '')))))) . ' Year';
                         DepreciationTrend::create([
                             'car_id'     => $myCar->id,
                             'year'       => $key,
-                            'year_title' => (($index == 1) ? '1st' : (($index == 2) ? '2nd' : (($index == 3) ? '3rd' : (($index == 4) ? '4th' : (($index == 5) ? '5th' : ''))))) . ' Year',
+                            'year_title' => $title,
                             'percentage' => $value,
                             'amount'     => $amount
                         ]);
@@ -540,9 +541,9 @@ class MyCarController extends AppBaseController
 
         $depreciation_trend_years = [];
         $years_luxury_new_car = [];
-        for ($a = 0; $a < 5; $a++) {
+        for ($a = 0; $a < 6; $a++) {
             $currentYear = now()->format('Y');
-            $year_list = ($currentYear + 1) + $a;
+            $year_list = ($currentYear) + $a;
             $depreciation_trend_years[$year_list] = $year_list;
 
             $luxury_new_car_years = ($currentYear) + $a;
@@ -937,9 +938,12 @@ class MyCarController extends AppBaseController
                 $amount = $request->amount;
                 foreach ($request->depreciation_trend as $key => $value) {
                     if ($value != null) {
+                        $index = array_search($key, array_keys($request->depreciation_trend)) + 1;
                         $amount = $amount - (($amount * $value) / 100);
+                        $title = (($index == 1) ? 'Purchase' : (($index == 2) ? '1st' : (($index == 3) ? '2nd' : (($index == 4) ? '3rd' : (($index == 5) ? '4th' : (($index == 6) ? '5th' : '')))))) . ' Year';
                         $this->trendRepository->updateOrCreate(['car_id' => $myCar->id, 'year' => $key], [
                             'percentage' => $value,
+                            'year_title' => $title,
                             'amount'     => $amount
                         ]);
                     }

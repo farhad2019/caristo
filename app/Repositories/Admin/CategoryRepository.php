@@ -131,7 +131,7 @@ class CategoryRepository extends BaseRepository
     {
         $input = $request->all();
         $input['user_id'] = \Auth::id();
-        $input['type'] = ($input['parent_id'] == 0)? 0 : $this->model->find($input['parent_id'])->type;
+        //$input['type'] = ($input['parent_id'] == 0)? 0 : $this->model->find($input['parent_id'])->type;
 
         $data = $this->update($input, $category->id);
         // Media Data

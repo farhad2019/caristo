@@ -629,9 +629,9 @@
         </div>
 
         <div class="form-group col-sm-6 regions  {{ $errors->has('back_tyre') ? ' has-error' : '' }}">
-            {!! Form::checkbox('highlight_back_tyre', 1, isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['RARE TYRE']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
-            {!! Form::label('Back_TYRE', 'Rare tyre:*') !!}
-            {!! Form::text('back_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['RARE TYRE']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'RARE TYRE', 'maxLength' => 55]) !!}
+            {!! Form::checkbox('highlight_back_tyre', 1, isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['REAR TYRE']['is_highlight']:false, ['data-toggle' => 'tooltip', 'data-placement' => 'top']) !!}
+            {!! Form::label('Back_TYRE', 'Rear tyre:*') !!}
+            {!! Form::text('back_tyre',  isset($limited_edition_specs)? $limited_edition_specs['Wheels_Tyres']['REAR TYRE']['value']:null, ['class' => 'form-control luxury-new', 'placeholder' => 'REAR TYRE', 'maxLength' => 55]) !!}
             {!! Form::hidden('unit_back_tyre', '') !!}
 
             @if ($errors->has('back_tyre'))
@@ -754,17 +754,21 @@
     <div class="col-sm-12 clearfix"></div>
     @foreach($depreciation_trend_years as $key => $depreciation_trend_year)
         @php($index=array_search($key, array_keys($depreciation_trend_years)) + 1)
-        <div class="regions" style="display: none">
-            <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend.'.$key) ? 'has-error' : '' }}">
-                {!! Form::label('depreciation_trend',(($index==1)?'1st':(($index==2)?'2nd':(($index==3)?'3rd':(($index==4)?'4th':(($index==5)?'5th':''))))).' Year', null, ['class' => 'form-control']) !!}
-                {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:null), ['class' => 'form-control ', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
-                @if ($errors->has('depreciation_trend.'.$key))
-                    <span class="help-block" style="color: red;">
+        @if($index == 1)
+            {!! Form::hidden('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:0)) !!}
+        @else
+            <div class="regions" style="display: none">
+                <div class="form-group col-sm-2 {{ $errors->has('depreciation_trend.'.$key) ? 'has-error' : '' }}">
+                    {!! Form::label('depreciation_trend',((($index==2)?'1st':(($index==3)?'2nd':(($index==4)?'3rd':(($index==5)?'4th':(($index==6)?'5th':'')))))).' Year', null, ['class' => 'form-control']) !!}
+                    {!! Form::number('depreciation_trend['.$key.']*', isset($myCar)?@$myCar->DepreciationTrend()->where('year', $key)->first()->percentage:(old('depreciation_trend')[$key]?(int)old('depreciation_trend')[$key]:null), ['class' => 'form-control ', 'placeholder' => 'Depreciation Trend in %', 'min' => 1, 'max' => 99]) !!}
+                    @if ($errors->has('depreciation_trend.'.$key))
+                        <span class="help-block" style="color: red;">
                     <strong>{{ $errors->first('depreciation_trend.'.$key) }}</strong>
                 </span>
-                @endif
+                    @endif
+                </div>
             </div>
-        </div>
+        @endif
     @endforeach
     <hr>
 </div>

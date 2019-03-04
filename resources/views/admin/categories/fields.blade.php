@@ -11,6 +11,7 @@
 {{--</div>--}}
 
 <!-- Slug Field -->
+
 <div class="form-group col-sm-6">
     {!! Form::label('subtitle', 'Sub Title:') !!}
     {!! Form::text('subtitle', null, ['class' => 'form-control']) !!}
@@ -21,6 +22,10 @@
     {!! Form::label('parent_id', 'Parent Category:') !!}
     {!! Form::select('parent_id', $root, (isset($category) ? $category->parent_id : null), ['class' => 'form-control select2']) !!}
 </div>
+
+@isset($category)
+    {!! Form::hidden('type', $category->type) !!}
+@endisset
 
 <!-- Slug Field -->
 <div class="form-group col-sm-6">

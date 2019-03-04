@@ -18,6 +18,7 @@ class DepreciationTrend extends Model
 
     public $fillable = [
         'car_id',
+        'year_title',
         'year',
         'percentage',
         'amount'
@@ -51,6 +52,7 @@ class DepreciationTrend extends Model
      */
     protected $visible = [
         'year',
+        'year_title',
         'percentage',
         'amount'
     ];
